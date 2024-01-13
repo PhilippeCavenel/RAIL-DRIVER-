@@ -1,0 +1,4 @@
+E3,5-10:0:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:CAP_DIS_ELKO_5MM_10MM(:Elko 5mm Pitch, 10mm Durchmesser, 16mm Hoehe:Elko 5mm Pitch, 10mm  Diameter, 16mm High
+D01S:0:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:RADIATOR_TO220(:RADIATOR_TO220_GRND
+FK222:0:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:HEATSINK_FK_222(:HEATSINK_FK_222_GRND
+DRILEGEND:0:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:CAP_DIS_ELKO_5MM_10MM(:Elko 5mm Pitch, 10mm Durchmesser, 16mm Hoehe:Elko 5mm Pitch, 10mm  Diameter, 16mm High
