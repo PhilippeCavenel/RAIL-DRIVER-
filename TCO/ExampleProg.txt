@@ -1,0 +1,152 @@
+//================================================//
+// MANAGEMENT OF MASTER 31 CARD AUTOMATED FUNCTIONS //
+//================================================//
+
+
+// PROGRAMMING OF GPIO 0 OUTPUT (VALUE SET TO 1 WHEN BOARD STARTS UP)
+PROG 31 GPIO 0 OUT
+PROG 31 GPIO 2 OUT
+
+
+//////////////////////////////////////////////////////////////////////////
+// MANUAL MODE 
+//////////////////////////////////////////////////////////////////////////
+
+
+// Manual mode detection and activation
+PROG 31 AUT M0 AUTON BOARD 31 GPIO 3 0 ACT MANUAL
+
+
+// Manual mode switch detection and blue LED off
+PROG 31 AUT M1 AUTON BOARD 31 GPIO 3 0 ACT LPO 2 0
+
+
+// Detects manual mode switching and sets speed to manual indicator
+PROG 31 AUT M2 AUTON BOARD 31 GPIO 3 0 ACT TRACK 4 SPEED KNOB0 FORW INERTIA KNOB1
+
+
+// Switching detection in manual mode and turns light green 
+PROG 31 AUT M3 AUTON BOARD 31 GPIO 3 0 ACT LPO 1 0
+PROG 31 AUT M4 AUTON BOARD 31 GPIO 3 0 ACT LPO 0 1
+
+
+//////////////////////////////////////////////////////////////////////////
+// AUTOMATIC MODE 
+//////////////////////////////////////////////////////////////////////////
+
+
+// Automatic mode detection and activation
+PROG 31 AUT A1 AUTON BOARD 31 GPIO 3 1 ACT AUTOMATIC
+
+
+// Automatic mode switch detection and automatic cycle reset
+PROG 31 AUT A2 AUTON BOARD 31 GPIO 3 1 ACT TIMER 3 1
+
+
+// Reset GPIO 3
+PROG 31 AUT A3 AUTON BOARD 31 GPIO 3 0 ACT GPIO 3 0
+
+
+// Disable timer 1 arming to wait in station for 30 units
+PROG 31 AUT A4 AUTON BOARD 31 GPIO 3 0 ACT AUTOFF D4
+
+
+//////////////////////////////////////////////////////////////////////////
+// TRAIN DETECTION ON AUTOMATIC MODE TRACK
+/////////////////////////////////////////////////////////////////////////
+
+
+// Red light on train detection on track A
+PROG 31 AUT D1 AUTOFF BOARD 31 TRACK 0 STA ONTRACK ACT LPO 1 1
+PROG 31 AUT D2 AUTOFF BOARD 31 TRACK 0 STA ONTRACK ACT LPO 0 0
+
+
+// Station stop, tracks A, B, C and D are progressively stopped
+PROG 31 AUT D3 AUTOFF BOARD 31 TRACK 0 STA ONTRACK ACT TRACK 4 SPEED 0 FORW INERTIA KNOB1
+
+
+// Set TIMER 1 to wait in station for 30 units
+PROG 31 AUT D4 AUTON BOARD 31 TRACK 0 STA ONTRACK ACT TIMER 1 30 
+
+
+//////////////////////////////////////////////////////////////////////////
+// TIMER 1 triggers AUTOMATIC MODE
+//////////////////////////////////////////////////////////////////////////
+
+
+// Starts train on tracks A, B, C and D
+PROG 31 AUT T1 AUTOFF BOARD 31 TIMER 1 ACT TRACK 4 SPEED KNOB0 FORW INERTIA KNOB1
+
+
+// Turn light green
+PROG 31 AUT T2 AUTON BOARD 31 TIMER 1 ACT LPO 1 0
+PROG 31 AUT T3 AUTON BOARD 31 TIMER 1 ACT LPO 0 1
+
+
+// Set TIMER 2 to run the train for 50 units
+PROG 31 AUT T4 AUTON BOARD 31 TIMER 1 ACT TIMER 2 50
+
+
+// Disables station stop on train detection on track A
+PROG 31 AUT T5 AUTON BOARD 31 TIMER 1 ACT AUTOFF D3
+
+
+//Disable red light on train detection on track A
+PROG 31 AUT T6 AUTON BOARD 31 TIMER 1 ACT AUTOFF D1
+PROG 31 AUT T7 AUTON BOARD 31 TIMER 1 ACT AUTOFF D2
+
+
+//////////////////////////////////////////////////////////////////////////
+// TIMER 2 triggers AUTOMATIC MODE
+//////////////////////////////////////////////////////////////////////////
+
+
+// Activate station stop on train detection on track A
+PROG 31 AUT T8 AUTOFF BOARD 31 TIMER 2 ACT AUTON D3
+
+
+// Activates red light when train detected on track A
+PROG 31 AUT T9 AUTOFF BOARD 31 TIMER 2 ACT AUTON D1 
+PROG 31 AUT TA AUTOFF BOARD 31 TIMER 2 ACT AUTON D2
+
+
+//////////////////////////////////////////////////////////////////////////
+// Set TIMER 1 and 3 by pressing blue button on board 31 AUTOMATIC MODE
+//////////////////////////////////////////////////////////////////////////
+
+
+// Set TIMER 1 to start cycle on channels A, B, C and D
+PROG 31 AUT B1 AUTON BOARD 31 GPIO 1 1 ACT TIMER 1 1
+
+
+// Set TIMER 3
+PROG 31 AUT B2 AUTON BOARD 31 GPIO 1 1 ACT TIMER 3 255
+
+
+// Activate TIMER 1 reset
+PROG 31 AUT B3 AUTON BOARD 31 GPIO 1 1 ACT AUTON B1
+
+
+// Lights the blue LED on the
+PROG 31 AUT B4 AUTOFF BOARD 31 GPIO 1 1 ACT LPO 2 1
+
+
+// Activates TIMER 1 arming to wait in station for 30 units
+PROG 31 AUT B5 AUTON BOARD 31 GPIO 1 1 ACT AUTON D4
+
+
+// Reset GPIO 1
+PROG 31 AUT B6 AUTON BOARD 31 GPIO 1 0 ACT GPIO 1 0
+
+
+//////////////////////////////////////////////////////////////////////////
+// TIMER 3 triggers AUTOMATIC MODE
+//////////////////////////////////////////////////////////////////////////
+
+
+// Disables TIMER 1 reset
+PROG 31 AUT TB AUTON BOARD 31 TIMER 3 ACT AUTOFF D4
+
+
+// Turns off blue LED
+PROG 31 AUT TC AUTON BOARD 31 TIMER 3 ACT LPO 2 0
