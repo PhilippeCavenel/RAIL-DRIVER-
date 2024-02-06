@@ -35,8 +35,12 @@
 #define TRUE							1
 #define FALSE							0
                          
-#define RAIL_DRIVER_HEADER				"RAIL DRIVER V 1.2"
-#define VERSION							"Version du 04-01-2024"
+#define RAIL_DRIVER_HEADER				"RAIL DRIVER..V 1.2"
+#define VERSION							"VERSION......30-01-2024"
+#define BOARD_NUMBER					"BOARD........"
+#define MEMORY							"MEMORY......."
+#define AUTOMATION						"AUTOMATION..."
+#define MODE							"MODE........."
 
 // PROTOCOL
 #define MAXINPUTSTRING					200
@@ -59,13 +63,15 @@
 #define MAXTIMER						15
 #define MAXTIMERDELAY					255
 #define MAXSPEEDVALUE					15
-#define MAXINERTIAVALUE					100
 #define MAXAUTOMATION					36
 
 // ACCELARATION RATE
-#define MAXINTERNALSPEED				2000
+#define MAX_STEP						50
 
-#define INITTIMERVALUE					0xFF
+// INTERNAL SPEED SETTING
+#define MAXINTERNALSPEED				2000 // speed x 2000 is in short range ( -15 < speed < 15)
+
+#define INITTIMERVALUE					0xFFF
 
 //EEPROM
 #define SMALL_BUFFER_SIZE				80
@@ -75,14 +81,17 @@
 #define MATCH							1
 #define DISMATCH	    				2
 
+// Don't change this order EEPROM ADDRESS SETTING !
 #define MAGICNUMBER_ADDRESS				0
 #define MAGICNUMBERSIZE					8
-#define MODE_ADDRESS					(MAGICNUMBERSIZE+1)
-#define NEXTTAUTOMATION_ADDRESS			(MODE_ADDRESS+1)
-#define GPIO0DIR_ADDRESS				(NEXTTAUTOMATION_ADDRESS+1) 	// Don't change this value
-#define GPIO1DIR_ADDRESS				(GPIO0DIR_ADDRESS+1) 		// Don't change this order
-#define GPIO2DIR_ADDRESS				(GPIO1DIR_ADDRESS+1) 		// Don't change this order
-#define GPIO3DIR_ADDRESS				(GPIO2DIR_ADDRESS+1) 		// Don't change this order
+#define MODE_ADDRESS					MAGICNUMBERSIZE
+#define KNOB_ADDRESS					(MODE_ADDRESS+1)
+#define KNOB_SIZE						8	
+#define NEXTTAUTOMATION_ADDRESS			(KNOB_ADDRESS+KNOB_SIZE)		
+#define GPIO0DIR_ADDRESS				(NEXTTAUTOMATION_ADDRESS+1) 
+#define GPIO1DIR_ADDRESS				(GPIO0DIR_ADDRESS+1) 	
+#define GPIO2DIR_ADDRESS				(GPIO1DIR_ADDRESS+1) 		
+#define GPIO3DIR_ADDRESS				(GPIO2DIR_ADDRESS+1) 		
 #define AUTOMATION_ADDRESS				(GPIO3DIR_ADDRESS+1)		// Should be the last of the list
 						
 
@@ -262,6 +271,7 @@
 #define KNOB1							"KNOB1"
 #define MANUAL							"MANUAL"
 #define AUTOMATIC						"AUTOMATIC"
+#define CALIB							"CALIB"
 
 ///////////////////////////////////////////////
 //Token Value
@@ -310,6 +320,7 @@
 #define DUMPValue						0x2A
 #define MANUALValue						0x2B
 #define AUTOMATICValue					0x2C
+#define CALIBValue						0x2D
 
 // SPECIFIC VALUES
 
@@ -328,6 +339,8 @@
 #define REQ_BOARD_NUMBER 							1
 #define REQ_GLOBAL_COMMAND 							2
 
+// DONT CHANGE THE FOLLOWING VALUES OR ORDERS
+/////////////////////////////////////////////
 #define REQ_COMMAND_REQUEST_SET_GPIO 				3
 #define REQ_COMMAND_REQUEST_GPIO_NUMBER 			4
 #define REQ_COMMAND_REQUEST_GPIO_LEVEL 				5
@@ -559,9 +572,10 @@ unsigned char				gl_master;
 unsigned char				gl_speedCounter;
  
    // SPEED CIRCUIT 
-int							gl_setPoint[4];	  // SPEED AND DIRECTION REQUESTED							
-int							gl_setStep[4];	  // INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
-int							gl_curSpeed[4];	  // CUR SPEED AND DIRECTION
+short						gl_setPoint[4];	  			// SPEED AND DIRECTION REQUESTED							
+short 						gl_setStep[4];	  			// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
+short 						gl_setStepCounter[4];	  	// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
+short 						gl_curSpeed[4];	  			// CUR SPEED AND DIRECTION
 
 // low level value
 unsigned char 				gl_speed[4];  
@@ -619,12 +633,25 @@ unsigned char  				gl_calibration;
 unsigned char  				gl_OUTSTATchar[4];
 unsigned char  				gl_trackNotification[4];
 
-short						gl_knobValue0; // Between -15 and 15
-short						gl_knobValue1; // Between 0 and 100
-short 						gl_adcKnobValue0;
-short 						gl_adcKnobValue1;
+int							gl_knobValue0; // Between -15 and 15
+int							gl_knobValue1; // Between 0 and 100
 short 						gl_lastKnobValue0;
 short 						gl_lastKnobValue1;
+
+unsigned short 				gl_adcKnobValue0;
+unsigned short 				gl_adcKnobValue1;
+unsigned short 				gl_minAdcKnobValue0;
+unsigned short 				gl_maxAdcKnobValue0;
+unsigned short 				gl_minAdcKnobValue1;
+unsigned short 				gl_maxAdcKnobValue1;
+
+char						gl_getKnobValue;
+char						gl_numberKnobData;
+char						gl_calibKnob;
+short						gl_deltaKnob0;
+short						gl_deltaKnob1;
+
+
 unsigned char				gl_userMode;	// MANUAL or AUTOMATIC
 
 
@@ -653,6 +680,7 @@ unsigned short				gl_synchroSend;
 
 // EEPROM READ / WRITE FUNCTION
 unsigned char 	ReadEEPROM(unsigned int adr, unsigned char *data);
+void		 	CalibMinMaxKnob();
 void 			ResetEEPROM();
 void 			ReadEEPROMConfig(void);
 unsigned char 	WriteCompletedEEPROM(void);
@@ -665,13 +693,14 @@ unsigned char 	compressAutomation();
 unsigned char 	isAdigit(unsigned char car);
 unsigned char 	isAhexaDigit(unsigned char car);
 unsigned char 	toUpperCase(unsigned char car);
-unsigned short 	strtol_with_atoi(const char* nptr, short base);
+unsigned short 	strtol(const char* nptr);
 void 			traceError();
 unsigned char 	getToken(unsigned char* inputString, unsigned char* inputToken, unsigned char* stringPointer);
 unsigned char 	getValue(unsigned char* inputString, unsigned char* Value, unsigned char* stringPointer);
 unsigned char   getIdent(unsigned char* inputString, unsigned char* stringPointer,unsigned char *ident);
 unsigned char 	parser(unsigned char* inputString, unsigned char* request);
-void 			memAvailable();
+unsigned char 	memAvailable();
+void			boardStatus();
 void 			uncompressData(unsigned char* data);
 unsigned char 	compressData(unsigned char* data);
 void 			initRequest(unsigned char* request);

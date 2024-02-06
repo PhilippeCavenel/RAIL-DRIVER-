@@ -38,6 +38,57 @@ unsigned char ReadEEPROM(unsigned int adr, unsigned char *data){
 
 /****************************************************************************
 *
+* Function CalibMinMaxKnob
+*
+****************************************************************************/
+void CalibMinMaxKnob() {
+
+	 unsigned short adr;
+	 unsigned long delay;
+
+	// Knob min & max
+	adr=(unsigned short)KNOB_ADDRESS;
+	
+	// Min knob values
+	TM1637_display(0,0);
+	gl_mutex=1;
+	gl_minAdcKnobValue0=0xFFFF;
+	gl_minAdcKnobValue1=0xFFFF;
+	gl_calibKnob=1;
+	gl_mutex=0;
+	
+
+	// Wait to get low value
+	for(delay=0;delay<0x5FFFF;delay++);
+
+	// Max knob values
+	TM1637_display(1,1);
+	gl_mutex=1;
+	gl_maxAdcKnobValue0=0;
+	gl_maxAdcKnobValue1=0;
+	gl_mutex=0;
+
+	// Wait to get low value
+	for(delay=0;delay<0x5FFFF;delay++);
+	gl_mutex=0;	gl_calibKnob=0; gl_mutex=0;
+
+	// Save in EEPROM
+	WriteEEPROM(adr++,(gl_minAdcKnobValue0>>8) & 0xFF);
+	WriteEEPROM(adr++,gl_minAdcKnobValue0 & 0xFF);
+
+	WriteEEPROM(adr++,(gl_maxAdcKnobValue0>>8) & 0xFF);			
+	WriteEEPROM(adr++,gl_maxAdcKnobValue0 & 0xFF);
+
+	WriteEEPROM(adr++,(gl_minAdcKnobValue1>>8) & 0xFF);		
+	WriteEEPROM(adr++,gl_minAdcKnobValue1 & 0xFF);
+
+	WriteEEPROM(adr++,(gl_maxAdcKnobValue1>>8) & 0xFF);	
+	WriteEEPROM(adr,gl_maxAdcKnobValue1 & 0xFF);
+
+}
+
+/****************************************************************************
+*
 * Function ResetEEPROM
 *
 ****************************************************************************/
@@ -66,7 +117,7 @@ void ResetEEPROM(){
 
 	// GPIO IN
 	for(adr=(unsigned short)GPIO0DIR_ADDRESS;adr<=(unsigned short)GPIO0DIR_ADDRESS+3;adr++)WriteEEPROM(adr,1);
-	
+
 	// Init
 	initSignal();
 
@@ -113,7 +164,29 @@ void ReadEEPROMConfig(void) {
 	TRISDbits.RD3=value;
 	ReadEEPROM(adr,&value);
 	TRISCbits.RC4=value;
-	
+
+	// Knob min & max
+	adr=(unsigned short)KNOB_ADDRESS;
+	ReadEEPROM(adr++,&value);
+	gl_minAdcKnobValue0=value;
+	ReadEEPROM(adr++,&value);
+	gl_minAdcKnobValue0=value+(gl_minAdcKnobValue0<<8);
+	ReadEEPROM(adr++,&value);
+	gl_maxAdcKnobValue0=value;
+	ReadEEPROM(adr++,&value);
+	gl_maxAdcKnobValue0=value+(gl_maxAdcKnobValue0<<8);
+	ReadEEPROM(adr++,&value);
+	gl_minAdcKnobValue1=value;
+	ReadEEPROM(adr++,&value);
+	gl_minAdcKnobValue1=value+(gl_minAdcKnobValue1<<8);
+	ReadEEPROM(adr++,&value);
+	gl_maxAdcKnobValue1=value;
+	ReadEEPROM(adr,&value);
+	gl_maxAdcKnobValue1=value+(gl_maxAdcKnobValue1<<8);
+
+	gl_deltaKnob0=gl_maxAdcKnobValue0-gl_minAdcKnobValue0;
+	gl_deltaKnob1=gl_maxAdcKnobValue1-gl_minAdcKnobValue1;
+
 	// Read in EEPROM last automation
 	uncompressAutomation();
 }
@@ -190,18 +263,41 @@ unsigned char WriteEEPROM(unsigned short adr, unsigned char data){
 /////////////////////////////////////////////////////////////////////////////
 // memAvailable
 /////////////////////////////////////////////////////////////////////////////
-void memAvailable() {
+unsigned char memAvailable() {
 
-	sprintf(gl_message,"Memory available %d %",uncompressAutomation());
+	return(uncompressAutomation());
+}
+/////////////////////////////////////////////////////////////////////////////
+// boardStatus()
+/////////////////////////////////////////////////////////////////////////////
+void boardStatus() {
+				
+	sprintf(gl_message,RAIL_DRIVER_HEADER);
 	prompt(gl_message);
-	if (gl_nexAvailableAutomation>0) {
-		if (gl_nexAvailableAutomation==1)sprintf(gl_message,"%d automation",gl_nexAvailableAutomation);
-		else sprintf(gl_message,"%d automations",gl_nexAvailableAutomation); 
-		prompt(gl_message);
-	}
+
+	sprintf(gl_message,VERSION);
+	prompt(gl_message);
+
+	sprintf(gl_message,BOARD_NUMBER);
+	sprintf(gl_message,"%s%d",gl_message,gl_boardNumber);
+	prompt(gl_message);
+
+	sprintf(gl_message,MEMORY);
+	sprintf(gl_message,"%s%d%%",gl_message,memAvailable());
+	prompt(gl_message);
+
+	sprintf(gl_message,AUTOMATION);
+	sprintf(gl_message,"%s%d",gl_message,gl_nexAvailableAutomation);
+	prompt(gl_message);
+
+	sprintf(gl_message,MODE);
+	if(gl_boardMode==ANAValue)sprintf(gl_message,"%sANA",gl_message);
+	else sprintf(gl_message,"%sANA",gl_message);
+	prompt(gl_message);
+
 	sprintf(gl_message,"");
 	prompt(gl_message);
-}
+}	
 
 /////////////////////////////////////////////////////////////////////////////
 // uncompressAutomation
@@ -352,7 +448,7 @@ unsigned char isAdigit(unsigned char car) {
 // isAhexaDigit
 /////////////////////////////////////////////////////////////////////////////
 unsigned char isAhexaDigit(unsigned char car) {
-	if ((car >='a' && car <= 'f')  || (car >='A' && car <= 'F')) return TRUE;
+	if (car >='A' && car <= 'F') return TRUE;
 	else return FALSE;
 }
 
@@ -369,68 +465,51 @@ unsigned char toUpperCase(unsigned char car) {
 	return(returnValue);
 }
 /////////////////////////////////////////////////////////////////////////////
-// strtol_with_atoi for positive number
+// strtol for positive number
 /////////////////////////////////////////////////////////////////////////////
-unsigned short strtol_with_atoi(const char* nptr, short base) {
+//unsigned short strtol_with_atoi(const char* nptr, short base) {
+unsigned short strtol(const char* nptr) {
 
-	unsigned short result=0;
-	unsigned char getData=FALSE;
+    short 			result16=0;
+    short 			result10=0;
+	unsigned char 	base=10;
+	unsigned short	result=0;
 
-	// Check sign
-	if (*nptr == '-') {
-		errno = ERANGE;
-		return result;
-	}
-	else if (*nptr == '+') {
+	if (*nptr == '0') 	nptr++;
+	if (*nptr == '\0'|| *nptr == ' ') return result; // 0
+	if (toUpperCase(*nptr) == 'X') {	
 		nptr++;
-	}
-
-	// Check base 0x for hexadécimal, 0 for octal
-	if (base == 0) {
-		if (*nptr == '0') {
-			nptr++;
-			getData=TRUE;
-			if (*nptr == '\0'|| *nptr == ' ') return result; // 0
-			if (*nptr == 'x' || *nptr == 'X') {
-				nptr++;
-				base = 16;
-				getData=FALSE;
-			}
-		}
-		else {
-			base = 10;
-		}
-	}
-
-	// atoi()
-	result = 0;
+		base=16;
+	}		
 	while (*nptr != '\0' && *nptr != ' ') {
 		int digit;
 		if (isAdigit(*nptr)) {
 			digit = *nptr - '0';
-			getData=TRUE;
-		}
-		else if (base == 16 && isAhexaDigit(*nptr)) {
-			digit = toUpperCase(*nptr) - 'A' + 10;
-			getData=TRUE;
 		}
 		else {
-			// end converstion
-			break;
+			if (isAhexaDigit(toUpperCase(*nptr))) {
+				digit = toUpperCase(*nptr) - 'A' + 10;
+ 				if (digit>=10)base=16;
+			}
+			else {
+				// end conversion
+				errno = ERANGE;
+				return result;
+			}
 		}
-
-		// Check value for base
-		if (digit >= base) {
-			// Fin de la conversion
-			errno = ERANGE;
-			return result;
-		}
-
-		result = result * base + digit;
+		
+		result16 = 16 * result16 + digit;
+		result10 = 10 * result10 + digit;
 		nptr++;
 	}
-	if (getData==FALSE) errno = EINVAL;
-	return result;
+	if (base==10) result=result10;
+	else result=result16;
+
+	if (result<0) {
+			errno = ERANGE;
+			return result;
+ 		}
+	return((unsigned short)result);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -525,7 +604,8 @@ unsigned char getValue(unsigned char* inputString, unsigned char* Value, unsigne
 		(*stringPointer)++;
 		carCounter++;
 	}
-	number = strtol_with_atoi(&inputString[carCounter],0);
+	//number = strtol_with_atoi(&inputString[carCounter],0);	
+	number = strtol(&inputString[carCounter]);
 
 	if (errno == ERANGE || errno ==EINVAL) dataFound = FALSE;
 	else dataFound = TRUE;
@@ -636,6 +716,18 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 	stringPointer = 0;
 	if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 		request[REQ_GLOBAL_COMMAND] = RUNValue;
+
+		// Get board number
+		if (!getValue(&inputString[stringPointer], &request[REQ_BOARD_NUMBER], &stringPointer))return(FALSE);
+		gl_parserErrorCode=0;
+		return(TRUE);
+	}
+
+	// CALIB 
+	sprintf(token,CALIB);
+	stringPointer = 0;
+	if (getToken(&inputString[stringPointer], token, &stringPointer)) {
+		request[REQ_GLOBAL_COMMAND] = CALIBValue;
 
 		// Get board number
 		if (!getValue(&inputString[stringPointer], &request[REQ_BOARD_NUMBER], &stringPointer))return(FALSE);
@@ -1391,41 +1483,20 @@ unsigned char saveAutomation(unsigned char automationNumber,unsigned char* data)
 /////////////////////////////////////////////////////////////////////////////
 void assignAutomation(char *request,unsigned char automationCounter) {
 
-		unsigned char identCounter;
+	unsigned char counterCommand;
+	unsigned char counterAutomation;
 
-		// set request for command
-		initRequest(request);
+	// set request for command
+	initRequest(request);
 
-		request[REQ_TYPE_ENTRY]=COMValue;
-		request[REQ_BOARD_NUMBER]=gl_boardNumber;
-		request[REQ_COMMAND_REQUEST_SET_GPIO] = gl_automation[automationCounter][AUTOMATION_COMMAND_SET_GPIO];
-		request[REQ_COMMAND_REQUEST_GPIO_NUMBER] = gl_automation[automationCounter][AUTOMATION_COMMAND_GPIO_NUMBER];
-		request[REQ_COMMAND_REQUEST_GPIO_LEVEL] = gl_automation[automationCounter][AUTOMATION_COMMAND_GPIO_LEVEL];
+	request[REQ_TYPE_ENTRY]=COMValue;
+	request[REQ_BOARD_NUMBER]=gl_boardNumber;
 
-		request[REQ_COMMAND_REQUEST_SET_TIMER] = gl_automation[automationCounter][AUTOMATION_COMMAND_SET_TIMER];
-		request[REQ_COMMAND_REQUEST_TIMER_NUMBER] = gl_automation[automationCounter][AUTOMATION_COMMAND_TIMER_NUMBER];
-		request[REQ_COMMAND_REQUEST_TIMER_DELAY] = gl_automation[automationCounter][AUTOMATION_COMMAND_TIMER_DELAY];
-
-		request[REQ_COMMAND_REQUEST_SET_LPO] = gl_automation[automationCounter][AUTOMATION_COMMAND_SET_LPO];
-		request[REQ_COMMAND_REQUEST_LPO_NUMBER] = gl_automation[automationCounter][AUTOMATION_COMMAND_LPO_NUMBER];
-		request[REQ_COMMAND_REQUEST_LPO_LEVEL] = gl_automation[automationCounter][AUTOMATION_COMMAND_LPO_LEVEL];
-
-		request[REQ_COMMAND_REQUEST_SET_AUT] = gl_automation[automationCounter][AUTOMATION_COMMAND_SET_AUT];
-		for(identCounter=0;identCounter<MAXSIZEIDENT;identCounter++) request[REQ_COMMAND_REQUEST_AUT_IDENT+identCounter] = gl_automation[automationCounter][AUTOMATION_COMMAND_AUT_IDENT+identCounter];
-		request[REQ_COMMAND_REQUEST_AUT_STATUS] = gl_automation[automationCounter][AUTOMATION_COMMAND_AUT_STATUS];
-
-		request[REQ_COMMAND_REQUEST_SET_TRACK] = gl_automation[automationCounter][AUTOMATION_COMMAND_SET_TRACK];
-		request[REQ_COMMAND_REQUEST_TRACK_NUMBER] = gl_automation[automationCounter][AUTOMATION_COMMAND_TRACK_NUMBER];
-		request[REQ_COMMAND_REQUEST_TRACK_SPEED] = gl_automation[automationCounter][AUTOMATION_COMMAND_TRACK_SPEED];
-		request[REQ_COMMAND_REQUEST_TRACK_DIR] = gl_automation[automationCounter][AUTOMATION_COMMAND_TRACK_DIR];
-		request[REQ_COMMAND_REQUEST_TRACK_INERTIA] = gl_automation[automationCounter][AUTOMATION_COMMAND_TRACK_INERTIA];
-
-		request[REQ_COMMAND_REQUEST_SET_USER_MODE]= gl_automation[automationCounter][AUTOMATION_COMMAND_SET_USER_MODE];
-		request[REQ_COMMAND_REQUEST_USER_MODE]= gl_automation[automationCounter][AUTOMATION_COMMAND_USER_MODE];
-
-		request[REQ_COMMAND_REQUEST_SET_DCC]= gl_automation[automationCounter][AUTOMATION_COMMAND_SET_DCC];
-		request[REQ_COMMAND_REQUEST_DCC_ADDRESS] = gl_automation[automationCounter][AUTOMATION_COMMAND_DCC_ADDRESS];
-		request[REQ_COMMAND_REQUEST_DCC_COMMAND] = gl_automation[automationCounter][AUTOMATION_COMMAND_DCC_COMMAND];
+	// Copy from automation
+	counterAutomation=AUTOMATION_COMMAND_SET_GPIO;
+	for(counterCommand=REQ_COMMAND_REQUEST_SET_GPIO;counterCommand<=REQ_COMMAND_REQUEST_DCC_COMMAND;counterCommand++) {
+		request[counterCommand]=gl_automation[automationCounter][counterAutomation++];
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1569,6 +1640,13 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
 			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) gl_stopAll=FALSE;
 			if (sendPrompt==TRUE) prompt(gl_message);
+		 	return(TRUE); 
+		case CALIBValue :
+			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
+			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) CalibMinMaxKnob() ;
+			if (sendPrompt==TRUE) {
+				prompt(gl_message);prompt(gl_message);
+			}
 		 	return(TRUE); 
 		case RESETValue :
 			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
@@ -1813,7 +1891,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 						if (request[REQ_COMMAND_REQUEST_TRACK_NUMBER]>=0 && request[REQ_COMMAND_REQUEST_TRACK_NUMBER]<=4) {
 							if (((request[REQ_COMMAND_REQUEST_TRACK_SPEED]>=0 && request[REQ_COMMAND_REQUEST_TRACK_SPEED]<=MAXSPEEDVALUE)|| request[REQ_COMMAND_REQUEST_TRACK_SPEED]==KNOB0Value || request[REQ_COMMAND_REQUEST_TRACK_SPEED]==KNOB1Value) &&
 							    (request[REQ_COMMAND_REQUEST_TRACK_DIR]==FORWValue || request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) &&
-								((request[REQ_COMMAND_REQUEST_TRACK_INERTIA]>=0 && request[REQ_COMMAND_REQUEST_TRACK_INERTIA]<=MAXINERTIAVALUE)|| request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB0Value || request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB1Value)) {
+								((request[REQ_COMMAND_REQUEST_TRACK_INERTIA]>=0 && request[REQ_COMMAND_REQUEST_TRACK_INERTIA]<=100)|| request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB0Value || request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB1Value)) {
 								gl_mutex=1;
 
 								if (request[REQ_COMMAND_REQUEST_TRACK_SPEED]==KNOB0Value) speed=gl_knobValue0;
@@ -1850,7 +1928,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 									gl_parserErrorCode=BAD_TRACK_DIR;
 									return(FALSE);
 								}
-								if (!(request[REQ_COMMAND_REQUEST_TRACK_INERTIA]>=0 && request[REQ_COMMAND_REQUEST_TRACK_INERTIA]<=MAXINERTIAVALUE)) {
+								if (!(request[REQ_COMMAND_REQUEST_TRACK_INERTIA]>=0 && request[REQ_COMMAND_REQUEST_TRACK_INERTIA]<=100)) {
 									gl_parserErrorCode=BAD_TRACK_INERTIA;
 									return(FALSE);
 								}
@@ -1926,10 +2004,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 					return(TRUE);
 				}
 				else if (request[REQ_COMMAND_REQUEST_GET_BOARD_STATUS] == TRUE) {
-					if(gl_boardMode==ANAValue)sprintf(gl_message,"Mode ANA");
-					else sprintf(gl_message,"Mode DCC");
-					if (sendPrompt==TRUE) prompt(gl_message);
-					if (sendPrompt==TRUE) memAvailable();			
+					if (sendPrompt==TRUE) boardStatus();		
 					return(TRUE);
 				}
 				else if (request[REQ_COMMAND_REQUEST_GET_GPIO_STATUS] == TRUE) {
@@ -2566,30 +2641,53 @@ void low_isr(void){
 	
 	if (!gl_mutex) {
 
-		// KNOB VALUE
-		ADCON0=INKNOB0;
-		ADCON0bits.GO = 1;                            // ADCON0.GODONE = 1 
-		while(ADCON0bits.GO == 1);                    // wait till GODONE bit is zero
-		ADC = ADRESH;    //Read converted result 
-		ADC = (ADC<<8) + ADRESL;
-		gl_adcKnobValue0=((9*gl_adcKnobValue0)+ADC)/10;
-		gl_knobValue0=(9*gl_knobValue0+(gl_adcKnobValue0/20)-25)/10;
+		gl_getKnobValue++;
 
- 		if (gl_knobValue0<-15)gl_knobValue0=-15;
- 		if (gl_knobValue0>15)gl_knobValue0=15;
+		if (gl_getKnobValue==0) {
 
+			gl_numberKnobData++;
 
-		ADCON0=INKNOB1;
-		ADCON0bits.GO = 1;                            // ADCON0.GODONE = 1 
-		while(ADCON0bits.GO == 1);                    // wait till GODONE bit is zero
-		ADC = ADRESH;    //Read converted result 
-		ADC = (ADC<<8) + ADRESL;
-		gl_adcKnobValue1=((9*gl_adcKnobValue1)+ADC)/10; 
-		gl_knobValue1=(9*gl_knobValue1+(gl_adcKnobValue1/9))/10;
+			// KNOB VALUE
+			ADCON0=INKNOB0;
+			ADCON0bits.GO = 1;                            // ADCON0.GODONE = 1 
+			while(ADCON0bits.GO == 1);                    // wait till GODONE bit is zero
+			ADC = ADRESH;    //Read converted result 
+			ADC = (ADC<<8) + ADRESL;
 
-		if (gl_knobValue1<0)gl_knobValue1=0;
-		if (gl_knobValue1>MAXINERTIAVALUE)gl_knobValue1=MAXINERTIAVALUE;
+			gl_adcKnobValue0+=ADC;
 
+			ADCON0=INKNOB1;
+			ADCON0bits.GO = 1;                            // ADCON0.GODONE = 1 
+			while(ADCON0bits.GO == 1);                    // wait till GODONE bit is zero
+			ADC = ADRESH;    //Read converted result 
+			ADC = (ADC<<8) + ADRESL;
+
+			gl_adcKnobValue1+=ADC;
+
+			if(gl_numberKnobData>=20) {
+				gl_numberKnobData=0;
+				gl_adcKnobValue0=gl_adcKnobValue0/20;
+				gl_adcKnobValue1=gl_adcKnobValue1/20;
+
+				if (gl_calibKnob==1) {
+					if (gl_minAdcKnobValue0>gl_adcKnobValue0)gl_minAdcKnobValue0=gl_adcKnobValue0;
+					if (gl_minAdcKnobValue1>gl_adcKnobValue1)gl_minAdcKnobValue1=gl_adcKnobValue1;
+					if (gl_maxAdcKnobValue0<gl_adcKnobValue0)gl_maxAdcKnobValue0=gl_adcKnobValue0;
+					if (gl_maxAdcKnobValue1<gl_adcKnobValue1)gl_maxAdcKnobValue1=gl_adcKnobValue1;
+					gl_deltaKnob0=gl_maxAdcKnobValue0-gl_minAdcKnobValue0;
+					gl_deltaKnob1=gl_maxAdcKnobValue1-gl_minAdcKnobValue1;
+					
+				}
+
+				gl_knobValue0=(31*((unsigned long)(gl_adcKnobValue0-gl_minAdcKnobValue0))/(unsigned long)(gl_deltaKnob0))-15;
+				gl_knobValue1=(101*(unsigned long)(gl_adcKnobValue1-gl_minAdcKnobValue1))/(unsigned long)(gl_deltaKnob1);
+				if (gl_knobValue0>15)gl_knobValue0=15;
+				if (gl_knobValue1>100)gl_knobValue1=100;
+
+				gl_adcKnobValue0=0;
+				gl_adcKnobValue1=0;
+			}
+		}
 		// GPIO IN Detection
 		if(TRISDbits.RD1==1 && PORTDbits.RD1!=gl_GPIOchar[0]){
 			gl_GPIOstabilized[0]++;
@@ -2660,13 +2758,17 @@ void low_isr(void){
 				}
 
 				if (gl_curSpeed[gl_trackNumber]!=gl_setPoint[gl_trackNumber]) {
-					if (gl_curSpeed[gl_trackNumber]>gl_setPoint[gl_trackNumber]){
-						gl_curSpeed[gl_trackNumber]-=(MAXINERTIAVALUE-gl_setStep[gl_trackNumber]+1)/5;
-						if(gl_curSpeed[gl_trackNumber]<gl_setPoint[gl_trackNumber])gl_curSpeed[gl_trackNumber]=gl_setPoint[gl_trackNumber];
-					}
-					else {
-						gl_curSpeed[gl_trackNumber]+=(MAXINERTIAVALUE-gl_setStep[gl_trackNumber]+1)/5;
-						if(gl_curSpeed[gl_trackNumber]>gl_setPoint[gl_trackNumber])gl_curSpeed[gl_trackNumber]=gl_setPoint[gl_trackNumber];
+					gl_setStepCounter[gl_trackNumber]--;
+					if (gl_setStepCounter[gl_trackNumber]<=0) {
+						gl_setStepCounter[gl_trackNumber]=gl_setStep[gl_trackNumber];
+						if (gl_curSpeed[gl_trackNumber]>gl_setPoint[gl_trackNumber]){
+							gl_curSpeed[gl_trackNumber]-=MAX_STEP;
+							if(gl_curSpeed[gl_trackNumber]<gl_setPoint[gl_trackNumber])gl_curSpeed[gl_trackNumber]=gl_setPoint[gl_trackNumber];
+						}
+						else {
+							gl_curSpeed[gl_trackNumber]+=MAX_STEP;
+							if(gl_curSpeed[gl_trackNumber]>gl_setPoint[gl_trackNumber])gl_curSpeed[gl_trackNumber]=gl_setPoint[gl_trackNumber];
+						}
 					}
 
 					if (gl_curSpeed[gl_trackNumber]>0) {
@@ -2853,6 +2955,7 @@ void initSignal() {
       gl_direction[trackNumber]=0;
       gl_setPoint[trackNumber]=0;
       gl_setStep[trackNumber]=0;
+      gl_setStepCounter[trackNumber]=0;
       gl_curSpeed[trackNumber]=0;
 	  gl_OUTSTATchar[trackNumber]=0;
 	  gl_trackNotification[trackNumber]=FALSE;
@@ -2872,7 +2975,7 @@ void initSignal() {
 	}
 	gl_timerNumber=0;
 	gl_timer=0;
-		
+	gl_speedCounter=0;	
 
 	// DCC TEMPO BETWEEN TWO TRAMES
     gl_dcc_ready=INITWAITDCCCOUNTER;
@@ -2892,6 +2995,12 @@ void initSignal() {
 	// Init structure 
 	gl_outputBufferCounter=0;
 	initRequest(&gl_request);
+
+	// Knob
+	gl_adcKnobValue0=0;
+	gl_adcKnobValue1=0;
+	gl_getKnobValue=0;
+	gl_calibKnob=0;
 
 	// Update form EEPROM
 	gl_mutex=0;
@@ -2960,7 +3069,7 @@ void init() {
 	gl_userMode=AUTOMATICValue;
 
     TM1637_init();
-   	TM1637_setBrightness(4);
+   	TM1637_setBrightness(0);
 
 }
 
@@ -3083,20 +3192,16 @@ void main()
 	// Full init of PIC18F
     init();
 
-	// CALIBRATION
+	// CALIBRATION FOR TRACK DETECTION
     calibration();
 
+	// BOARD STATUS
+	boardStatus();
 	// START MAIN LOOP
 
-	sprintf(gl_message,"Board %d",gl_boardNumber);
-	prompt(gl_message);
-	sprintf(gl_message,RAIL_DRIVER_HEADER);
-	prompt(gl_message);
-	sprintf(gl_message,VERSION);
-	prompt(gl_message);
-	memAvailable();
-	
+
     while (1){
+  	 	TM1637_setBrightness(4);
 		while(1) {	
 
 			// Manage knob value (for MANUAL and AUTOMATIC mode)

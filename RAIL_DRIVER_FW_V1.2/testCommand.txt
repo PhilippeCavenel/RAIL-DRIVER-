@@ -2,9 +2,6 @@
 // GESTION DES AUTOMATISMES DE LA CARTE MASTER 31 //
 //================================================//
 
-// PROGRAMMATION DE LA GPIO 0 EN SORTIE (VALEUR A 1 AU DEMARRAGE DE LA CARTE)
-PROG 31 GPIO 0 OUT
-PROG 31 GPIO 2 OUT
 
 //////////////////////////////////////////////////////////////////////////
 // MODE MANUEL 
@@ -23,6 +20,9 @@ PROG 31 AUT M2 AUTON BOARD 31 GPIO 3 0 ACT TRACK 4 SPEED KNOB0 FORW INERTIA KNOB
 PROG 31 AUT M3 AUTON BOARD 31 GPIO 3 0 ACT LPO 1 0
 PROG 31 AUT M4 AUTON BOARD 31 GPIO 3 0 ACT LPO 0 1
 
+// Allume led mode manuel
+PROG 31 AUT M5 AUTON BOARD 31 GPIO 3 0 ACT LPO 3 1
+
 //////////////////////////////////////////////////////////////////////////
 // MODE AUTOMATIQUE 
 //////////////////////////////////////////////////////////////////////////
@@ -36,8 +36,11 @@ PROG 31 AUT A2 AUTON BOARD 31 GPIO 3 1 ACT TIMER 3 1
 // Remise à zéro du GPIO 3
 PROG 31 AUT A3 AUTON BOARD 31 GPIO 3 0 ACT GPIO 3 0
 
-// Désactive armement du timer 1 pour attente en gare pendant 30 unités
+// Désactive armement du timer 1 pour attente en gare pendant 10 unités
 PROG 31 AUT A4 AUTON BOARD 31 GPIO 3 0 ACT AUTOFF D4
+
+// Eteint led mode manuel
+PROG 31 AUT A5 AUTON BOARD 31 GPIO 3 1 ACT LPO 3 0
 
 //////////////////////////////////////////////////////////////////////////
 // DETECTION DU TRAIN SUR LA VOIE A MODE AUTOMATIQUE
@@ -50,8 +53,8 @@ PROG 31 AUT D2 AUTOFF BOARD 31 TRACK 0 STA ONTRACK ACT LPO 0 0
 // Arret en gare, les voies A, B, C et D sont progressivement arrêtées
 PROG 31 AUT D3 AUTOFF BOARD 31 TRACK 0 STA ONTRACK ACT TRACK 4 SPEED 0 FORW INERTIA KNOB1
 
-// Arme TIMER 1 pour attente en gare pendant 30 unités
-PROG 31 AUT D4 AUTON BOARD 31 TRACK 0 STA ONTRACK ACT TIMER 1 30 
+// Arme TIMER 1 pour attente en gare pendant 10 unités
+PROG 31 AUT D4 AUTON BOARD 31 TRACK 0 STA ONTRACK ACT TIMER 1 10 
 
 //////////////////////////////////////////////////////////////////////////
 // TIMER 1 se déclenche MODE AUTOMATIQUE
@@ -64,8 +67,8 @@ PROG 31 AUT T1 AUTOFF BOARD 31 TIMER 1 ACT TRACK 4 SPEED KNOB0 FORW INERTIA KNOB
 PROG 31 AUT T2 AUTON BOARD 31 TIMER 1 ACT LPO 1 0
 PROG 31 AUT T3 AUTON BOARD 31 TIMER 1 ACT LPO 0 1
 
-// Arme TIMER 2 pour faire tourner le train pendant 50 unités
-PROG 31 AUT T4 AUTON BOARD 31 TIMER 1 ACT TIMER 2 50
+// Arme TIMER 2 pour faire tourner le train pendant 20 unités
+PROG 31 AUT T4 AUTON BOARD 31 TIMER 1 ACT TIMER 2 20
 
 // Désactive l'arret en gare sur détection de train voie A
 PROG 31 AUT T5 AUTON BOARD 31 TIMER 1 ACT AUTOFF D3
@@ -74,16 +77,22 @@ PROG 31 AUT T5 AUTON BOARD 31 TIMER 1 ACT AUTOFF D3
 PROG 31 AUT T6 AUTON BOARD 31 TIMER 1 ACT AUTOFF D1
 PROG 31 AUT T7 AUTON BOARD 31 TIMER 1 ACT AUTOFF D2
 
+// Désactive armement timer 1
+PROG 31 AUT T8 AUTON BOARD 31 TIMER 1 ACT AUTOFF D4
+
 //////////////////////////////////////////////////////////////////////////
 // TIMER 2 se déclenche MODE AUTOMATIQUE
 //////////////////////////////////////////////////////////////////////////
 
 // Active l'arret en gare sur détection de train voie A
-PROG 31 AUT T8 AUTOFF BOARD 31 TIMER 2 ACT AUTON D3
+PROG 31 AUT T9 AUTOFF BOARD 31 TIMER 2 ACT AUTON D3
 
 // Active le passage du feu au rouge sur détection de train voie A
-PROG 31 AUT T9 AUTOFF BOARD 31 TIMER 2 ACT AUTON D1 
-PROG 31 AUT TA AUTOFF BOARD 31 TIMER 2 ACT AUTON D2
+PROG 31 AUT TA AUTOFF BOARD 31 TIMER 2 ACT AUTON D1 
+PROG 31 AUT TB AUTOFF BOARD 31 TIMER 2 ACT AUTON D2
+
+// Active armement timer 1
+PROG 31 AUT TC AUTON BOARD 31 TIMER 2 ACT AUTON D4
 
 //////////////////////////////////////////////////////////////////////////
 // Arme TIMER 1 et 3 sur appui bouton bleu carte 31 MODE AUTOMATIQUE
@@ -93,7 +102,7 @@ PROG 31 AUT TA AUTOFF BOARD 31 TIMER 2 ACT AUTON D2
 PROG 31 AUT B1 AUTON BOARD 31 GPIO 1 1 ACT TIMER 1 1
 
 // Arme TIMER 3
-PROG 31 AUT B2 AUTON BOARD 31 GPIO 1 1 ACT TIMER 3 255
+PROG 31 AUT B2 AUTON BOARD 31 GPIO 1 1 ACT TIMER 3 100
 
 // Active le réarmement du TIMER 1
 PROG 31 AUT B3 AUTON BOARD 31 GPIO 1 1 ACT AUTON B1
@@ -101,7 +110,7 @@ PROG 31 AUT B3 AUTON BOARD 31 GPIO 1 1 ACT AUTON B1
 // Allume la LED Bleu du bouton
 PROG 31 AUT B4 AUTOFF BOARD 31 GPIO 1 1 ACT LPO 2 1
 
-// Active armement TIMER 1 pour attente en gare pendant 30 unités
+// Active armement TIMER 1 pour attente en gare pendant 10 unités
 PROG 31 AUT B5 AUTON BOARD 31 GPIO 1 1 ACT AUTON D4
 
 // Remise à zéro du GPIO 1
@@ -112,16 +121,135 @@ PROG 31 AUT B6 AUTON BOARD 31 GPIO 1 0 ACT GPIO 1 0
 //////////////////////////////////////////////////////////////////////////
 
 // Désactive le réarmement du TIMER 1
-PROG 31 AUT TB AUTON BOARD 31 TIMER 3 ACT AUTOFF D4
+PROG 31 AUT C0 AUTON BOARD 31 TIMER 3 ACT AUTOFF D4
 
 // Eteint la LED bleue
-PROG 31 AUT TC AUTON BOARD 31 TIMER 3 ACT LPO 2 0
+PROG 31 AUT C1 AUTON BOARD 31 TIMER 3 ACT LPO 2 0
 
 
 //================================================//
 // GESTION DES AUTOMATISMES DE LA CARTE 0         //
 //================================================//
 
+//////////////////////////////////////////////////////////////////////////
+// MODE MANUEL 
+//////////////////////////////////////////////////////////////////////////
 
+// Détection commutation en mode manuel et activation du mode Manuel
+PROG 0 AUT M0 AUTON BOARD 0 GPIO 3 0 ACT MANUAL
 
+// Détection commutation en mode manuel et éteint la LED blanche
+PROG 0 AUT M1 AUTON BOARD 0 GPIO 3 0 ACT LPO 2 0
 
+// Détection commutation en mode manuel et positionne vitesse sur indicateur manuel
+PROG 0 AUT M2 AUTON BOARD 0 GPIO 3 0 ACT TRACK 4 SPEED KNOB0 FORW INERTIA KNOB1
+
+// Détection commutation en mode manuel et passe le feu au vert 
+PROG 0 AUT M3 AUTON BOARD 0 GPIO 3 0 ACT LPO 1 0
+PROG 0 AUT M4 AUTON BOARD 0 GPIO 3 0 ACT LPO 0 1
+
+// Allume led mode manuel
+PROG 0 AUT M5 AUTON BOARD 0 GPIO 3 0 ACT LPO 3 1
+
+//////////////////////////////////////////////////////////////////////////
+// MODE AUTOMATIQUE 
+//////////////////////////////////////////////////////////////////////////
+
+// Détection commutation en mode automatique et activation du mode automatique
+PROG 0 AUT A1 AUTON BOARD 0 GPIO 3 1 ACT AUTOMATIC
+
+// Détection commutation en mode automatique et réinitialise le cycle automatique
+PROG 0 AUT A2 AUTON BOARD 0 GPIO 3 1 ACT TIMER 3 1
+
+// Remise à zéro du GPIO 3
+PROG 0 AUT A3 AUTON BOARD 0 GPIO 3 0 ACT GPIO 3 0
+
+// Désactive armement du timer 1 pour attente en gare pendant 10 unités
+PROG 0 AUT A4 AUTON BOARD 0 GPIO 3 0 ACT AUTOFF D4
+
+// Eteint led mode manuel
+PROG 0 AUT A5 AUTON BOARD 0 GPIO 3 1 ACT LPO 3 0
+
+//////////////////////////////////////////////////////////////////////////
+// DETECTION DU TRAIN SUR LA VOIE A MODE AUTOMATIQUE
+/////////////////////////////////////////////////////////////////////////
+
+// Passage du feu au rouge sur détection de train voie F
+PROG 0 AUT D1 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT LPO 1 1
+PROG 0 AUT D2 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT LPO 0 0
+
+// Arret en gare, les voies E,F,G et H sont progressivement arrêtées
+PROG 0 AUT D3 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT TRACK 4 SPEED 0 FORW INERTIA KNOB1
+
+// Arme TIMER 1 pour attente en gare pendant 10 unités
+PROG 0 AUT D4 AUTON BOARD 0 TRACK 1 STA ONTRACK ACT TIMER 1 10 
+
+//////////////////////////////////////////////////////////////////////////
+// TIMER 1 se déclenche MODE AUTOMATIQUE
+//////////////////////////////////////////////////////////////////////////
+
+// Démarre le train voie E,F,G et H
+PROG 0 AUT T1 AUTOFF BOARD 0 TIMER 1 ACT TRACK 4 SPEED KNOB0 FORW INERTIA KNOB1
+
+// Passage du feu au vert
+PROG 0 AUT T2 AUTON BOARD 0 TIMER 1 ACT LPO 1 0
+PROG 0 AUT T3 AUTON BOARD 0 TIMER 1 ACT LPO 0 1
+
+// Arme TIMER 2 pour faire tourner le train pendant 20 unités
+PROG 0 AUT T4 AUTON BOARD 0 TIMER 1 ACT TIMER 2 20
+
+// Désactive l'arret en gare sur détection de train voie A
+PROG 0 AUT T5 AUTON BOARD 0 TIMER 1 ACT AUTOFF D3
+
+//Désactive Le passage du feu au rouge sur détection de train voie A
+PROG 0 AUT T6 AUTON BOARD 0 TIMER 1 ACT AUTOFF D1
+PROG 0 AUT T7 AUTON BOARD 0 TIMER 1 ACT AUTOFF D2
+
+// Désactive armement timer 1
+PROG 0 AUT T8 AUTON BOARD 0 TIMER 1 ACT AUTOFF D4
+
+//////////////////////////////////////////////////////////////////////////
+// TIMER 2 se déclenche MODE AUTOMATIQUE
+//////////////////////////////////////////////////////////////////////////
+
+// Active l'arret en gare sur détection de train voie A
+PROG 0 AUT T9 AUTOFF BOARD 0 TIMER 2 ACT AUTON D3
+
+// Active le passage du feu au rouge sur détection de train voie A
+PROG 0 AUT TA AUTOFF BOARD 0 TIMER 2 ACT AUTON D1 
+PROG 0 AUT TB AUTOFF BOARD 0 TIMER 2 ACT AUTON D2
+
+// Active armement timer 1
+PROG 0 AUT TC AUTON BOARD 0 TIMER 2 ACT AUTON D4
+
+//////////////////////////////////////////////////////////////////////////
+// Arme TIMER 1 et 3 sur appui bouton bmanc carte 0 MODE AUTOMATIQUE
+//////////////////////////////////////////////////////////////////////////
+
+// Arme TIMER 1 pour lancer le cycle de démarrage sur les voies E,F,G et H
+PROG 0 AUT B1 AUTON BOARD 0 GPIO 1 1 ACT TIMER 1 1
+
+// Arme TIMER 3
+PROG 0 AUT B2 AUTON BOARD 0 GPIO 1 1 ACT TIMER 3 100
+
+// Active le réarmement du TIMER 1
+PROG 0 AUT B3 AUTON BOARD 0 GPIO 1 1 ACT AUTON B1
+
+// Allume la LED Bleu du bouton
+PROG 0 AUT B4 AUTOFF BOARD 0 GPIO 1 1 ACT LPO 2 1
+
+// Active armement TIMER 1 pour attente en gare pendant 10 unités
+PROG 0 AUT B5 AUTON BOARD 0 GPIO 1 1 ACT AUTON D4
+
+// Remise à zéro du GPIO 1
+PROG 0 AUT B6 AUTON BOARD 0 GPIO 1 0 ACT GPIO 1 0
+
+//////////////////////////////////////////////////////////////////////////
+// TIMER 3 se déclenche MODE AUTOMATIQUE
+//////////////////////////////////////////////////////////////////////////
+
+// Désactive le réarmement du TIMER 1
+PROG 0 AUT C0 AUTON BOARD 0 TIMER 3 ACT AUTOFF D4
+
+// Eteint la LED blanche
+PROG 0 AUT C1 AUTON BOARD 0 TIMER 3 ACT LPO 2 0
