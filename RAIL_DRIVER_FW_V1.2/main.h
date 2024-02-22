@@ -36,7 +36,7 @@
 #define FALSE							0
                          
 #define RAIL_DRIVER_HEADER				"RAIL DRIVER..V 1.2"
-#define VERSION							"VERSION......30-01-2024"
+#define VERSION							"VERSION......21-02-2024"
 #define BOARD_NUMBER					"BOARD........"
 #define MEMORY							"MEMORY......."
 #define AUTOMATION						"AUTOMATION..."
@@ -701,7 +701,7 @@ unsigned char   getIdent(unsigned char* inputString, unsigned char* stringPointe
 unsigned char 	parser(unsigned char* inputString, unsigned char* request);
 unsigned char 	memAvailable();
 void			boardStatus();
-void 			uncompressData(unsigned char* data);
+unsigned char 	uncompressData(unsigned char* data);
 unsigned char 	compressData(unsigned char* data);
 void 			initRequest(unsigned char* request);
 unsigned char 	saveAutomation(unsigned char automationNumber,unsigned char* data);

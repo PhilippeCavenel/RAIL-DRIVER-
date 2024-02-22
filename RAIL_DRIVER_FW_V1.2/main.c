@@ -428,7 +428,7 @@ unsigned char compressAutomation() {
 	adr=(unsigned short)NEXTTAUTOMATION_ADDRESS;
 	value=gl_nexAvailableAutomation;
 	ReadEEPROM(adr,&checkValue);
-	if (checkValue!=value)WriteEEPROM(adr++,value);
+	if (checkValue!=value)WriteEEPROM(adr,value);
 	return(TRUE);	
 }
 
@@ -1387,7 +1387,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 /////////////////////////////////////////////////////////////////////////////
 // uncompressData 
 /////////////////////////////////////////////////////////////////////////////
-void uncompressData(unsigned char* data) {
+unsigned char uncompressData(unsigned char* data) {
 	unsigned char dataCounter;
 	unsigned char tmpDataCounter;
 	unsigned char repeat;
@@ -1400,11 +1400,15 @@ void uncompressData(unsigned char* data) {
 	for(dataCounter=0;dataCounter<MAXTRAMESIZE-2;dataCounter+=2) {
 		if(data[dataCounter]==0) break;
 		for(repeat=0;repeat<data[dataCounter];repeat++) {
+			if (tmpDataCounter>=REQUESTSIZE) {
+				initRequest(data);
+				return(FALSE);
+			}
 			gl_tmpBuffer[tmpDataCounter++]=data[dataCounter+1];
-			if (tmpDataCounter>REQUESTSIZE) break;
 		}
 	}
 	for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++) data[dataCounter]=gl_tmpBuffer[dataCounter];
+	return(TRUE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1428,7 +1432,7 @@ unsigned char compressData(unsigned char* data) {
 			dataCounter++;
 			if (dataCounter>=REQUESTSIZE) break;
 		}
-		if (tmpDataCounter<MAXTRAMESIZE-1) {
+		if (tmpDataCounter<MAXTRAMESIZE-1 && tmpDataCounter<REQUESTSIZE-2) {
 			gl_tmpBuffer[tmpDataCounter++]=quantityValue;
 			gl_tmpBuffer[tmpDataCounter++]=curValue;
 		}
@@ -1727,8 +1731,6 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							}
 
 							gl_mutex=0;
-							ReadEEPROM(adr,&checkValue);
-							if (checkValue!=request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR])WriteEEPROM(request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR],gl_boardMode);
 							if (sendPrompt==TRUE) prompt(gl_message);
 							return(TRUE);
 						}
@@ -2070,6 +2072,11 @@ void initUSART() {
  	unsigned char 	readUSARTPointer;
 	if (gl_master==FALSE)return;
 
+	// init RS232 input buffer
+	for(readUSARTPointer=0;readUSARTPointer<USARTBUFFERSIZE;readUSARTPointer++) {
+		gl_receivedUSARTData[readUSARTPointer]=0;
+	}
+
     //RX and TX pin configuration
 	TRISC=0b10110000; //  RC4, RC5, RC7 (RX) in (RC6 TX RS232 out, could be updated as standard GPIO in initSignal())
 
@@ -2083,10 +2090,6 @@ void initUSART() {
     // Speed register configuration
     SPBRG = ((_XTAL_FREQ / 16) / _BAUD) - 1; // _BAUD defined in main.h
 
-	// init RS232 input buffer, event if it's not mandatory at all
-	for(readUSARTPointer=0;readUSARTPointer<USARTBUFFERSIZE;readUSARTPointer++) {
-		gl_receivedUSARTData[readUSARTPointer]=0;
-	}
 	gl_receivedUSARTPointer=0;
 	gl_getDataUSARTPointer=0;
 
@@ -2346,12 +2349,12 @@ unsigned char getInputRequestFromCAN(unsigned char* request) {
 				while(dataInCounter!=requestTrameEnd) {
 					request[dataStructureCounter++]=gl_inputBuffer[dataInCounter++];
 					if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
+					if (dataStructureCounter>=REQUESTSIZE)return(FALSE);
 				}
 				gl_canMode=CAN_UNKNOWN; // If more data arrive.... we delete this trame
 				gl_getDataCANPointer++;		
 				if (gl_getDataCANPointer>=MAXTRAMESIZE)gl_getDataCANPointer=0;
-				uncompressData(request);
-				return(TRUE); // Mean request available to proceed
+				return(uncompressData(request)); // Mean request available to proceed
 			}
 				
 			// PRINT FOOTER	
@@ -2666,8 +2669,8 @@ void low_isr(void){
 
 			if(gl_numberKnobData>=20) {
 				gl_numberKnobData=0;
-				gl_adcKnobValue0=gl_adcKnobValue0/20;
-				gl_adcKnobValue1=gl_adcKnobValue1/20;
+				gl_adcKnobValue0=gl_adcKnobValue0/10;
+				gl_adcKnobValue1=gl_adcKnobValue1/10;
 
 				if (gl_calibKnob==1) {
 					if (gl_minAdcKnobValue0>gl_adcKnobValue0)gl_minAdcKnobValue0=gl_adcKnobValue0;
@@ -3004,6 +3007,7 @@ void initSignal() {
 
 	// Update form EEPROM
 	gl_mutex=0;
+
 	ReadEEPROMConfig();
 
 	if(TRISDbits.RD1==0)gl_GPIOchar[0]=1; else gl_GPIOchar[0]=0xFF; // out default value is 1 
@@ -3042,12 +3046,14 @@ void PIC18FMainSettings (){
 /*****************************************************************************/
 void init() {
  
-
-    // Signal
-     initSignal();
+    // Main settings + Start timer
+    PIC18FMainSettings(); 
 
     // RS232
 	initUSART(); // Serial USART init on master board only
+
+	// Use user putc function
+	stdout = _H_USER;
     
     // ECAN
     TRISBbits.TRISB3 = 1; // CANRX input setting
@@ -3059,11 +3065,8 @@ void init() {
 	PIE3bits.RXB0IE=1; // enable interrupt for CAN
 	PIE3bits.RXB1IE=1; // enable interrupt for CAN
 
-    // Main settings + Start timer
-    PIC18FMainSettings(); 
-
-	// Use user putc function
-	stdout = _H_USER;
+    // Signal
+     initSignal();
 
 	// Default user mode is automatic 
 	gl_userMode=AUTOMATICValue;
@@ -3197,9 +3200,8 @@ void main()
 
 	// BOARD STATUS
 	boardStatus();
+
 	// START MAIN LOOP
-
-
     while (1){
   	 	TM1637_setBrightness(4);
 		while(1) {	
