@@ -1,11 +1,11 @@
 /*********************************************************************
 *
-* DRIVER RAIL V 1.2
+* DRIVER RAIL V 1.3
 *
 * MAIN.H
 *
 *********************************************************************
-* Processor: PIC18F4585
+* Processor: PIC18F4680
 * Frequency: 32 Mhz
 * Compiler: C18
 * TYPE                SIZE     RANGE
@@ -35,8 +35,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-#define RAIL_DRIVER_HEADER				"RAIL DRIVER..V 1.2"
-#define VERSION							"VERSION......03-03-2024"
+#define RAIL_DRIVER_HEADER				"RAIL DRIVER..V 1.3"
+#define VERSION							"VERSION......07-04-2024"
 #define BOARD_NUMBER					"BOARD........"
 #define MEMORY							"MEMORY......."
 #define AUTOMATION						"AUTOMATION..."
@@ -63,7 +63,7 @@
 #define MAXTIMER						15
 #define MAXTIMERDELAY					255
 #define MAXSPEEDVALUE					15
-#define MAXAUTOMATION					36
+#define MAXAUTOMATION					100
 
 // ACCELARATION RATE
 #define MAX_STEP						50
@@ -134,8 +134,8 @@
 #pragma config FCMEN 	= 				OFF
 #pragma config IESO 	= 				OFF
 #pragma config PWRT 	= 				OFF
-#pragma config BOREN 	= 				BOHW
-#pragma config BORV 	= 				2
+#pragma config BOREN 	= 				OFF // BOHW
+#pragma config BORV 	= 				3
 #pragma config WDT 		= 				OFF
 #pragma config PBADEN 	= 				OFF
 #pragma config MCLRE 	= 				OFF
@@ -440,6 +440,7 @@
 #define REQ_PROGRAM_REQUEST_DCC_SETTING 			(71+MAXSIZEIDENT*2)
 #define REQ_PROGRAM_REQUEST_ACTION_DCC_ADDRESS_SETTING 	(72+MAXSIZEIDENT*2)
 #define REQ_PROGRAM_REQUEST_ACTION_DCC_COMMAND_SETTING 	(73+MAXSIZEIDENT*2)
+
 #define REQ_PROGRAM_REQUEST_STATUS					(74+MAXSIZEIDENT*2)
 #define REQ_PROGRAM_REQUEST_STATUS_MANUAL			(75+MAXSIZEIDENT*2)	
 #define REQ_PROGRAM_REQUEST_IDENT					(76+MAXSIZEIDENT*2)
@@ -467,56 +468,32 @@
 // STRUCTURE AUTOMATION
 // ////////////////////
 
-// DONT CHANGE THE FOLLOWING VALUES OR ORDERS
-/////////////////////////////////////////////
+#define GPIO_EVENT									0
+#define TIMER_EVENT									1
+#define TRACK_EVENT									2
 
-#define AUTOMATION_EVENT_GPIO_EVENT					0
-#define AUTOMATION_EVENT_EVENT_BOARD_GPIO_NUMBER	1
-#define AUTOMATION_EVENT_EVENT_GPIO_NUMBER			2
-#define AUTOMATION_EVENT_EVENT_GPIO_LEVEL			3
+#define SET_GPIO									0
+#define	SET_TIMER									1
+#define SET_LPO										2
+#define SET_AUT										3
+#define SET_TRACK									4
+#define SET_USER_MODE								5
+#define SET_DCC										6
 
-#define AUTOMATION_EVENT_TIMER_EVENT				4	
-#define AUTOMATION_EVENT_EVENT_BOARD_TIMER_NUMBER	5
-#define AUTOMATION_EVENT_EVENT_TIMER_NUMBER			6			
+#define NEW_AUTOMATION_EVENT_TYPE					0
+#define NEW_AUTOMATION_EVENT_BOARD_NUMBER			1
+#define NEW_AUTOMATION_EVENT_NUMBER					2
+#define NEW_AUTOMATION_EVENT_VALUE					3
+#define NEW_AUTOMATION_SET_COMMAND					4
+#define NEW_AUTOMATION_SET_PARAM_1					5
+#define NEW_AUTOMATION_SET_PARAM_2					6
+#define NEW_AUTOMATION_SET_PARAM_3					7
+#define NEW_AUTOMATION_SET_PARAM_4					8
+#define NEW_AUTOMATION_STATUS						9
+#define NEW_AUTOMATION_STATUS_MANUAL				10
+#define NEW_AUTOMATION_IDENT						11
+#define NEW_AUTOMATIONSIZE							(NEW_AUTOMATION_IDENT+MAXSIZEIDENT+1)
 
-#define AUTOMATION_EVENT_TRACK_EVENT				7
-#define AUTOMATION_EVENT_EVENT_BOARD_TRACK_NUMBER	8
-#define AUTOMATION_EVENT_EVENT_TRACK_NUMBER			9
-#define AUTOMATION_EVENT_EVENT_VEHICLE_STATUS		10
-
-#define AUTOMATION_COMMAND_SET_GPIO					11
-#define AUTOMATION_COMMAND_GPIO_NUMBER				12
-#define AUTOMATION_COMMAND_GPIO_LEVEL				13
-
-#define AUTOMATION_COMMAND_SET_TIMER				14	
-#define AUTOMATION_COMMAND_TIMER_NUMBER				15
-#define AUTOMATION_COMMAND_TIMER_DELAY				16
-
-#define AUTOMATION_COMMAND_SET_LPO					17
-#define AUTOMATION_COMMAND_LPO_NUMBER				18
-#define AUTOMATION_COMMAND_LPO_LEVEL				19
-
-#define AUTOMATION_COMMAND_SET_AUT					20
-#define AUTOMATION_COMMAND_AUT_IDENT				21
-#define AUTOMATION_COMMAND_AUT_STATUS				(22+MAXSIZEIDENT)
-
-#define AUTOMATION_COMMAND_SET_TRACK				(23+MAXSIZEIDENT)
-#define AUTOMATION_COMMAND_TRACK_NUMBER				(24+MAXSIZEIDENT)
-#define AUTOMATION_COMMAND_TRACK_SPEED				(25+MAXSIZEIDENT)
-#define AUTOMATION_COMMAND_TRACK_DIR				(26+MAXSIZEIDENT)
-#define AUTOMATION_COMMAND_TRACK_INERTIA			(27+MAXSIZEIDENT)
-
-#define AUTOMATION_COMMAND_SET_USER_MODE			(28+MAXSIZEIDENT)
-#define AUTOMATION_COMMAND_USER_MODE				(29+MAXSIZEIDENT)
-
-#define AUTOMATION_COMMAND_SET_DCC					(30+MAXSIZEIDENT)
-#define AUTOMATION_COMMAND_DCC_ADDRESS				(31+MAXSIZEIDENT)
-#define AUTOMATION_COMMAND_DCC_COMMAND				(32+MAXSIZEIDENT)
-#define AUTOMATION_STATUS							(33+MAXSIZEIDENT)
-#define AUTOMATION_STATUS_MANUAL					(34+MAXSIZEIDENT)
-#define AUTOMATION_IDENT							(35+MAXSIZEIDENT)
-
-#define AUTOMATIONSIZE							   (AUTOMATION_IDENT+MAXSIZEIDENT+1)
 
 
 ///////////////////////////////////////////////
@@ -613,7 +590,7 @@ unsigned char 				gl_outputBuffer[MAXTRAMESIZE];
 unsigned char 				gl_inputBuffer[MAXTRAMESIZE];
 unsigned char 				gl_tmpBuffer[REQUESTSIZE];
 
-unsigned char		 		gl_automation[MAXAUTOMATION][AUTOMATIONSIZE];
+unsigned char		 		gl_automation[MAXAUTOMATION][NEW_AUTOMATIONSIZE];
 unsigned char 				gl_inputUartString[MAXINPUTSTRING];
 char 						gl_message[MAXOUTPUTSTRING];
 #pragma udata
@@ -689,8 +666,7 @@ void 			ReadEEPROMConfig(void);
 unsigned char 	WriteCompletedEEPROM(void);
 unsigned char 	WriteRdyEEPROM(void);
 unsigned char 	WriteEEPROM(unsigned short adr, unsigned char data);
-unsigned char	 uncompressAutomation();
-unsigned char 	compressAutomation();
+unsigned char	getAutomationFromEEPROM();
 
 // PARSER AND REQUEST MANAGEMENT
 unsigned char 	isAdigit(unsigned char car);
@@ -707,6 +683,7 @@ void			boardStatus();
 unsigned char 	uncompressData(unsigned char* data);
 unsigned char 	compressData(unsigned char* data);
 void 			initRequest(unsigned char* request);
+unsigned char 	removeAutomation(unsigned char automationNumber);
 unsigned char 	saveAutomation(unsigned char automationNumber,unsigned char* data);
 void 			assignAutomation(char *request,unsigned char automationCounter);
 void 			setSpeed(char speed,char step,unsigned char trackNumber);

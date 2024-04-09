@@ -1,0 +1,143 @@
+//================================================//
+// GESTION DES AUTOMATISMES DE LA CARTE 2         //
+//================================================//
+
+// Connect Rail 0	Voie M
+// Connect Rail 1	Voie non connectée
+// Connect Rail 2	Voie non connectée
+// Connect Rail 3	Voie non connectée
+
+// LPO 0		Ouverture barrière passage à niveau 
+// LPO 1		Fermeture barrière passage à niveau
+// LPO 2		Led bouton orange
+// LPO 3		Led mode manuel
+// LPO 4		Led tramway devant grue
+// LPO 5		Led tramway devant gare terminale 
+
+// GPIO input 0		non connecté
+// GPIO input 1		Bouton orange
+// GPIO input 2		Détecton passage tramway devant capteur magnétique
+// GPIO input 3		Contact mode manuel
+
+// Track Status	0	Afficheur 7 segments DIO
+// Track Status	1	Afficheur 7 segments CLK
+// Track Status	2	Potentiomètre inertie	
+// Track Status	3	Potentiomètre vitesse
+
+//////////////////////////////////////////////////////////////////////////
+// MODE MANUEL 
+//////////////////////////////////////////////////////////////////////////
+
+// Détection commutation en mode manuel et activation du mode Manuel uniquement sur track 0
+PROG 2 AUT M0 AUTON BOARD 2 GPIO 3 0 ACT MANUAL0
+
+// Détection commutation en mode manuel et éteint la LED orange
+PROG 2 AUT M1 AUTON BOARD 2 GPIO 3 0 ACT LPO 2 0
+
+// Allume led mode manuel
+PROG 2 AUT M3 AUTON BOARD 2 GPIO 3 0 ACT LPO 3 1
+
+// Remise à zéro du GPIO 3
+PROG 2 AUT M4 AUTON BOARD 2 GPIO 3 0 ACT GPIO 3 0
+
+// Eteint affichage des LEDs du TCO
+PROG 2 AUT M5 AUTON BOARD 2 GPIO 3 0 ACT LPO 4 0
+PROG 2 AUT M6 AUTON BOARD 2 GPIO 3 0 ACT LPO 5 0
+
+// Réinitialise le compteur de GPIO
+PROG 2 AUT M7 AUTON BOARD 2 GPIO 3 0 ACT GPIO 2 0
+
+
+//////////////////////////////////////////////////////////////////////////
+// MODE AUTOMATIQUE 
+//////////////////////////////////////////////////////////////////////////
+
+// Détection commutation en mode automatique et activation du mode automatique
+PROG 2 AUT A1 AUTON BOARD 2 GPIO 3 1 ACT AUTOMATIC
+
+// Détection commutation en mode automatique et Eteint led mode manuel
+PROG 2 AUT A2 AUTON BOARD 2 GPIO 3 1 ACT LPO 3 0
+
+// Détection commutation en mode automatique et stop le tramway
+PROG 2 AUT A3 AUTON BOARD 2 GPIO 3 1 ACT TRACK 0 SPEED 0 FORW INERTIA 0
+
+// Allume la LED orange du bouton sur appui bouton
+PROG 2 AUT A4 AUTOFF BOARD 2 GPIO 1 1 ACT LPO 2 1
+
+// Démarre le tramway pour le ramener sur la droite, le tramway doit être devant la gare de train
+PROG 2 AUT A5 AUTOFF BOARD 2 GPIO 1 1 ACT TRACK 0 SPEED 5 BACK INERTIA 27
+
+// Réinitialise GPIO 2 pour comptage position tramway
+PROG 2 AUT A6 AUTOFF BOARD 2 GPIO 1 1 ACT GPIO 2 0
+
+// Réinitialise GPIO 1 sur relachement bouton
+PROG 2 AUT A7 AUTOFF BOARD 2 GPIO 1 0 ACT GPIO 1 0
+
+//////////////////////////////////////////////////////////////////////////
+// AFFICHAGE POSITION TRAMWAY SUR ARRET POUR TCO
+//////////////////////////////////////////////////////////////////////////
+
+// Allume led TCO droite M0
+PROG 2 AUT P1 AUTOFF BOARD 2 GPIO 2 2 ACT LPO 5 1
+
+// Stop le tramway 
+PROG 2 AUT P2 AUTOFF BOARD 2 GPIO 2 2 ACT TRACK 0 SPEED 0 BACK INERTIA 27
+
+// Arme timer 1 d'attente en gare
+PROG 2 AUT P3 AUTOFF BOARD 2 GPIO 2 2 ACT TIMER 1 5
+
+// Redémarre le tramway sur déclenchement timer 1
+PROG 2 AUT P4 AUTOFF BOARD 2 TIMER 1 ACT TRACK 0 SPEED 5 FORW INERTIA 27
+
+// Eteint led TCO droite M0
+PROG 2 AUT P5 AUTOFF BOARD 2 GPIO 2 4 ACT LPO 5 0
+
+// Gare intermédiaire
+PROG 2 AUT P6 AUTOFF BOARD 2 GPIO 2 6 ACT TRACK 0 SPEED 0 FORW INERTIA 27
+
+// Arme timer 1 d'attente en gare intermédiaire
+PROG 2 AUT P7 AUTOFF BOARD 2 GPIO 2 6 ACT TIMER 1 5
+
+// ferme les barrieres
+PROG 2 AUT B1 AUTOFF BOARD 2 GPIO 2 8 ACT LPO 0 0 
+PROG 2 AUT B2 AUTOFF BOARD 2 GPIO 2 8 ACT LPO 1 1 
+
+PROG 2 AUT B3 AUTOFF BOARD 2 TIMER 2 ACT LPO 0 0 
+PROG 2 AUT B4 AUTOFF BOARD 2 TIMER 2 ACT LPO 1 1 
+
+// ouvre les barrieres
+PROG 2 AUT B5 AUTOFF BOARD 2 GPIO 2 12 ACT LPO 0 1
+PROG 2 AUT B6 AUTOFF BOARD 2 GPIO 2 12 ACT LPO 1 0
+
+PROG 2 AUT B7 AUTOFF BOARD 2 GPIO 2 20 ACT LPO 0 1
+PROG 2 AUT B8 AUTOFF BOARD 2 GPIO 2 20 ACT LPO 1 0
+
+PROG 2 AUT B9 AUTOFF BOARD 2 GPIO 2 2 ACT LPO 0 1
+PROG 2 AUT BA AUTOFF BOARD 2 GPIO 2 2 ACT LPO 1 0
+
+// Stop le tramway 
+PROG 2 AUT P8 AUTOFF BOARD 2 GPIO 2 14 ACT TRACK 0 SPEED 0 FORW INERTIA 27
+
+// Allume led TCO gauche M0
+PROG 2 AUT P9 AUTOFF BOARD 2 GPIO 2 14 ACT LPO 4 1
+
+// Arme timer 2 d'attente en gare
+PROG 2 AUT PA AUTOFF BOARD 2 GPIO 2 14 ACT TIMER 2 5
+
+// Redémarre le tramway sur déclenchement timer 2
+PROG 2 AUT PB AUTOFF BOARD 2 TIMER 2 ACT TRACK 0 SPEED 5 BACK INERTIA 27
+
+// Eteint led TCO gauche M0
+PROG 2 AUT PC AUTOFF BOARD 2 GPIO 2 16 ACT LPO 4 0
+
+// Gare intermédiaire retour
+PROG 2 AUT PD AUTOFF BOARD 2 GPIO 2 22 ACT TRACK 0 SPEED 0 FORW INERTIA 27
+
+// Arme timer 3 d'attente en gare intermédiaire
+PROG 2 AUT PE AUTOFF BOARD 2 GPIO 2 22 ACT TIMER 3 5
+
+// Redémarre le tramway sur déclenchement timer 3
+PROG 2 AUT PF AUTOFF BOARD 2 TIMER 3 ACT TRACK 0 SPEED 5 BACK INERTIA 27
+
+// Réinitialise GPIO 2 pour nouveau cycle aller-retour
+PROG 2 AUT PG AUTOFF BOARD 2 GPIO 2 24 ACT GPIO 2 0

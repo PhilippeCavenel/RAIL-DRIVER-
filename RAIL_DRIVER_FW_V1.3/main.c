@@ -1,11 +1,11 @@
 /*********************************************************************
 *
-* DRIVER RAIL V 1.2
+* DRIVER RAIL V 1.3
 *
 * MAIN.C
 *
 *********************************************************************
-* Processor: PIC18F4585
+* Processor: PIC18F4680
 * Frequency: 32 Mhz
 * Compiler: C18
 *********************************************************************/
@@ -188,7 +188,7 @@ void ReadEEPROMConfig(void) {
 	gl_deltaKnob1=gl_maxAdcKnobValue1-gl_minAdcKnobValue1;
 
 	// Read in EEPROM last automation
-	uncompressAutomation();
+	getAutomationFromEEPROM();
 }
 
 /**********************************************************
@@ -231,6 +231,8 @@ unsigned char WriteRdyEEPROM(void){
 	Return Value: ERROR, SUCCESS
 **********************************************************/
 unsigned char WriteEEPROM(unsigned short adr, unsigned char data){
+
+	unsigned char checkValue;
 	if(adr > 0x3FF){
 		return(ERROR);
 	}
@@ -238,6 +240,10 @@ unsigned char WriteEEPROM(unsigned short adr, unsigned char data){
 
 		// Wait eeprom ready to be written
 		while (WriteRdyEEPROM()==(unsigned char) ERROR);
+
+		// Check if this value already exists at that address
+		ReadEEPROM(adr,&checkValue);
+		if (checkValue==data)return(SUCCESS);
 
 		EEADR = adr&0xFF;			// Address of the data in EEPROM
 		EEADRH = (adr>>8) & 0x3;	// Address of the data in EEPROM
@@ -265,7 +271,7 @@ unsigned char WriteEEPROM(unsigned short adr, unsigned char data){
 /////////////////////////////////////////////////////////////////////////////
 unsigned char memAvailable() {
 
-	return(uncompressAutomation());
+	return(getAutomationFromEEPROM());
 }
 /////////////////////////////////////////////////////////////////////////////
 // boardStatus()
@@ -302,11 +308,10 @@ void boardStatus() {
 }	
 
 /////////////////////////////////////////////////////////////////////////////
-// uncompressAutomation
+// getAutomationFromEEPROM
 /////////////////////////////////////////////////////////////////////////////
-unsigned char uncompressAutomation() {
+unsigned char getAutomationFromEEPROM() {
 
-	unsigned short quantityValue;
     unsigned char  automationCounter;
     unsigned char  automationDataCounter;
 	unsigned char  value;
@@ -321,23 +326,10 @@ unsigned char uncompressAutomation() {
 
 	// Read and uncompress automation from EEPROM
 	adr=(unsigned short)AUTOMATION_ADDRESS;
-	ReadEEPROM(adr++,&value);
-	quantityValue=value;
-	ReadEEPROM(adr++,&value);
-
 	for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {	
-		for(automationDataCounter=0;automationDataCounter<AUTOMATIONSIZE;automationDataCounter++) {
+		for(automationDataCounter=0;automationDataCounter<NEW_AUTOMATIONSIZE;automationDataCounter++) {
+			ReadEEPROM(adr++,&value);
 			gl_automation[automationCounter][automationDataCounter]=value;
-			if (quantityValue>0)quantityValue--;
-			if (quantityValue==0) {
-				ReadEEPROM(adr++,&value);
-				quantityValue=value;
-				ReadEEPROM(adr++,&value);
-			}
-			if (quantityValue==0 || adr>=1024) {
-				percentage=100*(1024-(long)adr)/(1024-(long)AUTOMATION_ADDRESS);
-				return((unsigned char)percentage);
-			}
 		}
 	}
 	percentage=100*(1024-(long)adr)/(1024-(long)AUTOMATION_ADDRESS);
@@ -345,92 +337,32 @@ unsigned char uncompressAutomation() {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// compressAutomation
+// setAutomationToEEPROM
 /////////////////////////////////////////////////////////////////////////////
-unsigned char compressAutomation() {
+unsigned char setAutomationToEEPROM() {
 
     unsigned char  automationCounter;
     unsigned char  automationDataCounter;
-	unsigned short dataCounter;
-	unsigned short dataEeprom;
-	unsigned short quantityValue;
-	unsigned char  curValue;
 	unsigned short adr;
 	unsigned char  value;
-	unsigned char  checkValue;
 
-
-	// Codage is simply a list of (X,Y) where X is the number of Y. 
-	dataCounter=0;
-	curValue=gl_automation[0][0];
-	quantityValue=0;
-
-	// Check size
-	for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {	
-		for(automationDataCounter=0;automationDataCounter<AUTOMATIONSIZE;automationDataCounter++) {
-			if (gl_automation[automationCounter][automationDataCounter]==curValue) {
-				quantityValue++;
-				if (quantityValue>=256) {
-					gl_parserErrorCode=AUTOMATIONSIZELIMIT;
-					return(FALSE);
-				}
-			}
-			else {
-				if (dataCounter<=(unsigned short)(1021-AUTOMATION_ADDRESS)) {
-					dataCounter+=2;
-				}
-				else {
-					gl_parserErrorCode=AUTOMATIONSIZELIMIT;
-					return(FALSE);
-				}
-				quantityValue=1;
-				curValue=gl_automation[automationCounter][automationDataCounter];
-			}
-		}
-	}
-
-	// Write to eeprom
-	curValue=gl_automation[0][0];
-	quantityValue=0;
 	adr=(unsigned short)AUTOMATION_ADDRESS;
 
-	for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {	
-		for(automationDataCounter=0;automationDataCounter<AUTOMATIONSIZE;automationDataCounter++) {
-			if (gl_automation[automationCounter][automationDataCounter]==curValue) {
-				quantityValue++;
-			}
-			else {
-				value=quantityValue;
-				ReadEEPROM(adr,&checkValue);
-				if (checkValue!=value)WriteEEPROM(adr++,value);else adr++;
-				value=curValue;
-				ReadEEPROM(adr,&checkValue);
-				if (checkValue!=value)WriteEEPROM(adr++,value);else adr++;
-				quantityValue=1;
-				curValue=gl_automation[automationCounter][automationDataCounter];
-			}
+	for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
+		if (adr+NEW_AUTOMATIONSIZE>=1024) {
+			gl_parserErrorCode=AUTOMATIONSIZELIMIT;
+			return(FALSE);
+		}	
+		for(automationDataCounter=0;automationDataCounter<NEW_AUTOMATIONSIZE;automationDataCounter++) {
+			value=gl_automation[automationCounter][automationDataCounter];
+			WriteEEPROM(adr++,value);
 		}
-	}
-	// Write end of automation list (no more data)
-	if (adr<=1021) {
-
-		value=quantityValue;
-		ReadEEPROM(adr,&checkValue);
-		if (checkValue!=value)WriteEEPROM(adr++,value);else adr++;
-		value=curValue;
-		ReadEEPROM(adr,&checkValue);
-		if (checkValue!=value)WriteEEPROM(adr++,value);else adr++;
-
-		value=0;
-		ReadEEPROM(adr,&checkValue);
-		if (checkValue!=value)WriteEEPROM(adr++,value);else adr++;
 	}
 
 	// update in EEPROM next automation value
 	adr=(unsigned short)NEXTTAUTOMATION_ADDRESS;
 	value=gl_nexAvailableAutomation;
-	ReadEEPROM(adr,&checkValue);
-	if (checkValue!=value)WriteEEPROM(adr,value);
+	WriteEEPROM(adr,value);
 	return(TRUE);	
 }
 
@@ -519,9 +451,7 @@ unsigned short strtol(const char* nptr) {
 /////////////////////////////////////////////////////////////////////////////
 void traceError() {
 
-	sprintf(gl_message,"Error 0x%x",gl_parserErrorCode);
-
-/*	switch (gl_parserErrorCode) {	
+	switch (gl_parserErrorCode) {	
 		case UNKNOWN_TOKEN				:		sprintf(gl_message,"Unknown token");break;
 		case NUMBER_MISSING				:		sprintf(gl_message,"Number missing");break;
 		case INCOMPLETE_REQUEST			:		sprintf(gl_message,"Incomplete request");break;
@@ -550,7 +480,7 @@ void traceError() {
 		case BAD_TRACK_INERTIA			:		sprintf(gl_message,"Bad inertia value");break;
 		case BAD_USER_MODE					:	sprintf(gl_message,"Bad user mode");break;
 		default : sprintf(gl_message,"Unknown Error 0x%x",gl_parserErrorCode);
-	}*/
+	}
 
 	prompt(gl_message);
 	sprintf(gl_message,"");
@@ -1476,6 +1406,23 @@ void initRequest(unsigned char* request) {
 	for (dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++)request[dataCounter]=0;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// Remove Automation 
+/////////////////////////////////////////////////////////////////////////////
+unsigned char removeAutomation(unsigned char automationNumber) {
+
+    unsigned char  automationDataCounter;
+
+	if (automationNumber>=gl_nexAvailableAutomation) {
+		gl_parserErrorCode=BADAUTOMATIONNUMBER;
+		return(FALSE);
+	}
+	for(automationDataCounter=0;automationDataCounter<NEW_AUTOMATIONSIZE;automationDataCounter++) {
+		gl_automation[automationNumber][automationDataCounter]=gl_automation[gl_nexAvailableAutomation][automationDataCounter];
+	}
+	// update in EEPROM automation
+	return(setAutomationToEEPROM());
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // Save Automation 
@@ -1493,13 +1440,76 @@ unsigned char saveAutomation(unsigned char automationNumber,unsigned char* data)
 	}
 
 	// copy new automation content in gl_automation
-	for(automationDataCounter=0;automationDataCounter<AUTOMATIONSIZE;automationDataCounter++) {
-		gl_automation[automationNumber][automationDataCounter]=data[automationDataCounter];
+	if(data[REQ_PROGRAM_REQUEST_GPIO_EVENT]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_TYPE]=GPIO_EVENT;
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_BOARD_NUMBER]=data[REQ_PROGRAM_REQUEST_EVENT_BOARD_GPIO_NUMBER];
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_NUMBER]=data[REQ_PROGRAM_REQUEST_EVENT_GPIO_NUMBER];
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_VALUE]=data[REQ_PROGRAM_REQUEST_EVENT_GPIO_LEVEL];
 	}
+	else if(data[REQ_PROGRAM_REQUEST_TIMER_EVENT]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_TYPE]=TIMER_EVENT;
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_BOARD_NUMBER]=data[REQ_PROGRAM_REQUEST_EVENT_BOARD_TIMER_NUMBER];
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_NUMBER]=data[REQ_PROGRAM_REQUEST_EVENT_TIMER_NUMBER];
+	}
+	else if(data[REQ_PROGRAM_REQUEST_TRACK_EVENT]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_TYPE]=TRACK_EVENT;
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_BOARD_NUMBER]=data[REQ_PROGRAM_REQUEST_EVENT_BOARD_TRACK_NUMBER];
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_NUMBER]=data[REQ_PROGRAM_REQUEST_EVENT_TRACK_NUMBER];
+		gl_automation[automationNumber][NEW_AUTOMATION_EVENT_VALUE]=data[REQ_PROGRAM_REQUEST_EVENT_VEHICLE_STATUS];
+	}
+
+	if (data[REQ_PROGRAM_REQUEST_GPIO_SETTING]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_GPIO;
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=data[REQ_PROGRAM_REQUEST_ACTION_GPIO_SET_NUMBER];
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_2]=data[REQ_PROGRAM_REQUEST_ACTION_GPIO_SET_LEVEL];
+
+	}
+	else if (data[REQ_PROGRAM_REQUEST_TIMER_SETTING]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_TIMER;
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=data[REQ_PROGRAM_REQUEST_ACTION_TIMER_SET_NUMBER];
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_2]=data[REQ_PROGRAM_REQUEST_ACTION_TIMER_SET_DELAY];
+	}
+	else if (data[REQ_PROGRAM_REQUEST_LPO_SETTING]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_LPO;
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=data[REQ_PROGAM_REQUEST_ACTION_LPO_SET_NUMBER];
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_2]=data[REQ_PROGRAM_REQUEST_ACTION_LPO_SET_LEVEL];
+	}
+
+	else if (data[REQ_PROGRAM_REQUEST_AUT_SETTING]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_AUT;
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=data[REQ_PROGAM_REQUEST_ACTION_AUT_SET_IDENT];
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_2]=data[REQ_PROGAM_REQUEST_ACTION_AUT_SET_IDENT+1];
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_3]=data[REQ_PROGRAM_REQUEST_ACTION_AUT_SET_STATUS];
+	}
+
+	else if (data[REQ_PROGRAM_REQUEST_TRACK_SETTING]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_TRACK;
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=data[REQ_PROGRAM_REQUEST_ACTION_TRACK_SET_NUMBER];
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_2]=data[REQ_PROGRAM_REQUEST_ACTION_TRACK_SET_SPEED];
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_3]=data[REQ_PROGRAM_REQUEST_ACTION_TRACK_SET_DIR];
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_4]=data[REQ_PROGRAM_REQUEST_ACTION_TRACK_SET_INERTIA];
+	}
+
+	else if (data[REQ_PROGRAM_REQUEST_SET_USER_MODE]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_USER_MODE;
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=data[REQ_PROGRAM_REQUEST_ACTION_USER_MODE];
+	}
+
+	else if (data[REQ_PROGRAM_REQUEST_DCC_SETTING]==TRUE) {
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_DCC;
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=data[REQ_PROGRAM_REQUEST_ACTION_DCC_ADDRESS_SETTING];
+		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_2]=data[REQ_PROGRAM_REQUEST_ACTION_DCC_COMMAND_SETTING];
+	}
+
+	gl_automation[automationNumber][NEW_AUTOMATION_STATUS]=data[REQ_PROGRAM_REQUEST_STATUS];
+	gl_automation[automationNumber][NEW_AUTOMATION_STATUS_MANUAL]=data[REQ_PROGRAM_REQUEST_STATUS_MANUAL];
+	gl_automation[automationNumber][NEW_AUTOMATION_IDENT]=data[REQ_PROGRAM_REQUEST_IDENT];
+	gl_automation[automationNumber][NEW_AUTOMATION_IDENT+1]=data[REQ_PROGRAM_REQUEST_IDENT+1];
+	gl_automation[automationNumber][NEW_AUTOMATION_IDENT+2]='\0';
 	if (automationNumber==gl_nexAvailableAutomation)gl_nexAvailableAutomation++;
 
 	// update in EEPROM automation
-	return(compressAutomation());
+	return(setAutomationToEEPROM());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1508,7 +1518,6 @@ unsigned char saveAutomation(unsigned char automationNumber,unsigned char* data)
 void assignAutomation(char *request,unsigned char automationCounter) {
 
 	unsigned char counterCommand;
-	unsigned char counterAutomation;
 
 	// set request for command
 	initRequest(request);
@@ -1516,10 +1525,51 @@ void assignAutomation(char *request,unsigned char automationCounter) {
 	request[REQ_TYPE_ENTRY]=COMValue;
 	request[REQ_BOARD_NUMBER]=gl_boardNumber;
 
-	// Copy from automation
-	counterAutomation=AUTOMATION_COMMAND_SET_GPIO;
+	// Init
 	for(counterCommand=REQ_COMMAND_REQUEST_SET_GPIO;counterCommand<=REQ_COMMAND_REQUEST_DCC_COMMAND;counterCommand++) {
-		request[counterCommand]=gl_automation[automationCounter][counterAutomation++];
+		request[counterCommand]=0;
+	}	
+
+	// Copy from automation
+
+	switch (gl_automation[automationCounter][NEW_AUTOMATION_SET_COMMAND]) {
+		case SET_GPIO : request[REQ_COMMAND_REQUEST_SET_GPIO]=TRUE;
+						request[REQ_COMMAND_REQUEST_GPIO_NUMBER]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_1];
+					    request[REQ_COMMAND_REQUEST_GPIO_LEVEL]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_2];
+						break;
+
+		case SET_TIMER :request[REQ_COMMAND_REQUEST_SET_TIMER]=TRUE;
+						request[REQ_COMMAND_REQUEST_TIMER_NUMBER]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_1];
+					    request[REQ_COMMAND_REQUEST_TIMER_DELAY]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_2];
+						break;
+
+		case SET_LPO :	request[REQ_COMMAND_REQUEST_SET_LPO]=TRUE;
+						request[REQ_COMMAND_REQUEST_LPO_NUMBER]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_1];
+					    request[REQ_COMMAND_REQUEST_LPO_LEVEL]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_2];
+						break;
+	
+		case SET_AUT :	request[REQ_COMMAND_REQUEST_SET_AUT]=TRUE;
+						request[REQ_COMMAND_REQUEST_AUT_IDENT]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_1];
+						request[REQ_COMMAND_REQUEST_AUT_IDENT+1]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_2];
+					    request[REQ_COMMAND_REQUEST_AUT_STATUS]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_3];
+						break;
+
+		case SET_TRACK :request[REQ_COMMAND_REQUEST_SET_TRACK]=TRUE;
+						request[REQ_COMMAND_REQUEST_TRACK_NUMBER]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_1];
+					    request[REQ_COMMAND_REQUEST_TRACK_SPEED]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_2];
+					    request[REQ_COMMAND_REQUEST_TRACK_DIR]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_3];
+					    request[REQ_COMMAND_REQUEST_TRACK_INERTIA]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_4];
+						break;
+
+		case SET_USER_MODE :request[REQ_COMMAND_REQUEST_SET_USER_MODE]=TRUE;
+						request[REQ_COMMAND_REQUEST_USER_MODE]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_1];
+						break;
+
+		case SET_DCC :	request[REQ_COMMAND_REQUEST_SET_DCC]=TRUE;
+						request[REQ_COMMAND_REQUEST_DCC_ADDRESS]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_1];
+					    request[REQ_COMMAND_REQUEST_DCC_COMMAND]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_2];
+						break;
+
 	}
 }
 
@@ -1554,7 +1604,6 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 	 unsigned short adr; 
 	 unsigned short adrLast;
 	 unsigned char value;
-	 unsigned char checkValue;
 	 unsigned char writeEEPROMCounter;
  	 static unsigned char onTrack[MAXSIZETOKEN];
 	 static unsigned char offTrack[MAXSIZETOKEN];
@@ -1583,10 +1632,10 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 		eventVehicleStatus=request[REQ_EVENT_REQUEST_EVENT_VEHICLE_STATUS];
 
 		for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
-				if(gl_automation[automationCounter][AUTOMATION_EVENT_TRACK_EVENT]==TRUE && gl_automation[automationCounter][AUTOMATION_STATUS]==AUTONValue) {
-				if (gl_automation[automationCounter][AUTOMATION_EVENT_EVENT_BOARD_TRACK_NUMBER]==eventBoardTrackNumber &&
-					gl_automation[automationCounter][AUTOMATION_EVENT_EVENT_TRACK_NUMBER]==eventTrackNumber &&
-					gl_automation[automationCounter][AUTOMATION_EVENT_EVENT_VEHICLE_STATUS]==eventVehicleStatus) {
+				if(gl_automation[automationCounter][NEW_AUTOMATION_EVENT_TYPE]==TRACK_EVENT && gl_automation[automationCounter][NEW_AUTOMATION_STATUS]==AUTONValue) {
+				if (gl_automation[automationCounter][NEW_AUTOMATION_EVENT_BOARD_NUMBER]==eventBoardTrackNumber &&
+					gl_automation[automationCounter][NEW_AUTOMATION_EVENT_NUMBER]==eventTrackNumber &&
+					gl_automation[automationCounter][NEW_AUTOMATION_EVENT_VALUE]==eventVehicleStatus) {
 
 						// set request for command
 						assignAutomation(request,automationCounter);
@@ -1608,10 +1657,10 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 		eventGPIOLevel=request[REQ_EVENT_REQUEST_EVENT_GPIO_LEVEL];
 
 		for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
-			if(gl_automation[automationCounter][AUTOMATION_EVENT_GPIO_EVENT]==TRUE && gl_automation[automationCounter][AUTOMATION_STATUS]==AUTONValue) {
-				if (gl_automation[automationCounter][AUTOMATION_EVENT_EVENT_BOARD_GPIO_NUMBER]==eventBoardGPIONumber &&
-					gl_automation[automationCounter][AUTOMATION_EVENT_EVENT_GPIO_NUMBER]==eventGPIONumber &&
-					gl_automation[automationCounter][AUTOMATION_EVENT_EVENT_GPIO_LEVEL]==eventGPIOLevel) {
+			if(gl_automation[automationCounter][NEW_AUTOMATION_EVENT_TYPE]==GPIO_EVENT && gl_automation[automationCounter][NEW_AUTOMATION_STATUS]==AUTONValue) {
+				if (gl_automation[automationCounter][NEW_AUTOMATION_EVENT_BOARD_NUMBER]==eventBoardGPIONumber &&
+					gl_automation[automationCounter][NEW_AUTOMATION_EVENT_NUMBER]==eventGPIONumber &&
+					gl_automation[automationCounter][NEW_AUTOMATION_EVENT_VALUE]==eventGPIOLevel) {
 
 						// set request for command
 						assignAutomation(request,automationCounter);
@@ -1633,9 +1682,9 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 		eventTIMERNumber=request[REQ_EVENT_REQUEST_EVENT_TIMER_NUMBER];
 
 		for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
-			if(gl_automation[automationCounter][AUTOMATION_EVENT_TIMER_EVENT]==TRUE && gl_automation[automationCounter][AUTOMATION_STATUS]==AUTONValue) {
-				if (gl_automation[automationCounter][AUTOMATION_EVENT_EVENT_BOARD_TIMER_NUMBER]==eventBoardTIMERNumber &&
-					gl_automation[automationCounter][AUTOMATION_EVENT_EVENT_TIMER_NUMBER]==eventTIMERNumber) {
+			if(gl_automation[automationCounter][NEW_AUTOMATION_EVENT_TYPE]==TIMER_EVENT && gl_automation[automationCounter][NEW_AUTOMATION_STATUS]==AUTONValue) {
+				if (gl_automation[automationCounter][NEW_AUTOMATION_EVENT_BOARD_NUMBER]==eventBoardTIMERNumber &&
+					gl_automation[automationCounter][NEW_AUTOMATION_EVENT_NUMBER]==eventTIMERNumber) {
 
 						// set request for command
 						assignAutomation(request,automationCounter);
@@ -1699,8 +1748,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 								
 							// Save to EEPROM
 							adr=(unsigned short)MODE_ADDRESS;
-							ReadEEPROM(adr,&checkValue);
-							if (checkValue!=gl_boardMode)WriteEEPROM(adr,gl_boardMode);
+							WriteEEPROM(adr,gl_boardMode);
 							if (sendPrompt==TRUE) prompt(gl_message);
 							return(TRUE);
 					}
@@ -1709,8 +1757,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 
 							// Save to EEPROM
 							adr=(unsigned short)MODE_ADDRESS;
-							ReadEEPROM(adr,&checkValue);
-							if (checkValue!=gl_boardMode)WriteEEPROM(adr,gl_boardMode);
+							WriteEEPROM(adr,gl_boardMode);
 							if (sendPrompt==TRUE) prompt(gl_message);
 							return(TRUE);
 					}
@@ -1726,26 +1773,22 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							switch(request[REQ_PROGRAM_REQUEST_SET_GPIO_NUMBER]) {
 								case 0 :TRISDbits.RD1 = request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR];
 										adr=(unsigned short)GPIO0DIR_ADDRESS;
-										ReadEEPROM(adr,&checkValue);
-										if (checkValue!=TRISDbits.RD1)WriteEEPROM(adr,TRISDbits.RD1);
+										WriteEEPROM(adr,TRISDbits.RD1);
 										if(TRISDbits.RD1==0)gl_GPIOchar[0]=1;
 										break;
 								case 1 :TRISDbits.RD2 = request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR];
 										adr=(unsigned short)GPIO1DIR_ADDRESS;
-										ReadEEPROM(adr,&checkValue);
-										if (checkValue!=TRISDbits.RD2)WriteEEPROM(adr,TRISDbits.RD2);
+										WriteEEPROM(adr,TRISDbits.RD2);
 										if(TRISDbits.RD2==0)gl_GPIOchar[1]=1;
 										break;
 								case 2 :TRISDbits.RD3 = request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR];
 										adr=(unsigned short)GPIO2DIR_ADDRESS;
-										ReadEEPROM(adr,&checkValue);
-										if (checkValue!=TRISDbits.RD3)WriteEEPROM(adr,TRISDbits.RD3);
+										WriteEEPROM(adr,TRISDbits.RD3);
 										if(TRISDbits.RD3==0)gl_GPIOchar[2]=1;
 										break;
 								case 3 :TRISCbits.RC4 = request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR];
 										adr=(unsigned short)GPIO3DIR_ADDRESS;
-										ReadEEPROM(adr,&checkValue);
-										if (checkValue!=TRISCbits.RC4)WriteEEPROM(adr,TRISCbits.RC4);
+										WriteEEPROM(adr,TRISCbits.RC4);
 										if(TRISCbits.RC4==0)gl_GPIOchar[3]=1;
 										break;
 							}
@@ -1768,8 +1811,8 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 					length=strlen(&request[REQ_PROGRAM_REQUEST_IDENT]);
 					for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
 						notEqual=0;
-						if (strlen(&(gl_automation[automationCounter][AUTOMATION_IDENT]))!=length) continue; // they are not equal (strncmp doesn't work here)
-						for (i=0;i<length;i++)if (request[REQ_PROGRAM_REQUEST_IDENT+i]!=gl_automation[automationCounter][AUTOMATION_IDENT+i]) {
+						if (strlen(&(gl_automation[automationCounter][NEW_AUTOMATION_IDENT]))!=length) continue; // they are not equal (strncmp doesn't work here)
+						for (i=0;i<length;i++)if (request[REQ_PROGRAM_REQUEST_IDENT+i]!=gl_automation[automationCounter][NEW_AUTOMATION_IDENT+i]) {
 							notEqual=1;
 							break;
 						}
@@ -1779,7 +1822,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 						}
 					}
 
-					if (saveAutomation(gl_nexAvailableAutomation,&request[START_HERE_TO_COPY_FOR_AUTOMATION])==TRUE){
+					if (saveAutomation(gl_nexAvailableAutomation,request)==TRUE){
 						if (sendPrompt==TRUE) prompt(gl_message);		
 						return(TRUE);
 						
@@ -1792,12 +1835,12 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 					 if(request[REQ_PROGRAM_REQUEST_AUTOMATION_NUMBER]<gl_nexAvailableAutomation) {
 						gl_nexAvailableAutomation--;
 						if (request[REQ_PROGRAM_REQUEST_AUTOMATION_NUMBER]==gl_nexAvailableAutomation) {
-							compressAutomation();
+							setAutomationToEEPROM();
 							if (sendPrompt==TRUE) prompt(gl_message);		
 							return(TRUE);
 						}
 						else if (gl_nexAvailableAutomation>0) {
-							if (saveAutomation(request[REQ_PROGRAM_REQUEST_AUTOMATION_NUMBER],&(gl_automation[gl_nexAvailableAutomation][0]))==TRUE){
+							if (removeAutomation(request[REQ_PROGRAM_REQUEST_AUTOMATION_NUMBER])==TRUE){
 								if (sendPrompt==TRUE) prompt(gl_message);		
 								return(TRUE);
 							}
@@ -1808,8 +1851,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							adr=(unsigned short)NEXTTAUTOMATION_ADDRESS;
 							gl_nexAvailableAutomation=0;
 							value=0;
-							ReadEEPROM(adr,&checkValue);
-							if (checkValue!=value)WriteEEPROM(adr,value);
+							WriteEEPROM(adr,value);
 							if (sendPrompt==TRUE) prompt(gl_message);	
 							return(TRUE);
 						}
@@ -1884,14 +1926,14 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							length=strlen(&request[REQ_COMMAND_REQUEST_AUT_IDENT]);
 							for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
 								notEqual=0;
-								if (strlen(&(gl_automation[automationCounter][AUTOMATION_IDENT]))!=length) continue; // They are not equal (strncmp doesn't work here)
-								for (i=0;i<length;i++)if (request[REQ_COMMAND_REQUEST_AUT_IDENT+i]!=gl_automation[automationCounter][AUTOMATION_IDENT+i]) {
+								if (strlen(&(gl_automation[automationCounter][NEW_AUTOMATION_IDENT]))!=length) continue; // They are not equal (strncmp doesn't work here)
+								for (i=0;i<length;i++)if (request[REQ_COMMAND_REQUEST_AUT_IDENT+i]!=gl_automation[automationCounter][NEW_AUTOMATION_IDENT+i]) {
 									notEqual=1;
 									break;
 								}
 								if (!notEqual) {								
 									// update automation status
-									gl_automation[automationCounter][AUTOMATION_STATUS]=request[REQ_COMMAND_REQUEST_AUT_STATUS];
+									gl_automation[automationCounter][NEW_AUTOMATION_STATUS]=request[REQ_COMMAND_REQUEST_AUT_STATUS];
 									if (sendPrompt==TRUE) prompt(gl_message);
 									return(TRUE);
 								}
@@ -1967,8 +2009,8 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 
 						// Set all automation status
 						for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
-							if (request[REQ_COMMAND_REQUEST_USER_MODE]!=AUTOMATICValue) gl_automation[automationCounter][AUTOMATION_STATUS]=gl_automation[automationCounter][AUTOMATION_STATUS_MANUAL];
-							else gl_automation[automationCounter][AUTOMATION_STATUS]=AUTONValue;
+							if (request[REQ_COMMAND_REQUEST_USER_MODE]!=AUTOMATICValue) gl_automation[automationCounter][NEW_AUTOMATION_STATUS]=gl_automation[automationCounter][NEW_AUTOMATION_STATUS_MANUAL];
+							else gl_automation[automationCounter][NEW_AUTOMATION_STATUS]=AUTONValue;
 						}
 
 						if (sendPrompt==TRUE) prompt(gl_message);
@@ -1994,9 +2036,9 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 					sprintf(gl_message,"");
 					if (sendPrompt==TRUE) prompt(gl_message);
 					for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
-						if(gl_automation[automationCounter][AUTOMATION_STATUS]==AUTONValue) sprintf(gl_message,"%d %s ON",automationCounter,&(gl_automation[automationCounter][AUTOMATION_IDENT]));
-						else if(gl_automation[automationCounter][AUTOMATION_STATUS]==AUTOFFValue) sprintf(gl_message,"%d %s OFF",automationCounter,&(gl_automation[automationCounter][AUTOMATION_IDENT]));
-						else sprintf(gl_message,"%d %s UNKNOWN STATE",automationCounter,&(gl_automation[automationCounter][AUTOMATION_IDENT]));					
+						if(gl_automation[automationCounter][NEW_AUTOMATION_STATUS]==AUTONValue) sprintf(gl_message,"%d %s ON",automationCounter,&(gl_automation[automationCounter][NEW_AUTOMATION_IDENT]));
+						else if(gl_automation[automationCounter][NEW_AUTOMATION_STATUS]==AUTOFFValue) sprintf(gl_message,"%d %s OFF",automationCounter,&(gl_automation[automationCounter][NEW_AUTOMATION_IDENT]));
+						else sprintf(gl_message,"%d %s UNKNOWN STATE",automationCounter,&(gl_automation[automationCounter][NEW_AUTOMATION_IDENT]));					
 						if (sendPrompt==TRUE) prompt(gl_message);
 					}
 					sprintf(gl_message,"");
@@ -2007,7 +2049,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 					for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
 						sprintf(gl_message,"");
 						itemPerLine=0;
-						for(automationDataCounter=0;automationDataCounter<AUTOMATIONSIZE;automationDataCounter++) {
+						for(automationDataCounter=0;automationDataCounter<NEW_AUTOMATIONSIZE;automationDataCounter++) {
 							sprintf(gl_message,"%s(%d,%d,%d)",gl_message,automationCounter,automationDataCounter,gl_automation[automationCounter][automationDataCounter]);		
 							if (gl_automation[automationCounter][automationDataCounter]>=32 && gl_automation[automationCounter][automationDataCounter]<=127)sprintf(gl_message,"%s[%c]",gl_message,gl_automation[automationCounter][automationDataCounter]); 
 							itemPerLine++;
