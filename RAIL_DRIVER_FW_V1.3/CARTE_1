@@ -1,5 +1,10 @@
 //================================================//
 // GESTION DES AUTOMATISMES DE LA CARTE 1         //
+// TRAIN A CREMAILLERE						//
+// AUTOFF => Pas d'action en mode manuel et si    // 
+//           spécifié par une action (ACT),       //
+//           désactivation de l'automatisme       //
+//           correspondant		               //
 //================================================//
 
 // Connect Rail 0	Voie non connectée
@@ -7,53 +12,105 @@
 // Connect Rail 2	Voie non connectée
 // Connect Rail 3	Voie non connectée
 
-// LPO 0		aiguillage CROSS noir
-// LPO 1		aiguillage CROSS rouge
-// LPO 2		aiguillage B1 / CROSS (noir cmd manuel double appui)
-// LPO 3		aiguillage B1 / CROSS (rouge cmd manuel double appui)
-// LPO 4		aiguillage D3 / H3 et C2 / G2
-// LPO 5		aiguillage D3 / H3 et C2 / G2
+// LPO 0		aiguillage E0 / (E0) H1 et E0 / G2
+// LPO 1		aiguillage E0 / (E0) H1 et E0 / G2
+// LPO 2		Led bouton jaune
+// LPO 3		Led mode manuel
+// LPO 4		aiguillage I0 / J1 , K2
+// LPO 5		aiguillage I0 / J1 , K2
 
-// GPIO input 0		non connecté
-// GPIO input 1		non connecté
-// GPIO input 2		non connecté
-// GPIO input 3		non connecté
+// GPIO input 0		aiguillage E0 / (E0) H1 et E0 / G2
+// GPIO input 1		Bouton Jaune
+// GPIO input 2		aiguillage E0 / (E0) H1 et E0 / G2
+// GPIO input 3		Contact mode manuel
 
-// Track Status	0	non connecté
-// Track Status	1	non connecté
-// Track Status	2	non connecté	
-// Track Status	3	non connecté
+// Track Status	0	Afficheur 7 segments DIO
+// Track Status	1	Afficheur 7 segments CLK
+// Track Status	2	Potentiomètre inertie	
+// Track Status	3	Potentiomètre vitesse
 
-// Commande manuel CROSS
-PROG 1 AUT C1 AUTON BOARD 31 GPIO 0 1 ACT LPO 1 1
-PROG 1 AUT C2 AUTON BOARD 31 GPIO 2 1 ACT LPO 0 1
-PROG 1 AUT C3 AUTON BOARD 31 GPIO 2 1 ACT LPO 1 0
-PROG 1 AUT C4 AUTON BOARD 31 GPIO 0 1 ACT LPO 0 0
+//////////////////////////////////////////////////////////////////////////
+// MODE MANUEL 
+//////////////////////////////////////////////////////////////////////////
 
-// Commande manuel D3 / H3 et C2 / G2
-PROG 1 AUT C5 AUTON BOARD 0 GPIO 0 1 ACT LPO 5 1
-PROG 1 AUT C6 AUTON BOARD 0 GPIO 2 1 ACT LPO 4 1
-PROG 1 AUT C7 AUTON BOARD 0 GPIO 2 1 ACT LPO 5 0
-PROG 1 AUT C8 AUTON BOARD 0 GPIO 0 1 ACT LPO 4 0
+// Détection commutation en mode manuel et activation du mode Manuel uniquement sur track 0
+PROG 1 AUT M0 AUTON BOARD 1 GPIO 3 0 ACT MANUAL
 
-// Commande manuel B1 / CROSS
-PROG 1 AUT C9 AUTON BOARD 31 GPIO 0 2 ACT LPO 2 1
-PROG 1 AUT CA AUTON BOARD 31 GPIO 2 2 ACT LPO 3 1
-PROG 1 AUT CB AUTON BOARD 31 GPIO 2 2 ACT LPO 2 0
-PROG 1 AUT CC AUTON BOARD 31 GPIO 0 2 ACT LPO 3 0
+// Détection commutation en mode manuel et éteint la LED orange
+PROG 1 AUT M1 AUTON BOARD 1 GPIO 3 0 ACT LPO 2 0
 
-// Commande automatique B1 / CROSS
-PROG 1 AUT CD AUTON BOARD 31 GPIO 1 1 ACT LPO 2 1
-PROG 1 AUT CE AUTON BOARD 31 GPIO 1 1 ACT LPO 3 0
-PROG 1 AUT CF AUTON BOARD 31 GPIO 1 1 ACT LPO 2 1
-PROG 1 AUT CG AUTON BOARD 31 GPIO 1 1 ACT LPO 3 0
+// Allume led mode manuel
+PROG 1 AUT M3 AUTON BOARD 1 GPIO 3 0 ACT LPO 3 1
 
-// Commande automatique D3 / H3 et C2 / G2
-PROG 1 AUT CH AUTON BOARD 31 GPIO 1 1 ACT LPO 4 1
-PROG 1 AUT CI AUTON BOARD 31 GPIO 1 1 ACT LPO 5 0
-PROG 1 AUT CJ AUTON BOARD 0 GPIO 1 1 ACT LPO 4 1
-PROG 1 AUT CK AUTON BOARD 0 GPIO 1 1 ACT LPO 5 0
+// Remise à zéro du GPIO 3
+PROG 1 AUT M4 AUTON BOARD 1 GPIO 3 0 ACT GPIO 3 0
 
-// Commande automatique CROSS
-PROG 1 AUT CL AUTON BOARD 0 GPIO 1 1 ACT LPO 1 1
-PROG 1 AUT CM AUTON BOARD 0 GPIO 1 1 ACT LPO 0 0
+//////////////////////////////////////////////////////////////////////////
+// MODE AUTOMATIQUE 
+//////////////////////////////////////////////////////////////////////////
+
+// Détection commutation en mode automatique et activation du mode automatique
+PROG 1 AUT A1 AUTON BOARD 1 GPIO 3 1 ACT AUTOMATIC
+
+// Détection commutation en mode automatique et Eteint led mode manuel
+PROG 1 AUT A2 AUTON BOARD 1 GPIO 3 1 ACT LPO 3 0
+
+// Désactive démarrage train sur déclenchement TIMER 3
+PROG 1 AUT A3 AUTON BOARD 1 GPIO 3 1 ACT AUTOFF AG
+
+// Allume la LED jaune du bouton sur appui bouton
+PROG 1 AUT A4 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 2 1
+
+// Active démarrage train sur déclenchement TIMER 3
+PROG 1 AUT A5 AUTOFF BOARD 1 GPIO 1 1 ACT AUTON AG
+
+// Demarre le train (qui doit être quelque part sur la voie) voie A, B, C et D
+PROG 1 AUT A6 AUTOFF BOARD 1 GPIO 1 1 ACT TRACK 4 SPEED 8 FORW INERTIA 10
+
+// Réinitialise GPIO 1 sur relachement bouton
+PROG 1 AUT A7 AUTOFF BOARD 1 GPIO 1 0 ACT GPIO 1 0
+
+// Détection du train sur la voie B, arret des voies A, B, C et D
+PROG 1 AUT A8 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TRACK 4 SPEED 0 FORW INERTIA 20
+
+// // Arme TIMER 1 pour attente en gare du haut pendant 10 unités
+PROG 1 AUT A9 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TIMER 1 10 
+
+// Désactive A8, A9
+PROG 1 AUT AA AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT AUTOFF A8
+PROG 1 AUT AB AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT AUTOFF A9
+
+//Retour du train au déclenchement TIMER 1 vers la gare centrale (voie A, B, C et D)
+PROG 1 AUT AC AUTOFF BOARD 1 TIMER 1 ACT TRACK 4 SPEED 6 BACK INERTIA 10
+
+//Arme TIMER 2 au déclenchement TIMER 1 pendant 4 unités
+PROG 1 AUT AD AUTOFF BOARD 1 TIMER 1 ACT TIMER 2 4
+
+// Arret du train sur déclenchement TIMER 2, arret des voies A, B, C et D
+PROG 1 AUT AE AUTOFF BOARD 1 TIMER 2 ACT TRACK 4 SPEED 0 BACK INERTIA 18
+
+// Arme TIMER 3 pour attente en gare centrale pendant 10 unités
+PROG 1 AUT AF AUTOFF BOARD 1 TIMER 2 ACT TIMER 3 10
+
+// Démarre train sur déclenchement TIMER 3, voies A, B, C et D
+PROG 1 AUT AG AUTOFF BOARD 1 TIMER 3 ACT TRACK 4 SPEED 8 FORW INERTIA 10
+
+// Réactive A8, A9
+PROG 1 AUT AH AUTOFF BOARD 1 TIMER 3 ACT AUTON A8
+PROG 1 AUT AI AUTOFF BOARD 1 TIMER 3 ACT AUTON A9
+
+///////////////////////////////////////////////////
+// Commande manuel aiguillage E0 / (E0) H1 et E0 / G2
+PROG 1 AUT C0 AUTON BOARD 1 GPIO 0 1 ACT LPO 1 1
+PROG 1 AUT C1 AUTON BOARD 1 GPIO 2 1 ACT LPO 0 1
+PROG 1 AUT C2 AUTON BOARD 1 GPIO 2 1 ACT LPO 1 0
+PROG 1 AUT C3 AUTON BOARD 1 GPIO 0 1 ACT LPO 0 0
+
+// Commande manuel aiguillage I0 / J1 , K2
+PROG 1 AUT C4 AUTON BOARD 3 GPIO 0 1 ACT LPO 4 1
+PROG 1 AUT C5 AUTON BOARD 3 GPIO 1 1 ACT LPO 5 1
+PROG 1 AUT C6 AUTON BOARD 3 GPIO 1 1 ACT LPO 4 0
+PROG 1 AUT C7 AUTON BOARD 3 GPIO 0 1 ACT LPO 5 0
+
+PROG 1 AUT C8 AUTON BOARD 1 GPIO 0 0 ACT GPIO 0 0
+PROG 1 AUT C9 AUTON BOARD 1 GPIO 2 0 ACT GPIO 2 0

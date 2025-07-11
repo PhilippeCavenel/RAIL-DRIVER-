@@ -1,0 +1,67 @@
+//================================================//
+// GESTION DES AUTOMATISMES DE LA CARTE 3         //
+// AIGUILLAGES								//
+// AUTOFF => Pas d'action en mode manuel et si    // 
+//           spécifié par une action (ACT),       //
+//           désactivation de l'automatisme       //
+//           correspondant		               //
+//================================================//
+
+// Connect Rail 0	Voie non connectée
+// Connect Rail 1	Voie non connectée
+// Connect Rail 2	Voie non connectée
+// Connect Rail 3	Voie non connectée
+
+// LPO 0		aiguillage CROSS noir
+// LPO 1		aiguillage CROSS rouge
+// LPO 2		aiguillage B1 / CROSS (noir cmd manuel double appui)
+// LPO 3		aiguillage B1 / CROSS (rouge cmd manuel double appui)
+// LPO 4		aiguillage D3 / H3 et C2 / G2
+// LPO 5		aiguillage D3 / H3 et C2 / G2
+
+// GPIO input 0		aiguillage I0 / J1 , K2
+// GPIO input 1		aiguillage I0 / J1 , K2
+// GPIO input 2		non connecté
+// GPIO input 3		non connecté
+
+// Track Status	0	non connecté
+// Track Status	1	non connecté
+// Track Status	2	non connecté	
+// Track Status	3	non connecté
+
+// Commande manuel CROSS
+PROG 3 AUT C1 AUTON BOARD 31 GPIO 0 1 ACT LPO 1 1
+PROG 3 AUT C2 AUTON BOARD 31 GPIO 2 1 ACT LPO 0 1
+PROG 3 AUT C3 AUTON BOARD 31 GPIO 2 1 ACT LPO 1 0
+PROG 3 AUT C4 AUTON BOARD 31 GPIO 0 1 ACT LPO 0 0
+
+// Commande manuel D3 / H3 et C2 / G2
+PROG 3 AUT C5 AUTON BOARD 0 GPIO 0 1 ACT LPO 5 1
+PROG 3 AUT C6 AUTON BOARD 0 GPIO 2 1 ACT LPO 4 1
+PROG 3 AUT C7 AUTON BOARD 0 GPIO 2 1 ACT LPO 5 0
+PROG 3 AUT C8 AUTON BOARD 0 GPIO 0 1 ACT LPO 4 0
+
+// Commande manuel B1 / CROSS
+PROG 3 AUT C9 AUTON BOARD 31 GPIO 0 2 ACT LPO 2 1
+PROG 3 AUT CA AUTON BOARD 31 GPIO 2 2 ACT LPO 3 1
+PROG 3 AUT CB AUTON BOARD 31 GPIO 2 2 ACT LPO 2 0
+PROG 3 AUT CC AUTON BOARD 31 GPIO 0 2 ACT LPO 3 0
+
+// Commande automatique B1 / CROSS
+PROG 3 AUT CD AUTON BOARD 31 GPIO 1 1 ACT LPO 2 1
+PROG 3 AUT CE AUTON BOARD 31 GPIO 1 1 ACT LPO 3 0
+PROG 3 AUT CF AUTON BOARD 31 GPIO 1 1 ACT LPO 2 1
+PROG 3 AUT CG AUTON BOARD 31 GPIO 1 1 ACT LPO 3 0
+
+// Commande automatique D3 / H3 et C2 / G2
+PROG 3 AUT CH AUTON BOARD 31 GPIO 1 1 ACT LPO 4 1
+PROG 3 AUT CI AUTON BOARD 31 GPIO 1 1 ACT LPO 5 0
+PROG 3 AUT CJ AUTON BOARD 0 GPIO 1 1 ACT LPO 4 1
+PROG 3 AUT CK AUTON BOARD 0 GPIO 1 1 ACT LPO 5 0
+
+// Commande automatique CROSS
+PROG 3 AUT CL AUTON BOARD 0 GPIO 1 1 ACT LPO 1 1
+PROG 3 AUT CM AUTON BOARD 0 GPIO 1 1 ACT LPO 0 0
+
+PROG 3 AUT CN AUTON BOARD 3 GPIO 0 0 ACT GPIO 0 0
+PROG 3 AUT CO AUTON BOARD 3 GPIO 1 0 ACT GPIO 1 0

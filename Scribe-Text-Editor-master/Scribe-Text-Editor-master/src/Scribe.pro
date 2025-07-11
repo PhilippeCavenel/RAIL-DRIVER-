@@ -35,7 +35,6 @@ SOURCES += \
     finddialog.cpp \
     editor.cpp \
     metricreporter.cpp \
-    serialport.cpp \
     settings.cpp \
     utilityfunctions.cpp \
     searchhistory.cpp \
@@ -55,7 +54,6 @@ HEADERS += \
     editor.h \
     linenumberarea.h \
     metricreporter.h \
-    serialport.h \
     settings.h \
     utilityfunctions.h \
     searchhistory.h \

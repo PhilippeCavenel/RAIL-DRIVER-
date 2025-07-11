@@ -1,5 +1,10 @@
 //================================================//
 // GESTION DES AUTOMATISMES DE LA CARTE 0         //
+// VOIES INTERNES							//
+// AUTOFF => Pas d'action en mode manuel et si    // 
+//           spécifié par une action (ACT),       //
+//           désactivation de l'automatisme       //
+//           correspondant		               //
 //================================================//
 
 // Connect Rail 0	Voie E
@@ -134,8 +139,6 @@ PROG 0 AUT B5 AUTOFF BOARD 0 GPIO 1 1 ACT LPO 2 1
 
 // Remise à zéro du GPIO 1 sur relanchement bouton
 PROG 0 AUT B6 AUTOFF BOARD 0 GPIO 1 0 ACT GPIO 1 0
-
-/////////////////////////////////////////////////
 
 PROG 0 AUT C0 AUTON BOARD 31 GPIO 0 1 ACT LPO 5 0
 

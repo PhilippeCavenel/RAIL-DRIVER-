@@ -2,7 +2,6 @@
 #include "utilityfunctions.h"
 #include "ui_mainwindow.h"
 #include "settings.h"                   // storing app state
-#include "serialport.h"
 #include <QtDebug>
 #include <QtPrintSupport/QPrinter>      // printing
 #include <QtPrintSupport/QPrintDialog>  // printing
@@ -23,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
     readSettings();
+    openSerial();
 
     // Used to ensure that only one language can ever be checked at a time
     languageGroup = new QActionGroup(this);
@@ -75,13 +75,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     mapFileExtensionsToLanguages();
     appendShortcutsToToolbarTooltips();
 
-    connect(&serialLink, &SerialPortSender::response, this, &MainWindow::showResponse);
-    connect(&serialLink, &SerialPortSender::error, this, &MainWindow::processError);
-    connect(&serialLink, &SerialPortSender::timeout, this, &MainWindow::processTimeout);
-
-    connect(ui->simpleCommand,SIGNAL(returnPressed()),this,SLOT(on_action_simpleCommand()));
-
-    // Launch serial thread
+    // Serial
+    connect(serial, &QSerialPort::readyRead, this, &MainWindow::onDataReceived);
+    connect(simpleCommand,SIGNAL(returnPressed()),this,SLOT(on_action_simpleCommand()));
 }
 
 /* Ensures that the checkable formatting menu options, like auto indent
@@ -539,14 +535,6 @@ void MainWindow::on_actionOpen_triggered()
     setLanguageFromExtension();
 }
 
-void MainWindow::showResponse(const QString &s)
-{
-    QString result;
-    result=s;
-    result.replace(QString("\n"),QString(""));
-    CommandResult->append(result);
-}
-
 void MainWindow::processError(const QString &s)
 {
     informUser(QString("Error"), s);
@@ -601,7 +589,16 @@ void MainWindow::on_actionUpdate_triggered() {
                     continue;
                 }
                 newLine.append(QChar(' ')).append(QChar('\r'));
-                serialLink.send(QString("COM3"), 1000,  newLine);
+                QByteArray utf8Bytes = newLine.toUtf8();
+                for (char byte : utf8Bytes) {
+                    serial->write(&byte, 1);
+                    if (!serial->waitForBytesWritten(m_waitTimeout)) {
+                        QMessageBox::warning(this, "Error", "Timeout: " + QTime::currentTime().toString());
+                    }
+
+                    // wait for response
+                    if (serial->waitForReadyRead(m_waitTimeout));
+                }
                 newLine=QString("");
                 if (outputIndex==documentContents.length()-1)break;
             }
@@ -614,7 +611,16 @@ void MainWindow::on_action_simpleCommand(){
     QString newLine = QChar('\r');
     CommandResult->clear();
     newLine.append(simpleCommand->text()).append(QChar(' ')).append(QChar('\r'));
-    serialLink.send(QString("COM3"), 1000, newLine);
+    QByteArray utf8Bytes = newLine.toUtf8();
+    for (char byte : utf8Bytes) {
+        serial->write(&byte, 1);
+        if (!serial->waitForBytesWritten(m_waitTimeout)) {
+            QMessageBox::warning(this, "Error", "Timeout: " + QTime::currentTime().toString());
+        }
+        // wait for response
+        if (serial->waitForReadyRead(m_waitTimeout));
+    }
+    simpleCommand->clear();
 }
 
 /* Called when the user selects the Print option from the menu or toolbar (or uses Ctrl+P).
@@ -747,6 +753,36 @@ void MainWindow::readSettings()
                     });
 }
 
+/* Open Serial Link
+ */
+
+void MainWindow::openSerial() {
+    serial=new QSerialPort();
+    serial->setPortName(QString("COM3"));
+    serial->setBaudRate(QSerialPort::Baud115200);
+    serial->setDataBits(QSerialPort::Data8);
+    serial->setParity(QSerialPort::NoParity);
+    serial->setStopBits(QSerialPort::OneStop);
+    serial->setFlowControl(QSerialPort::NoFlowControl);
+    if (!serial->open(QIODevice::ReadWrite)) {
+        QMessageBox::warning(this, "Error", "Can't open COM3: " + serial->errorString());
+    }
+}
+
+void MainWindow::onDataReceived()
+{
+    while (serial->bytesAvailable()) {
+        char c;
+        qint64 bytesRead = serial->read(&c, 1);
+        if (bytesRead > 0) {
+            CommandResult->insertPlainText(QString(c).replace(QString("\n"),QString("")));
+            CommandResult->ensureCursorVisible(); // pour faire défiler automatiquement
+            CommandResult->show(); // pour faire défiler automatiquement
+            CommandResult->repaint(); // pour faire défiler automatiquement
+
+        }
+    }
+}
 
 /* Called when the Undo operation is toggled by the editor.
  */

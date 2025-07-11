@@ -9,7 +9,6 @@
 #include "language.h"
 #include "metricreporter.h"
 #include <highlighters/highlighter.h>
-#include "serialport.h"
 #include <QMainWindow>
 #include <QCloseEvent>                  // closeEvent
 #include <QLabel>                       // GUI labels
@@ -53,6 +52,8 @@ private:
     void updateFormatMenuOptions();
     void writeSettings();
     void readSettings();
+    void openSerial();
+    void onDataReceived();
 
     void toggleVisibilityOf(QWidget *widget);
 
@@ -63,6 +64,8 @@ private:
     MetricReporter *metricReporter;
     Editor *editor = nullptr;
     Settings *settings = Settings::instance();
+    QSerialPort *serial;
+    int m_waitTimeout = 10;
 
     // Used for storing application state upon termination
     const QString WINDOW_SIZE_KEY = "window_size";
@@ -79,7 +82,6 @@ private:
     QLabel *languageLabel;
     QMap<QAction*, Language> menuActionToLanguageMap;
     QMap<QString, Language> extensionToLanguageMap;
-    SerialPortSender serialLink;
     QLineEdit *simpleCommand;
 
 
@@ -119,7 +121,6 @@ private slots:
     void on_actionTool_Bar_triggered();
     void on_actionUpdate_triggered();
     void on_action_simpleCommand();
-    void showResponse(const QString &s);
     void processError(const QString &s);
     void processTimeout(const QString &s);
 
