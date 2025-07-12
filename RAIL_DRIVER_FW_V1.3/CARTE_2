@@ -56,6 +56,9 @@ PROG 2 AUT M7 AUTON BOARD 2 GPIO 3 0 ACT GPIO 3 0
 PROG 2 AUT M8 AUTON BOARD 2 GPIO 3 0 ACT TRACK 1 SPEED 0 FORW INERTIA 1
 PROG 2 AUT M9 AUTON BOARD 2 GPIO 3 0 ACT TRACK 2 SPEED 0 FORW INERTIA 1
 
+// Arret complet en attente changement de consigne sur le TCO
+PROG 2 AUT MA AUTON BOARD 2 GPIO 3 0 ACT TRACK 4 SPEED 0 FORW INERTIA 0
+
 //////////////////////////////////////////////////////////////////////////
 // MODE AUTOMATIQUE 
 //////////////////////////////////////////////////////////////////////////

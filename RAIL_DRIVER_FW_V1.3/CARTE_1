@@ -45,6 +45,9 @@ PROG 1 AUT M3 AUTON BOARD 1 GPIO 3 0 ACT LPO 3 1
 // Remise à zéro du GPIO 3
 PROG 1 AUT M4 AUTON BOARD 1 GPIO 3 0 ACT GPIO 3 0
 
+// Arret complet en attente changement de consigne sur le TCO
+PROG 1 AUT M5 AUTON BOARD 1 GPIO 3 0 ACT TRACK 4 SPEED 0 FORW INERTIA 0
+
 //////////////////////////////////////////////////////////////////////////
 // MODE AUTOMATIQUE 
 //////////////////////////////////////////////////////////////////////////

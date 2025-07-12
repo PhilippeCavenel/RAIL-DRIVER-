@@ -50,6 +50,9 @@ PROG 31 AUT M5 AUTON BOARD 31 GPIO 3 0 ACT LPO 3 1
 // Détection commutation en mode manuel et remise à zéro du GPIO 3 en mode manuel
 PROG 31 AUT M6 AUTON BOARD 31 GPIO 3 0 ACT GPIO 3 0
 
+// Arret complet en attente changement de consigne sur le TCO
+PROG 31 AUT M7 AUTON BOARD 31 GPIO 3 0 ACT TRACK 4 SPEED 0 FORW INERTIA 0
+
 //////////////////////////////////////////////////////////////////////////
 // MODE AUTOMATIQUE 
 //////////////////////////////////////////////////////////////////////////
