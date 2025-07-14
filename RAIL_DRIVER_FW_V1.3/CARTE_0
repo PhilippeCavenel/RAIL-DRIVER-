@@ -16,7 +16,7 @@
 // LPO 1		Feu rouge E
 // LPO 2		Led bouton blanc
 // LPO 3		Led mode manuel
-// LPO 4		non connecté
+// LPO 4		décrochage gare crémaillère haut
 // LPO 5		voie CROSS sur voie F (0) voie CROSS sur voie à définir (non connecté)
 
 // GPIO input 0		Bouton aiguillage D3 / H3 et C2/ G2 rouge
@@ -151,3 +151,14 @@ PROG 0 AUT C1 AUTON BOARD 31 GPIO 2 1 ACT LPO 5 1
 PROG 0 AUT C2 AUTON BOARD 0 GPIO 1 1 ACT LPO 5 0
 PROG 0 AUT C3 AUTON BOARD 0 GPIO 0 0 ACT GPIO 0 0 
 PROG 0 AUT C4 AUTON BOARD 0 GPIO 2 0 ACT GPIO 2 0 
+
+// Pilotage manuel décrochage gare crémaillère haut
+PROG 0 AUT C5 AUTON BOARD 3 GPIO 2 1 ACT LPO 4 1
+PROG 0 AUT C6 AUTON BOARD 3 GPIO 2 0 ACT LPO 4 0
+
+// Pilotage automatique décrochage gare crémaillère haut
+PROG 0 AUT C7 AUTON BOARD 1 TIMER 1 ACT LPO 4 1
+PROG 0 AUT C8 AUTON BOARD 1 TIMER 4 ACT LPO 4 0
+
+
+

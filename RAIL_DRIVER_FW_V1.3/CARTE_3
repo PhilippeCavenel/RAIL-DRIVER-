@@ -21,8 +21,8 @@
 
 // GPIO input 0		aiguillage I0 / J1 , K2
 // GPIO input 1		aiguillage I0 / J1 , K2
-// GPIO input 2		non connecté
-// GPIO input 3		non connecté
+// GPIO input 2		Commande décrochage wagon gare crémaillère haut
+// GPIO input 3		Commande décrochage wagon circuit bas
 
 // Track Status	0	non connecté
 // Track Status	1	non connecté
@@ -65,3 +65,6 @@ PROG 3 AUT CM AUTON BOARD 0 GPIO 1 1 ACT LPO 0 0
 
 PROG 3 AUT CN AUTON BOARD 3 GPIO 0 0 ACT GPIO 0 0
 PROG 3 AUT CO AUTON BOARD 3 GPIO 1 0 ACT GPIO 1 0
+PROG 3 AUT CP AUTON BOARD 3 GPIO 2 0 ACT GPIO 2 0
+PROG 3 AUT CQ AUTON BOARD 3 GPIO 3 0 ACT GPIO 3 0
+

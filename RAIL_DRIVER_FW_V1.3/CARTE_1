@@ -58,14 +58,12 @@ PROG 1 AUT A1 AUTON BOARD 1 GPIO 3 1 ACT AUTOMATIC
 // Détection commutation en mode automatique et Eteint led mode manuel
 PROG 1 AUT A2 AUTON BOARD 1 GPIO 3 1 ACT LPO 3 0
 
-// Désactive démarrage train sur déclenchement TIMER 3
-PROG 1 AUT A3 AUTON BOARD 1 GPIO 3 1 ACT AUTOFF AG
+// Positionnement correctement les aiguillages du haut
+PROG 1 AUT A3 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 5 1
+PROG 1 AUT A4 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 4 0
 
 // Allume la LED jaune du bouton sur appui bouton
-PROG 1 AUT A4 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 2 1
-
-// Active démarrage train sur déclenchement TIMER 3
-PROG 1 AUT A5 AUTOFF BOARD 1 GPIO 1 1 ACT AUTON AG
+PROG 1 AUT A5 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 2 1
 
 // Demarre le train (qui doit être quelque part sur la voie) voie A, B, C et D
 PROG 1 AUT A6 AUTOFF BOARD 1 GPIO 1 1 ACT TRACK 4 SPEED 8 FORW INERTIA 10
@@ -76,31 +74,55 @@ PROG 1 AUT A7 AUTOFF BOARD 1 GPIO 1 0 ACT GPIO 1 0
 // Détection du train sur la voie B, arret des voies A, B, C et D
 PROG 1 AUT A8 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TRACK 4 SPEED 0 FORW INERTIA 20
 
-// // Arme TIMER 1 pour attente en gare du haut pendant 10 unités
-PROG 1 AUT A9 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TIMER 1 10 
+// Arme TIMER 1 pour attente en gare du haut pendant 10 unités (A modifier) 
+PROG 1 AUT A9 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TIMER 1 2 
 
 // Désactive A8, A9
 PROG 1 AUT AA AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT AUTOFF A8
 PROG 1 AUT AB AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT AUTOFF A9
 
-//Retour du train au déclenchement TIMER 1 vers la gare centrale (voie A, B, C et D)
-PROG 1 AUT AC AUTOFF BOARD 1 TIMER 1 ACT TRACK 4 SPEED 6 BACK INERTIA 10
+// Démarrage séquence premier décrochage locomotive (gare du haut)
 
-//Arme TIMER 2 au déclenchement TIMER 1 pendant 4 unités
-PROG 1 AUT AD AUTOFF BOARD 1 TIMER 1 ACT TIMER 2 4
+// Démarrage lent pour décrochage wagon 
+PROG 1 AUT D1 AUTOFF BOARD 1 TIMER 1 ACT TRACK 4 SPEED 4 FORW INERTIA 100
+
+// Arme TIMER 4 pour retour arrière locomotive
+PROG 1 AUT D2 AUTOFF BOARD 1 TIMER 1 ACT TIMER 4 2
+
+// retour arrière locomotive sur déclenchement TIMER 4
+PROG 1 AUT D3 AUTOFF BOARD 1 TIMER 4 ACT TRACK 4 SPEED 5 BACK INERTIA 10
+
+// changement aiguillage sur déclenchement TIMER 4
+PROG 1 AUT D5 AUTOFF BOARD 1 TIMER 4 ACT LPO 5 0
+PROG 1 AUT D6 AUTOFF BOARD 1 TIMER 4 ACT LPO 4 1
+
+// Arme TIMER 5 pour retour avant locomotive 
+PROG 1 AUT D7 AUTOFF BOARD 1 TIMER 4 ACT TIMER 5 2
+
+//Retour avant de la locomotive au déclenchement TIMER 5
+PROG 1 AUT DA AUTOFF BOARD 1 TIMER 5 ACT TRACK 4 SPEED 4 FORW INERTIA 20
+
+// changement aiguillage sur déclenchement TIMER 5
+PROG 1 AUT DB AUTOFF BOARD 1 TIMER 5 ACT LPO 5 1
+PROG 1 AUT DC AUTOFF BOARD 1 TIMER 5 ACT LPO 4 0
+
+// Arme TIMER 6 pour retour final locomotive
+PROG 1 AUT DD AUTOFF BOARD 1 TIMER 5 ACT TIMER 6 2
+
+//Retour du train au déclenchement TIMER 6 vers la gare centrale (voie A, B, C et D)
+PROG 1 AUT AC AUTOFF BOARD 1 TIMER 6 ACT TRACK 4 SPEED 5 BACK INERTIA 20
+
+//Arme TIMER 2 au déclenchement TIMER 6 pendant 4 unités
+PROG 1 AUT AD AUTOFF BOARD 1 TIMER 6 ACT TIMER 2 4
 
 // Arret du train sur déclenchement TIMER 2, arret des voies A, B, C et D
 PROG 1 AUT AE AUTOFF BOARD 1 TIMER 2 ACT TRACK 4 SPEED 0 BACK INERTIA 18
 
-// Arme TIMER 3 pour attente en gare centrale pendant 10 unités
-PROG 1 AUT AF AUTOFF BOARD 1 TIMER 2 ACT TIMER 3 10
-
-// Démarre train sur déclenchement TIMER 3, voies A, B, C et D
-PROG 1 AUT AG AUTOFF BOARD 1 TIMER 3 ACT TRACK 4 SPEED 8 FORW INERTIA 10
-
 // Réactive A8, A9
-PROG 1 AUT AH AUTOFF BOARD 1 TIMER 3 ACT AUTON A8
-PROG 1 AUT AI AUTOFF BOARD 1 TIMER 3 ACT AUTON A9
+PROG 1 AUT AH AUTOFF BOARD 1 TIMER 2 ACT AUTON A8
+PROG 1 AUT AI AUTOFF BOARD 1 TIMER 2 ACT AUTON A9
+
+// Démarrage séquence deuxième décrochage locomotive (partie cachée)
 
 ///////////////////////////////////////////////////
 // Commande manuel aiguillage E0 / (E0) H1 et E0 / G2
