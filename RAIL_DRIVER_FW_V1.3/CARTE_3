@@ -16,7 +16,7 @@
 // LPO 1		aiguillage CROSS rouge
 // LPO 2		aiguillage B1 / CROSS (noir cmd manuel double appui)
 // LPO 3		aiguillage B1 / CROSS (rouge cmd manuel double appui)
-// LPO 4		aiguillage D3 / H3 et C2 / G2
+// LPO 4		non connecté (relié à un relai)
 // LPO 5		aiguillage D3 / H3 et C2 / G2
 
 // GPIO input 0		aiguillage I0 / J1 , K2
@@ -37,9 +37,7 @@ PROG 3 AUT C4 AUTON BOARD 31 GPIO 0 1 ACT LPO 0 0
 
 // Commande manuel D3 / H3 et C2 / G2
 PROG 3 AUT C5 AUTON BOARD 0 GPIO 0 1 ACT LPO 5 1
-PROG 3 AUT C6 AUTON BOARD 0 GPIO 2 1 ACT LPO 4 1
 PROG 3 AUT C7 AUTON BOARD 0 GPIO 2 1 ACT LPO 5 0
-PROG 3 AUT C8 AUTON BOARD 0 GPIO 0 1 ACT LPO 4 0
 
 // Commande manuel B1 / CROSS
 PROG 3 AUT C9 AUTON BOARD 31 GPIO 0 2 ACT LPO 2 1
@@ -54,9 +52,7 @@ PROG 3 AUT CF AUTON BOARD 31 GPIO 1 1 ACT LPO 2 1
 PROG 3 AUT CG AUTON BOARD 31 GPIO 1 1 ACT LPO 3 0
 
 // Commande automatique D3 / H3 et C2 / G2
-PROG 3 AUT CH AUTON BOARD 31 GPIO 1 1 ACT LPO 4 1
 PROG 3 AUT CI AUTON BOARD 31 GPIO 1 1 ACT LPO 5 0
-PROG 3 AUT CJ AUTON BOARD 0 GPIO 1 1 ACT LPO 4 1
 PROG 3 AUT CK AUTON BOARD 0 GPIO 1 1 ACT LPO 5 0
 
 // Commande automatique CROSS
