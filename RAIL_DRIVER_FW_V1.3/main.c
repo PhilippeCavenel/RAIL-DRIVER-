@@ -1030,8 +1030,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 					request[REQ_PROGRAM_REQUEST_ACTION_USER_MODE] = AUTOMATICValue;
 					gl_parserErrorCode=0;
 					return(TRUE);
-				}
-
+				}			
 				// DCC
 				stringPointer = keepStringPointer;
 				sprintf(token,DCC);
@@ -1264,7 +1263,6 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 			gl_parserErrorCode=0;
 			return(TRUE);
 		}
-
 		// DCC
 		stringPointer = keepStringPointer;
 		sprintf(token,DCC);
@@ -1617,6 +1615,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 	 char speed;
 	 char step;
 	 unsigned char trackNumber;
+	 unsigned char TIMERCounter;
 
      sprintf(gl_message,"");
 
@@ -2005,6 +2004,15 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 				}
 				else if (request[REQ_COMMAND_REQUEST_SET_USER_MODE]== TRUE) {
 					if (request[REQ_COMMAND_REQUEST_USER_MODE]==MANUALValue ||request[REQ_COMMAND_REQUEST_USER_MODE]==MANUAL0Value ||request[REQ_COMMAND_REQUEST_USER_MODE]==AUTOMATICValue ) {
+
+						// Reset all timer if AUTOMATIC mode is set
+						if (request[REQ_COMMAND_REQUEST_USER_MODE]==AUTOMATICValue) {
+							for(TIMERCounter=0;TIMERCounter<MAXTIMER;TIMERCounter++) {
+								gl_TIMERValue[TIMERCounter]=0;
+								gl_TIMERNotification[TIMERCounter]=FALSE;
+							}
+						}
+
 						gl_userMode=request[REQ_COMMAND_REQUEST_USER_MODE];
 
 						// Set all automation status
