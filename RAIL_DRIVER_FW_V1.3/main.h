@@ -133,8 +133,8 @@
 #pragma config OSC 		= 				IRCIO67 // Oscillateur Interne
 #pragma config FCMEN 	= 				OFF
 #pragma config IESO 	= 				OFF
-#pragma config PWRT 	= 				OFF
-#pragma config BOREN 	= 				OFF // BOHW
+#pragma config PWRT 	= 				ON
+#pragma config BOREN 	= 				BOHW // OFF
 #pragma config BORV 	= 				3
 #pragma config WDT 		= 				OFF
 #pragma config PBADEN 	= 				OFF
@@ -650,9 +650,6 @@ unsigned short				gl_timer;
 
 // RUN OR STOP ALL
 unsigned char 				gl_stopAll;
-
-// SYNCHRO SEND
-unsigned short				gl_synchroSend;
 
 ///////////////////////////////////////////////
 // function declaration

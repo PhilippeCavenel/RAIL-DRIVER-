@@ -2278,9 +2278,6 @@ int _user_putc (char c) {
 			// header trame
 			for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) dataOut[dataOutCounter]=TRAMEPRINTHEADER;
 
-			// Synchro send
-			while(gl_synchroSend >0);
-
 			while(!ECANSendMessage(id,dataOut,dataLen,flags));
 			CANsendDelay();
 
@@ -2341,8 +2338,6 @@ void sendRequestToCAN(unsigned char* request) {
 		dataOut[dataOutCounter]=TRAMEREQUESTHEADER;
 	}
 			
-	// Synchro send
-	while(gl_synchroSend >0);
 	CANsendDelay(); // Delay to avoid sending to fast after receiving a trame
 
 	while(!ECANSendMessage(id,dataOut,dataLen,flags));
@@ -2675,7 +2670,6 @@ void high_isr(void){
 			gl_InputBufferPointer+=dataLen;
 			if(gl_InputBufferPointer>=MAXTRAMESIZE)gl_InputBufferPointer-=MAXTRAMESIZE;
 		}
-		gl_synchroSend=(gl_boardNumber+1)*SYNCHROSENDDELAY;
 	}
 	
 	if (gl_master==FALSE)return;
@@ -2708,9 +2702,6 @@ void low_isr(void){
 	  unsigned char 	bitNumber;
 	  unsigned char 	bitValue;
 	  short 			ADC;
-
-	// Synchro send
-	if(gl_synchroSend>0)gl_synchroSend--;
 	
 	if (!gl_mutex) {
 
