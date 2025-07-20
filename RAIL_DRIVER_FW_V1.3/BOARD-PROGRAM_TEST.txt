@@ -388,7 +388,7 @@ PROG 0 AUT A9 AUTOFF BOARD 0 TIMER 1 ACT AUTOFF D3
 // Désactive la relance du train sur détection voie H3
 PROG 0 AUT AA AUTOFF BOARD 0 TIMER 1 ACT AUTOFF D4
 
-/ Désactivation des commandes pour le train à crémaillère
+// Désactivation des commandes pour le train à crémaillère
 PROG 0 AUT AB AUTOFF BOARD 0 TIMER 1 ACT AUTOFF D5
 PROG 0 AUT AC AUTOFF BOARD 0 TIMER 1 ACT AUTOFF D6
 PROG 0 AUT AD AUTOFF BOARD 0 TIMER 1 ACT AUTOFF D7
