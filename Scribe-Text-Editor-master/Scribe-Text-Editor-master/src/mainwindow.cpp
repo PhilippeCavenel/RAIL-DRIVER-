@@ -592,12 +592,11 @@ void MainWindow::on_actionUpdate_triggered() {
                 QByteArray utf8Bytes = newLine.toUtf8();
                 for (char byte : utf8Bytes) {
                     serial->write(&byte, 1);
-                    if (!serial->waitForBytesWritten(m_waitTimeout)) {
-                        QMessageBox::warning(this, "Error", "Timeout: " + QTime::currentTime().toString());
-                    }
+                    // wait for byte written
+                    serial->waitForBytesWritten(m_waitTimeout);
 
                     // wait for response
-                    if (serial->waitForReadyRead(m_waitTimeout));
+                    serial->waitForReadyRead(m_waitTimeout);
                 }
                 newLine=QString("");
                 if (outputIndex==documentContents.length()-1)break;

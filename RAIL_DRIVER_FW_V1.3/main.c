@@ -70,7 +70,7 @@ void CalibMinMaxKnob() {
 
 	// Wait to get low value
 	for(delay=0;delay<0x5FFFF;delay++);
-	gl_mutex=0;	gl_calibKnob=0; gl_mutex=0;
+	gl_mutex=1;	gl_calibKnob=0; gl_mutex=0;
 
 	// Save in EEPROM
 	WriteEEPROM(adr++,(gl_minAdcKnobValue0>>8) & 0xFF);
@@ -1951,7 +1951,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							return(FALSE);
 						}
 													
-						if (request[REQ_COMMAND_REQUEST_TRACK_NUMBER]>=0 && request[REQ_COMMAND_REQUEST_TRACK_NUMBER]<=4) {
+						if (request[REQ_COMMAND_REQUEST_TRACK_NUMBER]>=0 && request[REQ_COMMAND_REQUEST_TRACK_NUMBER]<=31) {
 							if (((request[REQ_COMMAND_REQUEST_TRACK_SPEED]>=0 && request[REQ_COMMAND_REQUEST_TRACK_SPEED]<=MAXSPEEDVALUE)|| request[REQ_COMMAND_REQUEST_TRACK_SPEED]==KNOB0Value || request[REQ_COMMAND_REQUEST_TRACK_SPEED]==KNOB1Value) &&
 							    (request[REQ_COMMAND_REQUEST_TRACK_DIR]==FORWValue || request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) &&
 								((request[REQ_COMMAND_REQUEST_TRACK_INERTIA]>=0 && request[REQ_COMMAND_REQUEST_TRACK_INERTIA]<=100)|| request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB0Value || request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB1Value)) {
@@ -1967,16 +1967,43 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 								
 								if (step<0)step=-step;
 	
-								if (request[REQ_COMMAND_REQUEST_TRACK_NUMBER]==4) { // ALL
+								// Manage all groups of tracks
+								// 17 = 0
+								// 18 = 1
+								// 19 = 1 0
+								// 20 = 2
+								// 21 = 2 0
+								// 22 = 2 1
+								// 23 = 2 1 0
+								// 24 = 3
+								// 25 = 3 0
+								// 26 = 3 1
+								// 27 = 3 1 0
+								// 28 = 3 2 
+								// 29 = 3 2 0
+								// 30 = 3 2 1
+								// 31 = 3 2 1 0
+
+								if (request[REQ_COMMAND_REQUEST_TRACK_NUMBER]>=17) {
 									for(trackNumber=0;trackNumber<4;trackNumber++) {
-										setSpeed(speed,step,trackNumber);
-										if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];
+										if ((request[REQ_COMMAND_REQUEST_TRACK_NUMBER] & 0x0F & (1<<trackNumber))== (1<<trackNumber)) {
+											setSpeed(speed,step,trackNumber);
+											if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];
+										}
+										else {
+											setSpeed(0,0,trackNumber);
+											if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];
+										}
 									}
 								}
-								else {
+								else if (request[REQ_COMMAND_REQUEST_TRACK_NUMBER]<=3) {
 										trackNumber=request[REQ_COMMAND_REQUEST_TRACK_NUMBER];
 										setSpeed(speed,step,trackNumber);
 										if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];
+								}
+								else {								
+									gl_parserErrorCode=BAD_TRACK_NUMBER;
+									return(FALSE);
 								}
 								gl_mutex=0;
 								if (sendPrompt==TRUE) prompt(gl_message);

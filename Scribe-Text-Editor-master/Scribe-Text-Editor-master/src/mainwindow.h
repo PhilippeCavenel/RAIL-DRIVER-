@@ -65,7 +65,7 @@ private:
     Editor *editor = nullptr;
     Settings *settings = Settings::instance();
     QSerialPort *serial;
-    int m_waitTimeout = 10;
+    int m_waitTimeout = 5;
 
     // Used for storing application state upon termination
     const QString WINDOW_SIZE_KEY = "window_size";
