@@ -35,8 +35,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-#define RAIL_DRIVER_HEADER				"RAIL DRIVER..V 1.32"
-#define VERSION							"VERSION......20-07-2025"
+#define RAIL_DRIVER_HEADER				"RAIL DRIVER..V 1.33"
+#define VERSION							"VERSION......21-07-2025"
 #define BOARD_NUMBER					"BOARD........"
 #define MEMORY							"MEMORY......."
 #define AUTOMATION						"AUTOMATION..."

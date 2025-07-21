@@ -1715,7 +1715,10 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 		 	return(TRUE); 
 		case CALIBValue :
 			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
-			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) CalibMinMaxKnob() ;
+			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) {
+				gl_stopAll=TRUE;
+			       	CalibMinMaxKnob() ;
+			}
 			if (sendPrompt==TRUE) {
 				prompt(gl_message);prompt(gl_message);
 			}
