@@ -77,7 +77,7 @@ void GraphicsView::setScene(BasicGraphicsScene *scene)
 {
     QGraphicsView::setScene(scene);
 
-    {
+/*    {
         // setup actions
         delete _clearSelectionAction;
         _clearSelectionAction = new QAction(QStringLiteral("Clear Selection"), this);
@@ -148,6 +148,7 @@ void GraphicsView::setScene(BasicGraphicsScene *scene)
     auto redoAction = scene->undoStack().createRedoAction(this, tr("&Redo"));
     redoAction->setShortcuts(QKeySequence::Redo);
     addAction(redoAction);
+*/
 }
 
 void GraphicsView::centerScene()
@@ -238,10 +239,36 @@ void GraphicsView::scaleUp()
     Q_EMIT scaleChanged(transform().m11());
 }
 
+void GraphicsView::adjustZoomRangeToFitScene()
+{
+    if (!scene())
+        return;
+
+    QRectF sceneRect = scene()->itemsBoundingRect(); // ou scene()->sceneRect() si elle est bien définie
+    QSizeF viewSize = viewport()->size();
+
+    // Évite division par zéro
+    if (sceneRect.width() == 0 || sceneRect.height() == 0)
+        return;
+
+    double scaleX = viewSize.width() / sceneRect.width();
+    double scaleY = viewSize.height() / sceneRect.height();
+
+    double minScale = std::min(scaleX, scaleY);
+
+    // Limites raisonnables
+    minScale = std::clamp(minScale, 0.05, 1.0);
+
+    // Tu peux garder 2.0 comme zoom maximal, ou le calculer aussi si tu veux
+    setScaleRange(minScale, 2.0);
+}
+
 void GraphicsView::scaleDown()
 {
     double const step = 1.2;
     double const factor = std::pow(step, -1.0);
+
+    adjustZoomRangeToFitScene();
 
     if (_scaleRange.minimum > 0) {
         QTransform t = transform();

@@ -33,11 +33,11 @@ public:
 public:
     AbstractGraphModel &graphModel() const;
 
-    void setHighlight(bool enabled);
+    NODE_EDITOR_PUBLIC void setHighlight(bool enabled);
 
     BasicGraphicsScene *nodeScene() const;
 
-    ConnectionId const &connectionId() const;
+    NODE_EDITOR_PUBLIC ConnectionId const & connectionId() const;
 
     QRectF boundingRect() const override;
 

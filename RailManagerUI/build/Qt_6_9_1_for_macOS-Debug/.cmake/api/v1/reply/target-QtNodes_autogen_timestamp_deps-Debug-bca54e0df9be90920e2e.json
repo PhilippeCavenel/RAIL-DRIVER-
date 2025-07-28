@@ -1,0 +1,27 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"/Users/pcavenel/Desktop/RAIL/QtNodesLibrary/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"id" : "QtNodes_autogen_timestamp_deps::@1286cf91529aee9545ca",
+	"isGeneratorProvided" : true,
+	"name" : "QtNodes_autogen_timestamp_deps",
+	"paths" : 
+	{
+		"build" : "QtNodesLibrary_build",
+		"source" : "/Users/pcavenel/Desktop/RAIL/QtNodesLibrary"
+	},
+	"sources" : [],
+	"type" : "UTILITY"
+}

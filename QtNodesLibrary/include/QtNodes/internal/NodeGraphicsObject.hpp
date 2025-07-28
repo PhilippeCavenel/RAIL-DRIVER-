@@ -52,7 +52,7 @@ public:
 
     void updateQWidgetEmbedPos();
 
-    void setHighlight(bool enabled);
+    NODE_EDITOR_PUBLIC void setHighlight(bool enabled);
 
     QColor highlightBackground() const { return _highlightBackground; }
 

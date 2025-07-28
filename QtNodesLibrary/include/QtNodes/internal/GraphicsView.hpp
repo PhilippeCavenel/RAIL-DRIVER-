@@ -46,6 +46,8 @@ public:
 public Q_SLOTS:
     void scaleUp();
 
+    void adjustZoomRangeToFitScene();
+
     void scaleDown();
 
     void setupScale(double scale);

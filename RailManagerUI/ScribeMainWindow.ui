@@ -98,7 +98,7 @@
      <x>0</x>
      <y>0</y>
      <width>631</width>
-     <height>24</height>
+     <height>37</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -161,12 +161,15 @@
     <property name="title">
      <string>RailRoad</string>
     </property>
+    <addaction name="actionCheck_Program"/>
+    <addaction name="actionSelect_Port_Com"/>
+    <addaction name="actionUpdate"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuRailRoad"/>
    <addaction name="menuEdit"/>
    <addaction name="menuFormat"/>
    <addaction name="menuView"/>
-   <addaction name="menuRailRoad"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -188,7 +191,7 @@
    <addaction name="actionPaste"/>
    <addaction name="actionFind"/>
    <addaction name="separator"/>
-   <addaction name="actionCheck"/>
+   <addaction name="actionCheck_Program"/>
    <addaction name="actionUpdate"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
@@ -468,19 +471,24 @@
      <normaloff>:/icons/res/icons/load.bmp</normaloff>:/icons/res/icons/load.bmp</iconset>
    </property>
    <property name="text">
-    <string>Update</string>
+    <string>Update boards</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::MenuRole::NoRole</enum>
+    <enum>QAction::MenuRole::TextHeuristicRole</enum>
    </property>
   </action>
-  <action name="actionCheck">
+  <action name="actionSelect_Port_Com">
+   <property name="text">
+    <string>Select Port Com</string>
+   </property>
+  </action>
+  <action name="actionCheck_Program">
    <property name="icon">
-    <iconset resource="resources.qrc">
-     <normaloff>:/icons/res/icons/check.bmp</normaloff>:/icons/res/icons/check.bmp</iconset>
+    <iconset>
+	    <normaloff>:/icons/res/icons/check.bmp</normaloff>:/icons/res/icons/check.bmp</iconset>
    </property>
    <property name="text">
-    <string>Check</string>
+    <string>Check_Program</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>

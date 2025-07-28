@@ -229,34 +229,10 @@ void GraphWidget::updateFromEditor() {
             ++currentCol;
         }
     }
+
+    // 🔍 Ajuster la vue pour contenir tout le contenu
+    gl_view->fitInView(gl_scene->itemsBoundingRect(), Qt::KeepAspectRatio);
 }
-
-/*void GraphWidget::highlightConnectionsForSelection() {
-    // 1. Récupérer tous les NodeId sélectionnés
-    QSet<NodeId> selectedNodeIds;
-    for (QGraphicsItem* item : gl_scene->selectedItems()) {
-        if (auto nodeGraphics = qgraphicsitem_cast<NodeGraphicsObject*>(item)) {
-            selectedNodeIds.insert(nodeGraphics->nodeId());
-        }
-    }
-
-    // 2. Parcourir tous les objets de la scène
-    for (QGraphicsItem* item : gl_scene->items()) {
-        auto connGraphics = qgraphicsitem_cast<ConnectionGraphicsObject*>(item);
-        if (!connGraphics)
-            continue;
-
-        ConnectionId connId = connGraphics->connectionId();
-
-        // Est-ce que la connexion touche un nœud sélectionné ?
-        bool highlight = selectedNodeIds.contains(connId.inNodeId)
-                         || selectedNodeIds.contains(connId.outNodeId);
-
-        connGraphics->setHighlight(highlight);  // 🟢 C'est ici que le style change
-    }
-
-    gl_scene->update();  // Force un rafraîchissement visuel
-}*/
 
 void GraphWidget::highlightConnectionsForSelection() {
     QSet<NodeId> selectedNodeIds;
@@ -313,14 +289,14 @@ GraphWidget::GraphWidget(ScribeMainWindow *editor, QWidget *parent)
     connect(gl_scene, &QGraphicsScene::selectionChanged, this, &GraphWidget::highlightConnectionsForSelection);
 
 
-    QAction *createNodeAction = new QAction("Create Node", gl_view);
+    /*QAction *createNodeAction = new QAction("Create Node", gl_view);
     gl_view->setContextMenuPolicy(Qt::ActionsContextMenu);
     QObject::connect(createNodeAction, &QAction::triggered, [=]() {
         QPointF posView = gl_view->mapToScene(gl_view->mapFromGlobal(QCursor::pos()));
         NodeId newId = gl_graphModel->addNode();
         gl_graphModel->setNodeData(newId, NodeRole::Position, posView);
     });
-    gl_view->addAction(createNodeAction);
+    gl_view->addAction(createNodeAction);*/
 
     gl_layout->addWidget(gl_view);
     setLayout(gl_layout);

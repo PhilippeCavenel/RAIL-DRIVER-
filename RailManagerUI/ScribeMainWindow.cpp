@@ -14,6 +14,9 @@
 #include <QShortcut>
 #include <QSerialPort>
 #include <QThread>
+#include <QSerialPortInfo>
+#include <QInputDialog>
+#include <QMessageBox>
 
 
 /* Sets up the main application window and all of its children/widgets.
@@ -22,7 +25,6 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
 {
     ui->setupUi(this);
     readSettings();
-    openSerial();
 
     // Used to ensure that only one language can ever be checked at a time
     languageGroup = new QActionGroup(this);
@@ -63,6 +65,8 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(on_actionSaveTriggered()));
     connect(ui->actionSave_As, SIGNAL(triggered()), this, SLOT(on_actionSaveTriggered()));
     connect(ui->actionReplace, SIGNAL(triggered()), this, SLOT(on_actionFind_triggered()));
+    connect(ui->actionSelect_Port_Com, &QAction::triggered, this, &ScribeMainWindow::actionSelect_Port_Com);
+
 
     // Have to add this shortcut manually because we can't define it via the GUI editor
     QShortcut *tabCloseShortcut = new QShortcut(QKeySequence("Ctrl+W"), this);
@@ -79,6 +83,7 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     connect(serial, &QSerialPort::readyRead, this, &ScribeMainWindow::onDataReceived);
     connect(ui->simpleCommand,SIGNAL(returnPressed()),this,SLOT(on_action_simpleCommand()));
 }
+
 
 QString ScribeMainWindow::getCurrentDocument() const {
     return editor->getContent();
@@ -302,6 +307,23 @@ void ScribeMainWindow::reconnectEditorDependentSignals()
     connect(editor, SIGNAL(copyAvailable(bool)), this, SLOT(toggleCopyAndCut(bool)));
 }
 
+void ScribeMainWindow::onTabRegainedFocus()
+{
+    qDebug() << "[ScribeMainWindow] Onglet activé.";
+    // Exemple : rafraîchir l’interface, relancer un processus, etc.
+    ui->statusBar->showMessage("Éditeur actif", 2000);
+}
+
+void ScribeMainWindow::onTabLostFocus()
+{
+    editor = tabbedEditor->currentTab();
+    connect(editor, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
+    emit checkTextSignal();
+
+    qDebug() << "[ScribeMainWindow] Onglet désactivé.";
+    // Exemple : mettre en pause des opérations, cacher des vues, etc.
+}
+
 
 /* Called each time the current tab changes in the tabbed editor. Sets the main window's current editor,
  * reconnects any relevant signals, and updates the window.
@@ -322,7 +344,8 @@ void ScribeMainWindow::on_currentTabChanged(int index)
     }
 
     editor = tabbedEditor->currentTab();
-    //connect(editor, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
+    connect(editor, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
+    emit checkTextSignal();
 
     reconnectEditorDependentSignals();
     editor->setFocus(Qt::FocusReason::TabFocusReason);
@@ -552,7 +575,38 @@ void ScribeMainWindow::processTimeout(const QString &s)
     informUser(QString("Error"), s);
 }
 
-void ScribeMainWindow::on_actionCheck_triggered(){
+void ScribeMainWindow::actionSelect_Port_Com() {
+    // Récupère la liste des ports disponibles
+    QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+
+    if (ports.isEmpty()) {
+        QMessageBox::warning(this, "Aucun port COM", "Aucun port COM disponible n’a été détecté.");
+        return;
+    }
+
+    // Crée une liste de noms pour l'affichage
+    QStringList portNames;
+    for (const QSerialPortInfo &port : ports) {
+        portNames << QString("%1 (%2)").arg(port.portName(), port.description());
+    }
+
+    // Affiche une boîte de dialogue pour choisir un port
+    bool ok;
+    QString selectedPort = QInputDialog::getItem(this,
+                                                 "Sélection du port COM",
+                                                 "Choisissez un port COM disponible :",
+                                                 portNames,
+                                                 0, // index sélectionné par défaut
+                                                 false, // non modifiable
+                                                 &ok);
+    if (ok && !selectedPort.isEmpty()) {
+        // Extrait uniquement le nom du port (avant le 1er espace ou parenthèse)
+        gl_currentComPort = selectedPort.section(' ', 0, 0);
+        QMessageBox::information(this, "Port sélectionné", QString("Port COM sélectionné : %1").arg(gl_currentComPort));
+    }
+}
+
+void ScribeMainWindow::on_actionCheck_Program_triggered(){
     editor->getContent();
     emit checkTextSignal();
 }
@@ -569,8 +623,11 @@ void ScribeMainWindow::on_actionUpdate_triggered() {
     }
 
     if (!serial || !serial->open(QIODevice::ReadWrite)) {
-        QMessageBox::warning(this, "Error", "Can't open COM3: " + serial->errorString());
-        return;
+        openSerial();
+        if (!serial || !serial->open(QIODevice::ReadWrite)) {
+            QMessageBox::warning(this, "Error", "Can't open " + gl_currentComPort);
+            return;
+        }
     }
 
     outputIndex=0;
@@ -630,8 +687,11 @@ void ScribeMainWindow::on_action_simpleCommand(){
     QByteArray utf8Bytes = newLine.toUtf8();
 
     if (!serial || !serial->open(QIODevice::ReadWrite)) {
-        QMessageBox::warning(this, "Error", "Can't open COM3: " + serial->errorString());
-        return;
+        openSerial();
+        if (!serial || !serial->open(QIODevice::ReadWrite)) {
+            QMessageBox::warning(this, "Error", "Can't open " + gl_currentComPort);
+            return;
+        }
     }
 
     for (char byte : utf8Bytes) {
@@ -777,13 +837,15 @@ void ScribeMainWindow::readSettings()
  */
 
 void ScribeMainWindow::openSerial() {
-    serial=new QSerialPort();
-    serial->setPortName(QString("COM3"));
-    serial->setBaudRate(QSerialPort::Baud115200);
-    serial->setDataBits(QSerialPort::Data8);
-    serial->setParity(QSerialPort::NoParity);
-    serial->setStopBits(QSerialPort::OneStop);
-    serial->setFlowControl(QSerialPort::NoFlowControl);
+    if (!serial) {
+        serial=new QSerialPort();
+        serial->setPortName(gl_currentComPort);
+        serial->setBaudRate(QSerialPort::Baud115200);
+        serial->setDataBits(QSerialPort::Data8);
+        serial->setParity(QSerialPort::NoParity);
+        serial->setStopBits(QSerialPort::OneStop);
+        serial->setFlowControl(QSerialPort::NoFlowControl);
+    }
 }
 
 void ScribeMainWindow::onDataReceived()

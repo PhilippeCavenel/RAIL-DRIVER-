@@ -1,3 +1,8 @@
+# Dans ton CMakeLists.txt tout au début :
+if(DEFINED CMAKE_PROJECT_INCLUDE_BEFORE AND CMAKE_PROJECT_INCLUDE_BEFORE MATCHES ".qtc/package-manager/auto-setup.cmake")
+    unset(CMAKE_PROJECT_INCLUDE_BEFORE CACHE)
+endif()
+
 cmake_minimum_required(VERSION 3.16)
 
 project(RailManagerUI VERSION 0.1 LANGUAGES CXX)
@@ -13,8 +18,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets SerialPort PrintSupport)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets SerialPort PrintSupport)
 
-# Ajoute la bibliothèque QtNodes
-add_subdirectory(../QtNodesLibrary QtNodes_build)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../QtNodesLibrary ${CMAKE_BINARY_DIR}/QtNodesLibrary_build)
 
 # Sources de ton application
 set(PROJECT_SOURCES

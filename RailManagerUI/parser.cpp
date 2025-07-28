@@ -484,7 +484,7 @@ char parser::parseLine(char* inputString,parserObject* returnedObject) {
                     if (getIdent(inputString,&stringPointer,ident)==FALSE) {
                         return(FALSE);
                     }
-                    returnedObject->Action.append(QString("AUTON"));
+                    returnedObject->Action.append(QString("AUTON ")).append(QString(ident));
 
                     return(TRUE);
                 }
@@ -499,7 +499,7 @@ char parser::parseLine(char* inputString,parserObject* returnedObject) {
                     if (getIdent(inputString,&stringPointer,ident)==FALSE) {
                         return(FALSE);
                     }
-                    returnedObject->Action.append(QString("AUTOFF"));
+                    returnedObject->Action.append(QString("AUTOFF ")).append(QString(ident));
 
                     return(TRUE);
                 }

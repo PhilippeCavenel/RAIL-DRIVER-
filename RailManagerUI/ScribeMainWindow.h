@@ -84,6 +84,7 @@ private:
     QLineEdit *simpleCommand;
     Editor *editor = nullptr;
     QString currentDocument;
+    QString gl_currentComPort;
 
 public:
     QString getCurrentDocument() const; // to get data access
@@ -99,6 +100,9 @@ public slots:
     inline void closeTabShortcut() { closeTab(tabbedEditor->currentTab()); }
     inline void informUser(QString title, QString message) { QMessageBox::information(findDialog, title, message); }
 
+public slots:
+    void onTabRegainedFocus();
+    void onTabLostFocus();
 
 // All UI and/or keyboard shortcut interactions
 private slots:
@@ -124,8 +128,9 @@ private slots:
     void on_actionWord_Wrap_triggered();
     void on_actionTool_Bar_triggered();
     void on_actionUpdate_triggered();
-    void on_actionCheck_triggered();
+    void on_actionCheck_Program_triggered();
     void on_action_simpleCommand();
+    void actionSelect_Port_Com();
     void processError(const QString &s);
     void processTimeout(const QString &s);
 

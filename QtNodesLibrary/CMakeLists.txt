@@ -1,8 +1,12 @@
+# Dans ton CMakeLists.txt tout au début :
+if(DEFINED CMAKE_PROJECT_INCLUDE_BEFORE AND CMAKE_PROJECT_INCLUDE_BEFORE MATCHES ".qtc/package-manager/auto-setup.cmake")
+    unset(CMAKE_PROJECT_INCLUDE_BEFORE CACHE)
+endif()
+
 cmake_minimum_required(VERSION 3.11)
 
 cmake_policy(SET CMP0072 NEW) # new in 3.11. The NEW behavior for this policy is to set OpenGL_GL_PREFERENCE to GLVND.
 cmake_policy(SET CMP0068 NEW) # new in 3.9. The NEW behavior of this policy is to ignore the RPATH settings for install_name on macOS.
-
 
 project(QtNodesLibrary CXX)
 
@@ -33,9 +37,9 @@ option(USE_QT6 "Build with Qt6 (Enabled by default)" ON)
 enable_testing()
 
 if(QT_NODES_DEVELOPER_DEFAULTS)
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
-  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin")
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 endif()
 
 if(BUILD_DEBUG_POSTFIX_D)
@@ -194,10 +198,11 @@ endif()
 
 set_target_properties(QtNodes
   PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
-    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
+    ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin
 )
+
 
 ######
 # Moc
