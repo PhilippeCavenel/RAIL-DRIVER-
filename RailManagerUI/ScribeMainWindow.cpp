@@ -80,7 +80,6 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     appendShortcutsToToolbarTooltips();
 
     // Serial
-    connect(serial, &QSerialPort::readyRead, this, &ScribeMainWindow::onDataReceived);
     connect(ui->simpleCommand,SIGNAL(returnPressed()),this,SLOT(on_action_simpleCommand()));
 }
 
@@ -603,6 +602,7 @@ void ScribeMainWindow::actionSelect_Port_Com() {
         // Extrait uniquement le nom du port (avant le 1er espace ou parenthèse)
         gl_currentComPort = selectedPort.section(' ', 0, 0);
         QMessageBox::information(this, "Port sélectionné", QString("Port COM sélectionné : %1").arg(gl_currentComPort));
+        openSerial();
     }
 }
 
@@ -622,12 +622,9 @@ void ScribeMainWindow::on_actionUpdate_triggered() {
         return;
     }
 
-    if (!serial || !serial->open(QIODevice::ReadWrite)) {
-        openSerial();
-        if (!serial || !serial->open(QIODevice::ReadWrite)) {
-            QMessageBox::warning(this, "Error", "Can't open " + gl_currentComPort);
-            return;
-        }
+    if (!serial) {
+         QMessageBox::warning(this, "Error", "Select a port com first !");
+        return;
     }
 
     outputIndex=0;
@@ -686,12 +683,9 @@ void ScribeMainWindow::on_action_simpleCommand(){
     newLine.append(simpleCommand->text()).append(QChar(' ')).append(QChar('\r'));
     QByteArray utf8Bytes = newLine.toUtf8();
 
-    if (!serial || !serial->open(QIODevice::ReadWrite)) {
-        openSerial();
-        if (!serial || !serial->open(QIODevice::ReadWrite)) {
-            QMessageBox::warning(this, "Error", "Can't open " + gl_currentComPort);
-            return;
-        }
+    if (!serial) {
+        QMessageBox::warning(this, "Error", "Select a port com first !");
+        return;
     }
 
     for (char byte : utf8Bytes) {
@@ -837,15 +831,21 @@ void ScribeMainWindow::readSettings()
  */
 
 void ScribeMainWindow::openSerial() {
-    if (!serial) {
+    if(!serial) {
         serial=new QSerialPort();
-        serial->setPortName(gl_currentComPort);
-        serial->setBaudRate(QSerialPort::Baud115200);
-        serial->setDataBits(QSerialPort::Data8);
-        serial->setParity(QSerialPort::NoParity);
-        serial->setStopBits(QSerialPort::OneStop);
-        serial->setFlowControl(QSerialPort::NoFlowControl);
+        connect(serial, &QSerialPort::readyRead, this, &ScribeMainWindow::onDataReceived);
     }
+    serial->setPortName(gl_currentComPort);
+    serial->setBaudRate(QSerialPort::Baud115200);
+    serial->setDataBits(QSerialPort::Data8);
+    serial->setParity(QSerialPort::NoParity);
+    serial->setStopBits(QSerialPort::OneStop);
+    serial->setFlowControl(QSerialPort::NoFlowControl);
+    if (!serial->open(QIODevice::ReadWrite)) {
+        QMessageBox::warning(this, "Error", "Can't open " + gl_currentComPort);
+        serial->deleteLater();
+    }
+
 }
 
 void ScribeMainWindow::onDataReceived()

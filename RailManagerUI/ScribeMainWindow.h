@@ -63,7 +63,7 @@ private:
     QTextEdit *CommandResult;
     MetricReporter *metricReporter;
     Settings *settings = Settings::instance();
-    QSerialPort *serial;
+    QSerialPort *serial=Q_NULLPTR;
     int m_waitTimeout = 5;
 
     // Used for storing application state upon termination
