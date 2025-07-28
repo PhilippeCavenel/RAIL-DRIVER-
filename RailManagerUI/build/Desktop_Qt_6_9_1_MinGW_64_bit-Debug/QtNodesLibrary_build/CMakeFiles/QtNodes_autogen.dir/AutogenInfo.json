@@ -1,13 +1,13 @@
 {
 	"AUTOGEN_COMMAND_LINE_LENGTH_MAX" : 32000,
-	"BUILD_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen",
-	"CMAKE_BINARY_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug",
-	"CMAKE_CURRENT_BINARY_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build",
-	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Mac/Home/Desktop/RAIL/QtNodesLibrary",
+	"BUILD_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/caven/Documents/GITHUB/QtNodesLibrary",
 	"CMAKE_EXECUTABLE" : "C:/Qt/Tools/CMake_64/bin/cmake.exe",
 	"CMAKE_LIST_FILES" : 
 	[
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/CMakeLists.txt",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/CMakeLists.txt",
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6/Qt6Config.cmake",
@@ -115,238 +115,238 @@
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6OpenGLPrivate/Qt6OpenGLPrivateAdditionalTargetInfo.cmake",
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6OpenGLPrivate/Qt6OpenGLPrivateVersionlessAliasTargets.cmake",
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6OpenGL/Qt6OpenGLVersionlessAliasTargets.cmake",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/resources/resources.qrc",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/resources/resources.qrc",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/GNUInstallDirs.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakePackageConfigHelpers.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/WriteBasicConfigVersionFile.cmake",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/cmake/QtNodesConfig.cmake.in"
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/cmake/QtNodesConfig.cmake.in"
 	],
-	"CMAKE_SOURCE_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI",
+	"CMAKE_SOURCE_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI",
 	"CROSS_CONFIG" : false,
-	"DEP_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen/deps",
+	"DEP_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "QtNodes_autogen/timestamp",
 	"HEADERS" : 
 	[
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/AbstractConnectionPainter.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/AbstractConnectionPainter.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/AbstractGraphModel.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/AbstractGraphModel.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/AbstractNodeGeometry.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/AbstractNodeGeometry.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/AbstractNodePainter.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/AbstractNodePainter.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/BasicGraphicsScene.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/BasicGraphicsScene.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Compiler.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Compiler.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionGraphicsObject.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionGraphicsObject.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionIdHash.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionIdHash.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionIdUtils.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionIdUtils.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionState.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionState.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionStyle.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionStyle.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DataFlowGraphModel.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DataFlowGraphModel.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DataFlowGraphicsScene.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DataFlowGraphicsScene.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DefaultConnectionPainter.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DefaultConnectionPainter.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DefaultHorizontalNodeGeometry.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DefaultHorizontalNodeGeometry.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DefaultNodePainter.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DefaultNodePainter.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DefaultVerticalNodeGeometry.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DefaultVerticalNodeGeometry.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Definitions.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Definitions.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Export.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Export.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/GraphicsView.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/GraphicsView.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/GraphicsViewStyle.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/GraphicsViewStyle.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeConnectionInteraction.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeConnectionInteraction.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeData.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeData.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeDelegateModel.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeDelegateModel.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeDelegateModelRegistry.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeDelegateModelRegistry.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeGraphicsObject.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeGraphicsObject.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeState.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeState.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeStyle.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeStyle.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/OperatingSystem.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/OperatingSystem.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/QStringStdHash.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/QStringStdHash.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/QUuidStdHash.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/QUuidStdHash.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Serializable.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Serializable.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Style.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Style.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/StyleCollection.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/StyleCollection.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/UndoCommands.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/UndoCommands.hpp",
 			"mU",
 			"",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/locateNode.hpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/locateNode.hpp",
 			"mU",
 			"",
 			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen/include",
-	"MOC_COMPILATION_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen/mocs_compilation.cpp",
+	"INCLUDE_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen/include",
+	"MOC_COMPILATION_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen/mocs_compilation.cpp",
 	"MOC_DEFINITIONS" : 
 	[
 		"MINGW_HAS_SECURE_API=1",
@@ -374,9 +374,9 @@
 	],
 	"MOC_INCLUDES" : 
 	[
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal",
 		"C:/Qt/6.9.1/mingw_64/include/QtCore",
 		"C:/Qt/6.9.1/mingw_64/include",
 		"C:/Qt/6.9.1/mingw_64/mkspecs/win32-g++",
@@ -410,211 +410,211 @@
 		"-c",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodes_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : 
 	[
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/AbstractConnectionPainter.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/AbstractGraphModel.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/AbstractNodeGeometry.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/AbstractNodePainter.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/BasicGraphicsScene.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Compiler.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionGraphicsObject.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionIdHash.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionIdUtils.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionState.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionStyle.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DataFlowGraphModel.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DataFlowGraphicsScene.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DefaultConnectionPainter.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DefaultHorizontalNodeGeometry.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DefaultNodePainter.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/DefaultVerticalNodeGeometry.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Definitions.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Export.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/GraphicsView.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/GraphicsViewStyle.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeConnectionInteraction.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeData.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeDelegateModel.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeDelegateModelRegistry.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeGraphicsObject.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeState.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeStyle.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/OperatingSystem.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/QStringStdHash.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/QUuidStdHash.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Serializable.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Style.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/StyleCollection.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/UndoCommands.hpp",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/locateNode.hpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractConnectionPainter.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractGraphModel.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractNodeGeometry.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractNodePainter.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_BasicGraphicsScene.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Compiler.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionGraphicsObject.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionIdHash.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionIdUtils.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionState.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionStyle.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DataFlowGraphModel.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DataFlowGraphicsScene.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultConnectionPainter.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultHorizontalNodeGeometry.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultNodePainter.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultVerticalNodeGeometry.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Definitions.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Export.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_GraphicsView.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_GraphicsViewStyle.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeConnectionInteraction.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeData.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeDelegateModel.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeDelegateModelRegistry.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeGraphicsObject.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeState.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeStyle.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_OperatingSystem.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_QStringStdHash.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_QUuidStdHash.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Serializable.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Style.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_StyleCollection.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_UndoCommands.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_locateNode.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/qrc_resources.cpp"
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/AbstractConnectionPainter.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/AbstractGraphModel.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/AbstractNodeGeometry.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/AbstractNodePainter.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/BasicGraphicsScene.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Compiler.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionGraphicsObject.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionIdHash.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionIdUtils.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionState.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionStyle.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DataFlowGraphModel.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DataFlowGraphicsScene.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DefaultConnectionPainter.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DefaultHorizontalNodeGeometry.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DefaultNodePainter.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/DefaultVerticalNodeGeometry.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Definitions.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Export.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/GraphicsView.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/GraphicsViewStyle.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeConnectionInteraction.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeData.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeDelegateModel.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeDelegateModelRegistry.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeGraphicsObject.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeState.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeStyle.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/OperatingSystem.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/QStringStdHash.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/QUuidStdHash.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Serializable.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Style.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/StyleCollection.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/UndoCommands.hpp",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/locateNode.hpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractConnectionPainter.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractGraphModel.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractNodeGeometry.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractNodePainter.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_BasicGraphicsScene.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Compiler.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionGraphicsObject.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionIdHash.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionIdUtils.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionState.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionStyle.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DataFlowGraphModel.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DataFlowGraphicsScene.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultConnectionPainter.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultHorizontalNodeGeometry.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultNodePainter.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultVerticalNodeGeometry.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Definitions.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Export.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_GraphicsView.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_GraphicsViewStyle.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeConnectionInteraction.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeData.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeDelegateModel.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeDelegateModelRegistry.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeGraphicsObject.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeState.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeStyle.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_OperatingSystem.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_QStringStdHash.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_QUuidStdHash.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Serializable.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Style.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_StyleCollection.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_UndoCommands.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_locateNode.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/qrc_resources.cpp"
 	],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 4,
-	"PARSE_CACHE_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/CMakeFiles/QtNodes_autogen.dir/ParseCache.txt",
+	"PARSE_CACHE_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/CMakeFiles/QtNodes_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "C:/Qt/6.9.1/mingw_64/bin/moc.exe",
 	"QT_UIC_EXECUTABLE" : "C:/Qt/6.9.1/mingw_64/bin/uic.exe",
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 9,
-	"SETTINGS_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/CMakeFiles/QtNodes_autogen.dir/AutogenUsed.txt",
+	"SETTINGS_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/CMakeFiles/QtNodes_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/AbstractGraphModel.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/AbstractGraphModel.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/AbstractNodeGeometry.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/AbstractNodeGeometry.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/BasicGraphicsScene.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/BasicGraphicsScene.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/ConnectionGraphicsObject.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/ConnectionGraphicsObject.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/ConnectionState.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/ConnectionState.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/ConnectionStyle.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/ConnectionStyle.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DataFlowGraphModel.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DataFlowGraphModel.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DataFlowGraphicsScene.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DataFlowGraphicsScene.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DefaultConnectionPainter.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DefaultConnectionPainter.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DefaultHorizontalNodeGeometry.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DefaultHorizontalNodeGeometry.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DefaultNodePainter.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DefaultNodePainter.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DefaultVerticalNodeGeometry.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DefaultVerticalNodeGeometry.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/Definitions.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/Definitions.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/GraphicsView.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/GraphicsView.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/GraphicsViewStyle.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/GraphicsViewStyle.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeConnectionInteraction.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeConnectionInteraction.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeDelegateModel.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeDelegateModel.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeDelegateModelRegistry.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeDelegateModelRegistry.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeGraphicsObject.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeGraphicsObject.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeState.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeState.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeStyle.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeStyle.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/StyleCollection.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/StyleCollection.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/UndoCommands.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/UndoCommands.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/locateNode.cpp",
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/locateNode.cpp",
 			"MU",
 			null
 		]
@@ -623,43 +623,43 @@
 	"UIC_SEARCH_PATHS" : [],
 	"UIC_SKIP" : 
 	[
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractConnectionPainter.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractGraphModel.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractNodeGeometry.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractNodePainter.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_BasicGraphicsScene.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Compiler.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionGraphicsObject.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionIdHash.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionIdUtils.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionState.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionStyle.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DataFlowGraphModel.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DataFlowGraphicsScene.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultConnectionPainter.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultHorizontalNodeGeometry.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultNodePainter.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultVerticalNodeGeometry.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Definitions.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Export.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_GraphicsView.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_GraphicsViewStyle.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeConnectionInteraction.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeData.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeDelegateModel.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeDelegateModelRegistry.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeGraphicsObject.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeState.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeStyle.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_OperatingSystem.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_QStringStdHash.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_QUuidStdHash.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Serializable.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Style.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_StyleCollection.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_UndoCommands.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_locateNode.cpp",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/qrc_resources.cpp"
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractConnectionPainter.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractGraphModel.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractNodeGeometry.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_AbstractNodePainter.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_BasicGraphicsScene.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Compiler.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionGraphicsObject.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionIdHash.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionIdUtils.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionState.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_ConnectionStyle.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DataFlowGraphModel.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DataFlowGraphicsScene.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultConnectionPainter.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultHorizontalNodeGeometry.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultNodePainter.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_DefaultVerticalNodeGeometry.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Definitions.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Export.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_GraphicsView.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_GraphicsViewStyle.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeConnectionInteraction.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeData.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeDelegateModel.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeDelegateModelRegistry.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeGraphicsObject.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeState.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_NodeStyle.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_OperatingSystem.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_QStringStdHash.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_QUuidStdHash.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Serializable.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_Style.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_StyleCollection.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_UndoCommands.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/include/QtNodes/internal/moc_locateNode.cpp",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/qrc_resources.cpp"
 	],
 	"UIC_UI_FILES" : [],
 	"USE_BETTER_GRAPH" : true,

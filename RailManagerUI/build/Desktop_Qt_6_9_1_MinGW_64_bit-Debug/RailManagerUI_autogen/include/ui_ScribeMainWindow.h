@@ -239,7 +239,7 @@ public:
         ScribeMainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ScribeMainWindow);
         menuBar->setObjectName("menuBar");
-        menuBar->setGeometry(QRect(0, 0, 631, 37));
+        menuBar->setGeometry(QRect(0, 0, 631, 22));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName("menuFile");
         menuEdit = new QMenu(menuBar);
@@ -297,8 +297,8 @@ public:
         menuLanguage->addAction(actionPython_Lang);
         menuView->addAction(actionStatus_Bar);
         menuView->addAction(actionTool_Bar);
-        menuRailRoad->addAction(actionCheck_Program);
         menuRailRoad->addAction(actionSelect_Port_Com);
+        menuRailRoad->addAction(actionCheck_Program);
         menuRailRoad->addAction(actionUpdate);
         mainToolBar->addAction(actionNew);
         mainToolBar->addAction(actionOpen);

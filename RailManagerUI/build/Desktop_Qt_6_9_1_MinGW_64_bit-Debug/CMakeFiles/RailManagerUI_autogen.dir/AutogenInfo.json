@@ -1,16 +1,16 @@
 {
 	"AUTOGEN_COMMAND_LINE_LENGTH_MAX" : 32000,
-	"BUILD_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen",
-	"CMAKE_BINARY_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug",
-	"CMAKE_CURRENT_BINARY_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug",
-	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI",
+	"BUILD_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI",
 	"CMAKE_EXECUTABLE" : "C:/Qt/Tools/CMake_64/bin/cmake.exe",
 	"CMAKE_LIST_FILES" : 
 	[
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/CMakeLists.txt",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/CMakeLists.txt",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeDetermineSystem.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeSystem.cmake.in",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeSystem.cmake",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeSystem.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeNinjaFindMake.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Platform/Windows-Initialize.cmake",
@@ -64,7 +64,7 @@
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeFindBinUtils.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/GNU-FindBinUtils.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeCXXCompiler.cmake.in",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeGenericSystem.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake",
@@ -79,7 +79,7 @@
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Platform/Windows-GNU.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeDetermineRCCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeRCCompiler.cmake.in",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeRCCompiler.cmake",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeRCCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeRCInformation.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Platform/Windows-windres.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeTestRCCompiler.cmake",
@@ -96,7 +96,7 @@
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeDetermineCompilerSupport.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Internal/FeatureTesting.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeCXXCompiler.cmake.in",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Platform/Windows-GNU-CXX-ABI.cmake",
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
@@ -457,162 +457,162 @@
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportPlugins.cmake",
 		"C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6PrintSupport/Qt6PrintSupportVersionlessAliasTargets.cmake",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/GNUInstallDirs.cmake",
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI/resources.qrc"
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI/resources.qrc"
 	],
-	"CMAKE_SOURCE_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI",
+	"CMAKE_SOURCE_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI",
 	"CROSS_CONFIG" : false,
-	"DEP_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/deps",
+	"DEP_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "RailManagerUI_autogen/timestamp",
 	"HEADERS" : 
 	[
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/CustomNodeModel.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/CustomNodeModel.h",
 			"MU",
 			"EWIEGA46WW/moc_CustomNodeModel.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/ScribeMainWindow.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/ScribeMainWindow.h",
 			"MU",
 			"EWIEGA46WW/moc_ScribeMainWindow.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/SimpleGraphModel.hpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/SimpleGraphModel.hpp",
 			"MU",
 			"EWIEGA46WW/moc_SimpleGraphModel.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/documentmetrics.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/documentmetrics.h",
 			"MU",
 			"EWIEGA46WW/moc_documentmetrics.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/editor.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/editor.h",
 			"MU",
 			"EWIEGA46WW/moc_editor.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/finddialog.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/finddialog.h",
 			"MU",
 			"EWIEGA46WW/moc_finddialog.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/fusionmainwindow.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/fusionmainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_fusionmainwindow.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/gotodialog.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/gotodialog.h",
 			"MU",
 			"EWIEGA46WW/moc_gotodialog.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/graphwidget.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/graphwidget.h",
 			"MU",
 			"EWIEGA46WW/moc_graphwidget.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/chighlighter.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/chighlighter.h",
 			"MU",
 			"7XSEGK5CEA/moc_chighlighter.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/cpphighlighter.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/cpphighlighter.h",
 			"MU",
 			"7XSEGK5CEA/moc_cpphighlighter.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/highlighter.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/highlighter.h",
 			"MU",
 			"7XSEGK5CEA/moc_highlighter.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/javahighlighter.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/javahighlighter.h",
 			"MU",
 			"7XSEGK5CEA/moc_javahighlighter.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/pythonhighlighter.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/pythonhighlighter.h",
 			"MU",
 			"7XSEGK5CEA/moc_pythonhighlighter.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/language.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/language.h",
 			"MU",
 			"EWIEGA46WW/moc_language.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/linenumberarea.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/linenumberarea.h",
 			"MU",
 			"EWIEGA46WW/moc_linenumberarea.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/mainwindow.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/metricreporter.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/metricreporter.h",
 			"MU",
 			"EWIEGA46WW/moc_metricreporter.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/parser.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/parser.h",
 			"MU",
 			"EWIEGA46WW/moc_parser.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/searchhistory.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/searchhistory.h",
 			"MU",
 			"EWIEGA46WW/moc_searchhistory.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/serialport.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/serialport.h",
 			"MU",
 			"EWIEGA46WW/moc_serialport.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/settings.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/settings.h",
 			"MU",
 			"EWIEGA46WW/moc_settings.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/tabbededitor.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/tabbededitor.h",
 			"MU",
 			"EWIEGA46WW/moc_tabbededitor.cpp",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/utilityfunctions.h",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/utilityfunctions.h",
 			"MU",
 			"EWIEGA46WW/moc_utilityfunctions.cpp",
 			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
-	"INCLUDE_DIR" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/include",
-	"MOC_COMPILATION_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/mocs_compilation.cpp",
+	"INCLUDE_DIR" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/include",
+	"MOC_COMPILATION_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/mocs_compilation.cpp",
 	"MOC_DEFINITIONS" : 
 	[
 		"MINGW_HAS_SECURE_API=1",
@@ -640,8 +640,8 @@
 	],
 	"MOC_INCLUDES" : 
 	[
-		"C:/Mac/Home/Desktop/RAIL/RailManagerUI",
-		"C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/include",
+		"C:/Users/caven/Documents/GITHUB/RailManagerUI",
+		"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include",
 		"C:/Qt/6.9.1/mingw_64/include/QtCore",
 		"C:/Qt/6.9.1/mingw_64/include",
 		"C:/Qt/6.9.1/mingw_64/mkspecs/win32-g++",
@@ -677,82 +677,122 @@
 		"-c",
 		"C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeCXXCompilerABI.cpp"
 	],
-	"MOC_PREDEFS_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/moc_predefs.h",
+	"MOC_PREDEFS_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/moc_predefs.h",
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : [],
 	"MULTI_CONFIG" : false,
 	"PARALLEL" : 4,
-	"PARSE_CACHE_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/RailManagerUI_autogen.dir/ParseCache.txt",
+	"PARSE_CACHE_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/RailManagerUI_autogen.dir/ParseCache.txt",
 	"QT_MOC_EXECUTABLE" : "C:/Qt/6.9.1/mingw_64/bin/moc.exe",
 	"QT_UIC_EXECUTABLE" : "C:/Qt/6.9.1/mingw_64/bin/uic.exe",
 	"QT_VERSION_MAJOR" : 6,
 	"QT_VERSION_MINOR" : 9,
-	"SETTINGS_FILE" : "C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/RailManagerUI_autogen.dir/AutogenUsed.txt",
+	"SETTINGS_FILE" : "C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/RailManagerUI_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/ScribeMainWindow.cpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/ScribeMainWindow.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/SimpleGraphModel.cpp",
-			"MU",
-			null
-		],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/editor.cpp", "MU", null ],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/finddialog.cpp", "MU", null ],
-		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/fusionmainwindow.cpp",
-			"MU",
-			null
-		],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/gotodialog.cpp", "MU", null ],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/graphwidget.cpp", "MU", null ],
-		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/chighlighter.cpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/SimpleGraphModel.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/cpphighlighter.cpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/editor.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/highlighter.cpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/finddialog.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/javahighlighter.cpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/fusionmainwindow.cpp",
 			"MU",
 			null
 		],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/highlighters/pythonhighlighter.cpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/gotodialog.cpp",
 			"MU",
 			null
 		],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/language.cpp", "MU", null ],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/main.cpp", "MU", null ],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/mainwindow.cpp", "MU", null ],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/metricreporter.cpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/graphwidget.cpp",
 			"MU",
 			null
 		],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/parser.cpp", "MU", null ],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/searchhistory.cpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/chighlighter.cpp",
 			"MU",
 			null
 		],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/serialport.cpp", "MU", null ],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/settings.cpp", "MU", null ],
-		[ "C:/Mac/Home/Desktop/RAIL/RailManagerUI/tabbededitor.cpp", "MU", null ],
 		[
-			"C:/Mac/Home/Desktop/RAIL/RailManagerUI/utilityfunctions.cpp",
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/cpphighlighter.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/highlighter.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/javahighlighter.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/pythonhighlighter.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/language.cpp",
+			"MU",
+			null
+		],
+		[ "C:/Users/caven/Documents/GITHUB/RailManagerUI/main.cpp", "MU", null ],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/mainwindow.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/metricreporter.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/parser.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/searchhistory.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/serialport.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/settings.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/tabbededitor.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/caven/Documents/GITHUB/RailManagerUI/utilityfunctions.cpp",
 			"MU",
 			null
 		]

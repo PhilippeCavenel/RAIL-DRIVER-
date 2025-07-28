@@ -1,20 +1,5 @@
-C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/EWIEGA46WW/moc_SimpleGraphModel.cpp: C:/Mac/Home/Desktop/RAIL/RailManagerUI/SimpleGraphModel.hpp \
-  C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/moc_predefs.h \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/AbstractGraphModel \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/ConnectionIdUtils \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/StyleCollection \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/AbstractGraphModel.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Compiler.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionIdHash.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionIdUtils.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/ConnectionStyle.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Definitions.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Export.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/GraphicsViewStyle.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/NodeStyle.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/OperatingSystem.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/Style.hpp \
-  //psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/StyleCollection.hpp \
+C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/EWIEGA46WW/moc_SimpleGraphModel.cpp: C:/Users/caven/Documents/GITHUB/RailManagerUI/SimpleGraphModel.hpp \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/moc_predefs.h \
   C:/Qt/6.9.1/mingw_64/include/QtCore/QDebug \
   C:/Qt/6.9.1/mingw_64/include/QtCore/QFile \
   C:/Qt/6.9.1/mingw_64/include/QtCore/QJsonDocument \
@@ -411,4 +396,19 @@ C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/time.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h \
-  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wctype.h
+  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wctype.h \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/AbstractGraphModel \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/ConnectionIdUtils \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/StyleCollection \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/AbstractGraphModel.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Compiler.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionIdHash.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionIdUtils.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/ConnectionStyle.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Definitions.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Export.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/GraphicsViewStyle.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/NodeStyle.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/OperatingSystem.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/Style.hpp \
+  C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include/QtNodes/internal/StyleCollection.hpp

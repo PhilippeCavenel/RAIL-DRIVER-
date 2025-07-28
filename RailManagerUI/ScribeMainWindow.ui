@@ -98,7 +98,7 @@
      <x>0</x>
      <y>0</y>
      <width>631</width>
-     <height>37</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -161,8 +161,8 @@
     <property name="title">
      <string>RailRoad</string>
     </property>
-    <addaction name="actionCheck_Program"/>
     <addaction name="actionSelect_Port_Com"/>
+    <addaction name="actionCheck_Program"/>
     <addaction name="actionUpdate"/>
    </widget>
    <addaction name="menuFile"/>
@@ -484,8 +484,8 @@
   </action>
   <action name="actionCheck_Program">
    <property name="icon">
-    <iconset>
-	    <normaloff>:/icons/res/icons/check.bmp</normaloff>:/icons/res/icons/check.bmp</iconset>
+    <iconset resource="resources.qrc">
+     <normaloff>:/icons/res/icons/check.bmp</normaloff>:/icons/res/icons/check.bmp</iconset>
    </property>
    <property name="text">
     <string>Check_Program</string>

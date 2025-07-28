@@ -1,5 +1,5 @@
-C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/EWIEGA46WW/moc_serialport.cpp: C:/Mac/Home/Desktop/RAIL/RailManagerUI/serialport.h \
-  C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/moc_predefs.h \
+C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/EWIEGA46WW/moc_serialport.cpp: C:/Users/caven/Documents/GITHUB/RailManagerUI/serialport.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/moc_predefs.h \
   C:/Qt/6.9.1/mingw_64/include/QtCore/QDeadlineTimer \
   C:/Qt/6.9.1/mingw_64/include/QtCore/QList \
   C:/Qt/6.9.1/mingw_64/include/QtCore/QMutex \

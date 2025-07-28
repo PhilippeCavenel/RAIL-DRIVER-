@@ -1,15 +1,5 @@
-C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/EWIEGA46WW/moc_ScribeMainWindow.cpp: C:/Mac/Home/Desktop/RAIL/RailManagerUI/ScribeMainWindow.h \
-  C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/moc_predefs.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/documentmetrics.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/editor.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/finddialog.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/gotodialog.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/highlighters/highlighter.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/language.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/metricreporter.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/searchhistory.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/settings.h \
-  //psf/Home/Desktop/RAIL/RailManagerUI/tabbededitor.h \
+C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/EWIEGA46WW/moc_ScribeMainWindow.cpp: C:/Users/caven/Documents/GITHUB/RailManagerUI/ScribeMainWindow.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/RailManagerUI_autogen/moc_predefs.h \
   C:/Qt/6.9.1/mingw_64/include/QtCore/QList \
   C:/Qt/6.9.1/mingw_64/include/QtCore/QMap \
   C:/Qt/6.9.1/mingw_64/include/QtCore/QObject \
@@ -475,4 +465,14 @@ C:/Mac/Home/Desktop/RAIL/RailManagerUI/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sys/types.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/time.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h \
-  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h
+  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/documentmetrics.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/editor.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/finddialog.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/gotodialog.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/highlighters/highlighter.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/language.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/metricreporter.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/searchhistory.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/settings.h \
+  C:/Users/caven/Documents/GITHUB/RailManagerUI/tabbededitor.h

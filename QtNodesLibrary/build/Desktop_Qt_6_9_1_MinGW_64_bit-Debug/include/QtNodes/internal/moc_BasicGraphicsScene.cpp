@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "//psf/Home/Desktop/RAIL/QtNodesLibrary/include/QtNodes/internal/BasicGraphicsScene.hpp"
+#include "../../../../../include/QtNodes/internal/BasicGraphicsScene.hpp"
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>

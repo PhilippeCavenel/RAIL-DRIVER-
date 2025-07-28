@@ -1,4 +1,4 @@
-# Install script for directory: //psf/Home/Desktop/RAIL/QtNodesLibrary/docs
+# Install script for directory: C:/Users/caven/Documents/GITHUB/QtNodesLibrary/docs
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

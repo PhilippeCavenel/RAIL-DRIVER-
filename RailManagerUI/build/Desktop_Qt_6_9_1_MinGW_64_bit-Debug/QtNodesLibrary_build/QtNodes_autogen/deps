@@ -1,31 +1,4 @@
 QtNodes_autogen/timestamp: \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/CMakeLists.txt \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/cmake/QtNodesConfig.cmake.in \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/resources/resources.qrc \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/AbstractGraphModel.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/AbstractNodeGeometry.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/BasicGraphicsScene.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/ConnectionGraphicsObject.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/ConnectionState.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/ConnectionStyle.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DataFlowGraphModel.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DataFlowGraphicsScene.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DefaultConnectionPainter.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DefaultHorizontalNodeGeometry.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DefaultNodePainter.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/DefaultVerticalNodeGeometry.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/Definitions.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/GraphicsView.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/GraphicsViewStyle.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeConnectionInteraction.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeDelegateModel.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeDelegateModelRegistry.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeGraphicsObject.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeState.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/NodeStyle.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/StyleCollection.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/UndoCommands.cpp \
-	C:/Mac/Home/Desktop/RAIL/QtNodesLibrary/src/locateNode.cpp \
 	C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6/FindWrapVulkanHeaders.cmake \
 	C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6/Qt6Config.cmake \
 	C:/Qt/6.9.1/mingw_64/lib/cmake/Qt6/Qt6ConfigExtras.cmake \
@@ -88,4 +61,31 @@ QtNodes_autogen/timestamp: \
 	C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/FindVulkan.cmake \
 	C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/GNUInstallDirs.cmake \
 	C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/WriteBasicConfigVersionFile.cmake \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/CMakeLists.txt \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/cmake/QtNodesConfig.cmake.in \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/resources/resources.qrc \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/AbstractGraphModel.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/AbstractNodeGeometry.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/BasicGraphicsScene.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/ConnectionGraphicsObject.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/ConnectionState.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/ConnectionStyle.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DataFlowGraphModel.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DataFlowGraphicsScene.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DefaultConnectionPainter.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DefaultHorizontalNodeGeometry.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DefaultNodePainter.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/DefaultVerticalNodeGeometry.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/Definitions.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/GraphicsView.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/GraphicsViewStyle.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeConnectionInteraction.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeDelegateModel.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeDelegateModelRegistry.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeGraphicsObject.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeState.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/NodeStyle.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/StyleCollection.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/UndoCommands.cpp \
+	C:/Users/caven/Documents/GITHUB/QtNodesLibrary/src/locateNode.cpp \
 	C:/Qt/Tools/CMake_64/bin/cmake.exe
