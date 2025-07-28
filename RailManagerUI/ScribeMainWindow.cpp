@@ -583,6 +583,13 @@ void ScribeMainWindow::actionSelect_Port_Com() {
         return;
     }
 
+    if (serial){
+        serial->close();
+        disconnect(serial, &QSerialPort::readyRead, this, &ScribeMainWindow::onDataReceived);
+        delete serial;
+        serial = Q_NULLPTR;
+    }
+
     // Crée une liste de noms pour l'affichage
     QStringList portNames;
     for (const QSerialPortInfo &port : ports) {
