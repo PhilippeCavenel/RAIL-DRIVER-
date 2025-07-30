@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>631</width>
-    <height>587</height>
+    <width>788</width>
+    <height>671</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,15 +20,58 @@
    <string>ScribeMainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" colspan="2">
      <widget class="QLabel" name="label_2">
       <property name="text">
        <string>Script update</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Command</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="8">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Master result</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="9">
+     <widget class="QPushButton" name="stopTransmissionButton">
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #d32f2f;   /* rouge vif */
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+    font-weight: bold;
+}
+QPushButton:hover {
+    background-color: #b71c1c;
+}
+QPushButton:pressed {
+    background-color: #f44336;
+}</string>
+      </property>
+      <property name="text">
+       <string>STOP !</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" colspan="6">
+     <widget class="QProgressBar" name="sendProgressBar">
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="7">
      <widget class="TabbedEditor" name="tabWidget">
       <property name="minimumSize">
        <size>
@@ -41,14 +84,22 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Simple Command</string>
+    <item row="1" column="7" rowspan="2" colspan="3">
+     <widget class="QPlainTextEdit" name="CommandResult">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>7</pointsize>
+       </font>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="2" column="1" colspan="4">
      <widget class="QLineEdit" name="simpleCommand">
       <property name="enabled">
        <bool>true</bool>
@@ -61,32 +112,23 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QLabel" name="label">
+    <item row="2" column="5">
+     <widget class="QPushButton" name="sendAgainButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="text">
-       <string>Master result</string>
+       <string>Run Again</string>
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QTextEdit" name="CommandResult">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>80</height>
-       </size>
-      </property>
-      <property name="textInteractionFlags">
-       <set>Qt::TextInteractionFlag::NoTextInteraction</set>
+    <item row="2" column="6">
+     <widget class="QPushButton" name="clearCommandButton">
+      <property name="text">
+       <string>Clear</string>
       </property>
      </widget>
     </item>
@@ -97,7 +139,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>631</width>
+     <width>788</width>
      <height>22</height>
     </rect>
    </property>
@@ -144,6 +186,7 @@
      <addaction name="actionCPP_Lang"/>
      <addaction name="actionJava_Lang"/>
      <addaction name="actionPython_Lang"/>
+     <addaction name="actionParser_Lang"/>
     </widget>
     <addaction name="actionFont"/>
     <addaction name="menuLanguage"/>
@@ -166,10 +209,10 @@
     <addaction name="actionUpdate"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuRailRoad"/>
    <addaction name="menuEdit"/>
    <addaction name="menuFormat"/>
    <addaction name="menuView"/>
+   <addaction name="menuRailRoad"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -492,6 +535,11 @@
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionParser_Lang">
+   <property name="text">
+    <string>Rail</string>
    </property>
   </action>
  </widget>

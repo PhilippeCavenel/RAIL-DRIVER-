@@ -3,9 +3,8 @@
 #include <QTabWidget>
 #include <QWidget>
 
-// Inclure les interfaces refactorisées de chaque application
-#include "ScribeMainWindow.h"     // Ton ancien MainWindow de App2
-#include "GraphWidget.h"          // Une nouvelle classe que tu crées à partir du code de App1
+#include "ScribeMainWindow.h"
+#include "graphwidget.h"
 
 void FusionMainWindow::onTabChanged(int index)
 {
@@ -36,5 +35,5 @@ FusionMainWindow::FusionMainWindow(QWidget *parent)
 
     setCentralWidget(tabs);
     resize(1000, 800);
-    setWindowTitle("Rail Manager Barraux");
+    setWindowTitle("Rail Manager");
 }

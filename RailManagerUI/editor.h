@@ -90,6 +90,7 @@ public slots:
     void replaceAll(QString what, QString with, bool caseSensitive, bool wholeWords);
     void goTo(int line);
 
+
 private slots:
     void on_textChanged();
     void updateLineNumberAreaWidth();
@@ -102,6 +103,7 @@ private slots:
 
 private:
     Highlighter *generateHighlighterFor(Language language);
+
     QString getFileNameFromPath();
     QTextDocument::FindFlags getSearchOptionsFromFlags(bool caseSensitive, bool wholeWords);
     bool handleEnterKeyPress();

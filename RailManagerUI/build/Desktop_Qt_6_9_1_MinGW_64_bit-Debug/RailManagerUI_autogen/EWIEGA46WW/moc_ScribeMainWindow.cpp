@@ -84,13 +84,16 @@ template <> constexpr inline auto ScribeMainWindow::qt_create_metaobjectdata<qt_
         "on_actionTool_Bar_triggered",
         "on_actionUpdate_triggered",
         "on_actionCheck_Program_triggered",
-        "on_action_simpleCommand",
+        "on_simpleCommand",
         "actionSelect_Port_Com",
         "processError",
         "s",
         "processTimeout",
-        "on_progressBar_valueChanged",
-        "value"
+        "processSendQueue",
+        "on_stopTransmissionButton_clicked",
+        "on_sendAgainButton_clicked",
+        "on_clearCommandButton_clicked",
+        "setParserLang"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -178,7 +181,7 @@ template <> constexpr inline auto ScribeMainWindow::qt_create_metaobjectdata<qt_
         QtMocHelpers::SlotData<void()>(43, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'on_actionCheck_Program_triggered'
         QtMocHelpers::SlotData<void()>(44, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'on_action_simpleCommand'
+        // Slot 'on_simpleCommand'
         QtMocHelpers::SlotData<void()>(45, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'actionSelect_Port_Com'
         QtMocHelpers::SlotData<void()>(46, 2, QMC::AccessPrivate, QMetaType::Void),
@@ -190,10 +193,16 @@ template <> constexpr inline auto ScribeMainWindow::qt_create_metaobjectdata<qt_
         QtMocHelpers::SlotData<void(const QString &)>(49, 2, QMC::AccessPrivate, QMetaType::Void, {{
             { QMetaType::QString, 48 },
         }}),
-        // Slot 'on_progressBar_valueChanged'
-        QtMocHelpers::SlotData<void(int)>(50, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { QMetaType::Int, 51 },
-        }}),
+        // Slot 'processSendQueue'
+        QtMocHelpers::SlotData<void()>(50, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_stopTransmissionButton_clicked'
+        QtMocHelpers::SlotData<void()>(51, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_sendAgainButton_clicked'
+        QtMocHelpers::SlotData<void()>(52, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'on_clearCommandButton_clicked'
+        QtMocHelpers::SlotData<void()>(53, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'setParserLang'
+        QtMocHelpers::SlotData<void()>(54, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -254,11 +263,15 @@ void ScribeMainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         case 31: _t->on_actionTool_Bar_triggered(); break;
         case 32: _t->on_actionUpdate_triggered(); break;
         case 33: _t->on_actionCheck_Program_triggered(); break;
-        case 34: _t->on_action_simpleCommand(); break;
+        case 34: _t->on_simpleCommand(); break;
         case 35: _t->actionSelect_Port_Com(); break;
         case 36: _t->processError((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 37: _t->processTimeout((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 38: _t->on_progressBar_valueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 38: _t->processSendQueue(); break;
+        case 39: _t->on_stopTransmissionButton_clicked(); break;
+        case 40: _t->on_sendAgainButton_clicked(); break;
+        case 41: _t->on_clearCommandButton_clicked(); break;
+        case 42: _t->setParserLang(); break;
         default: ;
         }
     }
@@ -306,14 +319,14 @@ int ScribeMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 39)
+        if (_id < 43)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 39;
+        _id -= 43;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 39)
+        if (_id < 43)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 39;
+        _id -= 43;
     }
     return _id;
 }

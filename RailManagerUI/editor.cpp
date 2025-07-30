@@ -5,6 +5,7 @@
 #include "highlighters/cpphighlighter.h"
 #include "highlighters/javahighlighter.h"
 #include "highlighters/pythonhighlighter.h"
+#include "parserlanghighlighter.h"
 #include <QPainter>
 #include <QTextBlock>
 #include <QFontDialog>
@@ -135,6 +136,7 @@ Highlighter *Editor::generateHighlighterFor(Language language)
         case (Language::CPP): return new CPPHighlighter(doc);
         case (Language::Java): return new JavaHighlighter(doc);
         case (Language::Python): return new PythonHighlighter(doc);
+        case (Language::Parser): return new ParserLangHighlighter(doc);  // ✅ ici
         default: return nullptr;
     }
 }

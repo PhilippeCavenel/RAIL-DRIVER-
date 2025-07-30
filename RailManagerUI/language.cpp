@@ -1,4 +1,5 @@
 #include "language.h"
+#include <qDebug>
 
 
 QString ProgrammingLanguage::toString(Language language)
@@ -13,6 +14,8 @@ QString ProgrammingLanguage::toString(Language language)
             return "Language: Java";
         case (Language::Python):
             return "Language: Python";
+        case (Language::Parser):
+            return "Language: Rail Manager";
         default:
             return "Language not selected";
     }

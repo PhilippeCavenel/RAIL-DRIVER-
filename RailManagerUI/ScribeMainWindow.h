@@ -60,11 +60,12 @@ private:
     // The "core" or essential members
     Ui::ScribeMainWindow *ui;
     TabbedEditor *tabbedEditor;
-    QTextEdit *CommandResult;
+    QPlainTextEdit *CommandResult;
     MetricReporter *metricReporter;
     Settings *settings = Settings::instance();
     QSerialPort *serial=Q_NULLPTR;
     int m_waitTimeout = 5;
+    QStringList sendQueue;
 
     // Used for storing application state upon termination
     const QString WINDOW_SIZE_KEY = "window_size";
@@ -85,9 +86,13 @@ private:
     Editor *editor = nullptr;
     QString currentDocument;
     QString gl_currentComPort;
+    bool transmissionStoppedManually = false;
+
 
 public:
     QString getCurrentDocument() const; // to get data access
+    QString getCurrentLanguage() const; // to get language access
+
 
 public slots:
     void toggleUndo(bool undoAvailable);
@@ -129,15 +134,19 @@ private slots:
     void on_actionTool_Bar_triggered();
     void on_actionUpdate_triggered();
     void on_actionCheck_Program_triggered();
-    void on_action_simpleCommand();
+    void on_simpleCommand();
     void actionSelect_Port_Com();
     void processError(const QString &s);
     void processTimeout(const QString &s);
-
-    void on_progressBar_valueChanged(int value);
+    void processSendQueue();
+    void on_stopTransmissionButton_clicked();
+    void on_sendAgainButton_clicked();
+    void on_clearCommandButton_clicked();
+    void setParserLang();
 
 signals:
     void checkTextSignal();
+
 };
 
 #endif // SCRIBEMAINWINDOW_H

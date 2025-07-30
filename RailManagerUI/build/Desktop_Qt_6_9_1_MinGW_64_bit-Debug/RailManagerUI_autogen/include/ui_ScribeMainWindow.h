@@ -12,15 +12,17 @@
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
+#include <QtWidgets/QProgressBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "tabbededitor.h"
 
@@ -58,14 +60,19 @@ public:
     QAction *actionUpdate;
     QAction *actionSelect_Port_Com;
     QAction *actionCheck_Program;
+    QAction *actionParser_Lang;
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout;
+    QGridLayout *gridLayout;
     QLabel *label_2;
-    TabbedEditor *tabWidget;
     QLabel *label_3;
-    QLineEdit *simpleCommand;
     QLabel *label;
-    QTextEdit *CommandResult;
+    QPushButton *stopTransmissionButton;
+    QProgressBar *sendProgressBar;
+    TabbedEditor *tabWidget;
+    QPlainTextEdit *CommandResult;
+    QLineEdit *simpleCommand;
+    QPushButton *sendAgainButton;
+    QPushButton *clearCommandButton;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -80,7 +87,7 @@ public:
     {
         if (ScribeMainWindow->objectName().isEmpty())
             ScribeMainWindow->setObjectName("ScribeMainWindow");
-        ScribeMainWindow->resize(631, 587);
+        ScribeMainWindow->resize(788, 671);
         ScribeMainWindow->setMinimumSize(QSize(530, 230));
         actionNew = new QAction(ScribeMainWindow);
         actionNew->setObjectName("actionNew");
@@ -193,53 +200,95 @@ public:
         icon12.addFile(QString::fromUtf8(":/icons/res/icons/check.bmp"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         actionCheck_Program->setIcon(icon12);
         actionCheck_Program->setMenuRole(QAction::MenuRole::NoRole);
+        actionParser_Lang = new QAction(ScribeMainWindow);
+        actionParser_Lang->setObjectName("actionParser_Lang");
         centralWidget = new QWidget(ScribeMainWindow);
         centralWidget->setObjectName("centralWidget");
-        verticalLayout = new QVBoxLayout(centralWidget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName("verticalLayout");
+        gridLayout = new QGridLayout(centralWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName("gridLayout");
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName("label_2");
 
-        verticalLayout->addWidget(label_2);
+        gridLayout->addWidget(label_2, 0, 0, 1, 2);
+
+        label_3 = new QLabel(centralWidget);
+        label_3->setObjectName("label_3");
+
+        gridLayout->addWidget(label_3, 2, 0, 1, 1);
+
+        label = new QLabel(centralWidget);
+        label->setObjectName("label");
+
+        gridLayout->addWidget(label, 0, 8, 1, 1);
+
+        stopTransmissionButton = new QPushButton(centralWidget);
+        stopTransmissionButton->setObjectName("stopTransmissionButton");
+        stopTransmissionButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: #d32f2f;   /* rouge vif */\n"
+"    color: white;\n"
+"    border-radius: 4px;\n"
+"    padding: 5px;\n"
+"    font-weight: bold;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: #b71c1c;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: #f44336;\n"
+"}"));
+
+        gridLayout->addWidget(stopTransmissionButton, 0, 9, 1, 1);
+
+        sendProgressBar = new QProgressBar(centralWidget);
+        sendProgressBar->setObjectName("sendProgressBar");
+        sendProgressBar->setValue(24);
+
+        gridLayout->addWidget(sendProgressBar, 0, 2, 1, 6);
 
         tabWidget = new TabbedEditor(centralWidget);
         tabWidget->setObjectName("tabWidget");
         tabWidget->setMinimumSize(QSize(0, 0));
 
-        verticalLayout->addWidget(tabWidget);
+        gridLayout->addWidget(tabWidget, 1, 0, 1, 7);
 
-        label_3 = new QLabel(centralWidget);
-        label_3->setObjectName("label_3");
+        CommandResult = new QPlainTextEdit(centralWidget);
+        CommandResult->setObjectName("CommandResult");
+        CommandResult->setEnabled(true);
+        QFont font;
+        font.setPointSize(7);
+        CommandResult->setFont(font);
+        CommandResult->setReadOnly(true);
 
-        verticalLayout->addWidget(label_3);
+        gridLayout->addWidget(CommandResult, 1, 7, 2, 3);
 
         simpleCommand = new QLineEdit(centralWidget);
         simpleCommand->setObjectName("simpleCommand");
         simpleCommand->setEnabled(true);
         simpleCommand->setReadOnly(false);
 
-        verticalLayout->addWidget(simpleCommand);
+        gridLayout->addWidget(simpleCommand, 2, 1, 1, 4);
 
-        label = new QLabel(centralWidget);
-        label->setObjectName("label");
+        sendAgainButton = new QPushButton(centralWidget);
+        sendAgainButton->setObjectName("sendAgainButton");
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(sendAgainButton->sizePolicy().hasHeightForWidth());
+        sendAgainButton->setSizePolicy(sizePolicy);
 
-        verticalLayout->addWidget(label);
+        gridLayout->addWidget(sendAgainButton, 2, 5, 1, 1);
 
-        CommandResult = new QTextEdit(centralWidget);
-        CommandResult->setObjectName("CommandResult");
-        CommandResult->setEnabled(true);
-        CommandResult->setMinimumSize(QSize(0, 0));
-        CommandResult->setMaximumSize(QSize(16777215, 80));
-        CommandResult->setTextInteractionFlags(Qt::TextInteractionFlag::NoTextInteraction);
+        clearCommandButton = new QPushButton(centralWidget);
+        clearCommandButton->setObjectName("clearCommandButton");
 
-        verticalLayout->addWidget(CommandResult);
+        gridLayout->addWidget(clearCommandButton, 2, 6, 1, 1);
 
         ScribeMainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ScribeMainWindow);
         menuBar->setObjectName("menuBar");
-        menuBar->setGeometry(QRect(0, 0, 631, 22));
+        menuBar->setGeometry(QRect(0, 0, 788, 22));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName("menuFile");
         menuEdit = new QMenu(menuBar);
@@ -262,10 +311,10 @@ public:
         ScribeMainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
-        menuBar->addAction(menuRailRoad->menuAction());
         menuBar->addAction(menuEdit->menuAction());
         menuBar->addAction(menuFormat->menuAction());
         menuBar->addAction(menuView->menuAction());
+        menuBar->addAction(menuRailRoad->menuAction());
         menuFile->addAction(actionNew);
         menuFile->addAction(actionOpen);
         menuFile->addAction(actionSave);
@@ -295,6 +344,7 @@ public:
         menuLanguage->addAction(actionCPP_Lang);
         menuLanguage->addAction(actionJava_Lang);
         menuLanguage->addAction(actionPython_Lang);
+        menuLanguage->addAction(actionParser_Lang);
         menuView->addAction(actionStatus_Bar);
         menuView->addAction(actionTool_Bar);
         menuRailRoad->addAction(actionSelect_Port_Com);
@@ -401,10 +451,14 @@ public:
         actionUpdate->setText(QCoreApplication::translate("ScribeMainWindow", "Update boards", nullptr));
         actionSelect_Port_Com->setText(QCoreApplication::translate("ScribeMainWindow", "Select Port Com", nullptr));
         actionCheck_Program->setText(QCoreApplication::translate("ScribeMainWindow", "Check_Program", nullptr));
+        actionParser_Lang->setText(QCoreApplication::translate("ScribeMainWindow", "Rail", nullptr));
         label_2->setText(QCoreApplication::translate("ScribeMainWindow", "Script update", nullptr));
-        label_3->setText(QCoreApplication::translate("ScribeMainWindow", "Simple Command", nullptr));
-        simpleCommand->setText(QString());
+        label_3->setText(QCoreApplication::translate("ScribeMainWindow", "Command", nullptr));
         label->setText(QCoreApplication::translate("ScribeMainWindow", "Master result", nullptr));
+        stopTransmissionButton->setText(QCoreApplication::translate("ScribeMainWindow", "STOP !", nullptr));
+        simpleCommand->setText(QString());
+        sendAgainButton->setText(QCoreApplication::translate("ScribeMainWindow", "Run Again", nullptr));
+        clearCommandButton->setText(QCoreApplication::translate("ScribeMainWindow", "Clear", nullptr));
         menuFile->setTitle(QCoreApplication::translate("ScribeMainWindow", "File", nullptr));
         menuEdit->setTitle(QCoreApplication::translate("ScribeMainWindow", "Edit", nullptr));
         menuFormat->setTitle(QCoreApplication::translate("ScribeMainWindow", "Format", nullptr));

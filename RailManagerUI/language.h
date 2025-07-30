@@ -11,7 +11,8 @@ namespace ProgrammingLanguage
         CPP,
         C,
         Python,
-        Java
+        Java,
+        Parser
     };
 
     QString toString(Language language);

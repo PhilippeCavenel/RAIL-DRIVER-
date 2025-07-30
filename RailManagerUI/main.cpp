@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QApplication::setStyle("fusion");
-    app.setWindowIcon(QIcon("res/icons/app-icon.ico"));  // chemin dans .qrc
+    app.setWindowIcon(QIcon("res/icons/app-icon.ico")); // .qrc
 
 
     FusionMainWindow mainWin;

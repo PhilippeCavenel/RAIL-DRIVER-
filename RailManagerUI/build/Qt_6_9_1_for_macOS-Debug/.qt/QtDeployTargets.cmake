@@ -1,0 +1,4 @@
+set(__QT_DEPLOY_TARGET_QtNodes_FILE /Users/pcavenel/Desktop/RAIL/RailManagerUI/build/Qt_6_9_1_for_macOS-Debug/QtNodesLibrary_build/lib/libQtNodes.dylib)
+set(__QT_DEPLOY_TARGET_QtNodes_TYPE SHARED_LIBRARY)
+set(__QT_DEPLOY_TARGET_RailManagerUI_FILE /Users/pcavenel/Desktop/RAIL/RailManagerUI/build/Qt_6_9_1_for_macOS-Debug/RailManagerUI.app/Contents/MacOS/RailManagerUI)
+set(__QT_DEPLOY_TARGET_RailManagerUI_TYPE EXECUTABLE)

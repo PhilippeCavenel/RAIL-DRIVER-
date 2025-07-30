@@ -71,7 +71,6 @@ void GraphWidget::myStyle()
       )");
 }
 
-
 void GraphWidget::updateFromEditor() {
     QString     documentContents = scribeEditor->getCurrentDocument();
     parser      myDocumentParsed;
@@ -86,6 +85,7 @@ void GraphWidget::updateFromEditor() {
     int         itemNumber = 0;
 
     gl_scene->clearScene();
+    if (!(scribeEditor->getCurrentLanguage()==QString("Language: Rail Manager"))) return;
 
     if (documentContents.length() >= 0) {
         outputIndex = 0;
@@ -175,7 +175,7 @@ void GraphWidget::updateFromEditor() {
         }
     }
 
-    // Comptage des descendants
+    // Counting descendants
     QMap<NodeId, int> descendantsCount;
     std::function<int(const NodeId&, QSet<NodeId>&)> countDescendants;
     countDescendants = [&](const NodeId& nodeId, QSet<NodeId>& visited) -> int {
@@ -192,13 +192,13 @@ void GraphWidget::updateFromEditor() {
         descendantsCount[nodeId] = countDescendants(nodeId, visited);
     }
 
-    // Groupement par nombre de descendants
+    // Grouping by number of descendants
     QMap<int, QList<NodeId>> groupedByDescendants;
     for (auto it = descendantsCount.begin(); it != descendantsCount.end(); ++it) {
         groupedByDescendants[it.value()].append(it.key());
     }
 
-    // MOD: Placement en grille √N avec tri par nombre de descendants (top-down par colonne)
+    // MOD: Grid placement √N with sorting by number of descendants (top-down by column)
     int spacingX = maxTextWidth;
     int spacingY = 150;
     int gridSize = std::ceil(std::sqrt(itemNumber));
@@ -212,12 +212,12 @@ void GraphWidget::updateFromEditor() {
         sortedNodes.append(nodeId);
     }
 
-    // Tri décroissant : nœuds avec plus de descendants en premier
+    // Descending sort: nodes with more descendants first
     std::sort(sortedNodes.begin(), sortedNodes.end(), [&](const NodeId& a, const NodeId& b) {
         return descendantsCount[a] > descendantsCount[b];
     });
 
-    // Placement colonne par colonne (gauche → droite, haut → bas)
+    // Column-by-column placement (left → right, top → bottom)
     for (const NodeId& nodeId : sortedNodes) {
         int x = currentCol * spacingX;
         int y = currentRow * spacingY;
@@ -230,7 +230,7 @@ void GraphWidget::updateFromEditor() {
         }
     }
 
-    // 🔍 Ajuster la vue pour contenir tout le contenu
+    // 🔍 Adjust the view to fit all content
     gl_view->fitInView(gl_scene->itemsBoundingRect(), Qt::KeepAspectRatio);
 }
 
@@ -244,7 +244,7 @@ void GraphWidget::highlightConnectionsForSelection() {
 
     QSet<NodeId> connectedNodeIds;
 
-    // 1. Connexions : surlignage + mémorisation des noeuds connectés
+    // 1. Connections: highlighting + storing connected nodes
     for (QGraphicsItem* item : gl_scene->items()) {
         auto connGraphics = qgraphicsitem_cast<ConnectionGraphicsObject*>(item);
         if (!connGraphics)
@@ -262,7 +262,7 @@ void GraphWidget::highlightConnectionsForSelection() {
         connGraphics->setHighlight(highlight);
     }
 
-    // 2. Noeuds : surlignage en fond rouge si connectés à un noeud sélectionné
+    // 2. Nodes: highlight with red background if connected to a selected node
     for (QGraphicsItem* item : gl_scene->items()) {
         if (auto nodeGraphics = qgraphicsitem_cast<NodeGraphicsObject*>(item)) {
             NodeId nid = nodeGraphics->nodeId();
@@ -287,16 +287,6 @@ GraphWidget::GraphWidget(ScribeMainWindow *editor, QWidget *parent)
     gl_view = new GraphicsView(gl_scene);
 
     connect(gl_scene, &QGraphicsScene::selectionChanged, this, &GraphWidget::highlightConnectionsForSelection);
-
-
-    /*QAction *createNodeAction = new QAction("Create Node", gl_view);
-    gl_view->setContextMenuPolicy(Qt::ActionsContextMenu);
-    QObject::connect(createNodeAction, &QAction::triggered, [=]() {
-        QPointF posView = gl_view->mapToScene(gl_view->mapFromGlobal(QCursor::pos()));
-        NodeId newId = gl_graphModel->addNode();
-        gl_graphModel->setNodeData(newId, NodeRole::Position, posView);
-    });
-    gl_view->addAction(createNodeAction);*/
 
     gl_layout->addWidget(gl_view);
     setLayout(gl_layout);

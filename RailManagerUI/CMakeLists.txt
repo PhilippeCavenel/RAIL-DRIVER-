@@ -79,6 +79,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         res/icons/save-as.bmp res/icons/save.bmp res/icons/search.bmp res/icons/undo.bmp
         res/icons/check.bmp res/icons/load.bmp
         CustomNodeModel.h
+        parserlanghighlighter.h parserlanghighlighter.cpp
 
 
     )

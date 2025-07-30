@@ -1,0 +1,117 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"C:/Users/caven/Documents/GITHUB/QtNodesLibrary/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 253,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 261,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 264,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 277,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"QtNodesLibrary_build/lib/libQtNodes.dll.a"
+			],
+			"targetId" : "QtNodes::@1286cf91529aee9545ca",
+			"targetIndex" : 0,
+			"targetIsImportLibrary" : true,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "bin",
+			"paths" : 
+			[
+				"QtNodesLibrary_build/bin/libQtNodes.dll"
+			],
+			"targetId" : "QtNodes::@1286cf91529aee9545ca",
+			"targetIndex" : 0,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				{
+					"from" : "C:/Users/caven/Documents/GITHUB/QtNodesLibrary/include",
+					"to" : "."
+				}
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/QtNodes",
+			"exportName" : "QtNodesTargets",
+			"exportTargets" : 
+			[
+				{
+					"id" : "QtNodes::@1286cf91529aee9545ca",
+					"index" : 0
+				}
+			],
+			"paths" : 
+			[
+				"QtNodesLibrary_build/CMakeFiles/Export/2673c3d8e115fa62e55ffa6a0dbdc309/QtNodesTargets.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/QtNodes",
+			"paths" : 
+			[
+				"build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/QtNodesLibrary_build/QtNodesConfig.cmake"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "QtNodesLibrary_build",
+		"source" : "C:/Users/caven/Documents/GITHUB/QtNodesLibrary"
+	}
+}

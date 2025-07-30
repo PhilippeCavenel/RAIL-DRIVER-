@@ -2,6 +2,7 @@
 #include "utilityfunctions.h"
 #include "ui_ScribeMainWindow.h"
 #include "settings.h"                   // storing app state
+#include "parserlanghighlighter.h"
 #include <QtDebug>
 #include <QtPrintSupport/QPrinter>      // printing
 #include <QtPrintSupport/QPrintDialog>  // printing
@@ -17,6 +18,9 @@
 #include <QSerialPortInfo>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QTimer>
+#include <QShowEvent>
+
 
 
 /* Sets up the main application window and all of its children/widgets.
@@ -33,7 +37,13 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     languageGroup->addAction(ui->actionCPP_Lang);
     languageGroup->addAction(ui->actionJava_Lang);
     languageGroup->addAction(ui->actionPython_Lang);
+    languageGroup->addAction(ui->actionParser_Lang);
+
+    ui->actionParser_Lang->setChecked(true);
+
+    connect(ui->actionParser_Lang, &QAction::triggered, this, &ScribeMainWindow::setParserLang);
     connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(on_languageSelected(QAction*)));
+
     // Language label frame
     setupLanguageOnStatusBar();
 
@@ -48,14 +58,17 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     // Set up the tabbed editor
     tabbedEditor  =ui->tabWidget;
     CommandResult =ui->CommandResult;
+    CommandResult->clear();
     simpleCommand =ui->simpleCommand;
-
+    ui->sendProgressBar->setVisible(false);
     tabbedEditor->setTabsClosable(true);
 
     // Add metric reporter and simulate a tab switch
     metricReporter = new MetricReporter();
     ui->statusBar->addPermanentWidget(metricReporter);
     on_currentTabChanged(0);
+    setParserLang();
+
 
     // Connect tabbedEditor's signals to their handlers
     connect(tabbedEditor, SIGNAL(currentChanged(int)), this, SLOT(on_currentTabChanged(int)));
@@ -66,7 +79,10 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     connect(ui->actionSave_As, SIGNAL(triggered()), this, SLOT(on_actionSaveTriggered()));
     connect(ui->actionReplace, SIGNAL(triggered()), this, SLOT(on_actionFind_triggered()));
     connect(ui->actionSelect_Port_Com, &QAction::triggered, this, &ScribeMainWindow::actionSelect_Port_Com);
-
+    connect(ui->stopTransmissionButton, &QPushButton::clicked,this, &ScribeMainWindow::on_stopTransmissionButton_clicked);
+    //connect(ui->sendAgainButton, &QPushButton::clicked, this, &ScribeMainWindow::on_sendAgainButton_clicked);
+    connect(ui->clearCommandButton, &QPushButton::clicked,this, &ScribeMainWindow::on_clearCommandButton_clicked);
+    connect(ui->simpleCommand,SIGNAL(returnPressed()),this,SLOT(on_simpleCommand()));
 
     // Have to add this shortcut manually because we can't define it via the GUI editor
     QShortcut *tabCloseShortcut = new QShortcut(QKeySequence("Ctrl+W"), this);
@@ -79,13 +95,38 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     mapFileExtensionsToLanguages();
     appendShortcutsToToolbarTooltips();
 
-    // Serial
-    connect(ui->simpleCommand,SIGNAL(returnPressed()),this,SLOT(on_action_simpleCommand()));
+    // Command line
+
+    tabbedEditor->removeTab(0);
+
+    // If we closed the last tab, make a new one
+    if (tabbedEditor->count() == 0)
+    {
+        on_actionNew_triggered();
+    }
 }
 
+void ScribeMainWindow::setParserLang() {
+    if (!editor) return;
+    editor->setProgrammingLanguage(ProgrammingLanguage::Language::Parser);
+    editor->document()->markContentsDirty(0, editor->toPlainText().length());
+}
 
+void ScribeMainWindow::on_sendAgainButton_clicked() {
+    qDebug() << "on_sendAgainButton_clicked";
+    // Réexécute la commande sans re-taper
+    on_simpleCommand();
+}
+
+void ScribeMainWindow::on_clearCommandButton_clicked() {
+    ui->simpleCommand->clear();
+    ui->simpleCommand->setFocus();
+}
 QString ScribeMainWindow::getCurrentDocument() const {
     return editor->getContent();
+}
+QString ScribeMainWindow::getCurrentLanguage() const {
+    return toString(editor->getProgrammingLanguage());
 }
 
 /* Ensures that the checkable formatting menu options, like auto indent
@@ -132,6 +173,8 @@ void ScribeMainWindow::mapMenuLanguageOptionToLanguageType()
     menuActionToLanguageMap[ui->actionCPP_Lang] = Language::CPP;
     menuActionToLanguageMap[ui->actionJava_Lang] = Language::Java;
     menuActionToLanguageMap[ui->actionPython_Lang] = Language::Python;
+    menuActionToLanguageMap[ui->actionParser_Lang] = Language::Parser;
+
 }
 
 /* Maps known file extensions to the languages the editor supports.
@@ -143,6 +186,8 @@ void ScribeMainWindow::mapFileExtensionsToLanguages()
     extensionToLanguageMap.insert("c", Language::C);
     extensionToLanguageMap.insert("java", Language::Java);
     extensionToLanguageMap.insert("py", Language::Python);
+    extensionToLanguageMap.insert("txt", Language::Parser);
+
 }
 
 void ScribeMainWindow::appendShortcutsToToolbarTooltips()
@@ -208,6 +253,14 @@ void ScribeMainWindow::triggerCorrespondingMenuLanguageOption(Language lang)
                 ui->actionPython_Lang->trigger();
             }
             break;
+
+        case (Language::Parser):
+            if (!ui->actionParser_Lang->isChecked())
+            {
+                ui->actionParser_Lang->trigger();
+            }
+            break;
+
 
         default: return;
     }
@@ -308,7 +361,6 @@ void ScribeMainWindow::reconnectEditorDependentSignals()
 
 void ScribeMainWindow::onTabRegainedFocus()
 {
-    qDebug() << "[ScribeMainWindow] Onglet activé.";
     // Exemple : rafraîchir l’interface, relancer un processus, etc.
     ui->statusBar->showMessage("Éditeur actif", 2000);
 }
@@ -316,10 +368,8 @@ void ScribeMainWindow::onTabRegainedFocus()
 void ScribeMainWindow::onTabLostFocus()
 {
     editor = tabbedEditor->currentTab();
-    connect(editor, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
     emit checkTextSignal();
 
-    qDebug() << "[ScribeMainWindow] Onglet désactivé.";
     // Exemple : mettre en pause des opérations, cacher des vues, etc.
 }
 
@@ -343,7 +393,6 @@ void ScribeMainWindow::on_currentTabChanged(int index)
     }
 
     editor = tabbedEditor->currentTab();
-    connect(editor, SIGNAL(textChanged()), this, SLOT(onTextChanged()));
     emit checkTextSignal();
 
     reconnectEditorDependentSignals();
@@ -359,8 +408,7 @@ void ScribeMainWindow::on_currentTabChanged(int index)
     else
     {        
         // If a menu language is checked but the current tab has no language set, uncheck the menu option
-        if (languageGroup->checkedAction())
-        {
+        if (languageGroup->checkedAction()){
             languageGroup->checkedAction()->setChecked(false);
         }
     }
@@ -374,7 +422,6 @@ void ScribeMainWindow::on_currentTabChanged(int index)
     toggleCopyAndCut(editor->textCursor().hasSelection());
 
     updateFormatMenuOptions();
-
 
     // We need to update this information manually for tab changes
     DocumentMetrics metrics = editor->getDocumentMetrics();
@@ -486,7 +533,7 @@ bool ScribeMainWindow::on_actionSaveTriggered()
     QFile file(editor->getCurrentFilePath());
     if (!file.open(QIODevice::WriteOnly | QFile::Text))
     {
-        QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
+        QMessageBox::critical(this, "Warning", "Cannot save file: " + file.errorString());
         return false;
     }
 
@@ -543,7 +590,7 @@ void ScribeMainWindow::on_actionOpen_triggered()
     QFile file(openedFilePath);
     if (!file.open(QIODevice::ReadOnly | QFile::Text))
     {
-        QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
+        QMessageBox::critical(this, "Warning", "Cannot save file: " + file.errorString());
         return;
     }
 
@@ -579,7 +626,7 @@ void ScribeMainWindow::actionSelect_Port_Com() {
     QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 
     if (ports.isEmpty()) {
-        QMessageBox::warning(this, "Aucun port COM", "Aucun port COM disponible n’a été détecté.");
+        QMessageBox::critical(this, "Aucun port COM", "Aucun port COM disponible n’a été détecté.");
         return;
     }
 
@@ -608,7 +655,6 @@ void ScribeMainWindow::actionSelect_Port_Com() {
     if (ok && !selectedPort.isEmpty()) {
         // Extrait uniquement le nom du port (avant le 1er espace ou parenthèse)
         gl_currentComPort = selectedPort.section(' ', 0, 0);
-        QMessageBox::information(this, "Port sélectionné", QString("Port COM sélectionné : %1").arg(gl_currentComPort));
         openSerial();
     }
 }
@@ -617,91 +663,87 @@ void ScribeMainWindow::on_actionCheck_Program_triggered(){
     editor->getContent();
     emit checkTextSignal();
 }
+
 void ScribeMainWindow::on_actionUpdate_triggered() {
+    if (!serial || !serial->isOpen()) {
+        QMessageBox::critical(this, "Erreur", "Sélectionnez un port COM valide !");
+        return;
+    }
 
+    QStringList linesToSend;
     QString documentContents = editor->getContent();
-    QString newLine;
-    qint64 outputIndex;
-    QString data;
-
-    if (documentContents.length() < 1) {
-        informUser(QString("Update Status"), QString("Empty text, nothing to update !"));
-        return;
-    }
-
-    if (!serial) {
-         QMessageBox::warning(this, "Error", "Select a port com first !");
-        return;
-    }
-
-    outputIndex=0;
-    CommandResult->clear();
-    // Remove comment line
-    while(outputIndex<documentContents.length()) {
-        data=documentContents.at(outputIndex);
-        if (data==QChar('/')){
-            outputIndex++;
-            if (outputIndex<documentContents.length()){
-                data=documentContents.at(outputIndex);
-                if (data==QChar('/')){
-                    outputIndex++;
-                    if (outputIndex<documentContents.length()){
-                        data=documentContents.at(outputIndex);
-                        while(data!=QChar('\n')){
-                            outputIndex++;
-                            if (outputIndex==documentContents.length())break;
-                            data=documentContents.at(outputIndex);
-                        }
-                    }
-                    outputIndex++;
-                }
-            }
-        }
-
-        // Sent command line
-        else {
-            if (data!=QChar('\n') && outputIndex<documentContents.length())newLine.append(data);
-            else {
-                if (newLine.isEmpty()){
-                    outputIndex++;
-                    continue;
-                }
-                newLine.append(QChar(' ')).append(QChar('\r'));
-                QByteArray utf8Bytes = newLine.toUtf8();
-                for (char byte : utf8Bytes) {
-                    serial->write(&byte, 1);
-                    // wait for byte written
-                    serial->waitForBytesWritten(m_waitTimeout);
-
-                    // wait for response
-                    serial->waitForReadyRead(m_waitTimeout);
-                }
-                newLine=QString("");
-                if (outputIndex==documentContents.length()-1)break;
-            }
-            outputIndex++;
+    QTextStream stream(&documentContents, QIODevice::ReadOnly);
+    QString line;
+    while (stream.readLineInto(&line)) {
+        line = line.trimmed();
+        if (!line.startsWith("//") && !line.isEmpty()) {
+            linesToSend.append(line + "\r");
         }
     }
+
+    sendQueue = linesToSend;
+    ui->sendProgressBar->setValue(0);
+    ui->sendProgressBar->setMaximum(sendQueue.size());
+    ui->sendProgressBar->setVisible(true);
+    transmissionStoppedManually = false;
+    processSendQueue();
 }
 
-void ScribeMainWindow::on_action_simpleCommand(){
+void ScribeMainWindow::processSendQueue() {
+    if (sendQueue.isEmpty()) {
+        ui->sendProgressBar->setVisible(false);
+        CommandResult->appendPlainText("[Terminé]");
+        return;
+    }
+
+    QString line = sendQueue.takeFirst();
+    QByteArray utf8Bytes = line.toUtf8();
+
+    int total = ui->sendProgressBar->maximum();
+    int sent = total - sendQueue.size();
+    ui->sendProgressBar->setValue(sent);
+    ui->sendProgressBar->setFormat(QString("%1 %").arg((100 * sent) / total));
+
+    if (!serial) return;
+
+    for (int i = 0; i < utf8Bytes.size(); ++i) {
+        char ch = utf8Bytes.at(i);
+        serial->write(&ch, 1);
+        serial->waitForBytesWritten(m_waitTimeout);
+        serial->waitForReadyRead(m_waitTimeout);
+
+        if (transmissionStoppedManually) {
+            CommandResult->appendPlainText("[STOP]");
+            ui->sendProgressBar->setVisible(false);
+            sendQueue.clear();
+            transmissionStoppedManually = false;
+            return;
+        }
+    }
+
+    // Appelle la suite du traitement après retour à l'événement loop
+    QTimer::singleShot(0, this, &ScribeMainWindow::processSendQueue);
+}
+
+void ScribeMainWindow::on_stopTransmissionButton_clicked() {
+     transmissionStoppedManually = true;
+}
+void ScribeMainWindow::on_simpleCommand(){
     QString newLine = QChar('\r');
-    CommandResult->clear();
     newLine.append(simpleCommand->text()).append(QChar(' ')).append(QChar('\r'));
     QByteArray utf8Bytes = newLine.toUtf8();
 
     if (!serial) {
-        QMessageBox::warning(this, "Error", "Select a port com first !");
+        QMessageBox::critical(this, "Error", "Select a port com first !");
         return;
     }
 
     for (char byte : utf8Bytes) {
         serial->write(&byte, 1);
         serial->waitForBytesWritten(m_waitTimeout);
-        // wait for response
         serial->waitForReadyRead(m_waitTimeout);
+
     }
-    simpleCommand->clear();
 }
 
 /* Called when the user selects the Print option from the menu or toolbar (or uses Ctrl+P).
@@ -849,22 +891,23 @@ void ScribeMainWindow::openSerial() {
     serial->setStopBits(QSerialPort::OneStop);
     serial->setFlowControl(QSerialPort::NoFlowControl);
     if (!serial->open(QIODevice::ReadWrite)) {
-        QMessageBox::warning(this, "Error", "Can't open " + gl_currentComPort);
-        serial->deleteLater();
+        QMessageBox::critical(this, "Error", "Can't open " + gl_currentComPort);
+        delete serial;
+        serial=Q_NULLPTR;
     }
-
 }
 
 void ScribeMainWindow::onDataReceived()
 {
+    if(!serial) return;
     while (serial->bytesAvailable()) {
         char c;
         qint64 bytesRead = serial->read(&c, 1);
         if (bytesRead > 0) {
-            CommandResult->insertPlainText(QString(c).replace(QString("\n"),QString("")));
-            CommandResult->ensureCursorVisible(); // pour faire défiler automatiquement
-            CommandResult->show(); // pour faire défiler automatiquement
-            CommandResult->repaint(); // pour faire défiler automatiquement
+            if (QChar(c).isPrint() || c=='\n')CommandResult->insertPlainText(QString(c));
+            CommandResult->ensureCursorVisible();
+            CommandResult->show();
+            CommandResult->repaint();
 
         }
     }
@@ -1047,12 +1090,5 @@ void ScribeMainWindow::closeEvent(QCloseEvent *event)
 {
     event->ignore();
     on_actionExit_triggered();
-}
-
-
-
-void ScribeMainWindow::on_progressBar_valueChanged(int value)
-{
-
 }
 
