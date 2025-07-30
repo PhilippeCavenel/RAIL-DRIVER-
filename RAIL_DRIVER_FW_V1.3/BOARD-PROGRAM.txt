@@ -532,8 +532,8 @@ PROG 1 AUT A9 AUTOFF BOARD 1 TIMER 3 ACT AUTOFF D4
 PROG 1 AUT AA AUTOFF BOARD 1 TIMER 1 ACT AUTOFF D2
 PROG 1 AUT AB AUTOFF BOARD 1 TIMER 1 ACT AUTOFF D3
 
-// Démarrage lent pour décrochage wagon 
-PROG 1 AUT AC AUTOFF BOARD 1 TIMER 1 ACT TRACK 31 SPEED 4 FORW INERTIA 80
+// Démarrage pour décrochage wagon 
+PROG 1 AUT AC AUTOFF BOARD 1 TIMER 1 ACT TRACK 31 SPEED 4 FORW INERTIA 40
 
 // Arme TIMER 4 pour retour arrière locomotive
 PROG 1 AUT AD AUTOFF BOARD 1 TIMER 1 ACT TIMER 4 2
@@ -568,6 +568,10 @@ PROG 1 AUT AM AUTOFF BOARD 1 TIMER 6 ACT AUTON D4
 ////////////////////////////////////////////////////////////////////////
 // Démarre le train qui passe sur la CARTE 0
 PROG 1 AUT AN AUTOFF BOARD 1 TIMER 2 ACT TRACK 31 SPEED 7 BACK INERTIA 15
+
+// Désactive Arret du train lors de l'arrivée en gare centrale
+
+PROG 1 AUT AO AUTOFF BOARD 1 TIMER 2 ACT AUTOFF D1
 
 // Arme TIMER 3 pour remise en mode normal de la voie
 PROG 1 AUT AP AUTOFF BOARD 1 TIMER 2 ACT TIMER 3 2

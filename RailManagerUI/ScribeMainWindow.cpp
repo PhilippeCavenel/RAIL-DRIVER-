@@ -80,7 +80,6 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     connect(ui->actionReplace, SIGNAL(triggered()), this, SLOT(on_actionFind_triggered()));
     connect(ui->actionSelect_Port_Com, &QAction::triggered, this, &ScribeMainWindow::actionSelect_Port_Com);
     connect(ui->stopTransmissionButton, &QPushButton::clicked,this, &ScribeMainWindow::on_stopTransmissionButton_clicked);
-    //connect(ui->sendAgainButton, &QPushButton::clicked, this, &ScribeMainWindow::on_sendAgainButton_clicked);
     connect(ui->clearCommandButton, &QPushButton::clicked,this, &ScribeMainWindow::on_clearCommandButton_clicked);
     connect(ui->simpleCommand,SIGNAL(returnPressed()),this,SLOT(on_simpleCommand()));
 

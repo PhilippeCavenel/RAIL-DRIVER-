@@ -63,16 +63,15 @@ public:
     QAction *actionParser_Lang;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QLabel *label_2;
-    QLabel *label_3;
-    QLabel *label;
-    QPushButton *stopTransmissionButton;
     QProgressBar *sendProgressBar;
     TabbedEditor *tabWidget;
     QPlainTextEdit *CommandResult;
-    QLineEdit *simpleCommand;
-    QPushButton *sendAgainButton;
+    QLabel *label;
+    QPushButton *stopTransmissionButton;
+    QLabel *label_2;
     QPushButton *clearCommandButton;
+    QPushButton *sendAgainButton;
+    QLineEdit *simpleCommand;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuEdit;
@@ -208,20 +207,32 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName("gridLayout");
-        label_2 = new QLabel(centralWidget);
-        label_2->setObjectName("label_2");
+        sendProgressBar = new QProgressBar(centralWidget);
+        sendProgressBar->setObjectName("sendProgressBar");
+        sendProgressBar->setValue(24);
 
-        gridLayout->addWidget(label_2, 0, 0, 1, 2);
+        gridLayout->addWidget(sendProgressBar, 0, 3, 1, 6);
 
-        label_3 = new QLabel(centralWidget);
-        label_3->setObjectName("label_3");
+        tabWidget = new TabbedEditor(centralWidget);
+        tabWidget->setObjectName("tabWidget");
+        tabWidget->setMinimumSize(QSize(0, 0));
 
-        gridLayout->addWidget(label_3, 2, 0, 1, 1);
+        gridLayout->addWidget(tabWidget, 1, 0, 1, 8);
+
+        CommandResult = new QPlainTextEdit(centralWidget);
+        CommandResult->setObjectName("CommandResult");
+        CommandResult->setEnabled(true);
+        QFont font;
+        font.setPointSize(7);
+        CommandResult->setFont(font);
+        CommandResult->setReadOnly(true);
+
+        gridLayout->addWidget(CommandResult, 1, 8, 2, 3);
 
         label = new QLabel(centralWidget);
         label->setObjectName("label");
 
-        gridLayout->addWidget(label, 0, 8, 1, 1);
+        gridLayout->addWidget(label, 0, 9, 1, 1);
 
         stopTransmissionButton = new QPushButton(centralWidget);
         stopTransmissionButton->setObjectName("stopTransmissionButton");
@@ -239,36 +250,17 @@ public:
 "    background-color: #f44336;\n"
 "}"));
 
-        gridLayout->addWidget(stopTransmissionButton, 0, 9, 1, 1);
+        gridLayout->addWidget(stopTransmissionButton, 0, 10, 1, 1);
 
-        sendProgressBar = new QProgressBar(centralWidget);
-        sendProgressBar->setObjectName("sendProgressBar");
-        sendProgressBar->setValue(24);
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName("label_2");
 
-        gridLayout->addWidget(sendProgressBar, 0, 2, 1, 6);
+        gridLayout->addWidget(label_2, 0, 0, 1, 3);
 
-        tabWidget = new TabbedEditor(centralWidget);
-        tabWidget->setObjectName("tabWidget");
-        tabWidget->setMinimumSize(QSize(0, 0));
+        clearCommandButton = new QPushButton(centralWidget);
+        clearCommandButton->setObjectName("clearCommandButton");
 
-        gridLayout->addWidget(tabWidget, 1, 0, 1, 7);
-
-        CommandResult = new QPlainTextEdit(centralWidget);
-        CommandResult->setObjectName("CommandResult");
-        CommandResult->setEnabled(true);
-        QFont font;
-        font.setPointSize(7);
-        CommandResult->setFont(font);
-        CommandResult->setReadOnly(true);
-
-        gridLayout->addWidget(CommandResult, 1, 7, 2, 3);
-
-        simpleCommand = new QLineEdit(centralWidget);
-        simpleCommand->setObjectName("simpleCommand");
-        simpleCommand->setEnabled(true);
-        simpleCommand->setReadOnly(false);
-
-        gridLayout->addWidget(simpleCommand, 2, 1, 1, 4);
+        gridLayout->addWidget(clearCommandButton, 2, 7, 1, 1);
 
         sendAgainButton = new QPushButton(centralWidget);
         sendAgainButton->setObjectName("sendAgainButton");
@@ -278,12 +270,14 @@ public:
         sizePolicy.setHeightForWidth(sendAgainButton->sizePolicy().hasHeightForWidth());
         sendAgainButton->setSizePolicy(sizePolicy);
 
-        gridLayout->addWidget(sendAgainButton, 2, 5, 1, 1);
+        gridLayout->addWidget(sendAgainButton, 2, 0, 1, 1);
 
-        clearCommandButton = new QPushButton(centralWidget);
-        clearCommandButton->setObjectName("clearCommandButton");
+        simpleCommand = new QLineEdit(centralWidget);
+        simpleCommand->setObjectName("simpleCommand");
+        simpleCommand->setEnabled(true);
+        simpleCommand->setReadOnly(false);
 
-        gridLayout->addWidget(clearCommandButton, 2, 6, 1, 1);
+        gridLayout->addWidget(simpleCommand, 2, 1, 1, 6);
 
         ScribeMainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(ScribeMainWindow);
@@ -452,13 +446,12 @@ public:
         actionSelect_Port_Com->setText(QCoreApplication::translate("ScribeMainWindow", "Select Port Com", nullptr));
         actionCheck_Program->setText(QCoreApplication::translate("ScribeMainWindow", "Check_Program", nullptr));
         actionParser_Lang->setText(QCoreApplication::translate("ScribeMainWindow", "Rail", nullptr));
-        label_2->setText(QCoreApplication::translate("ScribeMainWindow", "Script update", nullptr));
-        label_3->setText(QCoreApplication::translate("ScribeMainWindow", "Command", nullptr));
         label->setText(QCoreApplication::translate("ScribeMainWindow", "Master result", nullptr));
         stopTransmissionButton->setText(QCoreApplication::translate("ScribeMainWindow", "STOP !", nullptr));
-        simpleCommand->setText(QString());
-        sendAgainButton->setText(QCoreApplication::translate("ScribeMainWindow", "Run Again", nullptr));
+        label_2->setText(QCoreApplication::translate("ScribeMainWindow", "Script update", nullptr));
         clearCommandButton->setText(QCoreApplication::translate("ScribeMainWindow", "Clear", nullptr));
+        sendAgainButton->setText(QCoreApplication::translate("ScribeMainWindow", "Command", nullptr));
+        simpleCommand->setText(QString());
         menuFile->setTitle(QCoreApplication::translate("ScribeMainWindow", "File", nullptr));
         menuEdit->setTitle(QCoreApplication::translate("ScribeMainWindow", "Edit", nullptr));
         menuFormat->setTitle(QCoreApplication::translate("ScribeMainWindow", "Format", nullptr));
