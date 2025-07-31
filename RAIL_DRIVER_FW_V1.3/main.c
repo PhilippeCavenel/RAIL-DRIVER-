@@ -1717,7 +1717,8 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
 			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) {
 				gl_stopAll=TRUE;
-			       	CalibMinMaxKnob() ;
+			       	CalibMinMaxKnob();
+				gl_stopAll=FALSE;				
 			}
 			if (sendPrompt==TRUE) {
 				prompt(gl_message);prompt(gl_message);
