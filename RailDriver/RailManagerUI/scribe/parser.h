@@ -338,7 +338,7 @@ public:
     char parseLine(char* inputString, parserObject* returnedObject);
     void initRequest(unsigned char* request);
     unsigned char uncompressData(unsigned char* data);
-    unsigned char getInputRequestFromCAN(unsigned char* request);
+    unsigned char getInputRequestFromCAN(unsigned char* request,int *mode);
 
 };
 

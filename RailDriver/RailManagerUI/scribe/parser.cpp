@@ -890,7 +890,7 @@ unsigned char parser::uncompressData(unsigned char* data) {
 /*****************************************************************************/
 /* getInputRequestFromCAN() */
 /*****************************************************************************/
-unsigned char parser::getInputRequestFromCAN(unsigned char* request) {
+unsigned char parser::getInputRequestFromCAN(unsigned char* request,int* mode) {
 
     char			requestTrameEnd;
     char			printTrameEnd;
@@ -898,6 +898,7 @@ unsigned char parser::getInputRequestFromCAN(unsigned char* request) {
     unsigned char	dataInCounter;
     unsigned char	dataStructureCounter;
 
+    int     tmpDataCounter=0;
 
     while (gl_getDataCANPointer!=gl_InputBufferPointer) {
 
@@ -909,8 +910,6 @@ unsigned char parser::getInputRequestFromCAN(unsigned char* request) {
 
         // REQUEST HEADER
         if (gl_requestHeaderTrameDetected==8) {
-            qDebug() <<"REQUEST HEADER";
-
             gl_canMode=CAN_REQUEST;
             gl_requestHeaderTrameDetected=0;
             gl_requestTrameStart=gl_getDataCANPointer+1;
@@ -919,19 +918,13 @@ unsigned char parser::getInputRequestFromCAN(unsigned char* request) {
 
         // PRINT HEADER
         else if (gl_printHeaderTrameDetected==8) {
-            qDebug() <<"PRINT HEADER";
-
-            gl_canMode=CAN_PRINT;
             gl_printHeaderTrameDetected=0;
             gl_printTrameStart=gl_getDataCANPointer+1;
             if (gl_printTrameStart>=MAXTRAMESIZE)gl_printTrameStart=0;
-
         }
 
         // REQUEST FOOTER
         else if (gl_requestFooterTrameDetected==8 && gl_canMode==CAN_REQUEST) {
-            qDebug() <<"REQUEST FOOTER";
-
             requestTrameEnd=gl_getDataCANPointer-7;
             if (requestTrameEnd<0)requestTrameEnd+=MAXTRAMESIZE;
             dataInCounter=gl_requestTrameStart;
@@ -948,6 +941,7 @@ unsigned char parser::getInputRequestFromCAN(unsigned char* request) {
             gl_printHeaderTrameDetected=0;
             gl_requestFooterTrameDetected=0;
             gl_printFooterTrameDetected=0;
+            *mode=CAN_REQUEST;
             return(uncompressData(request)); // Mean request available to proceed
         }
 
@@ -958,15 +952,30 @@ unsigned char parser::getInputRequestFromCAN(unsigned char* request) {
             printTrameEnd=gl_getDataCANPointer-7;
             if (printTrameEnd<0)printTrameEnd+=MAXTRAMESIZE;
             dataInCounter=gl_printTrameStart;
-
+            tmpDataCounter=0;
+            request[tmpDataCounter]='\0';
             while(dataInCounter!=printTrameEnd) {
-                dataInCounter++;
+                request[tmpDataCounter++]=gl_inputBuffer[dataInCounter++];
                 if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
+                if (tmpDataCounter>=REQUESTSIZE){
+                    gl_requestHeaderTrameDetected=0;
+                    gl_printHeaderTrameDetected=0;
+                    gl_requestFooterTrameDetected=0;
+                    gl_printFooterTrameDetected=0;
+                    return(FALSE); // ERROR
+                }
             }
+            request[tmpDataCounter]='\0';
+
             gl_canMode=CAN_UNKNOWN; // If more data arrive.... we continue to get data
             gl_getDataCANPointer++;
             if (gl_getDataCANPointer>=MAXTRAMESIZE)gl_getDataCANPointer=0;
-            return(FALSE); // Mean no more data to print
+            gl_requestHeaderTrameDetected=0;
+            gl_printHeaderTrameDetected=0;
+            gl_requestFooterTrameDetected=0;
+            gl_printFooterTrameDetected=0;
+            *mode=CAN_PRINT;
+            return(TRUE); // Mean no more data to print
         }
 
         // read new data

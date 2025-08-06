@@ -662,7 +662,7 @@ QString ScribeMainWindow::analyseCANinput(unsigned char* request){
     // CHECK EVENT FIRST
     if (request[REQ_EVENT_REQUEST_TRACK_EVENT] == TRUE) {
         trameAnalysis = QString("TRACK EVENT BOARD ");
-        trameAnalysis.append(QString::number(request[REQ_EVENT_REQUEST_EVENT_BOARD_TIMER_NUMBER]));
+        trameAnalysis.append(QString::number(request[REQ_EVENT_REQUEST_EVENT_BOARD_TRACK_NUMBER]));
         trameAnalysis.append(" TRACK ");
         trameAnalysis.append(QString::number(request[REQ_EVENT_REQUEST_EVENT_TRACK_NUMBER]));
         trameAnalysis.append(" ");
@@ -671,7 +671,7 @@ QString ScribeMainWindow::analyseCANinput(unsigned char* request){
     }
     else if (request[REQ_EVENT_REQUEST_GPIO_EVENT] == TRUE) {
         trameAnalysis = QString("GPIO EVENT BOARD ");
-        trameAnalysis.append(QString::number(request[REQ_EVENT_REQUEST_EVENT_BOARD_TIMER_NUMBER]));
+        trameAnalysis.append(QString::number(request[REQ_EVENT_REQUEST_EVENT_BOARD_GPIO_NUMBER]));
         trameAnalysis.append(" GPIO ");
         trameAnalysis.append(QString::number(request[REQ_EVENT_REQUEST_EVENT_GPIO_NUMBER]));
         trameAnalysis.append(" LEVEL ");
@@ -858,6 +858,7 @@ QString ScribeMainWindow::analyseCANinput(unsigned char* request){
             break;
         }
     }
+    return(trameAnalysis);
 }
 void ScribeMainWindow::innoMakerDataReceived(unsigned char c)
 {
@@ -865,13 +866,24 @@ void ScribeMainWindow::innoMakerDataReceived(unsigned char c)
     CANinput.gl_inputBuffer[CANinput.gl_InputBufferPointer]=c;
     CANinput.gl_InputBufferPointer++;
     if(CANinput.gl_InputBufferPointer>=MAXTRAMESIZE)CANinput.gl_InputBufferPointer-=MAXTRAMESIZE;
-    if (CANinput.getInputRequestFromCAN(CANinput.gl_request)==TRUE) {
+    int mode;
+    if (CANinput.getInputRequestFromCAN(CANinput.gl_request,&mode)==TRUE) {
+        QString line;
+        if (mode==CAN_PRINT && !serial) {
+            line=QString::fromUtf8(reinterpret_cast<const char*>(CANinput.gl_request));
+        }
+        else if (mode==CAN_REQUEST) {
+            line = analyseCANinput(CANinput.gl_request);
+        }
 
-        QString line = analyseCANinput(CANinput.gl_request);
-
-        // Affiche les trames CAN en rouge
+        // Affiche les trames CAN en couleur
         QTextCharFormat format;
-        format.setForeground(QBrush(Qt::red));
+        if (line.contains("BOARD 31 ")) format.setForeground(QBrush(Qt::blue));
+        if (line.contains("BOARD 0 ")) format.setForeground(QBrush(Qt::magenta));
+        if (line.contains("BOARD 1 ")) format.setForeground(QBrush(Qt::green));
+        if (line.contains("BOARD 2 ")) format.setForeground(QBrush(QColor("#FFA500")));
+        if (line.contains("BOARD 3 ")) format.setForeground(QBrush(Qt::red));
+
         QTextCursor cursor(CommandResult->document());
         cursor.movePosition(QTextCursor::End);
         cursor.insertText("\n[CAN] " + line, format);
