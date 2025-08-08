@@ -147,6 +147,7 @@ private slots:
     void on_clearCommandButton_clicked();
     void setParserLang();
     QString analyseCANinput(unsigned char* request);
+    void on_ExportCommandResult_triggered();
 
 
 signals:

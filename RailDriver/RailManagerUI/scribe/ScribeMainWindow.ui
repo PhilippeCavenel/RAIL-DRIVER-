@@ -21,14 +21,20 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="3" colspan="6">
-     <widget class="QProgressBar" name="sendProgressBar">
-      <property name="value">
-       <number>24</number>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="sendAgainButton">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Command</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="8">
+    <item row="1" column="0" colspan="9">
      <widget class="TabbedEditor" name="tabWidget">
       <property name="minimumSize">
        <size>
@@ -41,7 +47,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="8" rowspan="2" colspan="3">
+    <item row="1" column="9" rowspan="2" colspan="3">
      <widget class="QPlainTextEdit" name="CommandResult">
       <property name="enabled">
        <bool>true</bool>
@@ -56,14 +62,20 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="9">
-     <widget class="QLabel" name="label">
+    <item row="2" column="1" colspan="7">
+     <widget class="QLineEdit" name="simpleCommand">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="text">
-       <string>Master result</string>
+       <string/>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
-    <item row="0" column="10">
+    <item row="0" column="11">
      <widget class="QPushButton" name="stopTransmissionButton">
       <property name="styleSheet">
        <string notr="true">QPushButton {
@@ -85,43 +97,31 @@ QPushButton:pressed {
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="3">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Script update</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="7">
+    <item row="2" column="8">
      <widget class="QPushButton" name="clearCommandButton">
       <property name="text">
        <string>Clear</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="sendAgainButton">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_2">
       <property name="text">
-       <string>Command</string>
+       <string>Script update</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1" colspan="6">
-     <widget class="QLineEdit" name="simpleCommand">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
+    <item row="0" column="9">
+     <widget class="QPushButton" name="ExportCommandResult">
       <property name="text">
-       <string/>
+       <string>Export</string>
       </property>
-      <property name="readOnly">
-       <bool>false</bool>
+     </widget>
+    </item>
+    <item row="0" column="1" colspan="6">
+     <widget class="QProgressBar" name="sendProgressBar">
+      <property name="value">
+       <number>24</number>
       </property>
      </widget>
     </item>

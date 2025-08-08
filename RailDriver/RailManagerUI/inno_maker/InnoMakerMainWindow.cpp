@@ -17,6 +17,7 @@ InnoMakerMainWindow::InnoMakerMainWindow(QWidget *parent)
     , ui(new Ui::InnoMakerMainWindow)
 {
     ui->setupUi(this);
+    this->ui->comboBox_baudrate->setCurrentIndex(12);
     can = new InnoMakerUsb2CanLib::innomaker_can();
     usbCanLib = new InnoMakerUsb2CanLib();
     usbCanLib->setup();
@@ -37,7 +38,7 @@ InnoMakerMainWindow::InnoMakerMainWindow(QWidget *parent)
     this->model->setHorizontalHeaderItem(8,new QStandardItem("FrameData"));
     this->model->setHorizontalHeaderItem(9,new QStandardItem("Message"));
 
-    this->ui->lineEdit_frameId->setText("00 00 00 00");
+    this->ui->lineEdit_frameId->setText("00 00 00 20"); // soit la valeur 32 (après l'id de la carte Master)
     this->ui->lineEdit_data->setText("00 00 00 00 00 00 00 00");
 
     this->ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);

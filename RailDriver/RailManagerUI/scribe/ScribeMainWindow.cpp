@@ -81,6 +81,8 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     connect(ui->stopTransmissionButton, &QPushButton::clicked,this, &ScribeMainWindow::on_stopTransmissionButton_clicked);
     connect(ui->clearCommandButton, &QPushButton::clicked,this, &ScribeMainWindow::on_clearCommandButton_clicked);
     connect(ui->simpleCommand,SIGNAL(returnPressed()),this,SLOT(on_simpleCommand()));
+    connect(ui->ExportCommandResult, &QPushButton::clicked, this, &ScribeMainWindow::on_ExportCommandResult_triggered);
+
 
     // Have to add this shortcut manually because we can't define it via the GUI editor
     QShortcut *tabCloseShortcut = new QShortcut(QKeySequence("Ctrl+W"), this);
@@ -895,6 +897,27 @@ void ScribeMainWindow::innoMakerDataReceived(unsigned char c)
         unsigned char dataCounter;
         for (dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++)CANinput.gl_request[dataCounter]=0;
     }
+}
+
+    void ScribeMainWindow::on_ExportCommandResult_triggered()
+{
+    QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Enregistrer la sortie"), defaultPath, tr("Fichiers texte (*.txt);;Tous les fichiers (*)"));
+
+    if (filePath.isEmpty())
+        return;
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
+        QMessageBox::critical(this, tr("Erreur"), tr("Impossible d'ouvrir le fichier pour écriture : ") + file.errorString());
+        return;
+    }
+
+    QTextStream out(&file);
+    out << CommandResult->toPlainText();
+    file.close();
+
+    ui->statusBar->showMessage(tr("Contenu enregistré dans %1").arg(filePath), 2000);
 }
 void ScribeMainWindow::on_actionCheck_Program_triggered(){
     editor->getContent();
