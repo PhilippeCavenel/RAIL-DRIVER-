@@ -109,7 +109,7 @@ public slots:
 public slots:
     void onTabRegainedFocus();
     void onTabLostFocus();
-    void innoMakerDataReceived(unsigned char c);
+    void innoMakerDataReceived(unsigned char c,QString TimeStamp);
 
 
 // All UI and/or keyboard shortcut interactions

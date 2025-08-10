@@ -35,8 +35,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-#define RAIL_DRIVER_HEADER				"RAIL DRIVER..V 1.33"
-#define VERSION							"VERSION......21-07-2025"
+#define RAIL_DRIVER_HEADER				"RAIL DRIVER..V 1.34"
+#define VERSION							"VERSION.....09-08-2025"
 #define BOARD_NUMBER					"BOARD........"
 #define MEMORY							"MEMORY......."
 #define AUTOMATION						"AUTOMATION..."
@@ -144,7 +144,8 @@
 // CAN
 #define CAN_REQUEST						1
 #define CAN_PRINT						2
-#define CAN_UNKNOWN						3
+#define CAN_FREE						3
+#define CAN_GET_DATA					4
 #define WAITDELAYTRAMECAN				500
 #define SYNCHROSENDDELAY				100
 
@@ -494,7 +495,8 @@
 #define NEW_AUTOMATION_IDENT						11
 #define NEW_AUTOMATIONSIZE							(NEW_AUTOMATION_IDENT+MAXSIZEIDENT+1)
 
-
+#define CAN_QUEUE_EMPTY  0
+#define CAN_QUEUE_FULL   1
 
 ///////////////////////////////////////////////
 // global variables
@@ -574,9 +576,17 @@ unsigned char 				gl_mutex;
 
 unsigned char				gl_trackNumber;
 
+// USARTCAN
+#pragma udata USARTCAN
+
 // USART
-#pragma udata USART
 static unsigned char 		gl_receivedUSARTData[USARTBUFFERSIZE];
+unsigned char				gl_waitCanPrint;
+
+// CAN QUEUE
+unsigned char 				gl_canQueueData[REQUESTSIZE];
+unsigned char 				gl_canQueueFull;
+
 #pragma udata
 
 unsigned char 				gl_receivedUSARTPointer;
@@ -593,6 +603,7 @@ unsigned char 				gl_tmpBuffer[REQUESTSIZE];
 unsigned char		 		gl_automation[MAXAUTOMATION][NEW_AUTOMATIONSIZE];
 unsigned char 				gl_inputUartString[MAXINPUTSTRING];
 char 						gl_message[MAXOUTPUTSTRING];
+
 #pragma udata
 
 unsigned char 				gl_nexAvailableAutomation;
@@ -631,9 +642,7 @@ char						gl_calibKnob;
 short						gl_deltaKnob0;
 short						gl_deltaKnob1;
 
-
 unsigned char				gl_userMode;	// MANUAL or AUTOMATIC
-
 
 // CUR GPIO STATUS
 unsigned char				gl_GPIONotification[4];
@@ -650,6 +659,7 @@ unsigned short				gl_timer;
 
 // RUN OR STOP ALL
 unsigned char 				gl_stopAll;
+
 
 ///////////////////////////////////////////////
 // function declaration
@@ -700,6 +710,9 @@ void			 CANsendDelay();
 int 			_user_putc(char c);
 void 			sendRequestToCAN(unsigned char* request);
 unsigned char	getInputRequestFromCAN(unsigned char* request);
+void 			trySendRequestToCAN(unsigned char* request);
+void 			processCANQueue(void);
+void			sendPrintToCAN();
 
 // 7 SEGMENT TM1637
 void 			set7segmentPort(unsigned char CLK, unsigned char DIO);

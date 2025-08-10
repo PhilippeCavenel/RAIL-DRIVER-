@@ -862,7 +862,7 @@ QString ScribeMainWindow::analyseCANinput(unsigned char* request){
     }
     return(trameAnalysis);
 }
-void ScribeMainWindow::innoMakerDataReceived(unsigned char c)
+void ScribeMainWindow::innoMakerDataReceived(unsigned char c,QString TimeStamp)
 {
 
     CANinput.gl_inputBuffer[CANinput.gl_InputBufferPointer]=c;
@@ -878,6 +878,7 @@ void ScribeMainWindow::innoMakerDataReceived(unsigned char c)
             line = analyseCANinput(CANinput.gl_request);
         }
 
+
         // Affiche les trames CAN en couleur
         QTextCharFormat format;
         if (line.contains("BOARD 31 ")) format.setForeground(QBrush(Qt::blue));
@@ -888,10 +889,11 @@ void ScribeMainWindow::innoMakerDataReceived(unsigned char c)
 
         QTextCursor cursor(CommandResult->document());
         cursor.movePosition(QTextCursor::End);
-        cursor.insertText("\n[CAN] " + line, format);
+        cursor.insertText("\n[CAN ", format);
+        cursor.insertText(TimeStamp, format);
+        cursor.insertText("] " + line, format);
         CommandResult->ensureCursorVisible();
         CommandResult->repaint();
-
 
         // Init
         unsigned char dataCounter;

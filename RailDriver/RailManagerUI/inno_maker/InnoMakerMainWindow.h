@@ -86,7 +86,7 @@ public slots:
     void delaySenderFinish();
 
 signals:
-    void characterReceived(unsigned char c);
+    void characterReceived(unsigned char c,QString TimeStamp);
 
 };
 #endif // INNOMAKERMAINWINDOW_H

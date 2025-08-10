@@ -1623,7 +1623,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 	if (request[REQ_EVENT_REQUEST_TRACK_EVENT] == TRUE) {
 
 		// Event from this board is sent to the others 
-		if (request[REQ_BOARD_NUMBER] == gl_boardNumber) sendRequestToCAN(request);
+		if (request[REQ_BOARD_NUMBER] == gl_boardNumber) trySendRequestToCAN(request);
 
 		// Keep values as request struct should be reset
 		eventBoardTrackNumber=request[REQ_EVENT_REQUEST_EVENT_BOARD_TRACK_NUMBER];
@@ -1648,7 +1648,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 	else if (request[REQ_EVENT_REQUEST_GPIO_EVENT] == TRUE) {
 
 		// Event from this board is sent to the others 
-		if (request[REQ_BOARD_NUMBER] == gl_boardNumber) sendRequestToCAN(request);
+		if (request[REQ_BOARD_NUMBER] == gl_boardNumber) trySendRequestToCAN(request);
 
 		// Keep values as request struct should be reset
 		eventBoardGPIONumber=request[REQ_EVENT_REQUEST_EVENT_BOARD_GPIO_NUMBER];
@@ -1674,7 +1674,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 	else if (request[REQ_EVENT_REQUEST_TIMER_EVENT] == TRUE) {
 
 		// Event from this board is sent to the others 
-		if (request[REQ_BOARD_NUMBER] == gl_boardNumber) sendRequestToCAN(request);
+		if (request[REQ_BOARD_NUMBER] == gl_boardNumber) trySendRequestToCAN(request);
 
 		// Keep values as request struct should be reset
 		eventBoardTIMERNumber=request[REQ_EVENT_REQUEST_EVENT_BOARD_TIMER_NUMBER];
@@ -1700,21 +1700,21 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
     switch (request[REQ_GLOBAL_COMMAND]) {
 		case STOPValue: 
 			gl_stopAll=TRUE;
-			if (request[REQ_BOARD_NUMBER] == gl_boardNumber) sendRequestToCAN(request);
+			if (request[REQ_BOARD_NUMBER] == gl_boardNumber) trySendRequestToCAN(request);
 			if (sendPrompt==TRUE) prompt(gl_message);
 			return(TRUE);
 		case RUNALLValue :
 			gl_stopAll=FALSE;
-			if (request[REQ_BOARD_NUMBER] == gl_boardNumber) sendRequestToCAN(request);
+			if (request[REQ_BOARD_NUMBER] == gl_boardNumber) trySendRequestToCAN(request);
 			if (sendPrompt==TRUE) prompt(gl_message);
 			return(TRUE);
 		case RUNValue :
-			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
+			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) trySendRequestToCAN(request);
 			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) gl_stopAll=FALSE;
 			if (sendPrompt==TRUE) prompt(gl_message);
 		 	return(TRUE); 
 		case CALIBValue :
-			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
+			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) trySendRequestToCAN(request);
 			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) {
 				gl_stopAll=TRUE;
 			       	CalibMinMaxKnob();
@@ -1725,7 +1725,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 			}
 		 	return(TRUE); 
 		case RESETValue :
-			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
+			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) trySendRequestToCAN(request);
 			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) ResetEEPROM();
 			if (sendPrompt==TRUE) prompt(gl_message);
 		 	return(TRUE); 
@@ -1737,7 +1737,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 				if (gl_master==TRUE) {
 
 					// Send request to CAN
-               	 	sendRequestToCAN(request);
+               	 	trySendRequestToCAN(request);
 					if (sendPrompt==TRUE) prompt(gl_message);
 				}
 				return(TRUE); // Not for us
@@ -2276,6 +2276,58 @@ void CANsendDelay() {
 	unsigned short	delay;
 	for(delay=0;delay<WAITDELAYTRAMECAN;delay++);
 }
+/*****************************************************************************/
+/* sendPrintToCAN() */
+/*****************************************************************************/
+void sendPrintToCAN(){
+
+	unsigned long 	id;			// Id of sender
+    unsigned char 	dataOut[8];	// DATA to CAN	
+	unsigned char 	dataCounter;
+	unsigned char	dataOutCounter;	
+	unsigned char	trameComplete;
+
+	BYTE dataLen; 				// Number of bytes transmitted in the gl_message
+	ECAN_RX_MSG_FLAGS flags; 	// Flags
+
+	dataLen=8;
+	flags=ECAN_TX_STD_FRAME;
+	id=gl_boardNumber;
+
+	// header trame
+	for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) dataOut[dataOutCounter]=TRAMEPRINTHEADER;
+
+	while(!ECANSendMessage(id,dataOut,dataLen,flags));
+	CANsendDelay();
+
+	// trame
+	trameComplete=FALSE;
+	dataCounter=0;
+	while(dataCounter<MAXMESSAGESIZE) {
+		for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) {
+			if (dataCounter<gl_outputBufferCounter) {
+				dataOut[dataOutCounter]=gl_outputBuffer[dataCounter++];
+				if (dataOut[dataOutCounter]==ENDOFPRINTFTRAME) trameComplete=TRUE;
+			}
+			else {
+				dataOut[dataOutCounter]=ENDOFPRINTFTRAME;
+				if (dataCounter<MAXMESSAGESIZE)dataCounter++;
+				trameComplete=TRUE;
+			}
+		}
+		while(!ECANSendMessage(id,dataOut,dataLen,flags));
+		CANsendDelay();
+
+		if (trameComplete==TRUE) break;
+	}
+	gl_outputBufferCounter=0;
+
+	// footer trame
+	for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) dataOut[dataOutCounter]=TRAMEPRINTFOOTER;
+	while(!ECANSendMessage(id,dataOut,dataLen,flags));
+	CANsendDelay();
+
+}
 
 /*****************************************************************************/
 /* _user_putc*/
@@ -2295,54 +2347,39 @@ int _user_putc (char c) {
 	if (gl_master==TRUE){
 		if (gl_inputCounter==0)sendUSART(c);
 	}
+
+	// Send on CAN bus
 	else {
 		if (gl_outputBufferCounter<MAXMESSAGESIZE)gl_outputBuffer[gl_outputBufferCounter++]=c;
-
-		// Send on CAN bus
-	
-
-		if (gl_outputBufferCounter==MAXMESSAGESIZE || c==ENDOFPRINTFTRAME) {
-			dataLen=8;
-			flags=ECAN_TX_STD_FRAME;
-			id=gl_boardNumber;
-
-			// header trame
-			for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) dataOut[dataOutCounter]=TRAMEPRINTHEADER;
-
-			while(!ECANSendMessage(id,dataOut,dataLen,flags));
-			CANsendDelay();
-
-			// trame
-			trameComplete=FALSE;
-			dataCounter=0;
-			while(dataCounter<MAXMESSAGESIZE) {
-				for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) {
-					if (dataCounter<gl_outputBufferCounter) {
-						dataOut[dataOutCounter]=gl_outputBuffer[dataCounter++];
-						if (dataOut[dataOutCounter]==ENDOFPRINTFTRAME) trameComplete=TRUE;
-					}
-					else {
-						dataOut[dataOutCounter]=ENDOFPRINTFTRAME;
-						if (dataCounter<MAXMESSAGESIZE)dataCounter++;
-						trameComplete=TRUE;
-					}
-				}
-				while(!ECANSendMessage(id,dataOut,dataLen,flags));
-				CANsendDelay();
-
-				if (trameComplete==TRUE) break;
-			}
-			gl_outputBufferCounter=0;
-
-			// footer trame
-			for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) dataOut[dataOutCounter]=TRAMEPRINTFOOTER;
-			while(!ECANSendMessage(id,dataOut,dataLen,flags));
-			CANsendDelay();
-		}
+		if ((gl_outputBufferCounter==MAXMESSAGESIZE || c==ENDOFPRINTFTRAME) && gl_canMode==CAN_FREE) sendPrintToCAN();
 	}
 	return(c);
 }
+/*****************************************************************************/
+/*void trySendRequestToCAN() */
+/*****************************************************************************/
+void trySendRequestToCAN(unsigned char* request) {
 
+	unsigned char 	dataCounter;
+
+    // Can't send the trame
+    if (gl_canMode != CAN_FREE) {
+		for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++) {
+			gl_canQueueData[dataCounter]=request[dataCounter];
+		}
+        gl_canQueueFull = CAN_QUEUE_FULL;
+    }
+	else {
+    	sendRequestToCAN(request);
+	}
+}
+/*****************************************************************************/
+/*void processCANQueue() */
+/*****************************************************************************/
+void processCANQueue(void) {
+	sendRequestToCAN(gl_canQueueData);
+	gl_canQueueFull = CAN_QUEUE_EMPTY;
+}
 /*****************************************************************************/
 /* sendRequestToCAN() */
 /*****************************************************************************/
@@ -2447,7 +2484,7 @@ unsigned char getInputRequestFromCAN(unsigned char* request) {
 					if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
 					if (dataStructureCounter>=REQUESTSIZE)return(FALSE);
 				}
-				gl_canMode=CAN_UNKNOWN; // If more data arrive.... we delete this trame
+				gl_canMode=CAN_FREE; // If more data arrive.... we delete this trame
 				gl_getDataCANPointer++;		
 				if (gl_getDataCANPointer>=MAXTRAMESIZE)gl_getDataCANPointer=0;
 				return(uncompressData(request)); // Mean request available to proceed
@@ -2460,12 +2497,12 @@ unsigned char getInputRequestFromCAN(unsigned char* request) {
 				dataInCounter=gl_printTrameStart;
 
 				while(dataInCounter!=printTrameEnd) {
-					if (gl_master==TRUE)printf("%c",gl_inputBuffer[dataInCounter]);
+					if (gl_master==TRUE && gl_inputBuffer[dataInCounter]!=0)printf("%c",gl_inputBuffer[dataInCounter]);
 					dataInCounter++;
 					if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
 				}
 				if (gl_master==TRUE) prompt(gl_message);
-				gl_canMode=CAN_UNKNOWN; // If more data arrive.... we continue to get data
+				gl_canMode=CAN_FREE; // If more data arrive.... we continue to get data
 				gl_getDataCANPointer++;		
 				if (gl_getDataCANPointer>=MAXTRAMESIZE)gl_getDataCANPointer=0;
 				return(FALSE); // Mean no more data to print
@@ -2698,6 +2735,7 @@ void high_isr(void){
 
 	if(PIR3bits.RXB0IF ||PIR3bits.RXB1IF) {
 		while(ECANReceiveMessage(&id, &gl_inputBuffer[gl_InputBufferPointer], &dataLen, &flags)) {	
+			if (gl_canMode==CAN_FREE) gl_canMode=CAN_GET_DATA;
 			gl_InputBufferPointer+=dataLen;
 			if(gl_InputBufferPointer>=MAXTRAMESIZE)gl_InputBufferPointer-=MAXTRAMESIZE;
 		}
@@ -3151,11 +3189,13 @@ void init() {
     TRISBbits.TRISB3 = 1; // CANRX input setting
 	gl_InputBufferPointer=0;
 	gl_getDataCANPointer=0;
-	gl_canMode=CAN_UNKNOWN;
+	gl_canMode=CAN_FREE;
 
     ECANInitialize(); // init ECAN
 	PIE3bits.RXB0IE=1; // enable interrupt for CAN
 	PIE3bits.RXB1IE=1; // enable interrupt for CAN
+    gl_canQueueFull = CAN_QUEUE_EMPTY;
+
 
     // Signal
      initSignal();
@@ -3300,6 +3340,9 @@ void main()
     while (1){
   	 	TM1637_setBrightness(4);
 		while(1) {	
+
+			// If data available
+			if (gl_canMode == CAN_FREE && gl_canQueueFull == CAN_QUEUE_FULL) processCANQueue();
 
 			// Manage knob value (for MANUAL and AUTOMATIC mode)
 			getEventFromKNOB();

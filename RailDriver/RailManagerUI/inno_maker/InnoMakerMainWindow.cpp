@@ -386,16 +386,17 @@ void InnoMakerMainWindow::recv( Message msg) {
     memset(frameDataBytes,0,8);
     memcpy(frameDataBytes,&msg.data[12],dlc);
 
-    for (int i = 0; i < dlc; ++i) {
-        emit characterReceived(static_cast<unsigned char>(frameDataBytes[i]));
-    }
-
     unsigned int timeStamp = (unsigned int)bytesToInt(&msg.data[20]);
     QString seqStr = QString::number(txNum + rxNum + rxErrorNum);
     QString timeStampStr= QString("%1.%2.%3").arg(timeStamp / 1000000,3,10,QChar('0')).arg((timeStamp % 1000000) / 1000,3,10,QChar('0')).arg( timeStamp % 1000,3,10,QChar('0'));
     QString channelStr ="0";
     QString frameIdStr = QString::number(frameId & Can_Id_Mask,16);
     QString frameLengthStr = QString::number(dlc,16);
+
+    for (int i = 0; i < dlc; ++i) {
+        emit characterReceived(static_cast<unsigned char>(frameDataBytes[i]),timeStampStr);
+    }
+
 
     std::string data_str = "";
 
