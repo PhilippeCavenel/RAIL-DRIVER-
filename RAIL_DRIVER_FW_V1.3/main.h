@@ -35,12 +35,14 @@
 #define TRUE							1
 #define FALSE							0
                          
-#define RAIL_DRIVER_HEADER				"RAIL DRIVER..V 1.34"
-#define VERSION							"VERSION.....09-08-2025"
-#define BOARD_NUMBER					"BOARD........"
-#define MEMORY							"MEMORY......."
-#define AUTOMATION						"AUTOMATION..."
-#define MODE							"MODE........."
+#define RAIL_DRIVER_HEADER				"RAIL DRIVER : V 1.35"
+#define VERSION							"VERSION : 12-08-2025"
+#define BOARD_NUMBER					"BOARD : "
+#define MEMORY							"MEMORY : "
+#define AUTOMATION						"AUTOMATION : "
+#define MODE							"MODE : "
+#define TRAME_RETRY						"RETRY : "
+#define TRAME_LOST						"LOST TRAME : "
 
 // PROTOCOL
 #define MAXINPUTSTRING					200
@@ -586,6 +588,9 @@ unsigned char				gl_waitCanPrint;
 // CAN QUEUE
 unsigned char 				gl_canQueueData[REQUESTSIZE];
 unsigned char 				gl_canQueueFull;
+unsigned long				gl_canIdReceived;
+unsigned long				gl_trameRetryCounter;
+unsigned long				gl_trameLostCounter;
 
 #pragma udata
 

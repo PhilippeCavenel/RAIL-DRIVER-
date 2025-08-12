@@ -301,7 +301,13 @@ void boardStatus() {
 	else sprintf(gl_message,"%sDCC",gl_message);
 	prompt(gl_message);
 
-	
+	sprintf(gl_message,TRAME_LOST);
+	sprintf(gl_message,"%s%d",gl_message,gl_trameLostCounter);
+	prompt(gl_message);
+
+	sprintf(gl_message,TRAME_RETRY);
+	sprintf(gl_message,"%s%d",gl_message,gl_trameRetryCounter);
+	prompt(gl_message);
 
 	sprintf(gl_message,"");
 	prompt(gl_message);
@@ -2300,6 +2306,19 @@ void sendPrintToCAN(){
 	while(!ECANSendMessage(id,dataOut,dataLen,flags));
 	CANsendDelay();
 
+	// Check if another board sent header at the same time
+	if (gl_canMode!=CAN_FREE) {
+		if (gl_boardNumber<gl_canIdReceived) { // Nothing to do, trame is lost
+			gl_trameLostCounter++;
+			return;
+		}
+		else { // We keep the priority and send the current request
+		       // Repeat header (because incoming trame could be REQUEST or PRINT)
+			while(!ECANSendMessage(id,dataOut,dataLen,flags));
+			CANsendDelay();
+		}
+	}
+
 	// trame
 	trameComplete=FALSE;
 	dataCounter=0;
@@ -2364,10 +2383,15 @@ void trySendRequestToCAN(unsigned char* request) {
 
     // Can't send the trame
     if (gl_canMode != CAN_FREE) {
+        if (gl_canQueueFull == CAN_QUEUE_FULL) {
+			gl_trameLostCounter++;
+			return;
+		}
 		for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++) {
 			gl_canQueueData[dataCounter]=request[dataCounter];
 		}
         gl_canQueueFull = CAN_QUEUE_FULL;
+		gl_trameRetryCounter++;
     }
 	else {
     	sendRequestToCAN(request);
@@ -2405,11 +2429,22 @@ void sendRequestToCAN(unsigned char* request) {
 	for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) {
 		dataOut[dataOutCounter]=TRAMEREQUESTHEADER;
 	}
-			
-	CANsendDelay(); // Delay to avoid sending to fast after receiving a trame
 
 	while(!ECANSendMessage(id,dataOut,dataLen,flags));
 	CANsendDelay();
+			
+	// Check if another board sent header at the same time
+	if (gl_canMode!=CAN_FREE) {
+		if (gl_boardNumber<gl_canIdReceived) { // We queue the current request
+			trySendRequestToCAN(request); 
+			return;
+		}
+		else { // We keep the priority and send the current request
+		       // Repeat header (because incoming trame could be REQUEST or PRINT)
+			while(!ECANSendMessage(id,dataOut,dataLen,flags));
+			CANsendDelay();
+		}
+	}
 
 	// trame
 	while(dataCounter<trameSize) {
@@ -2735,7 +2770,11 @@ void high_isr(void){
 
 	if(PIR3bits.RXB0IF ||PIR3bits.RXB1IF) {
 		while(ECANReceiveMessage(&id, &gl_inputBuffer[gl_InputBufferPointer], &dataLen, &flags)) {	
-			if (gl_canMode==CAN_FREE) gl_canMode=CAN_GET_DATA;
+			if (gl_canMode==CAN_FREE) {
+				gl_canMode=CAN_GET_DATA;
+				gl_canIdReceived=id;
+			}
+
 			gl_InputBufferPointer+=dataLen;
 			if(gl_InputBufferPointer>=MAXTRAMESIZE)gl_InputBufferPointer-=MAXTRAMESIZE;
 		}
@@ -3190,6 +3229,8 @@ void init() {
 	gl_InputBufferPointer=0;
 	gl_getDataCANPointer=0;
 	gl_canMode=CAN_FREE;
+	gl_trameRetryCounter=0;
+	gl_trameLostCounter=0;
 
     ECANInitialize(); // init ECAN
 	PIE3bits.RXB0IE=1; // enable interrupt for CAN
