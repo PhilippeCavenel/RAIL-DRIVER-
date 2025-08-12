@@ -2306,19 +2306,6 @@ void sendPrintToCAN(){
 	while(!ECANSendMessage(id,dataOut,dataLen,flags));
 	CANsendDelay();
 
-	// Check if another board sent header at the same time
-	if (gl_canMode!=CAN_FREE) {
-		if (gl_boardNumber<gl_canIdReceived) { // Nothing to do, trame is lost
-			gl_trameLostCounter++;
-			return;
-		}
-		else { // We keep the priority and send the current request
-		       // Repeat header (because incoming trame could be REQUEST or PRINT)
-			while(!ECANSendMessage(id,dataOut,dataLen,flags));
-			CANsendDelay();
-		}
-	}
-
 	// trame
 	trameComplete=FALSE;
 	dataCounter=0;
@@ -2370,7 +2357,9 @@ int _user_putc (char c) {
 	// Send on CAN bus
 	else {
 		if (gl_outputBufferCounter<MAXMESSAGESIZE)gl_outputBuffer[gl_outputBufferCounter++]=c;
-		if ((gl_outputBufferCounter==MAXMESSAGESIZE || c==ENDOFPRINTFTRAME) && gl_canMode==CAN_FREE) sendPrintToCAN();
+		if (gl_canMode==CAN_FREE) {
+			if ((gl_outputBufferCounter==MAXMESSAGESIZE || c==ENDOFPRINTFTRAME)) sendPrintToCAN();
+		}
 	}
 	return(c);
 }
@@ -2432,19 +2421,6 @@ void sendRequestToCAN(unsigned char* request) {
 
 	while(!ECANSendMessage(id,dataOut,dataLen,flags));
 	CANsendDelay();
-			
-	// Check if another board sent header at the same time
-	if (gl_canMode!=CAN_FREE) {
-		if (gl_boardNumber<gl_canIdReceived) { // We queue the current request
-			trySendRequestToCAN(request); 
-			return;
-		}
-		else { // We keep the priority and send the current request
-		       // Repeat header (because incoming trame could be REQUEST or PRINT)
-			while(!ECANSendMessage(id,dataOut,dataLen,flags));
-			CANsendDelay();
-		}
-	}
 
 	// trame
 	while(dataCounter<trameSize) {
@@ -2510,6 +2486,7 @@ unsigned char getInputRequestFromCAN(unsigned char* request) {
 
 			// REQUEST FOOTER
 			else if (requestFooterTrameDetected==8 && gl_canMode==CAN_REQUEST) {
+				gl_canMode=CAN_FREE; 
 				requestTrameEnd=gl_getDataCANPointer-7;
 				if (requestTrameEnd<0)requestTrameEnd+=MAXTRAMESIZE;
 				dataInCounter=gl_requestTrameStart;
@@ -2519,7 +2496,7 @@ unsigned char getInputRequestFromCAN(unsigned char* request) {
 					if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
 					if (dataStructureCounter>=REQUESTSIZE)return(FALSE);
 				}
-				gl_canMode=CAN_FREE; // If more data arrive.... we delete this trame
+
 				gl_getDataCANPointer++;		
 				if (gl_getDataCANPointer>=MAXTRAMESIZE)gl_getDataCANPointer=0;
 				return(uncompressData(request)); // Mean request available to proceed
@@ -2527,6 +2504,7 @@ unsigned char getInputRequestFromCAN(unsigned char* request) {
 				
 			// PRINT FOOTER	
 			else if (printFooterTrameDetected==8 && gl_canMode==CAN_PRINT) {
+				gl_canMode=CAN_FREE; 
 				printTrameEnd=gl_getDataCANPointer-7;
 				if (printTrameEnd<0)printTrameEnd+=MAXTRAMESIZE;
 				dataInCounter=gl_printTrameStart;
@@ -2537,7 +2515,6 @@ unsigned char getInputRequestFromCAN(unsigned char* request) {
 					if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
 				}
 				if (gl_master==TRUE) prompt(gl_message);
-				gl_canMode=CAN_FREE; // If more data arrive.... we continue to get data
 				gl_getDataCANPointer++;		
 				if (gl_getDataCANPointer>=MAXTRAMESIZE)gl_getDataCANPointer=0;
 				return(FALSE); // Mean no more data to print
