@@ -35,14 +35,13 @@
 #define TRUE							1
 #define FALSE							0
                          
-#define RAIL_DRIVER_HEADER				"RAIL DRIVER : V 1.35"
-#define VERSION							"VERSION : 12-08-2025"
-#define BOARD_NUMBER					"BOARD : "
-#define MEMORY							"MEMORY : "
-#define AUTOMATION						"AUTOMATION : "
-#define MODE							"MODE : "
-#define TRAME_RETRY						"RETRY : "
-#define TRAME_LOST						"LOST TRAME : "
+#define TEXT_RAIL_DRIVER_HEADER				"RAIL DRIVER V 1.36"
+#define TEXT_VERSION						"VERSION 17-08-2025"
+#define TEXT_BOARD_NUMBER					"BOARD  "
+#define TEXT_MEMORY							"MEMORY "
+#define TEXT_AUTOMATION						"AUTOMATION "
+#define TEXT_MODE							"MODE "
+#define TEST_START							"START"
 
 // PROTOCOL
 #define MAXINPUTSTRING					200
@@ -150,6 +149,7 @@
 #define CAN_GET_DATA					4
 #define WAITDELAYTRAMECAN				500
 #define SYNCHROSENDDELAY				100
+#define MAXINPUTCANBUFFER				3
 
 // RS232
 #define _XTAL_FREQ    					32000000
@@ -497,8 +497,6 @@
 #define NEW_AUTOMATION_IDENT						11
 #define NEW_AUTOMATIONSIZE							(NEW_AUTOMATION_IDENT+MAXSIZEIDENT+1)
 
-#define CAN_QUEUE_EMPTY  0
-#define CAN_QUEUE_FULL   1
 
 ///////////////////////////////////////////////
 // global variables
@@ -528,8 +526,18 @@
 //				DP
 ////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////////
+// Table segments (Common Anode) : 0–9, -, espace, A–Z
+//////////////////////////////////////////////////////////////////////////////
 //Common Anode             0    1    2      3     4     5     6    7     8     9     -   <space>
-const char digits[] = { 0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f, 0x40, 0x0};
+const char digits[] = {
+    0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F, // 0–9
+    0x40, // -
+    0x00, // espace
+    0x77,0x7C,0x39,0x5E,0x79,0x71,0x3D,0x76,0x06,0x1E, // Letters
+    0x75,0x38,0x37,0x54,0x3F,0x73,0x67,0x50,0x6D,0x78,
+    0x3E,0x1C,0x2A,0x76,0x6E,0x5B
+};
 
 unsigned char  				gl_S1T0char = 0;
 unsigned char  				gl_S2T0char = 0;
@@ -537,8 +545,8 @@ unsigned char  				gl_S2T0char = 0;
 unsigned char  				gl_S1T1char = 0;
 unsigned char  				gl_S2T1char = 0;
 
-unsigned char  				gl_S1T2char = 0;
 unsigned char  				gl_S2T2char = 0;
+unsigned char  				gl_S1T2char = 0;
 
 unsigned char  				gl_S1T3char = 0;
 unsigned char  				gl_S2T3char = 0;
@@ -574,7 +582,8 @@ char 						gl_dcc_ready;
 unsigned char 				gl_boardMode;	// ANA or DCC	
 
 // MUTEX
-unsigned char 				gl_mutex;
+unsigned char 				gl_mutexLow;
+unsigned char 				gl_mutexHigh;
 
 unsigned char				gl_trackNumber;
 
@@ -582,42 +591,45 @@ unsigned char				gl_trackNumber;
 #pragma udata USARTCAN
 
 // USART
-static unsigned char 		gl_receivedUSARTData[USARTBUFFERSIZE];
-unsigned char				gl_waitCanPrint;
+volatile static unsigned char 		gl_receivedUSARTData[USARTBUFFERSIZE];
+volatile unsigned char				gl_waitCanPrint;
 
-// CAN QUEUE
-unsigned char 				gl_canQueueData[REQUESTSIZE];
-unsigned char 				gl_canQueueFull;
-unsigned long				gl_canIdReceived;
-unsigned long				gl_trameRetryCounter;
-unsigned long				gl_trameLostCounter;
+// CAN
+volatile unsigned char 				gl_outputCANbuffer[MAXTRAMESIZE];
+volatile unsigned char				gl_outputCANbufferCounter;
+
+volatile unsigned char 				gl_inputCANbuffer[MAXINPUTCANBUFFER][MAXTRAMESIZE];
+volatile unsigned char				gl_inputCANWriteBufferPointer[MAXINPUTCANBUFFER];
+volatile unsigned char 				gl_inputCANReadBufferPointer[MAXINPUTCANBUFFER];
+
+volatile unsigned char 				gl_inputCANmode[MAXINPUTCANBUFFER];
+volatile unsigned char				gl_requestInputCANtrameStart[MAXINPUTCANBUFFER];
+volatile unsigned char				gl_printInputCANtrameStart[MAXINPUTCANBUFFER];
+volatile unsigned char				gl_currentCANid[MAXINPUTCANBUFFER];
+
+volatile unsigned char 				gl_data[MAXTRAMESIZE];
+
+// UART
+volatile unsigned char 				gl_inputUartString[MAXINPUTSTRING];
+volatile char 						gl_message[MAXOUTPUTSTRING];
+volatile unsigned char 				gl_receivedUSARTPointer;
+volatile unsigned char 				gl_getDataUSARTPointer;
+volatile char						gl_inputCounter;
 
 #pragma udata
-
-unsigned char 				gl_receivedUSARTPointer;
-unsigned char 				gl_getDataUSARTPointer;
-char						gl_inputCounter;
 
 // PROTOCOL
 #pragma udata PROTOCOL
 unsigned char 				gl_request[REQUESTSIZE];
-unsigned char 				gl_outputBuffer[MAXTRAMESIZE];
-unsigned char 				gl_inputBuffer[MAXTRAMESIZE];
 unsigned char 				gl_tmpBuffer[REQUESTSIZE];
-
 unsigned char		 		gl_automation[MAXAUTOMATION][NEW_AUTOMATIONSIZE];
-unsigned char 				gl_inputUartString[MAXINPUTSTRING];
-char 						gl_message[MAXOUTPUTSTRING];
 
+
+// GENERAL PURPOSE
 #pragma udata
 
 unsigned char 				gl_nexAvailableAutomation;
-unsigned char				gl_outputBufferCounter;
-unsigned char				gl_InputBufferPointer;
-unsigned char 				gl_getDataCANPointer;
-unsigned char 				gl_canMode;
-char						gl_requestTrameStart;
-char						gl_printTrameStart;
+
 
 // error info
 unsigned char 				gl_parserErrorCode;
@@ -715,8 +727,6 @@ void			 CANsendDelay();
 int 			_user_putc(char c);
 void 			sendRequestToCAN(unsigned char* request);
 unsigned char	getInputRequestFromCAN(unsigned char* request);
-void 			trySendRequestToCAN(unsigned char* request);
-void 			processCANQueue(void);
 void			sendPrintToCAN();
 
 // 7 SEGMENT TM1637
@@ -730,6 +740,10 @@ void 			TM1637_init(void);
 void			TM1637_write(short number1,short number2);
 void 			TM1637_display(short number1, short number2);
 void 			TM1637_setBrightness(char level);
+void 			TM1637_displayString(unsigned char *string);
+void 			TM1637_writeStringWindow(const char *s, unsigned char start, unsigned char len);
+unsigned char 	charToSegments(char c);
+void 			delayMainLoop(int delay);
 
 
 // INTERRUPT AND SIGNAL MANAGEMENT
