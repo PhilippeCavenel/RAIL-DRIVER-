@@ -81,7 +81,7 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     connect(ui->stopTransmissionButton, &QPushButton::clicked,this, &ScribeMainWindow::on_stopTransmissionButton_clicked);
     connect(ui->clearCommandButton, &QPushButton::clicked,this, &ScribeMainWindow::on_clearCommandButton_clicked);
     connect(ui->simpleCommand,SIGNAL(returnPressed()),this,SLOT(on_simpleCommand()));
-    connect(ui->ExportCommandResult, &QPushButton::clicked, this, &ScribeMainWindow::on_ExportCommandResult_triggered);
+    connect(ui->ExportCommandResult, &QPushButton::clicked, this, &ScribeMainWindow::on_ExportCommandResult_clicked);
 
 
     // Have to add this shortcut manually because we can't define it via the GUI editor
@@ -103,6 +103,16 @@ ScribeMainWindow::ScribeMainWindow(QWidget *parent) : QMainWindow(parent), ui(ne
     if (tabbedEditor->count() == 0)
     {
         on_actionNew_triggered();
+    }
+
+    for(int	bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
+        CANinput.gl_InputBufferPointer[bufferNumber]=0;
+        CANinput.gl_getDataCANPointer[bufferNumber]=0;
+        CANinput.gl_canMode[bufferNumber]=CAN_FREE;
+        CANinput.gl_printFooterTrameDetected[bufferNumber]=0;
+        CANinput.gl_printHeaderTrameDetected[bufferNumber]=0;
+        CANinput.gl_requestFooterTrameDetected[bufferNumber]=0;
+        CANinput.gl_requestHeaderTrameDetected[bufferNumber]=0;
     }
 }
 
@@ -699,6 +709,9 @@ QString ScribeMainWindow::analyseCANinput(unsigned char* request){
     case RUNALLValue :
         trameAnalysis = QString("RUN ALL");
         return(trameAnalysis);
+    case SYNCHROValue :
+        trameAnalysis = QString("SYNC");
+        return(trameAnalysis);
     case RUNValue :
         trameAnalysis = QString("RUN ");
         trameAnalysis.append(QString::number(request[REQ_BOARD_NUMBER]));
@@ -862,12 +875,14 @@ QString ScribeMainWindow::analyseCANinput(unsigned char* request){
     }
     return(trameAnalysis);
 }
-void ScribeMainWindow::innoMakerDataReceived(unsigned char c,QString TimeStamp)
+void ScribeMainWindow::innoMakerDataReceived(unsigned char c,QString TimeStamp,int frameId)
 {
 
-    CANinput.gl_inputBuffer[CANinput.gl_InputBufferPointer]=c;
-    CANinput.gl_InputBufferPointer++;
-    if(CANinput.gl_InputBufferPointer>=MAXTRAMESIZE)CANinput.gl_InputBufferPointer-=MAXTRAMESIZE;
+    if (frameId>=MAXINPUTCANBUFFER)return;
+
+    CANinput.gl_inputBuffer[frameId][CANinput.gl_InputBufferPointer[frameId]]=c;
+    CANinput.gl_InputBufferPointer[frameId]++;
+    if(CANinput.gl_InputBufferPointer[frameId]>=MAXTRAMESIZE)CANinput.gl_InputBufferPointer[frameId]-=MAXTRAMESIZE;
     int mode;
     if (CANinput.getInputRequestFromCAN(CANinput.gl_request,&mode)==TRUE) {
         QString line;
@@ -881,17 +896,19 @@ void ScribeMainWindow::innoMakerDataReceived(unsigned char c,QString TimeStamp)
 
         // Affiche les trames CAN en couleur
         QTextCharFormat format;
-        if (line.contains("BOARD 31 ")) format.setForeground(QBrush(Qt::blue));
-        if (line.contains("BOARD 0 ")) format.setForeground(QBrush(Qt::magenta));
-        if (line.contains("BOARD 1 ")) format.setForeground(QBrush(Qt::green));
-        if (line.contains("BOARD 2 ")) format.setForeground(QBrush(QColor("#FFA500")));
-        if (line.contains("BOARD 3 ")) format.setForeground(QBrush(Qt::red));
+        if (frameId==31) format.setForeground(QBrush(Qt::blue));
+        if (frameId==0) format.setForeground(QBrush(Qt::magenta));
+        if (frameId==1) format.setForeground(QBrush(Qt::green));
+        if (frameId==2) format.setForeground(QBrush(QColor("#FFA500")));
+        if (frameId==3) format.setForeground(QBrush(Qt::red));
 
         QTextCursor cursor(CommandResult->document());
         cursor.movePosition(QTextCursor::End);
-        cursor.insertText("\n[CAN ", format);
-        cursor.insertText(TimeStamp, format);
-        cursor.insertText("] " + line, format);
+        cursor.insertText("\n[CAN(",format);
+        cursor.insertText(QString::number(frameId),format);
+        cursor.insertText(") ",format);
+        cursor.insertText(TimeStamp,format);
+        cursor.insertText("] " + line,format);
         CommandResult->ensureCursorVisible();
         CommandResult->repaint();
 
@@ -901,7 +918,7 @@ void ScribeMainWindow::innoMakerDataReceived(unsigned char c,QString TimeStamp)
     }
 }
 
-    void ScribeMainWindow::on_ExportCommandResult_triggered()
+void ScribeMainWindow::on_ExportCommandResult_clicked()
 {
     QString defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     QString filePath = QFileDialog::getSaveFileName(this, tr("Enregistrer la sortie"), defaultPath, tr("Fichiers texte (*.txt);;Tous les fichiers (*)"));
@@ -959,7 +976,7 @@ void ScribeMainWindow::processSendQueue() {
         format.setForeground(QBrush(Qt::black));
         QTextCursor cursor(CommandResult->document());
         cursor.movePosition(QTextCursor::End);
-        cursor.insertText("[Terminé]", format);
+        cursor.insertText("\n[TERMINE]", format);
         CommandResult->ensureCursorVisible();
         CommandResult->repaint();
 
@@ -988,7 +1005,7 @@ void ScribeMainWindow::processSendQueue() {
             format.setForeground(QBrush(Qt::black));
             QTextCursor cursor(CommandResult->document());
             cursor.movePosition(QTextCursor::End);
-            cursor.insertText("[STOP]]", format);
+            cursor.insertText("\n[STOP]]", format);
             CommandResult->ensureCursorVisible();
             CommandResult->repaint();
 

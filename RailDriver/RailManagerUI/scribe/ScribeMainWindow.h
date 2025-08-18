@@ -109,7 +109,7 @@ public slots:
 public slots:
     void onTabRegainedFocus();
     void onTabLostFocus();
-    void innoMakerDataReceived(unsigned char c,QString TimeStamp);
+    void innoMakerDataReceived(unsigned char c,QString TimeStamp,int frameId);
 
 
 // All UI and/or keyboard shortcut interactions
@@ -147,7 +147,7 @@ private slots:
     void on_clearCommandButton_clicked();
     void setParserLang();
     QString analyseCANinput(unsigned char* request);
-    void on_ExportCommandResult_triggered();
+    void on_ExportCommandResult_clicked();
 
 
 signals:

@@ -2259,7 +2259,6 @@ void prompt(unsigned char* gl_message) {
 	if (gl_master==TRUE) printf("\n\rMaster (%d) > %s",gl_boardNumber,gl_message);
 	else if(strlen(gl_message)>0){
 		printf("Board %d : %s",gl_boardNumber,gl_message);
-		//TM1637_writeString(gl_message);
 		if (gl_master==TRUE)prompt("");
 	}
 	flushOut();	
@@ -2358,11 +2357,6 @@ int _user_putc (char c) {
 	else {
 		if (gl_outputCANbufferCounter<MAXMESSAGESIZE)gl_outputCANbuffer[gl_outputCANbufferCounter++]=c;
 		if ((gl_outputCANbufferCounter==MAXMESSAGESIZE || c==ENDOFPRINTFTRAME)) {
-			for(bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
-
-				// If CAN bus is busy, we cancel this trame, PRINT trame is not mandatory and could be lost
-				if (gl_inputCANmode[bufferNumber]!=CAN_FREE) return(c);
-			}
 			sendPrintToCAN();
 		}
 	}

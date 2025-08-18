@@ -394,7 +394,7 @@ void InnoMakerMainWindow::recv( Message msg) {
     QString frameLengthStr = QString::number(dlc,16);
 
     for (int i = 0; i < dlc; ++i) {
-        emit characterReceived(static_cast<unsigned char>(frameDataBytes[i]),timeStampStr);
+        emit characterReceived(static_cast<unsigned char>(frameDataBytes[i]),timeStampStr,frameId);
     }
 
 

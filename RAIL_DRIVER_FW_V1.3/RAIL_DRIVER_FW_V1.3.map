@@ -1,5 +1,5 @@
 MPLINK 5.00, LINKER
-Linker Map File - Created Sun Aug 17 22:01:49 2025
+Linker Map File - Created Mon Aug 18 19:32:31 2025
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -10,51 +10,51 @@ Linker Map File - Created Sun Aug 17 22:01:49 2025
         .idata_stdout.o_i    romdata   0x00000e    program   0x000002
                low_vector       code   0x000018    program   0x000006
                    .cinit    romdata   0x00001e    program   0x00001a
-             .code_main.o       code   0x000038    program   0x00c03c
-         .code_vfprintf.o       code   0x00c074    program   0x000c22
-         .code_ECANPoll.o       code   0x00cc96    program   0x00081e
-             .stringtable    romdata   0x00d4b4    program   0x0004c9
-      .romdata_fxd3232u.o    romdata   0x00d97d    program   0x000000
-       .idata_fxm3232.o_i    romdata   0x00d97d    program   0x000000
-       .romdata_fxm3232.o    romdata   0x00d97d    program   0x000000
-        .idata___init.o_i    romdata   0x00d97d    program   0x000000
-        .romdata___init.o    romdata   0x00d97d    program   0x000000
-         .idata_errno.o_i    romdata   0x00d97d    program   0x000000
-         .romdata_errno.o    romdata   0x00d97d    program   0x000000
-        .idata_printf.o_i    romdata   0x00d97d    program   0x000000
-        .romdata_printf.o    romdata   0x00d97d    program   0x000000
-          .romdata_putc.o    romdata   0x00d97d    program   0x000000
-          .idata_putc.o_i    romdata   0x00d97d    program   0x000000
-       .idata_sprintf.o_i    romdata   0x00d97d    program   0x000000
-       .romdata_sprintf.o    romdata   0x00d97d    program   0x000000
-        .romdata_stdout.o    romdata   0x00d97d    program   0x000000
-      .idata_vfprintf.o_i    romdata   0x00d97d    program   0x000000
-         .idata_c018i.o_i    romdata   0x00d97d    program   0x000000
-         .romdata_c018i.o    romdata   0x00d97d    program   0x000000
-      .idata_ECANPoll.o_i    romdata   0x00d97d    program   0x000000
-      .romdata_ECANPoll.o    romdata   0x00d97d    program   0x000000
-          .romdata_main.o    romdata   0x00d97d    program   0x000000
-      .idata_fxd3232u.o_i    romdata   0x00d97d    program   0x000000
-      .romdata_fxd1616u.o    romdata   0x00d97d    program   0x000000
-      .idata_fxd1616u.o_i    romdata   0x00d97d    program   0x000000
-            .code_c018i.o       code   0x00d97e    program   0x000000
-            .code_errno.o       code   0x00d97e    program   0x000000
-           .code_stdout.o       code   0x00d97e    program   0x000000
-                     PROG       code   0x00d97e    program   0x00014a
-                   STRING       code   0x00dac8    program   0x0000bc
-          .code_sprintf.o       code   0x00db84    program   0x0000ac
-               _cinit_scn       code   0x00dc30    program   0x00009e
-           .code_printf.o       code   0x00dcce    program   0x000098
-             .code_putc.o       code   0x00dd66    program   0x000084
-          .code_fxm3232.o       code   0x00ddea    program   0x000070
-         .code_fxd3232u.o       code   0x00de5a    program   0x000048
-         .code_fxd1616u.o       code   0x00dea2    program   0x00002c
-                    CTYPE       code   0x00dece    program   0x000024
-                    .code       code   0x00def2    program   0x000020
-             _startup_scn       code   0x00df12    program   0x00001c
-                    STDIO       code   0x00df2e    program   0x00001c
-      .romdata_vfprintf.o    romdata   0x00df4a    program   0x000011
-          .idata_main.o_i    romdata   0x00df5b    program   0x00002e
+             .code_main.o       code   0x000038    program   0x00bff8
+         .code_vfprintf.o       code   0x00c030    program   0x000c22
+         .code_ECANPoll.o       code   0x00cc52    program   0x00081e
+             .stringtable    romdata   0x00d470    program   0x0004c9
+      .romdata_fxd3232u.o    romdata   0x00d939    program   0x000000
+       .idata_fxm3232.o_i    romdata   0x00d939    program   0x000000
+       .romdata_fxm3232.o    romdata   0x00d939    program   0x000000
+        .idata___init.o_i    romdata   0x00d939    program   0x000000
+        .romdata___init.o    romdata   0x00d939    program   0x000000
+         .idata_errno.o_i    romdata   0x00d939    program   0x000000
+         .romdata_errno.o    romdata   0x00d939    program   0x000000
+        .idata_printf.o_i    romdata   0x00d939    program   0x000000
+        .romdata_printf.o    romdata   0x00d939    program   0x000000
+          .romdata_putc.o    romdata   0x00d939    program   0x000000
+          .idata_putc.o_i    romdata   0x00d939    program   0x000000
+       .idata_sprintf.o_i    romdata   0x00d939    program   0x000000
+       .romdata_sprintf.o    romdata   0x00d939    program   0x000000
+        .romdata_stdout.o    romdata   0x00d939    program   0x000000
+      .idata_vfprintf.o_i    romdata   0x00d939    program   0x000000
+         .idata_c018i.o_i    romdata   0x00d939    program   0x000000
+         .romdata_c018i.o    romdata   0x00d939    program   0x000000
+      .idata_ECANPoll.o_i    romdata   0x00d939    program   0x000000
+      .romdata_ECANPoll.o    romdata   0x00d939    program   0x000000
+          .romdata_main.o    romdata   0x00d939    program   0x000000
+      .idata_fxd3232u.o_i    romdata   0x00d939    program   0x000000
+      .romdata_fxd1616u.o    romdata   0x00d939    program   0x000000
+      .idata_fxd1616u.o_i    romdata   0x00d939    program   0x000000
+            .code_c018i.o       code   0x00d93a    program   0x000000
+            .code_errno.o       code   0x00d93a    program   0x000000
+           .code_stdout.o       code   0x00d93a    program   0x000000
+                     PROG       code   0x00d93a    program   0x00014a
+                   STRING       code   0x00da84    program   0x0000bc
+          .code_sprintf.o       code   0x00db40    program   0x0000ac
+               _cinit_scn       code   0x00dbec    program   0x00009e
+           .code_printf.o       code   0x00dc8a    program   0x000098
+             .code_putc.o       code   0x00dd22    program   0x000084
+          .code_fxm3232.o       code   0x00dda6    program   0x000070
+         .code_fxd3232u.o       code   0x00de16    program   0x000048
+         .code_fxd1616u.o       code   0x00de5e    program   0x00002c
+                    CTYPE       code   0x00de8a    program   0x000024
+                    .code       code   0x00deae    program   0x000020
+             _startup_scn       code   0x00dece    program   0x00001c
+                    STDIO       code   0x00deea    program   0x00001c
+      .romdata_vfprintf.o    romdata   0x00df06    program   0x000011
+          .idata_main.o_i    romdata   0x00df17    program   0x00002e
     .config_300001_main.o    romdata   0x300001    program   0x000001
     .config_300002_main.o    romdata   0x300002    program   0x000001
     .config_300003_main.o    romdata   0x300003    program   0x000001
@@ -115,11 +115,11 @@ Linker Map File - Created Sun Aug 17 22:01:49 2025
                                Start         End      
                            ---------   ---------      
                             0x000000    0x00000f      
-                            0x000018    0x00d97c      
-                            0x00d97e    0x00df88      
+                            0x000018    0x00d938      
+                            0x00d93a    0x00df44      
                             0x300001    0x300003      
                             0x300005    0x300006      
-            57221 out of 66584 program addresses used, program memory utilization is 85%
+            57153 out of 66584 program addresses used, program memory utilization is 85%
 
 
 
@@ -128,212 +128,212 @@ Linker Map File - Created Sun Aug 17 22:01:49 2025
                 ---------  ---------  ---------  --------- ---------                
              CANsendDelay   0x00900c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
           CalibMinMaxKnob   0x0000b2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                   D1616S   0x00d9a0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                D1616SNEG   0x00d9ae    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 D1616SOK   0x00d9aa    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  D1616SX   0x00d9c0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                   D3232S   0x00d9fa    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                D3232SNEG   0x00da08    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                 D3232SOK   0x00da04    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                  D3232SX   0x00da28    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                  DA1616S   0x00d990    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  DA3232S   0x00d9e4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-           ECANInitialize   0x00cc96    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-       ECANReceiveMessage   0x00ceee    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-          ECANSendMessage   0x00cce4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-     ECANSetOperationMode   0x00d0f8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-                 FXD1616S   0x00d97e    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 FXD1616U   0x00dea2    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
-                 FXD3232S   0x00d9ca    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                 FXD3232U   0x00de5a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232u.c
-                 FXM1616S   0x00da32    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-                 FXM1616U   0x00da8c    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616u.asm
-                  FXM3232   0x00ddea    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm3232.c
-       PIC18FMainSettings   0x00b938    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                   D1616S   0x00d95c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                D1616SNEG   0x00d96a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 D1616SOK   0x00d966    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  D1616SX   0x00d97c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                   D3232S   0x00d9b6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                D3232SNEG   0x00d9c4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                 D3232SOK   0x00d9c0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                  D3232SX   0x00d9e4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                  DA1616S   0x00d94c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  DA3232S   0x00d9a0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+           ECANInitialize   0x00cc52    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+       ECANReceiveMessage   0x00ceaa    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+          ECANSendMessage   0x00cca0    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+     ECANSetOperationMode   0x00d0b4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+                 FXD1616S   0x00d93a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 FXD1616U   0x00de5e    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
+                 FXD3232S   0x00d986    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                 FXD3232U   0x00de16    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232u.c
+                 FXM1616S   0x00d9ee    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+                 FXM1616U   0x00da48    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616u.asm
+                  FXM3232   0x00dda6    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm3232.c
+       PIC18FMainSettings   0x00b8f4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                ReadEEPROM   0x000038    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
          ReadEEPROMConfig   0x000422    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
               ResetEEPROM   0x00030a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-           TM1637_display   0x009f1c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-     TM1637_displayString   0x00a1a8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              TM1637_init   0x009d86    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-     TM1637_setBrightness   0x00a280    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             TM1637_write   0x009d8a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
- TM1637_writeStringWindow   0x00a0ce    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               TSIGN1616A   0x00da7e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+           TM1637_display   0x009ed8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+     TM1637_displayString   0x00a164    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              TM1637_init   0x009d42    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+     TM1637_setBrightness   0x00a23c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             TM1637_write   0x009d46    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+ TM1637_writeStringWindow   0x00a08a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               TSIGN1616A   0x00da3a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
      WriteCompletedEEPROM   0x000796    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
               WriteEEPROM   0x0007ba    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
            WriteRdyEEPROM   0x0007aa    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                   _2jEnd   0x00db6e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-              _4jContinue   0x00db10    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                   _5jEnd   0x00db1a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-             _CANIDToRegs   0x00d122    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-             _RegsToCANID   0x00d2e2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-       ___return_lbl00000   0x00de58    program     static                          
-       ___return_lbl00000   0x00dea0    program     static                          
+                   _2jEnd   0x00db2a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+              _4jContinue   0x00dacc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                   _5jEnd   0x00dad6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+             _CANIDToRegs   0x00d0de    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+             _RegsToCANID   0x00d29e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+       ___return_lbl00000   0x00de14    program     static                          
+       ___return_lbl00000   0x00de5c    program     static                          
        ___return_lbl00000   0x000004    program     static                          
-       ___return_lbl00000   0x00decc    program     static                          
-       ___return_lbl00001   0x00df2c    program     static                          
-       ___return_lbl00002   0x00dccc    program     static                          
-       ___return_lbl00864   0x00000c    program     static                          
-       ___return_lbl00891   0x00001c    program     static                          
+       ___return_lbl00000   0x00de88    program     static                          
+       ___return_lbl00001   0x00dee8    program     static                          
+       ___return_lbl00002   0x00dc88    program     static                          
+       ___return_lbl00860   0x00000c    program     static                          
+       ___return_lbl00887   0x00001c    program     static                          
                __config_0   0x300001    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                __config_1   0x300002    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                __config_2   0x300003    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                __config_3   0x300005    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                __config_4   0x300006    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                    __init   0x000006    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
-                   __pa_0   0x00c9b4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_1   0x00c9bc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_10   0x00ca70    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_11   0x00ca7e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_12   0x00ca94    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_13   0x00caae    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_14   0x00cac6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_15   0x00cad6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_16   0x00caec    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_17   0x00cafe    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_18   0x00cb10    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_19   0x00cb1a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_2   0x00c9c6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_20   0x00cb2a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_21   0x00cb3a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_22   0x00cb4a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_23   0x00cb56    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_24   0x00cb64    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_25   0x00cb6c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_26   0x00cb76    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_27   0x00cb80    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_28   0x00cb88    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_29   0x00cb96    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_3   0x00c9d0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_30   0x00cbb2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_31   0x00cbcc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_32   0x00cbe6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_33   0x00cbfe    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_34   0x00cc08    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_35   0x00cc16    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_36   0x00cc1e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_37   0x00cc28    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_38   0x00cc38    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_39   0x00cc46    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_4   0x00c9e8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_40   0x00cc52    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_41   0x00cc5e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_42   0x00cc66    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_43   0x00cc70    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_44   0x00cc76    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_45   0x00cc80    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_46   0x00cc8c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_5   0x00c9fc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_6   0x00ca18    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_7   0x00ca22    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_8   0x00ca2e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_9   0x00ca50    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-               __string_0   0x00d975    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_1   0x00d96d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_10   0x00d90c    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __string_100   0x00d4c6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __string_101   0x00d4c3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __string_102   0x00d4bf    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __string_103   0x00d4ba    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __string_104   0x00d4b4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_11   0x00d906    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_12   0x00d905    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_13   0x00d8f7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_14   0x00d8e8    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_15   0x00d8d5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_16   0x00d8ca    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_17   0x00d8bd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_18   0x00d8ad    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_19   0x00d89c    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_2   0x00d95a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_20   0x00d88c    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_21   0x00d87d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_22   0x00d867    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_23   0x00d853    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_24   0x00d83b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_25   0x00d828    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_26   0x00d819    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_27   0x00d80b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_28   0x00d7fb    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_29   0x00d7e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_3   0x00d947    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_30   0x00d7d6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_31   0x00d7c7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_32   0x00d7b4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_33   0x00d79b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_34   0x00d78d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_35   0x00d779    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_36   0x00d75e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_37   0x00d746    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_38   0x00d734    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_39   0x00d726    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_4   0x00d93f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_40   0x00d713    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_41   0x00d70e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_42   0x00d707    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_43   0x00d703    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_44   0x00d6fd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_45   0x00d6f7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_46   0x00d6f2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_47   0x00d6ee    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_48   0x00d6ea    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_49   0x00d6e5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_5   0x00d93a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_50   0x00d6e2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_51   0x00d6de    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_52   0x00d6da    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_53   0x00d6d4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_54   0x00d6cd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_55   0x00d6c7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_56   0x00d6c1    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_57   0x00d6bb    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_58   0x00d6b7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_59   0x00d6af    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_6   0x00d932    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_60   0x00d6a6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_61   0x00d6a2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_62   0x00d69e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_63   0x00d698    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_64   0x00d692    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_65   0x00d68c    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_66   0x00d687    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_67   0x00d682    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_68   0x00d67a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_69   0x00d672    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_7   0x00d92b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_70   0x00d66b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_71   0x00d661    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_72   0x00d65d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_73   0x00d659    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_74   0x00d653    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_75   0x00d64d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_76   0x00d647    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_77   0x00d641    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_78   0x00d639    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_79   0x00d634    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_8   0x00d91f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_80   0x00d62b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_81   0x00d621    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_82   0x00d60d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_83   0x00d600    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_84   0x00d5f9    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_85   0x00d5e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_86   0x00d5cd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_87   0x00d5bb    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_88   0x00d5a1    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_89   0x00d58f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_9   0x00d919    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_90   0x00d575    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_91   0x00d563    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_92   0x00d549    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_93   0x00d53b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_94   0x00d52d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_95   0x00d524    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_96   0x00d51b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_97   0x00d501    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_98   0x00d4e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_99   0x00d4d4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                   __pa_0   0x00c970    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_1   0x00c978    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_10   0x00ca2c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_11   0x00ca3a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_12   0x00ca50    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_13   0x00ca6a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_14   0x00ca82    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_15   0x00ca92    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_16   0x00caa8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_17   0x00caba    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_18   0x00cacc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_19   0x00cad6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_2   0x00c982    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_20   0x00cae6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_21   0x00caf6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_22   0x00cb06    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_23   0x00cb12    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_24   0x00cb20    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_25   0x00cb28    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_26   0x00cb32    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_27   0x00cb3c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_28   0x00cb44    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_29   0x00cb52    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_3   0x00c98c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_30   0x00cb6e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_31   0x00cb88    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_32   0x00cba2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_33   0x00cbba    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_34   0x00cbc4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_35   0x00cbd2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_36   0x00cbda    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_37   0x00cbe4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_38   0x00cbf4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_39   0x00cc02    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_4   0x00c9a4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_40   0x00cc0e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_41   0x00cc1a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_42   0x00cc22    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_43   0x00cc2c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_44   0x00cc32    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_45   0x00cc3c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_46   0x00cc48    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_5   0x00c9b8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_6   0x00c9d4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_7   0x00c9de    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_8   0x00c9ea    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_9   0x00ca0c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+               __string_0   0x00d931    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_1   0x00d929    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_10   0x00d8c8    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __string_100   0x00d482    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __string_101   0x00d47f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __string_102   0x00d47b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __string_103   0x00d476    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __string_104   0x00d470    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_11   0x00d8c2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_12   0x00d8c1    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_13   0x00d8b3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_14   0x00d8a4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_15   0x00d891    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_16   0x00d886    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_17   0x00d879    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_18   0x00d869    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_19   0x00d858    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_2   0x00d916    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_20   0x00d848    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_21   0x00d839    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_22   0x00d823    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_23   0x00d80f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_24   0x00d7f7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_25   0x00d7e4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_26   0x00d7d5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_27   0x00d7c7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_28   0x00d7b7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_29   0x00d7a3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_3   0x00d903    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_30   0x00d792    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_31   0x00d783    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_32   0x00d770    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_33   0x00d757    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_34   0x00d749    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_35   0x00d735    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_36   0x00d71a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_37   0x00d702    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_38   0x00d6f0    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_39   0x00d6e2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_4   0x00d8fb    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_40   0x00d6cf    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_41   0x00d6ca    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_42   0x00d6c3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_43   0x00d6bf    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_44   0x00d6b9    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_45   0x00d6b3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_46   0x00d6ae    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_47   0x00d6aa    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_48   0x00d6a6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_49   0x00d6a1    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_5   0x00d8f6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_50   0x00d69e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_51   0x00d69a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_52   0x00d696    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_53   0x00d690    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_54   0x00d689    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_55   0x00d683    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_56   0x00d67d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_57   0x00d677    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_58   0x00d673    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_59   0x00d66b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_6   0x00d8ee    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_60   0x00d662    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_61   0x00d65e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_62   0x00d65a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_63   0x00d654    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_64   0x00d64e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_65   0x00d648    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_66   0x00d643    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_67   0x00d63e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_68   0x00d636    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_69   0x00d62e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_7   0x00d8e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_70   0x00d627    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_71   0x00d61d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_72   0x00d619    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_73   0x00d615    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_74   0x00d60f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_75   0x00d609    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_76   0x00d603    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_77   0x00d5fd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_78   0x00d5f5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_79   0x00d5f0    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_8   0x00d8db    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_80   0x00d5e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_81   0x00d5dd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_82   0x00d5c9    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_83   0x00d5bc    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_84   0x00d5b5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_85   0x00d5a3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_86   0x00d589    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_87   0x00d577    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_88   0x00d55d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_89   0x00d54b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_9   0x00d8d5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_90   0x00d531    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_91   0x00d51f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_92   0x00d505    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_93   0x00d4f7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_94   0x00d4e9    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_95   0x00d4e0    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_96   0x00d4d7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_97   0x00d4bd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_98   0x00d4a3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_99   0x00d490    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
              __tmplbl_170   0x005312    program     static                          
              __tmplbl_171   0x005312    program     static                          
              __tmplbl_172   0x005312    program     static                          
@@ -474,102 +474,102 @@ Linker Map File - Created Sun Aug 17 22:01:49 2025
              __tmplbl_358   0x008d5c    program     static                          
              __tmplbl_361   0x008d76    program     static                          
              __tmplbl_362   0x008d5c    program     static                          
-             __tmplbl_388   0x00b620    program     static                          
-             __tmplbl_394   0x00b61c    program     static                          
-              __tmplbl_42   0x00cb4a    program     static                          
-              __tmplbl_43   0x00c992    program     static                          
-              __tmplbl_44   0x00c978    program     static                          
-              __tmplbl_85   0x00c0ca    program     static                          
-            __zero_memory   0x00def2    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                _do_cinit   0x00dc30    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+             __tmplbl_388   0x00b5dc    program     static                          
+             __tmplbl_394   0x00b5d8    program     static                          
+              __tmplbl_42   0x00cb06    program     static                          
+              __tmplbl_43   0x00c94e    program     static                          
+              __tmplbl_44   0x00c934    program     static                          
+              __tmplbl_85   0x00c086    program     static                          
+            __zero_memory   0x00deae    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                _do_cinit   0x00dbec    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                    _entry   0x000000    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                   _false   0x00de9c    program     static                          
-                 _startup   0x00df12    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-              _usart_putc   0x00df2e    program     extern E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
+                   _false   0x00de58    program     static                          
+                 _startup   0x00dece    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+              _usart_putc   0x00deea    program     extern E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
                _user_putc   0x0092b6    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
          assignAutomation   0x0060b0    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
               boardStatus   0x000884    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              calibration   0x00b9d2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-           charToSegments   0x009f6a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                compare_l   0x00df08    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+              calibration   0x00b98e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+           charToSegments   0x009f26    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                compare_l   0x00dec4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
              compressData   0x005464    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                copy_loop   0x00dca2    program     static                          
-            copy_one_byte   0x00dca8    program     static                          
-            delayMainLoop   0x00a02c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                     done   0x00dccc    program     static                          
-             done_copying   0x00dcb6    program     static                          
-                  endloop   0x00dec8    program     static                          
+                copy_loop   0x00dc5e    program     static                          
+            copy_one_byte   0x00dc64    program     static                          
+            delayMainLoop   0x009fe8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                     done   0x00dc88    program     static                          
+             done_copying   0x00dc72    program     static                          
+                  endloop   0x00de84    program     static                          
                  flushOut   0x009004    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
   getAutomationFromEEPROM   0x000b3c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-         getEventFromKNOB   0x00bd82    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-  getEventRequestFromGPIO   0x00bb80    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
- getEventRequestFromTIMER   0x00bcb0    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
- getEventRequestFromTrack   0x00ba78    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+         getEventFromKNOB   0x00bd3e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+  getEventRequestFromGPIO   0x00bb3c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+ getEventRequestFromTIMER   0x00bc6c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+ getEventRequestFromTrack   0x00ba34    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                  getIdent   0x001a8c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-   getInputRequestFromCAN   0x0095d2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+   getInputRequestFromCAN   0x00958e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
  getInputRequestFromUSART   0x008e04    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                  getToken   0x0016c4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                  getValue   0x0018b2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                 high_isr   0x00a3ea    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                     init   0x00b95c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                 high_isr   0x00a3a6    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                     init   0x00b918    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
               initRequest   0x005612    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               initSignal   0x00b692    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               initSignal   0x00b64e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                 initUSART   0x008d8e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
  interrupt_at_high_vector   0x000008    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                  isAdigit   0x000db4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
              isAhexaDigit   0x000de6    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                  isdigit   0x00dece    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                     jEnd   0x00db70    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                     jEnd   0x00dae2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                     jEnd   0x00db24    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                    jLoop   0x00dad8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                    jLoop   0x00db04    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                    jLoop   0x00db58    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                   jMatch   0x00deee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                 jNoMatch   0x00def0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                     loop   0x00df22    program     static                          
+                  isdigit   0x00de8a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                     jEnd   0x00db2c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                     jEnd   0x00da9e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                     jEnd   0x00dae0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                    jLoop   0x00da94    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                    jLoop   0x00dac0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                    jLoop   0x00db14    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                   jMatch   0x00deaa    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                 jNoMatch   0x00deac    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                     loop   0x00dede    program     static                          
+                     loop   0x00de24    program     static                          
                      loop   0x00de68    program     static                          
-                     loop   0x00deac    program     static                          
-                     loop   0x00df3e    program     static E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
-                   loop_h   0x00df00    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                   loop_l   0x00df0a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                     loop   0x00defa    program     static E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
+                   loop_h   0x00debc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                   loop_l   0x00dec6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
             low_interrupt   0x000018    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                  low_isr   0x00a734    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                     main   0x00be2c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                  low_isr   0x00a6f0    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                     main   0x00bde8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
             manageRequest   0x0066c2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
              memAvailable   0x00087e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                    parser   0x001c2a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                   printf   0x00dcce    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\printf.c
+                   printf   0x00dc8a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\printf.c
                    prompt   0x008f42    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                     putc   0x00dd66    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\putc.c
+                     putc   0x00dd22    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\putc.c
          removeAutomation   0x00564c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                 s_digits   0x00df4a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-            s_put_n_chars   0x00c074    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                 s_digits   0x00df06    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+            s_put_n_chars   0x00c030    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
            saveAutomation   0x0056dc    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
            sendPrintToCAN   0x00904c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-         sendRequestToCAN   0x009372    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+         sendRequestToCAN   0x00932e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                 sendUSART   0x008dde    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-          set7segmentPort   0x009c6e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+          set7segmentPort   0x009c2a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
     setAutomationToEEPROM   0x000cb2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                   setDcc   0x009ace    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                  setPort   0x00a2ac    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                   setDcc   0x009a8a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                  setPort   0x00a268    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                  setSpeed   0x006646    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                  sprintf   0x00db84    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\sprintf.c
-                   strlen   0x00dac8    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                strlenpgm   0x00db3a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                  strncmp   0x00dae4    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                  sprintf   0x00db40    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\sprintf.c
+                   strlen   0x00da84    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                strlenpgm   0x00daf6    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                  strncmp   0x00daa0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
                    strtol   0x000e58    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                     test   0x00dc4a    program     static                          
+                     test   0x00dc06    program     static                          
               toUpperCase   0x000e18    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                traceError   0x001102    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              twoWire_ack   0x009cf0    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             twoWire_init   0x009ca6    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-            twoWire_start   0x009cb2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             twoWire_stop   0x009ccc    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-            twoWire_write   0x009d08    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              twoWire_ack   0x009cac    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             twoWire_init   0x009c62    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+            twoWire_start   0x009c6e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             twoWire_stop   0x009c88    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+            twoWire_write   0x009cc4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
            uncompressData   0x00532a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                 vfprintf   0x00c0a0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-               zero_block   0x00df00    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                 vfprintf   0x00c05c    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+               zero_block   0x00debc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
                    ADCON0   0x000fc2       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
                ADCON0bits   0x000fc2       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
                    ADCON1   0x000fc1       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
@@ -1440,9 +1440,9 @@ gl_requestInputCANtrameStart   0x0004ca       data     extern C:\Users\caven\Doc
        ___return_lbl00000   0x000004    program     static                          
                    __init   0x000006    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
  interrupt_at_high_vector   0x000008    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-       ___return_lbl00864   0x00000c    program     static                          
+       ___return_lbl00860   0x00000c    program     static                          
             low_interrupt   0x000018    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-       ___return_lbl00891   0x00001c    program     static                          
+       ___return_lbl00887   0x00001c    program     static                          
                ReadEEPROM   0x000038    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
           CalibMinMaxKnob   0x0000b2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
               ResetEEPROM   0x00030a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
@@ -1619,262 +1619,262 @@ gl_requestInputCANtrameStart   0x0004ca       data     extern C:\Users\caven\Doc
              CANsendDelay   0x00900c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
            sendPrintToCAN   0x00904c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                _user_putc   0x0092b6    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-         sendRequestToCAN   0x009372    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-   getInputRequestFromCAN   0x0095d2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                   setDcc   0x009ace    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-          set7segmentPort   0x009c6e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             twoWire_init   0x009ca6    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-            twoWire_start   0x009cb2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             twoWire_stop   0x009ccc    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              twoWire_ack   0x009cf0    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-            twoWire_write   0x009d08    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              TM1637_init   0x009d86    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             TM1637_write   0x009d8a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-           TM1637_display   0x009f1c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-           charToSegments   0x009f6a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-            delayMainLoop   0x00a02c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
- TM1637_writeStringWindow   0x00a0ce    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-     TM1637_displayString   0x00a1a8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-     TM1637_setBrightness   0x00a280    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                  setPort   0x00a2ac    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                 high_isr   0x00a3ea    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                  low_isr   0x00a734    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __tmplbl_394   0x00b61c    program     static                          
-             __tmplbl_388   0x00b620    program     static                          
-               initSignal   0x00b692    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-       PIC18FMainSettings   0x00b938    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                     init   0x00b95c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              calibration   0x00b9d2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
- getEventRequestFromTrack   0x00ba78    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-  getEventRequestFromGPIO   0x00bb80    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
- getEventRequestFromTIMER   0x00bcb0    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-         getEventFromKNOB   0x00bd82    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                     main   0x00be2c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-            s_put_n_chars   0x00c074    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                 vfprintf   0x00c0a0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-              __tmplbl_85   0x00c0ca    program     static                          
-              __tmplbl_44   0x00c978    program     static                          
-              __tmplbl_43   0x00c992    program     static                          
-                   __pa_0   0x00c9b4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_1   0x00c9bc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_2   0x00c9c6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_3   0x00c9d0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_4   0x00c9e8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_5   0x00c9fc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_6   0x00ca18    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_7   0x00ca22    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_8   0x00ca2e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_9   0x00ca50    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_10   0x00ca70    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_11   0x00ca7e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_12   0x00ca94    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_13   0x00caae    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_14   0x00cac6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_15   0x00cad6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_16   0x00caec    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_17   0x00cafe    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_18   0x00cb10    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_19   0x00cb1a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_20   0x00cb2a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_21   0x00cb3a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-              __tmplbl_42   0x00cb4a    program     static                          
-                  __pa_22   0x00cb4a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_23   0x00cb56    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_24   0x00cb64    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_25   0x00cb6c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_26   0x00cb76    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_27   0x00cb80    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_28   0x00cb88    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_29   0x00cb96    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_30   0x00cbb2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_31   0x00cbcc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_32   0x00cbe6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_33   0x00cbfe    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_34   0x00cc08    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_35   0x00cc16    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_36   0x00cc1e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_37   0x00cc28    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_38   0x00cc38    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_39   0x00cc46    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_40   0x00cc52    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_41   0x00cc5e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_42   0x00cc66    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_43   0x00cc70    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_44   0x00cc76    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_45   0x00cc80    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_46   0x00cc8c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-           ECANInitialize   0x00cc96    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-          ECANSendMessage   0x00cce4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-       ECANReceiveMessage   0x00ceee    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-     ECANSetOperationMode   0x00d0f8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-             _CANIDToRegs   0x00d122    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-             _RegsToCANID   0x00d2e2    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
-             __string_104   0x00d4b4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __string_103   0x00d4ba    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __string_102   0x00d4bf    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __string_101   0x00d4c3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-             __string_100   0x00d4c6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_99   0x00d4d4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_98   0x00d4e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_97   0x00d501    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_96   0x00d51b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_95   0x00d524    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_94   0x00d52d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_93   0x00d53b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_92   0x00d549    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_91   0x00d563    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_90   0x00d575    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_89   0x00d58f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_88   0x00d5a1    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_87   0x00d5bb    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_86   0x00d5cd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_85   0x00d5e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_84   0x00d5f9    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_83   0x00d600    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_82   0x00d60d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_81   0x00d621    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_80   0x00d62b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_79   0x00d634    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_78   0x00d639    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_77   0x00d641    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_76   0x00d647    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_75   0x00d64d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_74   0x00d653    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_73   0x00d659    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_72   0x00d65d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_71   0x00d661    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_70   0x00d66b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_69   0x00d672    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_68   0x00d67a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_67   0x00d682    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_66   0x00d687    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_65   0x00d68c    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_64   0x00d692    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_63   0x00d698    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_62   0x00d69e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_61   0x00d6a2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_60   0x00d6a6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_59   0x00d6af    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_58   0x00d6b7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_57   0x00d6bb    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_56   0x00d6c1    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_55   0x00d6c7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_54   0x00d6cd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_53   0x00d6d4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_52   0x00d6da    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_51   0x00d6de    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_50   0x00d6e2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_49   0x00d6e5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_48   0x00d6ea    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_47   0x00d6ee    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_46   0x00d6f2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_45   0x00d6f7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_44   0x00d6fd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_43   0x00d703    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_42   0x00d707    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_41   0x00d70e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_40   0x00d713    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_39   0x00d726    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_38   0x00d734    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_37   0x00d746    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_36   0x00d75e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_35   0x00d779    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_34   0x00d78d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_33   0x00d79b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_32   0x00d7b4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_31   0x00d7c7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_30   0x00d7d6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_29   0x00d7e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_28   0x00d7fb    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_27   0x00d80b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_26   0x00d819    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_25   0x00d828    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_24   0x00d83b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_23   0x00d853    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_22   0x00d867    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_21   0x00d87d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_20   0x00d88c    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_19   0x00d89c    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_18   0x00d8ad    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_17   0x00d8bd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_16   0x00d8ca    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_15   0x00d8d5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_14   0x00d8e8    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_13   0x00d8f7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_12   0x00d905    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_11   0x00d906    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-              __string_10   0x00d90c    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_9   0x00d919    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_8   0x00d91f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_7   0x00d92b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_6   0x00d932    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_5   0x00d93a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_4   0x00d93f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_3   0x00d947    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_2   0x00d95a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_1   0x00d96d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-               __string_0   0x00d975    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
-                 FXD1616S   0x00d97e    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  DA1616S   0x00d990    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                   D1616S   0x00d9a0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 D1616SOK   0x00d9aa    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                D1616SNEG   0x00d9ae    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  D1616SX   0x00d9c0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 FXD3232S   0x00d9ca    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                  DA3232S   0x00d9e4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                   D3232S   0x00d9fa    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                 D3232SOK   0x00da04    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                D3232SNEG   0x00da08    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                  D3232SX   0x00da28    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                 FXM1616S   0x00da32    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-               TSIGN1616A   0x00da7e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-                 FXM1616U   0x00da8c    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616u.asm
-                   strlen   0x00dac8    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                    jLoop   0x00dad8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                     jEnd   0x00dae2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                  strncmp   0x00dae4    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                    jLoop   0x00db04    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-              _4jContinue   0x00db10    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                   _5jEnd   0x00db1a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                     jEnd   0x00db24    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                strlenpgm   0x00db3a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                    jLoop   0x00db58    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                   _2jEnd   0x00db6e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                     jEnd   0x00db70    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                  sprintf   0x00db84    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\sprintf.c
-                _do_cinit   0x00dc30    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     test   0x00dc4a    program     static                          
-                copy_loop   0x00dca2    program     static                          
-            copy_one_byte   0x00dca8    program     static                          
-             done_copying   0x00dcb6    program     static                          
-       ___return_lbl00002   0x00dccc    program     static                          
-                     done   0x00dccc    program     static                          
-                   printf   0x00dcce    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\printf.c
-                     putc   0x00dd66    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\putc.c
-                  FXM3232   0x00ddea    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm3232.c
-       ___return_lbl00000   0x00de58    program     static                          
-                 FXD3232U   0x00de5a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232u.c
+         sendRequestToCAN   0x00932e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+   getInputRequestFromCAN   0x00958e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                   setDcc   0x009a8a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+          set7segmentPort   0x009c2a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             twoWire_init   0x009c62    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+            twoWire_start   0x009c6e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             twoWire_stop   0x009c88    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              twoWire_ack   0x009cac    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+            twoWire_write   0x009cc4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              TM1637_init   0x009d42    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             TM1637_write   0x009d46    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+           TM1637_display   0x009ed8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+           charToSegments   0x009f26    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+            delayMainLoop   0x009fe8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+ TM1637_writeStringWindow   0x00a08a    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+     TM1637_displayString   0x00a164    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+     TM1637_setBrightness   0x00a23c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                  setPort   0x00a268    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                 high_isr   0x00a3a6    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                  low_isr   0x00a6f0    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __tmplbl_394   0x00b5d8    program     static                          
+             __tmplbl_388   0x00b5dc    program     static                          
+               initSignal   0x00b64e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+       PIC18FMainSettings   0x00b8f4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                     init   0x00b918    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              calibration   0x00b98e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+ getEventRequestFromTrack   0x00ba34    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+  getEventRequestFromGPIO   0x00bb3c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+ getEventRequestFromTIMER   0x00bc6c    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+         getEventFromKNOB   0x00bd3e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                     main   0x00bde8    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+            s_put_n_chars   0x00c030    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                 vfprintf   0x00c05c    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+              __tmplbl_85   0x00c086    program     static                          
+              __tmplbl_44   0x00c934    program     static                          
+              __tmplbl_43   0x00c94e    program     static                          
+                   __pa_0   0x00c970    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_1   0x00c978    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_2   0x00c982    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_3   0x00c98c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_4   0x00c9a4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_5   0x00c9b8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_6   0x00c9d4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_7   0x00c9de    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_8   0x00c9ea    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_9   0x00ca0c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_10   0x00ca2c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_11   0x00ca3a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_12   0x00ca50    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_13   0x00ca6a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_14   0x00ca82    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_15   0x00ca92    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_16   0x00caa8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_17   0x00caba    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_18   0x00cacc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_19   0x00cad6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_20   0x00cae6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_21   0x00caf6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+              __tmplbl_42   0x00cb06    program     static                          
+                  __pa_22   0x00cb06    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_23   0x00cb12    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_24   0x00cb20    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_25   0x00cb28    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_26   0x00cb32    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_27   0x00cb3c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_28   0x00cb44    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_29   0x00cb52    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_30   0x00cb6e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_31   0x00cb88    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_32   0x00cba2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_33   0x00cbba    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_34   0x00cbc4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_35   0x00cbd2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_36   0x00cbda    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_37   0x00cbe4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_38   0x00cbf4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_39   0x00cc02    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_40   0x00cc0e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_41   0x00cc1a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_42   0x00cc22    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_43   0x00cc2c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_44   0x00cc32    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_45   0x00cc3c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_46   0x00cc48    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+           ECANInitialize   0x00cc52    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+          ECANSendMessage   0x00cca0    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+       ECANReceiveMessage   0x00ceaa    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+     ECANSetOperationMode   0x00d0b4    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+             _CANIDToRegs   0x00d0de    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+             _RegsToCANID   0x00d29e    program     extern C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\ECANPoll.c
+             __string_104   0x00d470    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __string_103   0x00d476    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __string_102   0x00d47b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __string_101   0x00d47f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+             __string_100   0x00d482    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_99   0x00d490    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_98   0x00d4a3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_97   0x00d4bd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_96   0x00d4d7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_95   0x00d4e0    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_94   0x00d4e9    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_93   0x00d4f7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_92   0x00d505    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_91   0x00d51f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_90   0x00d531    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_89   0x00d54b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_88   0x00d55d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_87   0x00d577    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_86   0x00d589    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_85   0x00d5a3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_84   0x00d5b5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_83   0x00d5bc    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_82   0x00d5c9    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_81   0x00d5dd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_80   0x00d5e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_79   0x00d5f0    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_78   0x00d5f5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_77   0x00d5fd    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_76   0x00d603    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_75   0x00d609    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_74   0x00d60f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_73   0x00d615    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_72   0x00d619    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_71   0x00d61d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_70   0x00d627    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_69   0x00d62e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_68   0x00d636    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_67   0x00d63e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_66   0x00d643    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_65   0x00d648    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_64   0x00d64e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_63   0x00d654    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_62   0x00d65a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_61   0x00d65e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_60   0x00d662    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_59   0x00d66b    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_58   0x00d673    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_57   0x00d677    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_56   0x00d67d    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_55   0x00d683    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_54   0x00d689    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_53   0x00d690    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_52   0x00d696    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_51   0x00d69a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_50   0x00d69e    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_49   0x00d6a1    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_48   0x00d6a6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_47   0x00d6aa    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_46   0x00d6ae    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_45   0x00d6b3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_44   0x00d6b9    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_43   0x00d6bf    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_42   0x00d6c3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_41   0x00d6ca    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_40   0x00d6cf    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_39   0x00d6e2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_38   0x00d6f0    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_37   0x00d702    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_36   0x00d71a    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_35   0x00d735    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_34   0x00d749    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_33   0x00d757    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_32   0x00d770    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_31   0x00d783    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_30   0x00d792    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_29   0x00d7a3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_28   0x00d7b7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_27   0x00d7c7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_26   0x00d7d5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_25   0x00d7e4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_24   0x00d7f7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_23   0x00d80f    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_22   0x00d823    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_21   0x00d839    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_20   0x00d848    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_19   0x00d858    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_18   0x00d869    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_17   0x00d879    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_16   0x00d886    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_15   0x00d891    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_14   0x00d8a4    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_13   0x00d8b3    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_12   0x00d8c1    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_11   0x00d8c2    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+              __string_10   0x00d8c8    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_9   0x00d8d5    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_8   0x00d8db    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_7   0x00d8e7    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_6   0x00d8ee    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_5   0x00d8f6    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_4   0x00d8fb    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_3   0x00d903    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_2   0x00d916    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_1   0x00d929    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+               __string_0   0x00d931    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
+                 FXD1616S   0x00d93a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  DA1616S   0x00d94c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                   D1616S   0x00d95c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 D1616SOK   0x00d966    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                D1616SNEG   0x00d96a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  D1616SX   0x00d97c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 FXD3232S   0x00d986    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                  DA3232S   0x00d9a0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                   D3232S   0x00d9b6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                 D3232SOK   0x00d9c0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                D3232SNEG   0x00d9c4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                  D3232SX   0x00d9e4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                 FXM1616S   0x00d9ee    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+               TSIGN1616A   0x00da3a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+                 FXM1616U   0x00da48    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616u.asm
+                   strlen   0x00da84    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                    jLoop   0x00da94    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                     jEnd   0x00da9e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                  strncmp   0x00daa0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                    jLoop   0x00dac0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+              _4jContinue   0x00dacc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                   _5jEnd   0x00dad6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                     jEnd   0x00dae0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                strlenpgm   0x00daf6    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                    jLoop   0x00db14    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                   _2jEnd   0x00db2a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                     jEnd   0x00db2c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                  sprintf   0x00db40    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\sprintf.c
+                _do_cinit   0x00dbec    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     test   0x00dc06    program     static                          
+                copy_loop   0x00dc5e    program     static                          
+            copy_one_byte   0x00dc64    program     static                          
+             done_copying   0x00dc72    program     static                          
+       ___return_lbl00002   0x00dc88    program     static                          
+                     done   0x00dc88    program     static                          
+                   printf   0x00dc8a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\printf.c
+                     putc   0x00dd22    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\putc.c
+                  FXM3232   0x00dda6    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm3232.c
+       ___return_lbl00000   0x00de14    program     static                          
+                 FXD3232U   0x00de16    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232u.c
+                     loop   0x00de24    program     static                          
+                   _false   0x00de58    program     static                          
+       ___return_lbl00000   0x00de5c    program     static                          
+                 FXD1616U   0x00de5e    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
                      loop   0x00de68    program     static                          
-                   _false   0x00de9c    program     static                          
-       ___return_lbl00000   0x00dea0    program     static                          
-                 FXD1616U   0x00dea2    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
-                     loop   0x00deac    program     static                          
-                  endloop   0x00dec8    program     static                          
-       ___return_lbl00000   0x00decc    program     static                          
-                  isdigit   0x00dece    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                   jMatch   0x00deee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                 jNoMatch   0x00def0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-            __zero_memory   0x00def2    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-               zero_block   0x00df00    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                   loop_h   0x00df00    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                compare_l   0x00df08    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                   loop_l   0x00df0a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                 _startup   0x00df12    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     loop   0x00df22    program     static                          
-       ___return_lbl00001   0x00df2c    program     static                          
-              _usart_putc   0x00df2e    program     extern E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
-                     loop   0x00df3e    program     static E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
-                 s_digits   0x00df4a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  endloop   0x00de84    program     static                          
+       ___return_lbl00000   0x00de88    program     static                          
+                  isdigit   0x00de8a    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                   jMatch   0x00deaa    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                 jNoMatch   0x00deac    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+            __zero_memory   0x00deae    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+               zero_block   0x00debc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                   loop_h   0x00debc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                compare_l   0x00dec4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                   loop_l   0x00dec6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                 _startup   0x00dece    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     loop   0x00dede    program     static                          
+       ___return_lbl00001   0x00dee8    program     static                          
+              _usart_putc   0x00deea    program     extern E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
+                     loop   0x00defa    program     static E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
+                 s_digits   0x00df06    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
                __config_0   0x300001    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                __config_1   0x300002    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c
                __config_2   0x300003    program     static C:\Users\caven\Documents\GITHUB\RAIL_DRIVER_FW_V1.3\main.c

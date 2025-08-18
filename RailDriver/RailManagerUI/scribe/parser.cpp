@@ -224,13 +224,38 @@ char parser::parseLine(char* inputString,parserObject* returnedObject) {
     returnedObject->Mode.clear();
 
     // STOP
+    stringPointer = 0;
+
     if (getToken(&inputString[stringPointer], (char*)STOP, &stringPointer)) {
+
+        // Get board number
+        char Number;
+
+        if (!getValue(&inputString[stringPointer], &Number, &stringPointer))return(FALSE);
+        returnedObject->BoardNumber=QString::number(Number);
+        returnedObject->Action=QString("BOARD ").append(QString::number(Number)).append(QString(" STOP"));
+        return(TRUE);
+    }
+
+    // STOPALL
+    stringPointer = 0;
+
+    if (getToken(&inputString[stringPointer], (char*)STOP, &stringPointer)) {
+        returnedObject->Action=QString("STOPALL ");
         return(TRUE);
     }
 
     // RUNALL
     stringPointer = 0;
     if (getToken(&inputString[stringPointer], (char*)RUNALL, &stringPointer)) {
+        returnedObject->Action=QString("RUNALL ");
+        return(TRUE);
+    }
+
+    // SYNCHRO
+    stringPointer = 0;
+    if (getToken(&inputString[stringPointer], (char*)SYNCHRO, &stringPointer)) {
+        returnedObject->Action=QString("SYNC ");
         return(TRUE);
     }
 
@@ -241,6 +266,8 @@ char parser::parseLine(char* inputString,parserObject* returnedObject) {
         // Get board number
         char Number;
         if (!getValue(&inputString[stringPointer], &Number, &stringPointer))return(FALSE);
+        returnedObject->BoardNumber=QString::number(Number);
+        returnedObject->Action=QString("BOARD ").append(QString::number(Number)).append(QString(" RUN"));
         return(TRUE);
     }
 
@@ -252,6 +279,8 @@ char parser::parseLine(char* inputString,parserObject* returnedObject) {
         char Number;
 
         if (!getValue(&inputString[stringPointer], &Number, &stringPointer))return(FALSE);
+        returnedObject->BoardNumber=QString::number(Number);
+        returnedObject->Action=QString("CALIB ").append(QString::number(Number));
         return(TRUE);
     }
 
@@ -263,6 +292,8 @@ char parser::parseLine(char* inputString,parserObject* returnedObject) {
         char Number;
 
         if (!getValue(&inputString[stringPointer], &Number, &stringPointer))return(FALSE);
+        returnedObject->BoardNumber=QString::number(Number);
+        returnedObject->Action=QString("RESET ").append(QString::number(Number));
         return(TRUE);
     }
 
@@ -898,89 +929,92 @@ unsigned char parser::getInputRequestFromCAN(unsigned char* request,int* mode) {
     unsigned char	dataInCounter;
     unsigned char	dataStructureCounter;
 
-    int     tmpDataCounter=0;
+    int             tmpDataCounter=0;
 
-    while (gl_getDataCANPointer!=gl_InputBufferPointer) {
+    for(int bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
 
-        if (gl_inputBuffer[gl_getDataCANPointer]==(unsigned char)TRAMEREQUESTHEADER) gl_requestHeaderTrameDetected++;	else gl_requestHeaderTrameDetected=0;
-        if (gl_inputBuffer[gl_getDataCANPointer]==(unsigned char)TRAMEREQUESTFOOTER) gl_requestFooterTrameDetected++;	else gl_requestFooterTrameDetected=0;
+        while (gl_getDataCANPointer[bufferNumber]!=gl_InputBufferPointer[bufferNumber]) {
 
-        if (gl_inputBuffer[gl_getDataCANPointer]==(unsigned char)TRAMEPRINTHEADER) 	gl_printHeaderTrameDetected++;		else gl_printHeaderTrameDetected=0;
-        if (gl_inputBuffer[gl_getDataCANPointer]==(unsigned char)TRAMEPRINTFOOTER) 	gl_printFooterTrameDetected++;		else gl_printFooterTrameDetected=0;
+            if (gl_inputBuffer[bufferNumber][gl_getDataCANPointer[bufferNumber]]==(unsigned char)TRAMEREQUESTHEADER) gl_requestHeaderTrameDetected[bufferNumber]++;	else gl_requestHeaderTrameDetected[bufferNumber]=0;
+            if (gl_inputBuffer[bufferNumber][gl_getDataCANPointer[bufferNumber]]==(unsigned char)TRAMEREQUESTFOOTER) gl_requestFooterTrameDetected[bufferNumber]++;	else gl_requestFooterTrameDetected[bufferNumber]=0;
 
-        // REQUEST HEADER
-        if (gl_requestHeaderTrameDetected==8) {
-            gl_canMode=CAN_REQUEST;
-            gl_requestHeaderTrameDetected=0;
-            gl_requestTrameStart=gl_getDataCANPointer+1;
-            if (gl_requestTrameStart>=MAXTRAMESIZE)gl_requestTrameStart=0;
-        }
+            if (gl_inputBuffer[bufferNumber][gl_getDataCANPointer[bufferNumber]]==(unsigned char)TRAMEPRINTHEADER) 	gl_printHeaderTrameDetected[bufferNumber]++;		else gl_printHeaderTrameDetected[bufferNumber]=0;
+            if (gl_inputBuffer[bufferNumber][gl_getDataCANPointer[bufferNumber]]==(unsigned char)TRAMEPRINTFOOTER) 	gl_printFooterTrameDetected[bufferNumber]++;		else gl_printFooterTrameDetected[bufferNumber]=0;
 
-        // PRINT HEADER
-        else if (gl_printHeaderTrameDetected==8) {
-            gl_printHeaderTrameDetected=0;
-            gl_printTrameStart=gl_getDataCANPointer+1;
-            if (gl_printTrameStart>=MAXTRAMESIZE)gl_printTrameStart=0;
-        }
-
-        // REQUEST FOOTER
-        else if (gl_requestFooterTrameDetected==8 && gl_canMode==CAN_REQUEST) {
-            requestTrameEnd=gl_getDataCANPointer-7;
-            if (requestTrameEnd<0)requestTrameEnd+=MAXTRAMESIZE;
-            dataInCounter=gl_requestTrameStart;
-            dataStructureCounter=0;
-            while(dataInCounter!=requestTrameEnd) {
-                request[dataStructureCounter++]=gl_inputBuffer[dataInCounter++];
-                if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
-                if (dataStructureCounter>=REQUESTSIZE)return(FALSE);
+            // REQUEST HEADER
+            if (gl_requestHeaderTrameDetected[bufferNumber]==8) {
+                gl_canMode[bufferNumber]=CAN_REQUEST;
+                gl_requestHeaderTrameDetected[bufferNumber]=0;
+                gl_requestTrameStart[bufferNumber]=gl_getDataCANPointer[bufferNumber]+1;
+                if (gl_requestTrameStart[bufferNumber]>=MAXTRAMESIZE)gl_requestTrameStart[bufferNumber]=0;
             }
-            gl_canMode=CAN_UNKNOWN; // If more data arrive.... we delete this trame
-            gl_getDataCANPointer++;
-            if (gl_getDataCANPointer>=MAXTRAMESIZE)gl_getDataCANPointer=0;
-            gl_requestHeaderTrameDetected=0;
-            gl_printHeaderTrameDetected=0;
-            gl_requestFooterTrameDetected=0;
-            gl_printFooterTrameDetected=0;
-            *mode=CAN_REQUEST;
-            return(uncompressData(request)); // Mean request available to proceed
-        }
 
-        // PRINT FOOTER
-        else if (gl_printFooterTrameDetected==8 && gl_canMode==CAN_PRINT) {
-            qDebug() <<"PRINT FOOTER";
+            // PRINT HEADER
+            else if (gl_printHeaderTrameDetected[bufferNumber]==8) {
+                gl_printHeaderTrameDetected[bufferNumber]=0;
+                gl_printTrameStart[bufferNumber]=gl_getDataCANPointer[bufferNumber]+1;
+                if (gl_printTrameStart[bufferNumber]>=MAXTRAMESIZE)gl_printTrameStart[bufferNumber]=0;
+            }
 
-            printTrameEnd=gl_getDataCANPointer-7;
-            if (printTrameEnd<0)printTrameEnd+=MAXTRAMESIZE;
-            dataInCounter=gl_printTrameStart;
-            tmpDataCounter=0;
-            request[tmpDataCounter]='\0';
-            while(dataInCounter!=printTrameEnd) {
-                request[tmpDataCounter++]=gl_inputBuffer[dataInCounter++];
-                if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
-                if (tmpDataCounter>=REQUESTSIZE){
-                    gl_requestHeaderTrameDetected=0;
-                    gl_printHeaderTrameDetected=0;
-                    gl_requestFooterTrameDetected=0;
-                    gl_printFooterTrameDetected=0;
-                    return(FALSE); // ERROR
+            // REQUEST FOOTER
+            else if (gl_requestFooterTrameDetected[bufferNumber]==8 && gl_canMode[bufferNumber]==CAN_REQUEST) {
+                requestTrameEnd=gl_getDataCANPointer[bufferNumber]-7;
+                if (requestTrameEnd<0)requestTrameEnd+=MAXTRAMESIZE;
+                dataInCounter=gl_requestTrameStart[bufferNumber];
+                dataStructureCounter=0;
+                while(dataInCounter!=requestTrameEnd) {
+                    request[dataStructureCounter++]=gl_inputBuffer[bufferNumber][dataInCounter++];
+                    if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
+                    if (dataStructureCounter>=REQUESTSIZE)return(FALSE);
                 }
+                gl_canMode[bufferNumber]=CAN_FREE; // If more data arrive.... we delete this trame
+                gl_getDataCANPointer[bufferNumber]++;
+                if (gl_getDataCANPointer[bufferNumber]>=MAXTRAMESIZE)gl_getDataCANPointer[bufferNumber]=0;
+                gl_requestHeaderTrameDetected[bufferNumber]=0;
+                gl_printHeaderTrameDetected[bufferNumber]=0;
+                gl_requestFooterTrameDetected[bufferNumber]=0;
+                gl_printFooterTrameDetected[bufferNumber]=0;
+                *mode=CAN_REQUEST;
+                return(uncompressData(request)); // Mean request available to proceed
             }
-            request[tmpDataCounter]='\0';
 
-            gl_canMode=CAN_UNKNOWN; // If more data arrive.... we continue to get data
-            gl_getDataCANPointer++;
-            if (gl_getDataCANPointer>=MAXTRAMESIZE)gl_getDataCANPointer=0;
-            gl_requestHeaderTrameDetected=0;
-            gl_printHeaderTrameDetected=0;
-            gl_requestFooterTrameDetected=0;
-            gl_printFooterTrameDetected=0;
-            *mode=CAN_PRINT;
-            return(TRUE); // Mean no more data to print
+            // PRINT FOOTER
+            else if (gl_printFooterTrameDetected[bufferNumber]==8 && gl_canMode[bufferNumber]==CAN_PRINT) {
+                qDebug() <<"PRINT FOOTER";
+
+                printTrameEnd=gl_getDataCANPointer[bufferNumber]-7;
+                if (printTrameEnd<0)printTrameEnd+=MAXTRAMESIZE;
+                dataInCounter=gl_printTrameStart[bufferNumber];
+                tmpDataCounter=0;
+                request[tmpDataCounter]='\0';
+                while(dataInCounter!=printTrameEnd) {
+                    request[tmpDataCounter++]=gl_inputBuffer[bufferNumber][dataInCounter++];
+                    if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
+                    if (tmpDataCounter>=REQUESTSIZE){
+                        gl_requestHeaderTrameDetected[bufferNumber]=0;
+                        gl_printHeaderTrameDetected[bufferNumber]=0;
+                        gl_requestFooterTrameDetected[bufferNumber]=0;
+                        gl_printFooterTrameDetected[bufferNumber]=0;
+                        return(FALSE); // ERROR
+                    }
+                }
+                request[tmpDataCounter]='\0';
+
+                gl_canMode[bufferNumber]=CAN_FREE; // If more data arrive.... we continue to get data
+                gl_getDataCANPointer[bufferNumber]++;
+                if (gl_getDataCANPointer[bufferNumber]>=MAXTRAMESIZE)gl_getDataCANPointer[bufferNumber]=0;
+                gl_requestHeaderTrameDetected[bufferNumber]=0;
+                gl_printHeaderTrameDetected[bufferNumber]=0;
+                gl_requestFooterTrameDetected[bufferNumber]=0;
+                gl_printFooterTrameDetected[bufferNumber]=0;
+                *mode=CAN_PRINT;
+                return(TRUE); // Mean no more data to print
+            }
+
+            // read new data
+            gl_getDataCANPointer[bufferNumber]++;
+            if (gl_getDataCANPointer[bufferNumber]>=MAXTRAMESIZE)gl_getDataCANPointer[bufferNumber]=0;
         }
-
-        // read new data
-        gl_getDataCANPointer++;
-        if (gl_getDataCANPointer>=MAXTRAMESIZE)gl_getDataCANPointer=0;
     }
     return(FALSE); // Nothing to do
 }

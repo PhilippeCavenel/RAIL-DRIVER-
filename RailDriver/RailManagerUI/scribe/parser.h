@@ -189,6 +189,7 @@
 #define MANUAL0							"MANUAL0"
 #define AUTOMATIC						"AUTOMATIC"
 #define CALIB							"CALIB"
+#define SYNCHRO                         "SYNC"
 
 
 ///////////////////////////////////////////////
@@ -248,6 +249,15 @@
 #define KNOB1Value						0xEE	// Value over max value 99
 
 
+#define MANUAL0Value					0x2E
+#define MANUAL1Value					0x2F
+#define MANUAL2Value					0x30
+#define MANUAL3Value					0x31
+
+////////////////// MODIF SYNCHRO CARTES
+#define SYNCHROValue 					0x40
+////////////////// MODIF SYNCHRO CARTES
+
 
 #define MAXOUTPUTSTRING					200
 
@@ -290,11 +300,14 @@
 #define TRAMEPRINTFOOTER				0xDD
 #define CAN_REQUEST                     1
 #define CAN_PRINT                       2
-#define CAN_UNKNOWN                     3
+#define CAN_FREE                        3
 
 
 #define TRUE							1
 #define FALSE							0
+
+#define MAXINPUTCANBUFFER				2047
+
 
 
 class parser
@@ -303,20 +316,22 @@ public:
     char    gl_parserErrorCode;
     char    gl_message[MAXOUTPUTSTRING];
     QString gl_errorContext;
-    unsigned char  gl_getDataCANPointer=0;
-    unsigned char  gl_InputBufferPointer=0;
-    unsigned char  gl_inputBuffer[MAXTRAMESIZE];
-    unsigned char  gl_canMode;
-    char           gl_requestTrameStart;
-    char           gl_printTrameStart;
+    unsigned char  gl_getDataCANPointer[MAXINPUTCANBUFFER];
+    unsigned char  gl_InputBufferPointer[MAXINPUTCANBUFFER];
+    unsigned char  gl_inputBuffer[MAXINPUTCANBUFFER][MAXTRAMESIZE];
+    unsigned char  gl_canMode[MAXINPUTCANBUFFER];
+    char           gl_requestTrameStart[MAXINPUTCANBUFFER];
+    char           gl_printTrameStart[MAXINPUTCANBUFFER];
+    unsigned char  gl_currentCANid[MAXINPUTCANBUFFER];
+
     unsigned char  gl_master;
     unsigned char  gl_tmpBuffer[REQUESTSIZE];
     unsigned char  gl_request[REQUESTSIZE];
 
-    unsigned char  gl_requestHeaderTrameDetected=0;
-    unsigned char  gl_printHeaderTrameDetected=0;
-    unsigned char  gl_requestFooterTrameDetected=0;
-    unsigned char  gl_printFooterTrameDetected=0;
+    unsigned char  gl_requestHeaderTrameDetected[MAXINPUTCANBUFFER];
+    unsigned char  gl_printHeaderTrameDetected[MAXINPUTCANBUFFER];
+    unsigned char  gl_requestFooterTrameDetected[MAXINPUTCANBUFFER];
+    unsigned char  gl_printFooterTrameDetected[MAXINPUTCANBUFFER];
 
 
 
