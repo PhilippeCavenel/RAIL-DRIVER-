@@ -240,8 +240,11 @@
 #define MANUALValue						0x2B
 #define AUTOMATICValue					0x2C
 #define CALIBValue						0x2D
-
 #define MANUAL0Value					0x2E
+#define MANUAL1Value					0x2F
+#define MANUAL2Value					0x30
+#define MANUAL3Value					0x31
+#define SYNCHROValue 					0x40
 
 // SPECIFIC VALUES
 
@@ -249,14 +252,6 @@
 #define KNOB1Value						0xEE	// Value over max value 99
 
 
-#define MANUAL0Value					0x2E
-#define MANUAL1Value					0x2F
-#define MANUAL2Value					0x30
-#define MANUAL3Value					0x31
-
-////////////////// MODIF SYNCHRO CARTES
-#define SYNCHROValue 					0x40
-////////////////// MODIF SYNCHRO CARTES
 
 
 #define MAXOUTPUTSTRING					200

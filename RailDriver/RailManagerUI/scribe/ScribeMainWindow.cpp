@@ -830,6 +830,18 @@ QString ScribeMainWindow::analyseCANinput(unsigned char* request){
                     trameAnalysis.append(QString(" MANUAL0 "));
                     return(trameAnalysis);
                 }
+                else if (request[REQ_COMMAND_REQUEST_USER_MODE]==MANUAL1Value){
+                    trameAnalysis.append(QString(" MANUAL1 "));
+                    return(trameAnalysis);
+                }
+                else if (request[REQ_COMMAND_REQUEST_USER_MODE]==MANUAL2Value){
+                    trameAnalysis.append(QString(" MANUAL2 "));
+                    return(trameAnalysis);
+                }
+                else if (request[REQ_COMMAND_REQUEST_USER_MODE]==MANUAL3Value){
+                    trameAnalysis.append(QString(" MANUAL3 "));
+                    return(trameAnalysis);
+                }
                 else if (request[REQ_COMMAND_REQUEST_USER_MODE]==AUTOMATICValue) {
                      trameAnalysis.append(QString(" AUTOMATIC"));
                     return(trameAnalysis);

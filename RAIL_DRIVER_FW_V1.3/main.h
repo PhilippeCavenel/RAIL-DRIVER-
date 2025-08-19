@@ -35,8 +35,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-#define TEXT_RAIL_DRIVER_HEADER				"RAIL DRIVER V 1.36"
-#define TEXT_VERSION						"VERSION 17-08-2025"
+#define TEXT_RAIL_DRIVER_HEADER				"RAIL DRIVER V 1.37"
+#define TEXT_VERSION						"VERSION 19-08-2025"
 #define TEXT_BOARD_NUMBER					"BOARD  "
 #define TEXT_MEMORY							"MEMORY "
 #define TEXT_AUTOMATION						"AUTOMATION "
@@ -49,9 +49,10 @@
 #define MAXSIZETOKEN					10
 #define MAXSIZEIDENT					3
 #define MAXTRAMESIZE					80 // Should be multiple of 8
-#define MAXTRAMECAN						MAXTRAMESIZE-24
+#define MAXTRAMECAN						MAXTRAMESIZE-24 
 #define MAXMESSAGESIZE					MAXTRAMECAN-2 // We need to add last char and end of string
 
+#define TRAMESYNCTRACE					0xAA
 #define TRAMEPRINTHEADER				0xCC
 #define TRAMEPRINTFOOTER				0xDD
 
@@ -151,6 +152,10 @@
 #define SYNCHROSENDDELAY				100
 #define MAXINPUTCANBUFFER				3
 
+// SYNCHRO BOARD VIA CAN
+#define SYNC_ID 0x0FF
+
+
 // RS232
 #define _XTAL_FREQ    					32000000
 #define _BAUD         					115200
@@ -235,6 +240,7 @@
 #define DCC								"DCC"
 #define STOP							"STOP"
 #define RUNALL 							"RUNALL"
+#define SYNCHRO 						"SYNC"
 #define ANA								"ANA"
 #define LPO								"LPO"
 #define GPIO							"GPIO"
@@ -274,6 +280,9 @@
 #define KNOB1							"KNOB1"
 #define MANUAL							"MANUAL" 	// All track managed by knobs
 #define MANUAL0							"MANUAL0"	// Only track 0 managed by knobs
+#define MANUAL1							"MANUAL1"	// Only track 1 managed by knobs
+#define MANUAL2							"MANUAL2"	// Only track 2 managed by knobs
+#define MANUAL3							"MANUAL3"	// Only track 3 managed by knobs
 #define AUTOMATIC						"AUTOMATIC"
 #define CALIB							"CALIB"
 
@@ -325,8 +334,12 @@
 #define MANUALValue						0x2B
 #define AUTOMATICValue					0x2C
 #define CALIBValue						0x2D
-
 #define MANUAL0Value					0x2E
+#define MANUAL1Value					0x2F
+#define MANUAL2Value					0x30
+#define MANUAL3Value					0x31
+#define SYNCHROValue 					0x40
+
 
 // SPECIFIC VALUES
 
@@ -539,53 +552,52 @@ const char digits[] = {
     0x3E,0x1C,0x2A,0x76,0x6E,0x5B
 };
 
-unsigned char  				gl_S1T0char = 0;
-unsigned char  				gl_S2T0char = 0;
+volatile unsigned char  				gl_S1T0char = 0;
+volatile unsigned char  				gl_S2T0char = 0;
 
-unsigned char  				gl_S1T1char = 0;
-unsigned char  				gl_S2T1char = 0;
+volatile unsigned char  				gl_S1T1char = 0;
+volatile unsigned char  				gl_S2T1char = 0;
 
-unsigned char  				gl_S2T2char = 0;
-unsigned char  				gl_S1T2char = 0;
+volatile unsigned char  				gl_S2T2char = 0;
+volatile unsigned char  				gl_S1T2char = 0;
 
-unsigned char  				gl_S1T3char = 0;
-unsigned char  				gl_S2T3char = 0;
+volatile unsigned char  				gl_S1T3char = 0;
+volatile unsigned char  				gl_S2T3char = 0;
 
-unsigned char  				gl_OUTchar[6];
+volatile unsigned char  				gl_OUTchar[6];
 
 
 // BOARD NUMBER FROM SWITCH SETTING
-unsigned char				gl_boardNumber;
+volatile unsigned char				gl_boardNumber;
 
 // MASTER 
-unsigned char				gl_master;
+volatile unsigned char				gl_master;
 
 // SPEED MANAGEMENT IN ANALOG MODE
-unsigned char				gl_speedCounter;
+volatile unsigned char				gl_speedCounter;
  
    // SPEED CIRCUIT 
-short						gl_setPoint[4];	  			// SPEED AND DIRECTION REQUESTED							
-short 						gl_setStep[4];	  			// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
-short 						gl_setStepCounter[4];	  	// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
-short 						gl_curSpeed[4];	  			// CUR SPEED AND DIRECTION
+volatile short						gl_setPoint[4];	  			// SPEED AND DIRECTION REQUESTED							
+volatile short 						gl_setStep[4];	  			// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
+volatile short 						gl_setStepCounter[4];	  	// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
+volatile short 						gl_curSpeed[4];	  			// CUR SPEED AND DIRECTION
 
 // low level value
-unsigned char 				gl_speed[4];  
-unsigned char 				gl_direction[4];  // DIRECTION CIRCUIT 
+volatile unsigned char 				gl_speed[4];  
+volatile unsigned char 				gl_direction[4];  // DIRECTION CIRCUIT 
 
 // SIGNAL MANAGEMENT IN DIGITAL MODE
-unsigned char 				gl_signalState;
-unsigned char 				gl_dcc[FRAME_SIZE]; 
-char 						gl_dcc_ready;
+volatile unsigned char 				gl_signalState;
+volatile unsigned char 				gl_dcc[FRAME_SIZE]; 
+volatile char 						gl_dcc_ready;
 
 // MODE
-unsigned char 				gl_boardMode;	// ANA or DCC	
+volatile unsigned char 				gl_boardMode;	// ANA or DCC	
 
 // MUTEX
-unsigned char 				gl_mutexLow;
-unsigned char 				gl_mutexHigh;
+volatile unsigned char 				gl_mutexLowIsr;
 
-unsigned char				gl_trackNumber;
+volatile unsigned char				gl_trackNumber;
 
 // USARTCAN
 #pragma udata USARTCAN
@@ -609,42 +621,48 @@ volatile unsigned char				gl_currentCANid[MAXINPUTCANBUFFER];
 
 volatile unsigned char 				gl_data[MAXTRAMESIZE];
 
+// SYNCHRO BOARD VIA CAN
+
+volatile unsigned char 				gl_syncRequested; 
+
 // UART
 volatile unsigned char 				gl_inputUartString[MAXINPUTSTRING];
 volatile char 						gl_message[MAXOUTPUTSTRING];
 volatile unsigned char 				gl_receivedUSARTPointer;
 volatile unsigned char 				gl_getDataUSARTPointer;
 volatile char						gl_inputCounter;
+volatile unsigned char 				gl_badToken[MAXSIZETOKEN];
 
 #pragma udata
 
 // PROTOCOL
 #pragma udata PROTOCOL
-unsigned char 				gl_request[REQUESTSIZE];
-unsigned char 				gl_tmpBuffer[REQUESTSIZE];
-unsigned char		 		gl_automation[MAXAUTOMATION][NEW_AUTOMATIONSIZE];
+volatile unsigned char 				gl_request[REQUESTSIZE];
+
+volatile unsigned char 				gl_tmpBuffer[REQUESTSIZE];
+volatile unsigned char		 		gl_automation[MAXAUTOMATION][NEW_AUTOMATIONSIZE];
 
 
 // GENERAL PURPOSE
 #pragma udata
 
-unsigned char 				gl_nexAvailableAutomation;
+volatile unsigned char 				gl_nexAvailableAutomation;
 
 
 // error info
-unsigned char 				gl_parserErrorCode;
+volatile unsigned char 				gl_parserErrorCode;
 
 // CUR TRACK STATUS
-unsigned int				gl_average[4];
-unsigned int 				gl_noVehicule[4];
-unsigned char  				gl_calibration;
-unsigned char  				gl_OUTSTATchar[4];
-unsigned char  				gl_trackNotification[4];
+volatile unsigned int				gl_average[4];
+volatile unsigned int 				gl_noVehicule[4];
+volatile unsigned char  			gl_calibration;
+volatile unsigned char  			gl_OUTSTATchar[4];
+volatile unsigned char  			gl_trackNotification[4];
 
-int							gl_knobValue0; // Between -15 and 15
-int							gl_knobValue1; // Between 0 and 100
-short 						gl_lastKnobValue0;
-short 						gl_lastKnobValue1;
+volatile int							gl_knobValue0; // Between -15 and 15
+volatile int							gl_knobValue1; // Between 0 and 100
+volatile short 						gl_lastKnobValue0;
+volatile short 						gl_lastKnobValue1;
 
 unsigned short 				gl_adcKnobValue0;
 unsigned short 				gl_adcKnobValue1;
@@ -653,11 +671,11 @@ unsigned short 				gl_maxAdcKnobValue0;
 unsigned short 				gl_minAdcKnobValue1;
 unsigned short 				gl_maxAdcKnobValue1;
 
-char						gl_getKnobValue;
-char						gl_numberKnobData;
-char						gl_calibKnob;
-short						gl_deltaKnob0;
-short						gl_deltaKnob1;
+volatile char						gl_getKnobValue;
+volatile char						gl_numberKnobData;
+volatile char						gl_calibKnob;
+volatile short						gl_deltaKnob0;
+volatile short						gl_deltaKnob1;
 
 unsigned char				gl_userMode;	// MANUAL or AUTOMATIC
 
@@ -726,6 +744,9 @@ void 			flushOut();
 void			 CANsendDelay();
 int 			_user_putc(char c);
 void 			sendRequestToCAN(unsigned char* request);
+void 			CAN_SendSync(void);
+
+
 unsigned char	getInputRequestFromCAN(unsigned char* request);
 void			sendPrintToCAN();
 
@@ -749,11 +770,14 @@ void 			delayMainLoop(int delay);
 // INTERRUPT AND SIGNAL MANAGEMENT
 void 			setDcc(unsigned char address, unsigned char command);
 void 			setPort();
+
 void 			interrupt_at_high_vector(void);
-void  			interrupt_at_low_vector(void);
 void 			high_isr(void);
+
+void  			interrupt_at_low_vector(void);
 void 			low_interrupt();
 void 			low_isr(void);
+void			low_isr_task();
 
 // CODE INITIALISATION
 void 			initSignal();
