@@ -507,7 +507,7 @@ PROG 2 AUT E2 AUTON BOARD 2 GPIO 0 1 ACT AUTOFF E1
 // Le deuxième passage devant le capteur optique stoppe le dételage (voir TCO)
 
 // Lorsque la locomotive passe sur l'autre capteur optique, on remet les aiguillages correctement (voir TCO) et on inverse le sens de la locomotive
-PROG 0 AUT DB AUTOFF BOARD 2 GPIO 0 3 ACT TRACK 30 SPEED 4 BACK INERTIA 20
+PROG 0 AUT DB AUTOFF BOARD 2 GPIO 0 3 ACT TRACK 30 SPEED 6 BACK INERTIA 20
 
 // Dès que le premier wagon passe devant le capteur optique après le dételage on retourne vers la gare centrale
 
