@@ -2232,6 +2232,12 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 						return(TRUE);
 				}
 				else if (request[REQ_COMMAND_REQUEST_GET_AUTOMATION_LIST] == TRUE) {
+
+					// Watchdog off
+   					 WDTCONbits.SWDTEN = 0;  
+
+				 	 gl_mutexLowIsr=1;gl_stopAll=TRUE;	gl_mutexLowIsr=0;
+
 					sprintf(gl_message,"");
 					if (sendPrompt==TRUE) prompt(gl_message);
 					for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
@@ -2242,9 +2248,21 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 					}
 					sprintf(gl_message,"");
 					if (sendPrompt==TRUE) prompt(gl_message);
+
+				 	gl_mutexLowIsr=1;gl_stopAll=FALSE;	gl_mutexLowIsr=0;
+
+					// Watchdog on
+ 					WDTCONbits.SWDTEN = 1;  
+
 					return(TRUE);
 				}
 				else if (request[REQ_COMMAND_REQUEST_GET_DUMP] == TRUE) {
+
+					// Watchdog off
+   					 WDTCONbits.SWDTEN = 0;  
+
+				 	 gl_mutexLowIsr=1;gl_stopAll=TRUE;	gl_mutexLowIsr=0;
+
 					for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
 						sprintf(gl_message,"");
 						itemPerLine=0;
@@ -2264,6 +2282,11 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							sprintf(gl_message,"");
 						}
 					}
+			 	 	gl_mutexLowIsr=1;gl_stopAll=FALSE;	gl_mutexLowIsr=0; 
+
+					// Watchdog on
+					WDTCONbits.SWDTEN = 1; 
+
 					return(TRUE);
 				}
 				else if (request[REQ_COMMAND_REQUEST_GET_BOARD_STATUS] == TRUE) {

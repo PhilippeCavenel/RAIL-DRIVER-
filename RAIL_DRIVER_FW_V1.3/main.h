@@ -74,7 +74,7 @@ rom char WATCHDOG_STRING[]				= "ERROR";
 #define MAXTIMER						15
 #define MAXTIMERDELAY					255
 #define MAXSPEEDVALUE					15
-#define MAXAUTOMATION					80
+#define MAXAUTOMATION					70
 
 // ACCELARATION RATE
 #define MAX_STEP						50

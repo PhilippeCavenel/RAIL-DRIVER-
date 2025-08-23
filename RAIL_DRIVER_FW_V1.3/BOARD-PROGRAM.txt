@@ -455,7 +455,7 @@ PROG 0 AUT BA AUTOFF BOARD 1 TIMER 2 ACT AUTON D9
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gestion normale de la carte pour arret du train en gare principale
 // Arret en gare, les voies E0, F1, G2 et H3 sont progressivement arrêtées sur détection de train voie F1
-PROG 0 AUT D1 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT TRACK 31 SPEED 0 FORW INERTIA 56
+PROG 0 AUT D1 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT TRACK 31 SPEED 0 FORW INERTIA 60
 
 // Passage du feu au rouge sur détection de train voie F1
 PROG 0 AUT D2 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT LPO 1 1
