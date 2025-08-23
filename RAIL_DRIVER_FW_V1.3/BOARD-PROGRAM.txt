@@ -1,4 +1,6 @@
 //================================================
+// VERSION DU 21 AOUT 2025
+//================================================
 // Gestion des numeros de piste
 // Entre 0 et 3, numéro de piste unique
 // Entre 17 et 31 :
@@ -102,8 +104,8 @@
 //================================================
 
 // Connect Rail 0	Voie M0
-// Connect Rail 1	Voie voiture 1
-// Connect Rail 2	Voie voiture 2
+// Connect Rail 1	Voie voiture 1 - temporaire en attendant d'avoir d'autres cartes
+// Connect Rail 2	Voie voiture 2 - temporaire en attendant d'avoir d'autres cartes
 // Connect Rail 3	Voie non connectée
 
 // LPO 0		Ouverture barrière passage à niveau 
@@ -154,18 +156,18 @@
 // PRINCIPES GENERAUX DE FONCTIONNEMENT POUR TOUTES LES CARTES
 //============================================================
 
-// Le passage en mode manuel
-//	- passe en vitesse nulle toutes les voies de la carte
+// Passage en mode manuel
+//	- passe en vitesse nulle toutes les voies de la carte jusqu'à modification d'une valeur de vitesse ou d'internie
 //	- allume la led rouge du mode manuel
-//	- Eteint la led du bouton demarrer
-//	- Réinitialise tous les timers
-//	- Passage en mode manuel
+//	- Eteint la led du bouton demarrer si elle était allumée
+//	- Réinitialise tous les TIMERs
+//	- Passage en mode manuel et désactivation de toutes les commandes de type AUTOFF
 
-// Le passage en mode automatique
+// Passage en mode automatique
 //	 - Eteint la led rouge du bouton mode manuel
 //	 - Passage en mode automatique
 //	 - L'appui sur le bouton démarrer
-//		- Allume la led du bouton démarrer
+//		- Allume la led du bouton démarrer en mode clignotement
 //		- Lance la séquence automatique programmée 
 
 //============================================================
@@ -174,8 +176,17 @@
 // M<i> => MANUEL
 // A<i> => AUTOMATIQUE
 // T<i> => Gestion commandes du TCO
-// D<i> => Commande pouvant être désactivée
-// C<i> => Clignotement boutons démarrer
+// D<i> => Commande pouvant être désactivée (via AUTOFF spécifique non lié au mode AUTOMATIC ou MANUAL)
+
+// Les commandes en mode AUTON sont toujours actives en mode MANUAL et AUTOMATIC sauf si elles ont été désactivées par une commande spécifique AUTOFF
+// Les commandes en mode AUTOFF sont désactivées en mode MANUAL 
+// Au démarrage des cartes, toutes les commandes AUTOFF sont désactivées, il faut donc spécifier au moins une fois un passage en mode AUTOMATIC
+
+//============================================================
+// ARRET COMPLET DES AUTOMATISMES
+//============================================================
+
+STOPALL
 
 //============================================================
 // GESTION DES MODES MANUELS
@@ -207,7 +218,7 @@ PROG 31 AUT M6 AUTON BOARD 31 GPIO 1 0 ACT GPIO 1 0
 // CARTE 0 pour les 4 voies internes E0,F1,G2,H3 
 ////////////////////////////////////////////////
 
-// Passe en vitesse sur nulle toutes les voies de la carte
+// Passe en vitesse nulle toutes les voies de la carte
 PROG 0 AUT M1 AUTON BOARD 0 GPIO 3 0 ACT TRACK 31 SPEED 0 FORW INERTIA 0
 
 // Allume la led rouge du mode manuel
@@ -229,7 +240,7 @@ PROG 0 AUT M6 AUTON BOARD 0 GPIO 1 0 ACT GPIO 1 0
 // CARTE 1 pour les 4 voies de la crémaillère I0,J1,K2,L3
 /////////////////////////////////////////////////////////
 
-// Passe en vitesse sur nulle toutes les voies de la carte
+// Passe en vitesse nulle toutes les voies de la carte
 PROG 1 AUT M1 AUTON BOARD 1 GPIO 3 0 ACT TRACK 31 SPEED 0 FORW INERTIA 0
 
 // Allume la led rouge du mode manuel
@@ -251,7 +262,7 @@ PROG 1 AUT M6 AUTON BOARD 1 GPIO 1 0 ACT GPIO 1 0
 // CARTE 2 pour la voie du tramway et les 2 voies temporaire Faller AMS
 ///////////////////////////////////////////////////////////////////////
 
-// Passe en vitesse sur nulle toutes les voies de la carte
+// Passe en vitesse nulle toutes les voies de la carte
 PROG 2 AUT M1 AUTON BOARD 2 GPIO 3 0 ACT TRACK 31 SPEED 0 FORW INERTIA 0
 
 // Allume la led rouge du mode manuel
@@ -263,7 +274,7 @@ PROG 2 AUT M3 AUTON BOARD 2 GPIO 3 0 ACT LPO 2 0
 // Réinitialise GPIO
 PROG 2 AUT M4 AUTON BOARD 2 GPIO 3 0 ACT GPIO 3 0
 
-// Passage en mode manuel(0)
+// Passage en mode manuel (voie 0)
 PROG 2 AUT M5 AUTON BOARD 2 GPIO 3 0 ACT MANUAL0
 
 // Réinitialise GPIO
@@ -288,7 +299,7 @@ PROG 2 AUT MA AUTON BOARD 2 GPIO 3 0 ACT LPO 1 1
 // TIMER 2 => Temps de circulation sur les voies
 ////////////////////////////////////////////////////////
 
-// Le passage en mode automatique va réinitialiser tous les timers
+// Passage en mode automatique 
 PROG 31 AUT A0 AUTON BOARD 31 GPIO 3 1 ACT AUTOMATIC
 
 // Eteint la led rouge du bouton mode manuel 
@@ -301,18 +312,11 @@ PROG 31 AUT A2 AUTOFF BOARD 31 GPIO 1 1 ACT TIMER 1 1
 
 // DESCRIPTION DE LA SEQUENCE
 // --------------------------
-// Sur appui bouton démarrer, le train va effectuer des tours pendant 10 unités de temps timer (environ 1mn20),
+// Sur appui bouton démarrer, le train va effectuer des tours pendant 10 unités de temps TIMER (environ 1mn20),
 // puis s'arrêter en gare sur la même période avant de recommencer
 
-// Allume la led du bouton démarrer
-PROG 31 AUT A3 AUTOFF BOARD 31  GPIO 1 1  ACT LPO 2 1
-
-// Clignotement bouton démarrer
-PROG 31 AUT C1 AUTOFF BOARD 31 GPIO 1 1 ACT TIMER 10 1
-PROG 31 AUT C2 AUTOFF BOARD 31 TIMER 10 ACT LPO 2 0
-PROG 31 AUT C3 AUTOFF BOARD 31 TIMER 10 ACT TIMER 11 1
-PROG 31 AUT C4 AUTOFF BOARD 31 TIMER 11 ACT LPO 2 1
-PROG 31 AUT C5 AUTOFF BOARD 31 TIMER 11 ACT TIMER 10 1
+// Allume la led du bouton démarrer (clignotement)
+PROG 31 AUT A3 AUTOFF BOARD 31  GPIO 1 1  ACT LPO 2 2
 
 // Active le démarrage du train voie A0, B1, C2 et D3 sur appui bouton démarrer
 PROG 31 AUT A4 AUTOFF BOARD 31 GPIO 1 1 ACT AUTON D4
@@ -349,14 +353,14 @@ PROG 31 AUT AG AUTOFF BOARD 31 TIMER 2 ACT TIMER 1 10
 // --------------------------------
 
 // Arret en gare sur détection voie A0, les voies A0, B1, C2 et D3 sont progressivement arrêtées
-PROG 31 AUT D1 AUTOFF BOARD 31 TRACK 0 STA ONTRACK ACT TRACK 31 SPEED 0 FORW INERTIA KNOB1
+PROG 31 AUT D1 AUTOFF BOARD 31 TRACK 0 STA ONTRACK ACT TRACK 31 SPEED 0 FORW INERTIA 48
 
 // Passage du feu au rouge sur détection de train voie A0
 PROG 31 AUT D2 AUTOFF BOARD 31 TRACK 0 STA ONTRACK ACT LPO 1 1
 PROG 31 AUT D3 AUTOFF BOARD 31 TRACK 0 STA ONTRACK ACT LPO 0 0
 
 // Démarre le train voie A0, B1, C2 et D3 sur déclenchement TIMER 1 selon valeurs de consigne du TCO, cette commande peut être désactivée pour le retournement du train à crémaillère
-PROG 31 AUT D4 AUTOFF BOARD 31 TIMER 1 ACT TRACK 31 SPEED KNOB0 FORW INERTIA KNOB1
+PROG 31 AUT D4 AUTOFF BOARD 31 TIMER 1 ACT TRACK 31 SPEED 9 FORW INERTIA 30
 
 // On relance le train si le démarrage a été activé quand le train à crémaillère arrive en haut
 PROG 31 AUT D5 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TIMER 1 1
@@ -367,7 +371,7 @@ PROG 31 AUT D5 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TIMER 1 1
 //TIMER 2 => Retour de la locomotive pour récupérer les wagons détachés
 /////////////////////////////////////////////////////////////////////
 
-// Le passage en mode automatique va réinitialiser tous les timers
+// Passage en mode automatique 
 PROG 0 AUT A0 AUTON BOARD 0 GPIO 3 1 ACT AUTOMATIC
 
 // Eteint la led rouge du bouton mode manuel 
@@ -376,27 +380,17 @@ PROG 0 AUT A1 AUTON BOARD 0 GPIO 3 1 ACT LPO 3 0
 // Mode normal de la carte par appui bouton démarrer ou action automatique du train à crémaillère
 PROG 0 AUT A2 AUTOFF BOARD 0 GPIO 1 1 ACT TIMER 1 1
 
-// Allume la led du bouton démarrer
-PROG 0 AUT A3 AUTOFF BOARD 0 GPIO 1 1 ACT LPO 2 1
-
-// Clignotement bouton démarrer
-PROG 0 AUT C1 AUTOFF BOARD 0 GPIO 1 1 ACT TIMER 10 1
-PROG 0 AUT C2 AUTOFF BOARD 0 TIMER 10 ACT LPO 2 0
-PROG 0 AUT C3 AUTOFF BOARD 0 TIMER 10 ACT TIMER 11 1
-PROG 0 AUT C4 AUTOFF BOARD 0 TIMER 11 ACT LPO 2 1
-PROG 0 AUT C5 AUTOFF BOARD 0 TIMER 11 ACT TIMER 10 1
-
-// Allume la led du bouton démarrer
-PROG 0 AUT A4 AUTOFF BOARD 0 TIMER 1 ACT LPO 2 1
+// Allume la led du bouton démarrer (clignotement)
+PROG 0 AUT A3 AUTOFF BOARD 0 GPIO 1 1 ACT LPO 2 2
 
 // Lance la séquence automatique programmée 
 
 // DESCRIPTION DE LA SEQUENCE
 // --------------------------
-// Sur appui bouton démarrer, le train va effectuer des tours jusqu'à ce que le train à crémaillère quitte la gare du haut, afin de permettre à ce dernier de faire un retournement de la locomotive sur les voies internes. Le redémarrage du train s'effectuera quand le train à crémaillère sera revenu en gare centrale.
+// Sur appui bouton démarrer, le train va effectuer des tours jusqu'à ce que le train à crémaillère quitte la gare du haut, afin de permettre à ce dernier de faire un retournement de la locomotive sur les voies internes. Le redémarrage du train s'effectuera par déclenchement du Timer 1, activé quand le wagon du train à crémaillère déclenche le capteur optique pour retour vers la gare centrale. 
 
 // Démarre le train voie E0, F1, G2 et H3
-PROG 0 AUT A5 AUTOFF BOARD 0 TIMER 1 ACT TRACK 31 SPEED KNOB0 FORW INERTIA KNOB1
+PROG 0 AUT A5 AUTOFF BOARD 0 TIMER 1 ACT TRACK 31 SPEED 11 FORW INERTIA 56
 
 // Passage du feu au vert
 PROG 0 AUT A6 AUTOFF BOARD 0 TIMER 1 ACT LPO 1 0
@@ -426,9 +420,8 @@ PROG 0 AUT AK AUTOFF BOARD 0 TIMER 1 ACT AUTOFF DD
 // En mode automatique, même si le démarrage n'est pas lancé, la commande DD ne doit pas être active avant le retour du train à crémaillère
 PROG 0 AUT AL AUTOFF BOARD 0 GPIO 3 1 ACT AUTOFF DD
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ces différentes commandes sont pilotées depuis la carte 1 Crémaillère au travers de TIMER 6 (lorsque le train à crémaillère repart de la gare du haut) 
+// Ces différentes commandes sont pilotées depuis la carte 1 Crémaillère au travers du TIMER 6 (lorsque le train à crémaillère repart de la gare du haut) 
 // Active l'arret en gare sur détection de train voie F1 
 PROG 0 AUT B0 AUTOFF BOARD 1 TIMER 6 ACT AUTON D1
 
@@ -445,7 +438,7 @@ PROG 0 AUT B4 AUTOFF BOARD 1 TIMER 2 ACT AUTOFF D4
 // Désactive l'arret du train en gare principale sur détection du train en voie F1, car le train à crémaillère passe par là 
 PROG 0 AUT B5 AUTOFF BOARD 1 TIMER 2 ACT AUTOFF D1
 
-// Activation des commandes pour le train à crémaillère dès activation du timer 2 de la carte 1
+// Activation des commandes pour le train à crémaillère dès activation du TIMER 2 de la carte 1
 PROG 0 AUT B6 AUTOFF BOARD 1 TIMER 2 ACT AUTON D5
 PROG 0 AUT B7 AUTOFF BOARD 1 TIMER 2 ACT AUTON D6
 PROG 0 AUT B8 AUTOFF BOARD 1 TIMER 2 ACT AUTON D7
@@ -460,23 +453,23 @@ PROG 0 AUT BA AUTOFF BOARD 1 TIMER 2 ACT AUTON D9
 // => Gestion automatique décrochage circuit caché et aiguillage E0 / (E0) H1 et E0 / G2, voir les commandes automatiques du TCO 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Gestion normal de la carte pour arret du train en gare principale
+// Gestion normale de la carte pour arret du train en gare principale
 // Arret en gare, les voies E0, F1, G2 et H3 sont progressivement arrêtées sur détection de train voie F1
-PROG 0 AUT D1 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT TRACK 31 SPEED 0 FORW INERTIA KNOB1
+PROG 0 AUT D1 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT TRACK 31 SPEED 0 FORW INERTIA 56
 
 // Passage du feu au rouge sur détection de train voie F1
 PROG 0 AUT D2 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT LPO 1 1
 PROG 0 AUT D3 AUTOFF BOARD 0 TRACK 1 STA ONTRACK ACT LPO 0 0
 
 // Si le train est détecté sur la voie H3 car il a reçu trop tard la commande d'arrêt, il faut le remettre en route pour un tour
-PROG 0 AUT D4 AUTOFF BOARD 0 TRACK 3 STA ONTRACK ACT TRACK 31 SPEED KNOB0 FORW INERTIA KNOB1
+PROG 0 AUT D4 AUTOFF BOARD 0 TRACK 3 STA ONTRACK ACT TRACK 31 SPEED 11 FORW INERTIA 56
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gestion de la carte pour le train à crémaillère
 
-// Démarrage train à crémaillère vers décrochage partie caché
-PROG 0 AUT D5 AUTOFF BOARD 1 TIMER 2 ACT TRACK 30 SPEED 7 BACK INERTIA 15
+// Démarrage train à crémaillère vers décrochage partie cachée
+PROG 0 AUT D5 AUTOFF BOARD 1 TIMER 2 ACT TRACK 30 SPEED 7  BACK INERTIA 15
 
 // Pas de passage de train sur la voie externe quand on retourne la locomotive, donc on bloque le train en gare
 PROG 31 AUT AH AUTOFF BOARD 1 TIMER 2 ACT AUTON D1
@@ -499,7 +492,7 @@ PROG 0 AUT D8 AUTOFF BOARD 0 TRACK 3 STA ONTRACK ACT AUTON DC
 PROG 0 AUT D9 AUTOFF BOARD 0 TRACK 3 STA ONTRACK ACT AUTON DD
 
 // Lorsque la locomotive passe sur le capteur optique après le système de dételage, on inverse le sens de la locomotive et des aiguillages et on stoppe le dételage (voir TCO)
-PROG 0 AUT DA AUTOFF BOARD 2 GPIO 0 1 ACT TRACK 30 SPEED 6 FORW INERTIA 20
+PROG 0 AUT DA AUTOFF BOARD 2 GPIO 0 1 ACT TRACK 30 SPEED 6 FORW INERTIA 27
 
 // On désactive la fonction de remise à zero du capteur optique
 PROG 2 AUT E2 AUTON BOARD 2 GPIO 0 1 ACT AUTOFF E1
@@ -507,13 +500,12 @@ PROG 2 AUT E2 AUTON BOARD 2 GPIO 0 1 ACT AUTOFF E1
 // Le deuxième passage devant le capteur optique stoppe le dételage (voir TCO)
 
 // Lorsque la locomotive passe sur l'autre capteur optique, on remet les aiguillages correctement (voir TCO) et on inverse le sens de la locomotive
-PROG 0 AUT DB AUTOFF BOARD 2 GPIO 0 3 ACT TRACK 30 SPEED 6 BACK INERTIA 20
+PROG 0 AUT DB AUTOFF BOARD 2 GPIO 0 3 ACT TRACK 30 SPEED 6 BACK INERTIA 27
 
 // Dès que le premier wagon passe devant le capteur optique après le dételage on retourne vers la gare centrale
+PROG 0 AUT DC AUTOFF BOARD 2 GPIO 0 5 ACT TRACK 30 SPEED 8 FORW INERTIA 27
 
-PROG 0 AUT DC AUTOFF BOARD 2 GPIO 0 5 ACT TRACK 30 SPEED 8 FORW INERTIA 0
-
-// retour vers le mode normal de la carte
+// ACtivation du TIMER 1 pour retour vers le mode normal de la carte
 PROG 0 AUT DD AUTOFF  BOARD 2 GPIO 0 5 ACT TIMER 1 8
 
 /////////////////////////////////////////////////////////
@@ -526,27 +518,20 @@ PROG 0 AUT DD AUTOFF  BOARD 2 GPIO 0 5 ACT TIMER 1 8
 // TIMER 6 => Retour vers la gare centrale
 /////////////////////////////////////////////////////////
 
-// Le passage en mode automatique va réinitialiser tous les timers
+// Passage en mode automatique 
 PROG 1 AUT A0 AUTON BOARD 1 GPIO 3 1 ACT AUTOMATIC
 
 // Eteint la led rouge du bouton mode manuel 
 PROG 1 AUT A1 AUTON BOARD 1 GPIO 3 1 ACT LPO 3 0
 
-// Allume la led du bouton démarrer
-PROG 1 AUT A2 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 2 1
-
-// Clignotement bouton démarrer
-PROG 1 AUT C1 AUTOFF BOARD 1 GPIO 1 1 ACT TIMER 10 1
-PROG 1 AUT C2 AUTOFF BOARD 1 TIMER 10 ACT LPO 2 0
-PROG 1 AUT C3 AUTOFF BOARD 1 TIMER 10 ACT TIMER 11 1
-PROG 1 AUT C4 AUTOFF BOARD 1 TIMER 11 ACT LPO 2 1
-PROG 1 AUT C5 AUTOFF BOARD 1 TIMER 11 ACT TIMER 10 1
+// Allume la led du bouton démarrer (Clignotement)
+PROG 1 AUT A2 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 2 2
 
 // Lance la séquence automatique programmée 
 
 // DESCRIPTION DE LA SEQUENCE
 // -------------------------
-// Sur appui bouton démarrer, le train à crémaillère quitte la gare principale pour se rendre à la gare du haut. Après un temps d'attente de 5 unités, la locomotive se decroche et se positionne à l'arrière du train pour revenir vers la gare centrale. A l'arrivée à la gare centrale, après un temps d'attente de 5 unités, le train à crémaillère va sur la voie interne pour un décrochage de la locomotive et positionnement à l'avant du train en voie caché avant de revenir en gare centrale puis remonter directement à la gare du haut
+// Sur appui bouton démarrer, le train à crémaillère quitte la gare principale pour se rendre à la gare du haut. Après un temps d'attente de 5 unités, la locomotive se decroche et se positionne à l'arrière du train pour revenir vers la gare centrale. A l'arrivée à la gare centrale, après un temps d'attente de 5 unités, le train à crémaillère va sur la voie interne pour un décrochage de la locomotive et positionnement à l'avant du train en voie cachée avant de revenir en gare centrale puis remonter directement à la gare du haut
 
 // Arme TIMER 3 pour déclenchement mode normal automatique
 PROG 1 AUT A3 AUTOFF BOARD 1 GPIO 1 1 ACT TIMER 3 1
@@ -555,9 +540,9 @@ PROG 1 AUT A3 AUTOFF BOARD 1 GPIO 1 1 ACT TIMER 3 1
 PROG 1 AUT A4 AUTOFF BOARD 1 TIMER 3 ACT LPO 4 0
 
 // Demarre le train (qui doit être quelque part sur la voie I0 ou L3 (gare) )
-PROG 1 AUT A5 AUTOFF BOARD 1 TIMER 3 ACT TRACK 31 SPEED 8 FORW INERTIA 20
+PROG 1 AUT A5 AUTOFF BOARD 1 TIMER 3 ACT TRACK 31 SPEED 8 FORW INERTIA 27
 
-// Active détection arrivée en gare du haut et activation timer
+// Active détection arrivée en gare du haut et activation TIMER
 PROG 1 AUT A7 AUTOFF BOARD 1 TIMER 3 ACT AUTON D2
 PROG 1 AUT A8 AUTOFF BOARD 1 TIMER 3 ACT AUTON D3
 
@@ -568,7 +553,7 @@ PROG 1 AUT A9 AUTOFF BOARD 1 TIMER 3 ACT AUTOFF D1
 PROG 1 AUT A9 AUTOFF BOARD 1 TIMER 3 ACT AUTOFF D4
 PROG 1 AUT AA AUTOFF BOARD 1 TIMER 3 ACT AUTOFF D5
 
-// Désactive Détection arrivée en gare du haut et activation timer
+// Désactive Détection arrivée en gare du haut et activation TIMER
 PROG 1 AUT AB AUTOFF BOARD 1 TIMER 1 ACT AUTOFF D2
 PROG 1 AUT AC AUTOFF BOARD 1 TIMER 1 ACT AUTOFF D3
 
@@ -579,7 +564,7 @@ PROG 1 AUT AD AUTOFF BOARD 1 TIMER 1 ACT TRACK 31 SPEED 4 FORW INERTIA 40
 PROG 1 AUT AE AUTOFF BOARD 1 TIMER 1 ACT TIMER 4 2
 
 // retour arrière locomotive sur déclenchement TIMER 4
-PROG 1 AUT AF AUTOFF BOARD 1 TIMER 4 ACT TRACK 31 SPEED 5 BACK INERTIA 10
+PROG 1 AUT AF AUTOFF BOARD 1 TIMER 4 ACT TRACK 31 SPEED 5  BACK INERTIA 10
 
 // changement aiguillage sur déclenchement TIMER 4
 PROG 1 AUT AG AUTOFF BOARD 1 TIMER 4 ACT LPO 4 1
@@ -588,7 +573,7 @@ PROG 1 AUT AG AUTOFF BOARD 1 TIMER 4 ACT LPO 4 1
 PROG 1 AUT AH AUTOFF BOARD 1 TIMER 4 ACT TIMER 5 2
 
 //Retour avant de la locomotive au déclenchement TIMER 5
-PROG 1 AUT AI AUTOFF BOARD 1 TIMER 5 ACT TRACK 31 SPEED 4 FORW INERTIA 20
+PROG 1 AUT AI AUTOFF BOARD 1 TIMER 5 ACT TRACK 31 SPEED 4 FORW INERTIA 27
 
 // changement aiguillage sur déclenchement TIMER 5
 PROG 1 AUT AJ AUTOFF BOARD 1 TIMER 5 ACT LPO 4 0
@@ -597,7 +582,7 @@ PROG 1 AUT AJ AUTOFF BOARD 1 TIMER 5 ACT LPO 4 0
 PROG 1 AUT AK AUTOFF BOARD 1 TIMER 5 ACT TIMER 6 2
 
 // Retour du train vers la gare centrale (voie I0, J1, K2 et L3)
-PROG 1 AUT AL AUTOFF BOARD 1 TIMER 6 ACT TRACK 31 SPEED 5 BACK INERTIA 15
+PROG 1 AUT AL AUTOFF BOARD 1 TIMER 6 ACT TRACK 31 SPEED 5  BACK INERTIA 15
 
 // Active arret du train en gare centrale 
 PROG 1 AUT AM AUTOFF BOARD 1 TIMER 6 ACT AUTON D1
@@ -608,7 +593,7 @@ PROG 1 AUT AO AUTOFF BOARD 1 TIMER 6 ACT AUTON D5
 
 ////////////////////////////////////////////////////////////////////////
 // Démarre le train qui passe sur la CARTE 0
-PROG 1 AUT AP AUTOFF BOARD 1 TIMER 2 ACT TRACK 31 SPEED 7 BACK INERTIA 15
+PROG 1 AUT AP AUTOFF BOARD 1 TIMER 2 ACT TRACK 31 SPEED 7  BACK INERTIA 15
 
 // Désactive Arret du train lors de l'arrivée en gare centrale
 PROG 1 AUT AQ AUTOFF BOARD 1 TIMER 2 ACT AUTOFF D1
@@ -622,10 +607,10 @@ PROG 1 AUT AR AUTOFF BOARD 1 TIMER 2 ACT TIMER 3 2
 // --------------------------------
 
 // Arret du train lors de l'arrivée en gare centrale (voie I0, J1, K2 et L3)
-PROG 1 AUT D1 AUTOFF BOARD 1 TRACK 0 STA ONTRACK ACT TRACK 31 SPEED 0 BACK INERTIA 100
+PROG 1 AUT D1 AUTOFF BOARD 1 TRACK 0 STA ONTRACK ACT TRACK 31 SPEED 0  BACK INERTIA 100
 
 // Détection du train sur la voie K, arret des voies I0, J1, K2 et L3
-PROG 1 AUT D2 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TRACK 31 SPEED 0 FORW INERTIA 20
+PROG 1 AUT D2 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TRACK 31 SPEED 0 FORW INERTIA 27
 
 // Arme TIMER 1 pour attente en gare du haut pendant 5 unités 
 PROG 1 AUT D3 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TIMER 1 5 
@@ -633,7 +618,7 @@ PROG 1 AUT D3 AUTOFF BOARD 1 TRACK 2 STA ONTRACK ACT TIMER 1 5
 // Arme TIMER 2 pour séquence de décrochage vers la partie cachée
 PROG 1 AUT D4 AUTOFF BOARD 1 TRACK 0 STA ONTRACK ACT TIMER 2 5
 
-// Désactive l'armement du timer 2
+// Désactive l'armement du TIMER 2
 PROG 1 AUT D5 AUTOFF BOARD 1 TRACK 0 STA ONTRACK ACT AUTOFF D4
 
 
@@ -644,27 +629,20 @@ PROG 1 AUT D5 AUTOFF BOARD 1 TRACK 0 STA ONTRACK ACT AUTOFF D4
 // TIMER 3 => Temps d'attente à la gare intermédiaire au retour
 ///////////////////////////////////////////////////////////////////////
 
-// Le passage en mode automatique va réinitialiser tous les timers
+// Passage en mode automatique 
 PROG 2 AUT A0 AUTON BOARD 2 GPIO 3 1 ACT AUTOMATIC
 
 // Eteint la led rouge du bouton mode manuel 
 PROG 2 AUT A1 AUTON BOARD 2 GPIO 3 1 ACT LPO 3 0
 
-// Allume la led du bouton démarrer
-PROG 2 AUT A2 AUTOFF BOARD 2 GPIO 1 1 ACT LPO 2 1
-
-// Clignotement bouton démarrer
-PROG 2 AUT C1 AUTOFF BOARD 2 GPIO 1 1 ACT TIMER 10 1
-PROG 2 AUT C2 AUTOFF BOARD 2 TIMER 10 ACT LPO 2 0
-PROG 2 AUT C3 AUTOFF BOARD 2 TIMER 10 ACT TIMER 11 1
-PROG 2 AUT C4 AUTOFF BOARD 2 TIMER 11 ACT LPO 2 1
-PROG 2 AUT C5 AUTOFF BOARD 2 TIMER 11 ACT TIMER 10 1
+// Allume la led du bouton démarrer (clignotement)
+PROG 2 AUT A2 AUTOFF BOARD 2 GPIO 1 1 ACT LPO 2 2
 
 // Lance la séquence automatique programmée 
 
 // DESCRIPTION DE LA SEQUENCE
 // --------------------------
-// Sur appui bouton démarrer, et sous réserve que le Tramway a bien été positionné devant la gare centrale, il va venir se positionner devant la gare du tramway à droite de la gare centrale, puis suivre un cycle d'aller/retour régulier avec un arret à l'aller et au retour à la gare intermédiaire. Chaque arret est programmé sur un timer de 5 unités
+// Sur appui bouton démarrer, et sous réserve que le Tramway ait bien été positionné devant la gare centrale, il va venir se positionner devant la gare du tramway à droite de la gare centrale, puis suivre un cycle d'aller/retour régulier avec un arret à l'aller et au retour à la gare intermédiaire. Chaque arret est programmé sur un TIMER de 5 unités
 
 // Démarre le tramway pour le ramener sur la droite, le tramway doit être devant la gare de train
 PROG 2 AUT A3 AUTOFF BOARD 2 GPIO 1 1 ACT TRACK 0 SPEED 5 BACK INERTIA 27
@@ -682,10 +660,10 @@ PROG 2 AUT A7 AUTOFF BOARD 2 GPIO 2 2 ACT LPO 5 1
 // Stop le tramway 
 PROG 2 AUT A8 AUTOFF BOARD 2 GPIO 2 2 ACT TRACK 0 SPEED 0 BACK INERTIA 27
 
-// Arme timer 1 d'attente en gare
+// Arme TIMER 1 d'attente en gare
 PROG 2 AUT A9 AUTOFF BOARD 2 GPIO 2 2 ACT TIMER 1 5
 
-// Redémarre le tramway sur déclenchement timer 1
+// Redémarre le tramway sur déclenchement TIMER 1
 PROG 2 AUT AA AUTOFF BOARD 2 TIMER 1 ACT TRACK 0 SPEED 5 FORW INERTIA 27
 
 // Eteint led TCO droite M0
@@ -694,7 +672,7 @@ PROG 2 AUT AB AUTOFF BOARD 2 GPIO 2 4 ACT LPO 5 0
 // Gare intermédiaire
 PROG 2 AUT AC AUTOFF BOARD 2 GPIO 2 6 ACT TRACK 0 SPEED 0 FORW INERTIA 27
 
-// Arme timer 1 d'attente en gare intermédiaire
+// Arme TIMER 1 d'attente en gare intermédiaire
 PROG 2 AUT AD AUTOFF BOARD 2 GPIO 2 6 ACT TIMER 1 5
 
 // ferme les barrieres
@@ -720,10 +698,10 @@ PROG 2 AUT AO AUTOFF BOARD 2 GPIO 2 14 ACT TRACK 0 SPEED 0 FORW INERTIA 27
 // Allume led TCO gauche M0
 PROG 2 AUT AP AUTOFF BOARD 2 GPIO 2 14 ACT LPO 4 1
 
-// Arme timer 2 d'attente en gare
+// Arme TIMER 2 d'attente en gare
 PROG 2 AUT AQ AUTOFF BOARD 2 GPIO 2 14 ACT TIMER 2 5
 
-// Redémarre le tramway sur déclenchement timer 2
+// Redémarre le tramway sur déclenchement TIMER 2
 PROG 2 AUT AR AUTOFF BOARD 2 TIMER 2 ACT TRACK 0 SPEED 5 BACK INERTIA 27
 
 // Eteint led TCO gauche M0
@@ -732,10 +710,10 @@ PROG 2 AUT AS AUTOFF BOARD 2 GPIO 2 16 ACT LPO 4 0
 // Gare intermédiaire retour
 PROG 2 AUT AT AUTOFF BOARD 2 GPIO 2 22 ACT TRACK 0 SPEED 0 FORW INERTIA 27
 
-// Arme timer 3 d'attente en gare intermédiaire
+// Arme TIMER 3 d'attente en gare intermédiaire
 PROG 2 AUT AU AUTOFF BOARD 2 GPIO 2 22 ACT TIMER 3 5
 
-// Redémarre le tramway sur déclenchement timer 3
+// Redémarre le tramway sur déclenchement TIMER 3
 PROG 2 AUT AV AUTOFF BOARD 2 TIMER 3 ACT TRACK 0 SPEED 5 BACK INERTIA 27
 
 // Réinitialise GPIO 2 pour nouveau cycle aller-retour
@@ -755,6 +733,7 @@ PROG 3 AUT M4 AUTON BOARD 3 GPIO 3 0 ACT GPIO 3 0
 //============================================================
 
 // Pilotage automatique décrochage circuit caché
+PROG 31 AUT T0 AUTON BOARD 0 GPIO 3 0 ACT AUTOFF T2
 PROG 31 AUT T1 AUTON BOARD 0 TIMER 1 ACT AUTOFF T2
 PROG 31 AUT T2 AUTON BOARD 0 TRACK 3 STA ONTRACK ACT LPO 4 1
 PROG 31 AUT T3 AUTON BOARD 1 TIMER 2 ACT AUTON T2
@@ -762,6 +741,7 @@ PROG 31 AUT T4 AUTON BOARD 2 GPIO 0 1 ACT AUTOFF T2
 PROG 31 AUT T5 AUTON BOARD 2 GPIO 0 1 ACT LPO 4 0
 
 // Commande automatique aiguillage E0 / (E0) H1 et E0 / G2
+PROG 1 AUT T0 AUTON BOARD 0 GPIO 3 0 ACT AUTOFF T2
 PROG 1 AUT T1 AUTON BOARD 0 TIMER 1 ACT AUTOFF T2
 PROG 1 AUT T2 AUTON BOARD 2 GPIO 0 1 ACT LPO 0 1
 PROG 1 AUT T3 AUTON BOARD 1 TIMER 2 ACT AUTON T2
@@ -778,31 +758,29 @@ PROG 3 AUT T2 AUTON BOARD 1 TIMER 2 ACT LPO 0 1
 // Commande automatique B1 / CROSS
 PROG 3 AUT T3 AUTON BOARD 31 GPIO 1 1 ACT LPO 2 1
 PROG 3 AUT T4 AUTON BOARD 31 GPIO 1 1 ACT LPO 3 0
-PROG 3 AUT T5 AUTON BOARD 31 GPIO 1 1 ACT LPO 2 1
-PROG 3 AUT T6 AUTON BOARD 31 GPIO 1 1 ACT LPO 3 0
 
 // Commande automatique D3 / H3 et C2 / G2
-PROG 3 AUT T7 AUTON BOARD 31 GPIO 1 1 ACT LPO 5 0
-PROG 3 AUT T8 AUTOFF BOARD 0 GPIO 1 1 ACT LPO 5 0
+PROG 3 AUT T5 AUTON BOARD 31 GPIO 1 1 ACT LPO 5 0
+PROG 3 AUT T6 AUTON BOARD 0 GPIO 1 1 ACT LPO 5 0
 
 // Commande automatique CROSS
-PROG 3 AUT T9 AUTON BOARD 0 TIMER 1 ACT LPO 1 1
-PROG 3 AUT TA AUTON BOARD 0 TIMER 1 ACT LPO 0 0
+PROG 3 AUT T7 AUTON BOARD 0 TIMER 1 ACT LPO 1 1
+PROG 3 AUT T8 AUTON BOARD 0 TIMER 1 ACT LPO 0 0
 
-PROG 3 AUT TB AUTON BOARD 1 TIMER 2 ACT LPO 1 0
-PROG 3 AUT TC AUTON BOARD 1 TIMER 2 ACT LPO 0 1
+PROG 3 AUT T9 AUTON BOARD 1 TIMER 2 ACT LPO 1 0
+PROG 3 AUT TA AUTON BOARD 1 TIMER 2 ACT LPO 0 1
 
 //============================================================
 // GESTION DES COMMANDES DU TCO EN MODE MANUEL 
 //============================================================
 
 // Pilotage manuel décrochage circuit caché
-PROG 31 AUT T7 AUTON BOARD 3 GPIO 3 1 ACT LPO 4 1
-PROG 31 AUT T8 AUTON BOARD 3 GPIO 3 0 ACT LPO 4 0
+PROG 31 AUT T6 AUTON BOARD 3 GPIO 3 1 ACT LPO 4 1
+PROG 31 AUT T7 AUTON BOARD 3 GPIO 3 0 ACT LPO 4 0
 
 // Remise à zero GPIO
-PROG 31 AUT T9 AUTON BOARD 31 GPIO 0 0 ACT GPIO 2 0
-PROG 31 AUT TA AUTON BOARD 31 GPIO 2 0 ACT GPIO 0 0
+PROG 31 AUT T8 AUTON BOARD 31 GPIO 0 0 ACT GPIO 2 0
+PROG 31 AUT T9 AUTON BOARD 31 GPIO 2 0 ACT GPIO 0 0
 
 // Pilotage manuel décrochage gare crémaillère haut
 PROG 0 AUT T3 AUTON BOARD 3 GPIO 2 1 ACT LPO 4 1
@@ -813,27 +791,33 @@ PROG 0 AUT T5 AUTON BOARD 0 GPIO 0 0 ACT GPIO 0 0
 PROG 0 AUT T6 AUTON BOARD 0 GPIO 2 0 ACT GPIO 2 0
 
 // Commande manuel aiguillage E0 / (E0) H1 et E0 / G2
-PROG 1 AUT T7 AUTON BOARD 1 GPIO 2 1 ACT LPO 0 1
-PROG 1 AUT T8 AUTON BOARD 1 GPIO 0 1 ACT LPO 0 0
-PROG 1 AUT T9 AUTON BOARD 1 GPIO 2 0 ACT GPIO 2 0
-PROG 1 AUT TA AUTON BOARD 1 GPIO 0 0 ACT GPIO 0 0
+PROG 1 AUT T6 AUTON BOARD 1 GPIO 2 1 ACT LPO 0 1
+PROG 1 AUT T7 AUTON BOARD 1 GPIO 0 1 ACT LPO 0 0
+PROG 1 AUT T8 AUTON BOARD 1 GPIO 2 0 ACT GPIO 2 0
+PROG 1 AUT T9 AUTON BOARD 1 GPIO 0 0 ACT GPIO 0 0
 
 // Commande manuel aiguillage I0 / J1 , K2
-PROG 1 AUT TB AUTON BOARD 3 GPIO 0 1 ACT LPO 4 1
-PROG 1 AUT TC AUTON BOARD 3 GPIO 1 1 ACT LPO 4 0
+PROG 1 AUT TA AUTON BOARD 3 GPIO 0 1 ACT LPO 4 1
+PROG 1 AUT TB AUTON BOARD 3 GPIO 1 1 ACT LPO 4 0
 
 // Commande manuel CROSS
-PROG 3 AUT TD AUTON BOARD 31 GPIO 0 1 ACT LPO 1 1
-PROG 3 AUT TE AUTON BOARD 31 GPIO 2 1 ACT LPO 0 1
-PROG 3 AUT TF AUTON BOARD 31 GPIO 2 1 ACT LPO 1 0
-PROG 3 AUT TG AUTON BOARD 31 GPIO 0 1 ACT LPO 0 0
+PROG 3 AUT TB AUTON BOARD 31 GPIO 0 1 ACT LPO 1 1
+PROG 3 AUT TC AUTON BOARD 31 GPIO 2 1 ACT LPO 0 1
+PROG 3 AUT TD AUTON BOARD 31 GPIO 2 1 ACT LPO 1 0
+PROG 3 AUT TE AUTON BOARD 31 GPIO 0 1 ACT LPO 0 0
 
 // Commande manuel D3 / H3 et C2 / G2
-PROG 3 AUT TH AUTON BOARD 0 GPIO 0 1 ACT LPO 5 1
-PROG 3 AUT TI AUTON BOARD 0 GPIO 2 1 ACT LPO 5 0
+PROG 3 AUT TF AUTON BOARD 0 GPIO 0 1 ACT LPO 5 1
+PROG 3 AUT TG AUTON BOARD 0 GPIO 2 1 ACT LPO 5 0
 
 // Commande manuel B1 / CROSS
-PROG 3 AUT TJ AUTON BOARD 31 GPIO 0 2 ACT LPO 2 1
-PROG 3 AUT TK AUTON BOARD 31 GPIO 2 2 ACT LPO 3 1
-PROG 3 AUT TL AUTON BOARD 31 GPIO 2 2 ACT LPO 2 0
-PROG 3 AUT TM AUTON BOARD 31 GPIO 0 2 ACT LPO 3 0
+PROG 3 AUT TH AUTON BOARD 31 GPIO 0 2 ACT LPO 2 1
+PROG 3 AUT TI AUTON BOARD 31 GPIO 2 2 ACT LPO 3 1
+PROG 3 AUT TJ AUTON BOARD 31 GPIO 2 2 ACT LPO 2 0
+PROG 3 AUT TK AUTON BOARD 31 GPIO 0 2 ACT LPO 3 0
+
+//============================================================
+// REMISE EN ROUTE DES AUTOMATISMES
+//============================================================
+
+RUNALL

@@ -35,18 +35,27 @@
 #define TRUE							1
 #define FALSE							0
                          
-#define TEXT_RAIL_DRIVER_HEADER				"RAIL DRIVER V 1.37"
-#define TEXT_VERSION						"VERSION 19-08-2025"
-#define TEXT_BOARD_NUMBER					"BOARD  "
-#define TEXT_MEMORY							"MEMORY "
-#define TEXT_AUTOMATION						"AUTOMATION "
-#define TEXT_MODE							"MODE "
-#define TEST_START							"START"
+rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.38";
+rom char VERSION_STRING[] 				= "VERSION 21-08-2025";
+rom char BOARD_NUMBER_STRING[] 			= "BOARD ";
+rom char MODE_STRING[] 					= "MODE ";
+rom char MEMORY_STRING[] 				= "MEMORY ";
+rom char AUTOMATION_STRING[] 			= "AUTOMATION MODE ";
+rom char AUTOMATION_NUMBER_STRING[] 	= "NUMBER OF AUTOMATION ";
+
+rom char START_STRING[] 				= "START";
+rom char RESET_STRING[] 				= "RESET";
+rom char STOP_STRING[] 					= " STOP ";
+rom char RUN_STRING[] 					= " RUN ";
+rom char SYNC_STRING[] 					= " SYNC ";
+rom char DONE_STRING[] 					= " DONE ";
+rom char WATCHDOG_STRING[]				= "ERROR";
 
 // PROTOCOL
-#define MAXINPUTSTRING					200
-#define MAXOUTPUTSTRING					200
+#define MAXINPUTSTRING					160
+#define MAXOUTPUTSTRING					160
 #define MAXSIZETOKEN					10
+#define MAXERRORINFO					60
 #define MAXSIZEIDENT					3
 #define MAXTRAMESIZE					80 // Should be multiple of 8
 #define MAXTRAMECAN						MAXTRAMESIZE-24 
@@ -65,7 +74,7 @@
 #define MAXTIMER						15
 #define MAXTIMERDELAY					255
 #define MAXSPEEDVALUE					15
-#define MAXAUTOMATION					100
+#define MAXAUTOMATION					80
 
 // ACCELARATION RATE
 #define MAX_STEP						50
@@ -96,6 +105,35 @@
 #define GPIO3DIR_ADDRESS				(GPIO2DIR_ADDRESS+1) 		
 #define AUTOMATION_ADDRESS				(GPIO3DIR_ADDRESS+1)		// Should be the last of the list
 						
+rom char  UNKNOWN_TOKEN_STRING[] 		= "Unknown token";
+rom char  NUMBER_MISSING_STRING[] 		= "Number missing";
+rom char  INCOMPLETE_REQUEST_STRING[] 	= "Incomplete request";
+rom char  BAD_NUMBER_STRING[] 			= "Bad number";
+rom char  MODE_MISSING_STRING[] 		= "Mode missing";
+rom char  BAD_GPIO_NUMBER_STRING[] 		= "Bad GPIO number";
+rom char  BAD_TIMER_NUMBER_STRING[] 	= "Bad TIMER number";
+rom char  BAD_TIMER_VALUE_STRING[] 		= "Bad TIMER value";
+rom char  BAD_LPO_NUMBER_STRING[] 		= "Bad LPO number";
+rom char  BAD_AUT_STATUS_STRING[] 		= "Bad Automation status";
+rom char  BAD_AUT_IDENT_STRING[] 		= "Bad Automation name";
+rom char  MISSING_IDENT_STRING[] 		= "Automation name missing";
+rom char  BAD_GPIO_DIR_STRING[] 		= "Bad GPIO direction";
+rom char  BAD_GPIO_LEVEL_STRING[] 		= "Bad GPIO level";
+rom char  BAD_LPO_LEVEL_STRING[] 		= "Bad LPO level";
+rom char  BAD_TRACK_SPEED_STRING[] 		= "Bad track speed";
+rom char  BAD_TRACK_DIR_STRING[] 		= "Bad track direction";
+rom char  BAD_TRACK_NUMBER_STRING[] 	= "Bad track number";
+rom char  BAD_BOARD_MODE_STRING[] 		= "Bad board mode";
+rom char  WRONG_BOARD_NUMBER_STRING[]	= "Wrong board number";
+rom char  AUTOMATIONSIZELIMIT_STRING[] 	= "Automation limit reached";
+rom char  MISSING_SPACE_STRING[] 		= "Space missing";
+rom char  IDENT_TOO_LONG_STRING[] 		= "Identifier too long";
+rom char  AUTOMATIONLREADYEXISTS_STRING[] = "Automation already defined";
+rom char  BADAUTOMATIONNUMBER_STRING[] 	= "Wrong automation number";
+rom char  BAD_TRACK_INERTIA_STRING[] 	= "Bad inertia value";
+rom char  BAD_USER_MODE_STRING[] 		= "Bad user mode";
+rom char  UNKNOWN_ERROR_STRING[] 		= "Unknown Error";
+rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
 
 // ERROR CODE
 #define UNKNOWN_TOKEN					0x1
@@ -136,9 +174,10 @@
 #pragma config FCMEN 	= 				OFF
 #pragma config IESO 	= 				OFF
 #pragma config PWRT 	= 				ON
-#pragma config BOREN 	= 				BOHW // OFF
+#pragma config BOREN 	= 				OFF
 #pragma config BORV 	= 				3
-#pragma config WDT 		= 				OFF
+#pragma config WDT 		= 				OFF  
+#pragma config WDTPS 	= 				128     // ~2.3 s
 #pragma config PBADEN 	= 				OFF
 #pragma config MCLRE 	= 				OFF
 #pragma config LVP 		= 				OFF
@@ -181,7 +220,7 @@
 #define HYSTERERISLOW					1
 #define SAMPLEFORAVERAGE				30
 #define SAMPLEFORCALIBRATION			5
-#define TIMECALIBRATION 				0xFFF
+#define TRACKCALIBRATIONDELAY			2
 
 // GPIO DETECTION
 #define GPIOTHRESHOLD					100
@@ -552,20 +591,22 @@ const char digits[] = {
     0x3E,0x1C,0x2A,0x76,0x6E,0x5B
 };
 
-volatile unsigned char  				gl_S1T0char = 0;
-volatile unsigned char  				gl_S2T0char = 0;
 
-volatile unsigned char  				gl_S1T1char = 0;
-volatile unsigned char  				gl_S2T1char = 0;
+volatile unsigned char  			gl_S1T0char = 0;
+volatile unsigned char  			gl_S2T0char = 0;
 
-volatile unsigned char  				gl_S2T2char = 0;
-volatile unsigned char  				gl_S1T2char = 0;
+volatile unsigned char  			gl_S1T1char = 0;
+volatile unsigned char  			gl_S2T1char = 0;
 
-volatile unsigned char  				gl_S1T3char = 0;
-volatile unsigned char  				gl_S2T3char = 0;
+volatile unsigned char  			gl_S2T2char = 0;
+volatile unsigned char  			gl_S1T2char = 0;
 
-volatile unsigned char  				gl_OUTchar[6];
+volatile unsigned char  			gl_S1T3char = 0;
+volatile unsigned char  			gl_S2T3char = 0;
 
+#pragma udata GLOBAL_DATA
+volatile unsigned char  			gl_OUTchar[6];
+#pragma udata
 
 // BOARD NUMBER FROM SWITCH SETTING
 volatile unsigned char				gl_boardNumber;
@@ -576,7 +617,9 @@ volatile unsigned char				gl_master;
 // SPEED MANAGEMENT IN ANALOG MODE
 volatile unsigned char				gl_speedCounter;
  
-   // SPEED CIRCUIT 
+// SPEED CIRCUIT 
+
+#pragma udata GLOBAL_DATA
 volatile short						gl_setPoint[4];	  			// SPEED AND DIRECTION REQUESTED							
 volatile short 						gl_setStep[4];	  			// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
 volatile short 						gl_setStepCounter[4];	  	// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
@@ -585,11 +628,20 @@ volatile short 						gl_curSpeed[4];	  			// CUR SPEED AND DIRECTION
 // low level value
 volatile unsigned char 				gl_speed[4];  
 volatile unsigned char 				gl_direction[4];  // DIRECTION CIRCUIT 
+#pragma udata
 
 // SIGNAL MANAGEMENT IN DIGITAL MODE
 volatile unsigned char 				gl_signalState;
+
+#pragma udata GLOBAL_DATA
 volatile unsigned char 				gl_dcc[FRAME_SIZE]; 
+#pragma udata
+
 volatile char 						gl_dcc_ready;
+
+// FLASHING LED
+volatile unsigned int				gl_flashingCounter;
+volatile unsigned char				gl_goFlashingCounter;
 
 // MODE
 volatile unsigned char 				gl_boardMode;	// ANA or DCC	
@@ -597,16 +649,15 @@ volatile unsigned char 				gl_boardMode;	// ANA or DCC
 // MUTEX
 volatile unsigned char 				gl_mutexLowIsr;
 
-volatile unsigned char				gl_trackNumber;
-
-// USARTCAN
-#pragma udata USARTCAN
-
 // USART
+
+#pragma udata GLOBAL_DATA
 volatile static unsigned char 		gl_receivedUSARTData[USARTBUFFERSIZE];
+#pragma udata 
 volatile unsigned char				gl_waitCanPrint;
 
 // CAN
+#pragma udata GLOBAL_DATA
 volatile unsigned char 				gl_outputCANbuffer[MAXTRAMESIZE];
 volatile unsigned char				gl_outputCANbufferCounter;
 
@@ -620,81 +671,85 @@ volatile unsigned char				gl_printInputCANtrameStart[MAXINPUTCANBUFFER];
 volatile unsigned char				gl_currentCANid[MAXINPUTCANBUFFER];
 
 volatile unsigned char 				gl_data[MAXTRAMESIZE];
+#pragma udata 
 
 // SYNCHRO BOARD VIA CAN
 
 volatile unsigned char 				gl_syncRequested; 
 
 // UART
+#pragma udata GLOBAL_DATA
 volatile unsigned char 				gl_inputUartString[MAXINPUTSTRING];
 volatile char 						gl_message[MAXOUTPUTSTRING];
+volatile unsigned char 				gl_errorInfo[MAXERRORINFO];
+#pragma udata
+
 volatile unsigned char 				gl_receivedUSARTPointer;
 volatile unsigned char 				gl_getDataUSARTPointer;
 volatile char						gl_inputCounter;
-volatile unsigned char 				gl_badToken[MAXSIZETOKEN];
 
-#pragma udata
-
-// PROTOCOL
-#pragma udata PROTOCOL
+// PROTOCOL AND AUTOMATION
+#pragma udata GLOBAL_DATA
 volatile unsigned char 				gl_request[REQUESTSIZE];
-
 volatile unsigned char 				gl_tmpBuffer[REQUESTSIZE];
 volatile unsigned char		 		gl_automation[MAXAUTOMATION][NEW_AUTOMATIONSIZE];
-
-
-// GENERAL PURPOSE
 #pragma udata
-
 volatile unsigned char 				gl_nexAvailableAutomation;
-
 
 // error info
 volatile unsigned char 				gl_parserErrorCode;
 
 // CUR TRACK STATUS
+#pragma udata GLOBAL_DATA
 volatile unsigned int				gl_average[4];
 volatile unsigned int 				gl_noVehicule[4];
-volatile unsigned char  			gl_calibration;
 volatile unsigned char  			gl_OUTSTATchar[4];
 volatile unsigned char  			gl_trackNotification[4];
 
-volatile int							gl_knobValue0; // Between -15 and 15
-volatile int							gl_knobValue1; // Between 0 and 100
+#pragma udata
+volatile unsigned char  			gl_trackCalibration;
+volatile unsigned char				gl_trackNumber;
+
+// MANUAL or AUTOMATIC
+volatile unsigned char				gl_userMode;	
+
+// CUR GPIO STATUS
+#pragma udata GLOBAL_DATA
+volatile unsigned char				gl_GPIONotification[4];
+volatile unsigned char				gl_GPIOchar[4];
+volatile unsigned char				gl_GPIOcounter[4];
+volatile unsigned int				gl_GPIOstabilized[4];
+#pragma udata
+
+// CUR TIMER 
+#pragma udata GLOBAL_DATA
+volatile unsigned char				gl_TIMERValue[MAXTIMER];
+volatile unsigned char				gl_TIMERNotification[MAXTIMER];
+#pragma udata
+volatile unsigned char				gl_timerNumber;
+volatile unsigned short				gl_timer;
+
+// RUN OR STOP ALL
+volatile unsigned char 				gl_stopAll;
+
+// KNOBS
+volatile char						gl_numberKnobData;
+volatile int						gl_knobValue0; // Between -15 and 15
+volatile int						gl_knobValue1; // Between 0 and 100
 volatile short 						gl_lastKnobValue0;
 volatile short 						gl_lastKnobValue1;
 
-unsigned short 				gl_adcKnobValue0;
-unsigned short 				gl_adcKnobValue1;
-unsigned short 				gl_minAdcKnobValue0;
-unsigned short 				gl_maxAdcKnobValue0;
-unsigned short 				gl_minAdcKnobValue1;
-unsigned short 				gl_maxAdcKnobValue1;
+volatile unsigned short 			gl_adcKnobValue0;
+volatile unsigned short 			gl_adcKnobValue1;
+volatile unsigned short 			gl_minAdcKnobValue0;
+volatile unsigned short 			gl_maxAdcKnobValue0;
+volatile unsigned short 			gl_minAdcKnobValue1;
+volatile unsigned short 			gl_maxAdcKnobValue1;
 
 volatile char						gl_getKnobValue;
-volatile char						gl_numberKnobData;
 volatile char						gl_calibKnob;
 volatile short						gl_deltaKnob0;
 volatile short						gl_deltaKnob1;
-
-unsigned char				gl_userMode;	// MANUAL or AUTOMATIC
-
-// CUR GPIO STATUS
-unsigned char				gl_GPIONotification[4];
-unsigned char				gl_GPIOchar[4];
-unsigned char				gl_GPIOcounter[4];
-unsigned int				gl_GPIOstabilized[4];
-
-// CUR TIMER 
-
-unsigned char				gl_TIMERValue[MAXTIMER];
-unsigned char				gl_TIMERNotification[MAXTIMER];
-unsigned char				gl_timerNumber;
-unsigned short				gl_timer;
-
-// RUN OR STOP ALL
-unsigned char 				gl_stopAll;
-
 
 ///////////////////////////////////////////////
 // function declaration
@@ -715,6 +770,7 @@ unsigned char 	isAdigit(unsigned char car);
 unsigned char 	isAhexaDigit(unsigned char car);
 unsigned char 	toUpperCase(unsigned char car);
 unsigned short 	strtol(const char* nptr);
+void			clearError();
 void 			traceError();
 unsigned char 	getToken(unsigned char* inputString, unsigned char* inputToken, unsigned char* stringPointer);
 unsigned char 	getValue(unsigned char* inputString, unsigned char* Value, unsigned char* stringPointer);
@@ -741,7 +797,7 @@ void 			prompt(unsigned char* message);
 
 // CAN
 void 			flushOut();
-void			 CANsendDelay();
+void			CANsendDelay();
 int 			_user_putc(char c);
 void 			sendRequestToCAN(unsigned char* request);
 void 			CAN_SendSync(void);
@@ -780,10 +836,10 @@ void 			low_isr(void);
 void			low_isr_task();
 
 // CODE INITIALISATION
-void 			initSignal();
+void 			initEnvironment();
 void 			PIC18FMainSettings();
 void 			init();
-void 			calibration();
+void 			trackCalibration();
 
 // EVENT MANAGEMENT
 unsigned char 	getEventRequestFromTrack(unsigned char* request);

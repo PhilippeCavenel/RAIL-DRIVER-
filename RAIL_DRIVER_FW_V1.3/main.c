@@ -44,8 +44,10 @@ unsigned char ReadEEPROM(unsigned int adr, unsigned char *data){
 void CalibMinMaxKnob() {
 
 	 unsigned short adr;
-
 	 unsigned char counter;
+
+	// Watchdog off
+    WDTCONbits.SWDTEN = 0; 
 
 	// Knob min & max
 	adr=(unsigned short)KNOB_ADDRESS;
@@ -57,11 +59,11 @@ void CalibMinMaxKnob() {
 	gl_calibKnob=1;
 	gl_mutexLowIsr=0;
 
-	TM1637_setBrightness(4);
+	// Wait to get low value
 	for (counter=5;counter>0;counter--) {
 		sprintf(gl_message,"CAL0 %d",counter);
 		TM1637_displayString(gl_message);
-		delayMainLoop(5); // 2.5 s
+		delayMainLoop(2); 
 	}
 
 	// Max knob values
@@ -70,12 +72,17 @@ void CalibMinMaxKnob() {
 	gl_maxAdcKnobValue1=0;
 	gl_mutexLowIsr=0;
 
-	// Wait to get low value
+	// Wait to get high value
 	for (counter=5;counter>0;counter--) {
 		sprintf(gl_message,"CAL1 %d",counter);
 		TM1637_displayString(gl_message);
-		delayMainLoop(5); // 2.5 s
+		delayMainLoop(2); 
 	}
+
+	sprintf(gl_message,DONE_STRING);
+	TM1637_displayString(gl_message);
+	delayMainLoop(2); 
+
 	gl_mutexLowIsr=1;	gl_calibKnob=0; gl_mutexLowIsr=0;
 
 	// Save in EEPROM
@@ -90,6 +97,8 @@ void CalibMinMaxKnob() {
 
 	WriteEEPROM(adr++,(gl_maxAdcKnobValue1>>8) & 0xFF);	
 	WriteEEPROM(adr,gl_maxAdcKnobValue1 & 0xFF);
+
+    WDTCONbits.SWDTEN = 1;
 
 }
 
@@ -124,11 +133,6 @@ void ResetEEPROM(){
 	// GPIO IN
 	for(adr=(unsigned short)GPIO0DIR_ADDRESS;adr<=(unsigned short)GPIO0DIR_ADDRESS+3;adr++)WriteEEPROM(adr,1);
 
-	// Init
-	initSignal();
-
-	// Calibration
-	calibration();
 }
 
 /****************************************************************************
@@ -174,24 +178,24 @@ void ReadEEPROMConfig(void) {
 	// Knob min & max
 	adr=(unsigned short)KNOB_ADDRESS;
 	ReadEEPROM(adr++,&value);
-	gl_minAdcKnobValue0=value;
+	gl_mutexLowIsr=1;gl_minAdcKnobValue0=value;gl_mutexLowIsr=0;
 	ReadEEPROM(adr++,&value);
-	gl_minAdcKnobValue0=value+(gl_minAdcKnobValue0<<8);
+	gl_mutexLowIsr=1;gl_minAdcKnobValue0=value+(gl_minAdcKnobValue0<<8);gl_mutexLowIsr=0;
 	ReadEEPROM(adr++,&value);
-	gl_maxAdcKnobValue0=value;
+	gl_mutexLowIsr=1;gl_maxAdcKnobValue0=value;gl_mutexLowIsr=0;
 	ReadEEPROM(adr++,&value);
-	gl_maxAdcKnobValue0=value+(gl_maxAdcKnobValue0<<8);
+	gl_mutexLowIsr=1;gl_maxAdcKnobValue0=value+(gl_maxAdcKnobValue0<<8);gl_mutexLowIsr=0;
 	ReadEEPROM(adr++,&value);
-	gl_minAdcKnobValue1=value;
+	gl_mutexLowIsr=1;gl_minAdcKnobValue1=value;gl_mutexLowIsr=0;
 	ReadEEPROM(adr++,&value);
-	gl_minAdcKnobValue1=value+(gl_minAdcKnobValue1<<8);
+	gl_mutexLowIsr=1;gl_minAdcKnobValue1=value+(gl_minAdcKnobValue1<<8);gl_mutexLowIsr=0;
 	ReadEEPROM(adr++,&value);
-	gl_maxAdcKnobValue1=value;
+	gl_mutexLowIsr=1;gl_maxAdcKnobValue1=value;gl_mutexLowIsr=0;
 	ReadEEPROM(adr,&value);
-	gl_maxAdcKnobValue1=value+(gl_maxAdcKnobValue1<<8);
+	gl_mutexLowIsr=1;gl_maxAdcKnobValue1=value+(gl_maxAdcKnobValue1<<8);gl_mutexLowIsr=0;
 
-	gl_deltaKnob0=gl_maxAdcKnobValue0-gl_minAdcKnobValue0;
-	gl_deltaKnob1=gl_maxAdcKnobValue1-gl_minAdcKnobValue1;
+	gl_mutexLowIsr=1;gl_deltaKnob0=gl_maxAdcKnobValue0-gl_minAdcKnobValue0;gl_mutexLowIsr=0;
+	gl_mutexLowIsr=1;gl_deltaKnob1=gl_maxAdcKnobValue1-gl_minAdcKnobValue1;gl_mutexLowIsr=0;
 
 	// Read in EEPROM last automation
 	getAutomationFromEEPROM();
@@ -284,27 +288,32 @@ unsigned char memAvailable() {
 /////////////////////////////////////////////////////////////////////////////
 void boardStatus() {
 				
-	sprintf(gl_message,TEXT_RAIL_DRIVER_HEADER);
+	sprintf(gl_message,RAIL_DRIVER_HEADER_STRING);
 	prompt(gl_message);
 
-	sprintf(gl_message,TEXT_VERSION);
+	sprintf(gl_message,VERSION_STRING);
 	prompt(gl_message);
 
-	sprintf(gl_message,TEXT_BOARD_NUMBER);
+	sprintf(gl_message,BOARD_NUMBER_STRING);
 	sprintf(gl_message,"%s%d",gl_message,gl_boardNumber);
 	prompt(gl_message);
 
-	sprintf(gl_message,TEXT_MEMORY);
+	sprintf(gl_message,MODE_STRING);
+	if(gl_boardMode==ANAValue)sprintf(gl_message,"%sANA",gl_message);
+	else sprintf(gl_message,"%sDCC",gl_message);
+	prompt(gl_message);
+
+	sprintf(gl_message,MEMORY_STRING);
 	sprintf(gl_message,"%s%d%%",gl_message,memAvailable());
 	prompt(gl_message);
 
-	sprintf(gl_message,TEXT_AUTOMATION);
-	sprintf(gl_message,"%s%d",gl_message,gl_nexAvailableAutomation);
+	sprintf(gl_message,AUTOMATION_STRING);
+	if (gl_userMode!=AUTOMATICValue) sprintf(gl_message,"%sMANUAL",gl_message);
+	else sprintf(gl_message,"%sAUTOMATIC",gl_message);
 	prompt(gl_message);
 
-	sprintf(gl_message,TEXT_MODE);
-	if(gl_boardMode==ANAValue)sprintf(gl_message,"%sANA (0x%x)",gl_message,gl_userMode);
-	else sprintf(gl_message,"%sDCC",gl_message);
+	sprintf(gl_message,AUTOMATION_NUMBER_STRING);
+	sprintf(gl_message,"%s%d",gl_message,gl_nexAvailableAutomation);
 	prompt(gl_message);
 
 	sprintf(gl_message,"");
@@ -325,7 +334,7 @@ unsigned char getAutomationFromEEPROM() {
 	// Get next automation address
 	adr=(unsigned short)NEXTTAUTOMATION_ADDRESS;
 	ReadEEPROM(adr,&value);
-	gl_nexAvailableAutomation=value;
+	gl_mutexLowIsr=1;gl_nexAvailableAutomation=value;gl_mutexLowIsr=0;
 	if (gl_nexAvailableAutomation==0) return((double)100); // nothing to do
 
 	// Read and uncompress automation from EEPROM
@@ -333,7 +342,7 @@ unsigned char getAutomationFromEEPROM() {
 	for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {	
 		for(automationDataCounter=0;automationDataCounter<NEW_AUTOMATIONSIZE;automationDataCounter++) {
 			ReadEEPROM(adr++,&value);
-			gl_automation[automationCounter][automationDataCounter]=value;
+			gl_mutexLowIsr=1;gl_automation[automationCounter][automationDataCounter]=value;gl_mutexLowIsr=0;
 		}
 	}
 	percentage=100*(1024-(long)adr)/(1024-(long)AUTOMATION_ADDRESS);
@@ -354,6 +363,7 @@ unsigned char setAutomationToEEPROM() {
 
 	for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
 		if (adr+NEW_AUTOMATIONSIZE>=1024) {
+			sprintf(gl_errorInfo,"limit is %d",gl_nexAvailableAutomation);
 			gl_parserErrorCode=AUTOMATIONSIZELIMIT;
 			return(FALSE);
 		}	
@@ -451,45 +461,54 @@ unsigned short strtol(const char* nptr) {
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// clearError 
+/////////////////////////////////////////////////////////////////////////////
+void clearError() {
+		sprintf(gl_errorInfo,"");
+		gl_parserErrorCode=0;
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // traceError 
 /////////////////////////////////////////////////////////////////////////////
 void traceError() {
 
 	switch (gl_parserErrorCode) {	
-		case UNKNOWN_TOKEN				:		sprintf(gl_message,"Unknown token %s",gl_badToken);break;
-		case NUMBER_MISSING				:		sprintf(gl_message,"Number missing");break;
-		case INCOMPLETE_REQUEST			:		sprintf(gl_message,"Incomplete request");break;
-		case BAD_NUMBER					:		sprintf(gl_message,"Bad number");break;
-		case MODE_MISSING				:		sprintf(gl_message,"Mode missing");break;
-		case BAD_GPIO_NUMBER			:		sprintf(gl_message,"Bad GPIO number");break;
-		case BAD_TIMER_NUMBER			:		sprintf(gl_message,"Bad TIMER number");break;
-		case BAD_TIMER_VALUE			:		sprintf(gl_message,"Bad TIMER value");break;
-		case BAD_LPO_NUMBER				:		sprintf(gl_message,"Bad LPO number");break;
-		case BAD_AUT_STATUS				:		sprintf(gl_message,"Bad Automation status");break;
-		case BAD_AUT_IDENT				:		sprintf(gl_message,"Bad Automation name");break;
-		case MISSING_IDENT				:		sprintf(gl_message,"Automation name missing");break;
-		case BAD_GPIO_DIR				:		sprintf(gl_message,"Bad GPIO direction");break;
-		case BAD_GPIO_LEVEL				:		sprintf(gl_message,"Bad GPIO level");break;
-		case BAD_LPO_LEVEL				:		sprintf(gl_message,"Bad LPO level");break;
-		case BAD_TRACK_SPEED			:		sprintf(gl_message,"Bad track speed");break;
-		case BAD_TRACK_DIR				:		sprintf(gl_message,"Bad track direction");break;
-		case BAD_TRACK_NUMBER			:		sprintf(gl_message,"Bad track number");break;
-		case BAD_BOARD_MODE					:	sprintf(gl_message,"Bad board mode");break;
-		case WRONG_BOARD_NUMBER			:		sprintf(gl_message,"Wrong board number");break;
-		case AUTOMATIONSIZELIMIT		:		sprintf(gl_message,"Automation limit reached");break;
-		case MISSING_SPACE				:		sprintf(gl_message,"Space missing");break;
-		case IDENT_TOO_LONG				:		sprintf(gl_message,"Identifier too long");break;
-		case AUTOMATIONLREADYEXISTS		:		sprintf(gl_message,"Automation already defined");break;
-		case BADAUTOMATIONNUMBER		:		sprintf(gl_message,"Wrong automation number");break;
-		case BAD_TRACK_INERTIA			:		sprintf(gl_message,"Bad inertia value");break;
-		case BAD_USER_MODE					:	sprintf(gl_message,"Bad user mode");break;
-		default : sprintf(gl_message,"Unknown Error 0x%x",gl_parserErrorCode);
+		case UNKNOWN_TOKEN				:		sprintf(gl_message,UNKNOWN_TOKEN_STRING);break;
+		case NUMBER_MISSING				:		sprintf(gl_message,NUMBER_MISSING_STRING);break;
+		case INCOMPLETE_REQUEST			:		sprintf(gl_message,INCOMPLETE_REQUEST_STRING);break;
+		case BAD_NUMBER					:		sprintf(gl_message,BAD_NUMBER_STRING);break;
+		case MODE_MISSING				:		sprintf(gl_message,MODE_MISSING_STRING);break;
+		case BAD_GPIO_NUMBER			:		sprintf(gl_message,BAD_GPIO_NUMBER_STRING);break;
+		case BAD_TIMER_NUMBER			:		sprintf(gl_message,BAD_TIMER_NUMBER_STRING);break;
+		case BAD_TIMER_VALUE			:		sprintf(gl_message,BAD_TIMER_VALUE_STRING);break;
+		case BAD_LPO_NUMBER				:		sprintf(gl_message,BAD_LPO_NUMBER_STRING);break;
+		case BAD_AUT_STATUS				:		sprintf(gl_message,BAD_AUT_STATUS_STRING);break;
+		case BAD_AUT_IDENT				:		sprintf(gl_message,BAD_AUT_IDENT_STRING);break;
+		case MISSING_IDENT				:		sprintf(gl_message,MISSING_IDENT_STRING);break;
+		case BAD_GPIO_DIR				:		sprintf(gl_message,BAD_GPIO_DIR_STRING);break;
+		case BAD_GPIO_LEVEL				:		sprintf(gl_message,BAD_GPIO_LEVEL_STRING);break;
+		case BAD_LPO_LEVEL				:		sprintf(gl_message,BAD_LPO_LEVEL_STRING);break;
+		case BAD_TRACK_SPEED			:		sprintf(gl_message,BAD_TRACK_SPEED_STRING);break;
+		case BAD_TRACK_DIR				:		sprintf(gl_message,BAD_TRACK_DIR_STRING);break;
+		case BAD_TRACK_NUMBER			:		sprintf(gl_message,BAD_TRACK_NUMBER_STRING);break;
+		case BAD_BOARD_MODE					:	sprintf(gl_message,BAD_BOARD_MODE_STRING);break;
+		case WRONG_BOARD_NUMBER			:		sprintf(gl_message,WRONG_BOARD_NUMBER_STRING);break;
+		case AUTOMATIONSIZELIMIT		:		sprintf(gl_message,AUTOMATIONSIZELIMIT_STRING);break;
+		case MISSING_SPACE				:		sprintf(gl_message,MISSING_SPACE_STRING);break;
+		case IDENT_TOO_LONG				:		sprintf(gl_message,IDENT_TOO_LONG_STRING);break;
+		case AUTOMATIONLREADYEXISTS		:		sprintf(gl_message,AUTOMATIONLREADYEXISTS_STRING);break;
+		case BADAUTOMATIONNUMBER		:		sprintf(gl_message,BADAUTOMATIONNUMBER_STRING);break;
+		case BAD_TRACK_INERTIA			:		sprintf(gl_message,BAD_TRACK_INERTIA_STRING);break;
+		case BAD_USER_MODE					:	sprintf(gl_message,BAD_USER_MODE_STRING);break;
+		default : sprintf(gl_message,"%s 0x%x",UNKNOWN_ERROR_STRING,gl_parserErrorCode);
 	}
+	sprintf(gl_message,"%s %s",gl_message,gl_errorInfo);
 
 	prompt(gl_message);
 	sprintf(gl_message,"");
 	prompt(gl_message);	
-	gl_parserErrorCode=0;
+	clearError();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -522,7 +541,7 @@ unsigned char getToken(unsigned char* inputString, unsigned char* inputToken, un
 		}
 	} 
 	testToken[tokenCarPointer]='\0';
-	sprintf(gl_badToken,"%s",testToken);
+	sprintf(gl_errorInfo,"%s",testToken);
 	gl_parserErrorCode = UNKNOWN_TOKEN;
 	return(FALSE);
 }
@@ -551,6 +570,7 @@ unsigned char getValue(unsigned char* inputString, unsigned char* Value, unsigne
 
 	if (number >255) {
 		errno == ERANGE;
+		sprintf(gl_errorInfo,"%d",number);
 		gl_parserErrorCode = BAD_NUMBER;
 		return(FALSE);
 	}
@@ -566,6 +586,7 @@ unsigned char getValue(unsigned char* inputString, unsigned char* Value, unsigne
 		return(TRUE);
 	}
 	else {
+		sprintf(gl_errorInfo,"");
 		gl_parserErrorCode = NUMBER_MISSING;
 		return(FALSE);
 	}
@@ -584,6 +605,7 @@ unsigned char getIdent(unsigned char* inputString, unsigned char* stringPointer,
 	while(identCounter<MAXSIZEIDENT) {
 		if (inputString[*stringPointer]!=' ') {
 			if(identCounter==0 && getFirstSpace==FALSE) {
+				sprintf(gl_errorInfo,"");
 				gl_parserErrorCode = MISSING_SPACE;
 				return(FALSE);
 			}
@@ -593,6 +615,7 @@ unsigned char getIdent(unsigned char* inputString, unsigned char* stringPointer,
 					 break;
 				}
 				else {
+					sprintf(gl_errorInfo,"");
 					gl_parserErrorCode = MISSING_IDENT;
 					return(FALSE);
 				}
@@ -611,6 +634,8 @@ unsigned char getIdent(unsigned char* inputString, unsigned char* stringPointer,
 		}
 		
 		if (identCounter==MAXSIZEIDENT) {
+			ident[identCounter-1]='\0';
+			sprintf(gl_errorInfo,"%s",ident);
 			gl_parserErrorCode = IDENT_TOO_LONG;
 			return(FALSE);
 		}
@@ -636,7 +661,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 	if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 		request[REQ_GLOBAL_COMMAND] = STOPValue;
 		request[REQ_BOARD_NUMBER] = gl_boardNumber;
-		gl_parserErrorCode=0;
+		clearError();;
 		return(TRUE);
 	}
 
@@ -646,7 +671,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 	if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 		request[REQ_GLOBAL_COMMAND] = RUNALLValue;
 		request[REQ_BOARD_NUMBER] = gl_boardNumber;
-		gl_parserErrorCode=0;
+		clearError();
 		return(TRUE);
 	}
 
@@ -656,7 +681,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 	if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 		request[REQ_GLOBAL_COMMAND] = SYNCHROValue;
 		request[REQ_BOARD_NUMBER] = gl_boardNumber;
-		gl_parserErrorCode=0;
+		clearError();
 		return(TRUE);
 	}
 
@@ -668,7 +693,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 		// Get board number
 		if (!getValue(&inputString[stringPointer], &request[REQ_BOARD_NUMBER], &stringPointer))return(FALSE);
-		gl_parserErrorCode=0;
+		clearError();
 		return(TRUE);
 	}
 
@@ -680,7 +705,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 		// Get board number
 		if (!getValue(&inputString[stringPointer], &request[REQ_BOARD_NUMBER], &stringPointer))return(FALSE);
-		gl_parserErrorCode=0;
+		clearError();
 		return(TRUE);
 	}
 
@@ -692,7 +717,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 		// Get board number
 		if (!getValue(&inputString[stringPointer], &request[REQ_BOARD_NUMBER], &stringPointer))return(FALSE);
-		gl_parserErrorCode=0;
+		clearError();
 		return(TRUE);
 	}
 
@@ -713,7 +738,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_PROGRAM_REQUEST_SET_BOARD_MODE] = TRUE;
 			request[REQ_PROGRAM_REQUEST_BOARD_MODE] = DCCValue;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		//ANA
@@ -722,7 +747,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_PROGRAM_REQUEST_SET_BOARD_MODE] = TRUE;
 			request[REQ_PROGRAM_REQUEST_BOARD_MODE] = ANAValue;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// GPIO
@@ -739,7 +764,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 			sprintf(token,IN);
 			if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 				request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR] = INValue;
-				gl_parserErrorCode=0;
+				clearError();
 				return(TRUE);
 			}
 
@@ -749,7 +774,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 				sprintf(token,OUT);
 				if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 					request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR] = OUTValue;
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 				else return(FALSE);
@@ -875,7 +900,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 					// get GPIO level
 					if (!getValue(&inputString[stringPointer], &request[REQ_PROGRAM_REQUEST_ACTION_GPIO_SET_LEVEL], &stringPointer)) return(FALSE);
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 
@@ -890,7 +915,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 					// get TIMER delay
 					if (!getValue(&inputString[stringPointer], &request[REQ_PROGRAM_REQUEST_ACTION_TIMER_SET_DELAY], &stringPointer)) return(FALSE);
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 
@@ -906,7 +931,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 					// get LPO level
 					if (!getValue(&inputString[stringPointer], &request[REQ_PROGRAM_REQUEST_ACTION_LPO_SET_LEVEL], &stringPointer)) return(FALSE);
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 
@@ -923,7 +948,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 					// set AUT status
 					request[REQ_PROGRAM_REQUEST_ACTION_AUT_SET_STATUS]=AUTONValue;
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 
@@ -940,7 +965,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 					// set AUT status
 					request[REQ_PROGRAM_REQUEST_ACTION_AUT_SET_STATUS]=AUTOFFValue;
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 
@@ -1014,7 +1039,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 							if (!getValue(&inputString[stringPointer], &request[REQ_PROGRAM_REQUEST_ACTION_TRACK_SET_INERTIA], &stringPointer)) return(FALSE);
 						}
 					}					
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 
@@ -1024,7 +1049,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 				if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 					request[REQ_PROGRAM_REQUEST_SET_USER_MODE] = TRUE;
 					request[REQ_PROGRAM_REQUEST_ACTION_USER_MODE] = MANUAL0Value;
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 				// MANUAL1
@@ -1033,7 +1058,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 				if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 					request[REQ_PROGRAM_REQUEST_SET_USER_MODE] = TRUE;
 					request[REQ_PROGRAM_REQUEST_ACTION_USER_MODE] = MANUAL1Value;
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 				// MANUAL2
@@ -1042,7 +1067,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 				if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 					request[REQ_PROGRAM_REQUEST_SET_USER_MODE] = TRUE;
 					request[REQ_PROGRAM_REQUEST_ACTION_USER_MODE] = MANUAL2Value;
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 				// MANUAL3
@@ -1051,7 +1076,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 				if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 					request[REQ_PROGRAM_REQUEST_SET_USER_MODE] = TRUE;
 					request[REQ_PROGRAM_REQUEST_ACTION_USER_MODE] = MANUAL3Value;
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 				// MANUAL
@@ -1060,7 +1085,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 				if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 					request[REQ_PROGRAM_REQUEST_SET_USER_MODE] = TRUE;
 					request[REQ_PROGRAM_REQUEST_ACTION_USER_MODE] = MANUALValue;
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 				// AUTOMATIC
@@ -1069,7 +1094,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 				if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 					request[REQ_PROGRAM_REQUEST_SET_USER_MODE] = TRUE;
 					request[REQ_PROGRAM_REQUEST_ACTION_USER_MODE] = AUTOMATICValue;
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}			
 				// DCC
@@ -1083,7 +1108,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 					// get DCC Command
 					if (!getValue(&inputString[stringPointer], &request[REQ_PROGRAM_REQUEST_ACTION_DCC_COMMAND_SETTING], &stringPointer))return(FALSE);
-					gl_parserErrorCode=0;
+					clearError();
 					return(TRUE);
 				}
 				return(FALSE);
@@ -1100,7 +1125,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 			// get Automation number
 			if (!getValue(&inputString[stringPointer], &request[REQ_PROGRAM_REQUEST_AUTOMATION_NUMBER], &stringPointer)) return(FALSE);
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 	}
@@ -1126,7 +1151,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 			// get GPIO level
 			if (!getValue(&inputString[stringPointer], &request[REQ_COMMAND_REQUEST_GPIO_LEVEL], &stringPointer)) return(FALSE);
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 
@@ -1142,7 +1167,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 			// get TIMER delay
 			if (!getValue(&inputString[stringPointer], &request[REQ_COMMAND_REQUEST_TIMER_DELAY], &stringPointer)) return(FALSE);
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 
@@ -1158,7 +1183,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 			// get LPO level
 			if (!getValue(&inputString[stringPointer], &request[REQ_COMMAND_REQUEST_LPO_LEVEL], &stringPointer)) return(FALSE);
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 
@@ -1176,7 +1201,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 			// set AUT status
 			request[REQ_COMMAND_REQUEST_AUT_STATUS]=AUTONValue;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 
@@ -1194,7 +1219,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 
 			// set AUT status
 			request[REQ_COMMAND_REQUEST_AUT_STATUS]=AUTOFFValue;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 
@@ -1271,7 +1296,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 				}
 			}					
 
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 
@@ -1281,7 +1306,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_SET_USER_MODE] = TRUE;
 			request[REQ_COMMAND_REQUEST_USER_MODE] = MANUAL0Value;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// MANUAL1
@@ -1290,7 +1315,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_SET_USER_MODE] = TRUE;
 			request[REQ_COMMAND_REQUEST_USER_MODE] = MANUAL1Value;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// MANUAL2
@@ -1299,7 +1324,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_SET_USER_MODE] = TRUE;
 			request[REQ_COMMAND_REQUEST_USER_MODE] = MANUAL2Value;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// MANUAL3
@@ -1308,7 +1333,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_SET_USER_MODE] = TRUE;
 			request[REQ_COMMAND_REQUEST_USER_MODE] = MANUAL3Value;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 
@@ -1318,7 +1343,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_SET_USER_MODE] = TRUE;
 			request[REQ_COMMAND_REQUEST_USER_MODE] = MANUALValue;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 
@@ -1328,7 +1353,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_SET_USER_MODE] = TRUE;
 			request[REQ_COMMAND_REQUEST_USER_MODE] = AUTOMATICValue;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// DCC
@@ -1344,7 +1369,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 			if (!getValue(&inputString[stringPointer], &request[REQ_COMMAND_REQUEST_DCC_COMMAND], &stringPointer))  {
 				return(FALSE);
 			}
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 
@@ -1353,7 +1378,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		sprintf(token,GSTAT);
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_GET_GPIO_STATUS] = TRUE;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// LSTAT
@@ -1361,7 +1386,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		sprintf(token,LSTAT);
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_GET_LPO_STATUS] = TRUE;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// TSTAT
@@ -1369,7 +1394,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		sprintf(token,TSTAT);
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_GET_TRACK_STATUS] = TRUE;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// BSTAT
@@ -1377,7 +1402,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		sprintf(token,BSTAT);
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_GET_BOARD_STATUS] = TRUE;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// AUTLIST
@@ -1385,7 +1410,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		sprintf(token,AUTLIST);
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_GET_AUTOMATION_LIST] = TRUE;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 		// DUMP
@@ -1393,7 +1418,7 @@ unsigned char parser(unsigned char* inputString, unsigned char* request) {
 		sprintf(token,DUMP);
 		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
 			request[REQ_COMMAND_REQUEST_GET_DUMP] = TRUE;
-			gl_parserErrorCode=0;
+			clearError();
 			return(TRUE);
 		}
 	}
@@ -1480,11 +1505,12 @@ unsigned char removeAutomation(unsigned char automationNumber) {
     unsigned char  automationDataCounter;
 
 	if (automationNumber>=gl_nexAvailableAutomation) {
+		sprintf(gl_errorInfo,"%d",automationNumber);
 		gl_parserErrorCode=BADAUTOMATIONNUMBER;
 		return(FALSE);
 	}
 	for(automationDataCounter=0;automationDataCounter<NEW_AUTOMATIONSIZE;automationDataCounter++) {
-		gl_automation[automationNumber][automationDataCounter]=gl_automation[gl_nexAvailableAutomation][automationDataCounter];
+		gl_mutexLowIsr=1;gl_automation[automationNumber][automationDataCounter]=gl_automation[gl_nexAvailableAutomation][automationDataCounter];gl_mutexLowIsr=0;
 	}
 	// update in EEPROM automation
 	return(setAutomationToEEPROM());
@@ -1501,9 +1527,12 @@ unsigned char saveAutomation(unsigned char automationNumber,unsigned char* data)
 	unsigned char  value;
 
 	if (automationNumber>=MAXAUTOMATION) {
+		sprintf(gl_errorInfo,"%d",automationNumber);
 		gl_parserErrorCode=AUTOMATIONSIZELIMIT;
 		return(FALSE);
 	}
+
+	gl_mutexLowIsr=1;
 
 	// copy new automation content in gl_automation
 	if(data[REQ_PROGRAM_REQUEST_GPIO_EVENT]==TRUE) {
@@ -1574,6 +1603,8 @@ unsigned char saveAutomation(unsigned char automationNumber,unsigned char* data)
 	gl_automation[automationNumber][NEW_AUTOMATION_IDENT+2]='\0';
 	if (automationNumber==gl_nexAvailableAutomation)gl_nexAvailableAutomation++;
 
+	gl_mutexLowIsr=0;
+
 	// update in EEPROM automation
 	return(setAutomationToEEPROM());
 }
@@ -1641,8 +1672,8 @@ void assignAutomation(char *request,unsigned char automationCounter) {
 
 /////////////////////////////////////////////////////////////////////////////
 void setSpeed(char speed,char step,unsigned char trackNumber) {
-	gl_setPoint[trackNumber]=((int)speed * (int)MAXINTERNALSPEED);
-	gl_setStep[trackNumber]=step;
+	gl_mutexLowIsr=1;gl_setPoint[trackNumber]=((int)speed * (int)MAXINTERNALSPEED);	gl_mutexLowIsr=0;
+		gl_mutexLowIsr=1;gl_setStep[trackNumber]=step;	gl_mutexLowIsr=0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1671,8 +1702,8 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 	 unsigned short adrLast;
 	 unsigned char value;
 	 unsigned char writeEEPROMCounter;
- 	 static unsigned char onTrack[MAXSIZETOKEN];
-	 static unsigned char offTrack[MAXSIZETOKEN];
+ 	 volatile static unsigned char onTrack[MAXSIZETOKEN];
+	 volatile static unsigned char offTrack[MAXSIZETOKEN];
 
 	 unsigned char length;
 	 unsigned char i;
@@ -1768,14 +1799,18 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
     switch (request[REQ_GLOBAL_COMMAND]) {
 
 		case STOPValue: 
-			gl_stopAll=TRUE;
+			gl_mutexLowIsr=1;gl_stopAll=TRUE;	gl_mutexLowIsr=0;
 			if (request[REQ_BOARD_NUMBER] == gl_boardNumber) sendRequestToCAN(request);
+			sprintf(gl_message,STOP_STRING);
+			TM1637_displayString(gl_message);
 			if (sendPrompt==TRUE) prompt(gl_message);
 			return(TRUE);
 
 		case RUNALLValue :
-			gl_stopAll=FALSE;
+			gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;
 			if (request[REQ_BOARD_NUMBER] == gl_boardNumber) sendRequestToCAN(request);
+			sprintf(gl_message,RUN_STRING);
+			TM1637_displayString(gl_message);
 			if (sendPrompt==TRUE) prompt(gl_message);
 			return(TRUE);
 
@@ -1786,16 +1821,21 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 
 		case RUNValue :
 			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
-			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) gl_stopAll=FALSE;
+			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber){
+				gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;
+				sprintf(gl_message,RUN_STRING);
+				TM1637_displayString(gl_message);
+			}
+
 			if (sendPrompt==TRUE) prompt(gl_message);
 		 	return(TRUE); 
 
 		case CALIBValue :
 			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
 			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) {
-				gl_stopAll=TRUE;
-			       	CalibMinMaxKnob();
-				gl_stopAll=FALSE;				
+				gl_mutexLowIsr=1;gl_stopAll=TRUE;gl_mutexLowIsr=0;
+			    CalibMinMaxKnob();
+				gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;			
 			}
 			if (sendPrompt==TRUE) {
 				prompt(gl_message);prompt(gl_message);
@@ -1804,7 +1844,14 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
  
 		case RESETValue :
 			if (request[REQ_BOARD_NUMBER] != gl_boardNumber && gl_master==TRUE) sendRequestToCAN(request);
-			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) ResetEEPROM();
+			else if (request[REQ_BOARD_NUMBER] == gl_boardNumber) {
+				sprintf(gl_message,RESET_STRING);
+				TM1637_displayString(gl_message);
+				gl_mutexLowIsr=1;gl_stopAll=TRUE;gl_mutexLowIsr=0;
+				ResetEEPROM();
+				initEnvironment();
+				gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;
+			}
 			if (sendPrompt==TRUE) prompt(gl_message);
 		 	return(TRUE); 
 
@@ -1843,6 +1890,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							return(TRUE);
 					}
 					else {
+						sprintf(gl_errorInfo,"0x%x",request[REQ_PROGRAM_REQUEST_BOARD_MODE]);
 						gl_parserErrorCode=MODE_MISSING;
 						return(FALSE);
 					}
@@ -1850,40 +1898,42 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 				if (request[REQ_PROGRAM_REQUEST_SET_GPIO] == TRUE) {		
 					if (request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR]==INValue || request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR]==OUTValue) {		
 						if (request[REQ_PROGRAM_REQUEST_SET_GPIO_NUMBER]>=0 && request[REQ_PROGRAM_REQUEST_SET_GPIO_NUMBER]<=3) {
-							gl_mutexLowIsr=1;
+
 							switch(request[REQ_PROGRAM_REQUEST_SET_GPIO_NUMBER]) {
 								case 0 :TRISDbits.RD1 = request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR];
 										adr=(unsigned short)GPIO0DIR_ADDRESS;
 										WriteEEPROM(adr,TRISDbits.RD1);
-										if(TRISDbits.RD1==0)gl_GPIOchar[0]=1;
+										if(TRISDbits.RD1==0){gl_mutexLowIsr=1;gl_GPIOchar[0]=1;gl_mutexLowIsr=0;}
 										break;
 								case 1 :TRISDbits.RD2 = request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR];
 										adr=(unsigned short)GPIO1DIR_ADDRESS;
 										WriteEEPROM(adr,TRISDbits.RD2);
-										if(TRISDbits.RD2==0)gl_GPIOchar[1]=1;
+										if(TRISDbits.RD2==0){gl_mutexLowIsr=1;gl_GPIOchar[1]=1;gl_mutexLowIsr=0;}
 										break;
 								case 2 :TRISDbits.RD3 = request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR];
 										adr=(unsigned short)GPIO2DIR_ADDRESS;
 										WriteEEPROM(adr,TRISDbits.RD3);
-										if(TRISDbits.RD3==0)gl_GPIOchar[2]=1;
+										if(TRISDbits.RD3==0){gl_mutexLowIsr=1;gl_GPIOchar[2]=1;gl_mutexLowIsr=0;}
 										break;
 								case 3 :TRISCbits.RC4 = request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR];
 										adr=(unsigned short)GPIO3DIR_ADDRESS;
 										WriteEEPROM(adr,TRISCbits.RC4);
-										if(TRISCbits.RC4==0)gl_GPIOchar[3]=1;
+										if(TRISCbits.RC4==0){gl_mutexLowIsr=1;gl_GPIOchar[3]=1;gl_mutexLowIsr=0;}
 										break;
 							}
 
-							gl_mutexLowIsr=0;
+
 							if (sendPrompt==TRUE) prompt(gl_message);
 							return(TRUE);
 						}
 						else {
+							sprintf(gl_errorInfo,"%d",request[REQ_PROGRAM_REQUEST_SET_GPIO_NUMBER]);
 							gl_parserErrorCode=BAD_GPIO_NUMBER;
 							return(FALSE);
 						}
 					}
 					else {
+						sprintf(gl_errorInfo,"%d",request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR]);
 						gl_parserErrorCode=BAD_GPIO_DIR;
 						return(FALSE);
 					}											
@@ -1897,7 +1947,8 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							notEqual=1;
 							break;
 						}
-						if (!notEqual) {								
+						if (!notEqual) {
+							if (length<MAXERRORINFO) sprintf(gl_errorInfo,"%s",&request[REQ_PROGRAM_REQUEST_IDENT]);								
 							gl_parserErrorCode=AUTOMATIONLREADYEXISTS;
 							return(FALSE);
 						}
@@ -1914,7 +1965,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 				}		
 				if (request[REQ_PROGRAM_REQUEST_DEL_AUTOMATION] == TRUE) {
 					 if(request[REQ_PROGRAM_REQUEST_AUTOMATION_NUMBER]<gl_nexAvailableAutomation) {
-						gl_nexAvailableAutomation--;
+						gl_mutexLowIsr=1;gl_nexAvailableAutomation--;gl_mutexLowIsr=0;
 						if (request[REQ_PROGRAM_REQUEST_AUTOMATION_NUMBER]==gl_nexAvailableAutomation) {
 							setAutomationToEEPROM();
 							if (sendPrompt==TRUE) prompt(gl_message);		
@@ -1930,7 +1981,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 						else {
 							// reset in EEPROM next automation value
 							adr=(unsigned short)NEXTTAUTOMATION_ADDRESS;
-							gl_nexAvailableAutomation=0;
+							gl_mutexLowIsr=1;gl_nexAvailableAutomation=0;gl_mutexLowIsr=0;
 							value=0;
 							WriteEEPROM(adr,value);
 							if (sendPrompt==TRUE) prompt(gl_message);	
@@ -1938,6 +1989,7 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 						}
 					}
 					else {
+						sprintf(gl_errorInfo,"%d",request[REQ_PROGRAM_REQUEST_AUTOMATION_NUMBER]);								
 						gl_parserErrorCode=BADAUTOMATIONNUMBER;
 						return(FALSE);
 					}
@@ -1947,22 +1999,24 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 				
 			case COMValue : 
 				if (request[REQ_COMMAND_REQUEST_SET_GPIO]==TRUE) {
-					if (request[REQ_COMMAND_REQUEST_GPIO_NUMBER]==0 && TRISDbits.RD1==1) gl_GPIOcounter[0]=0;
-					else if (request[REQ_COMMAND_REQUEST_GPIO_NUMBER]==1 && TRISDbits.RD2==1)gl_GPIOcounter[1]=0;
-					else if (request[REQ_COMMAND_REQUEST_GPIO_NUMBER]==2 && TRISDbits.RD3==1)gl_GPIOcounter[2]=0;
-					else if (request[REQ_COMMAND_REQUEST_GPIO_NUMBER]==3 && TRISCbits.RC4==1)gl_GPIOcounter[3]=0;
+					if (request[REQ_COMMAND_REQUEST_GPIO_NUMBER]==0 && TRISDbits.RD1==1) {gl_mutexLowIsr=1;gl_GPIOcounter[0]=0;gl_mutexLowIsr=0;}
+					else if (request[REQ_COMMAND_REQUEST_GPIO_NUMBER]==1 && TRISDbits.RD2==1){gl_mutexLowIsr=1;gl_GPIOcounter[1]=0;gl_mutexLowIsr=0;}
+					else if (request[REQ_COMMAND_REQUEST_GPIO_NUMBER]==2 && TRISDbits.RD3==1){gl_mutexLowIsr=1;gl_GPIOcounter[2]=0;gl_mutexLowIsr=0;}
+					else if (request[REQ_COMMAND_REQUEST_GPIO_NUMBER]==3 && TRISCbits.RC4==1){gl_mutexLowIsr=1;gl_GPIOcounter[3]=0;gl_mutexLowIsr=0;}
 					else if (request[REQ_COMMAND_REQUEST_GPIO_NUMBER]>=0 && request[REQ_COMMAND_REQUEST_GPIO_NUMBER]<=3) {
 							if (request[REQ_COMMAND_REQUEST_GPIO_LEVEL]==0 ||request[REQ_COMMAND_REQUEST_GPIO_LEVEL]==1 ) {
-								gl_mutexLowIsr=1;	gl_GPIOchar[request[REQ_COMMAND_REQUEST_GPIO_NUMBER]]=request[REQ_COMMAND_REQUEST_GPIO_LEVEL]; gl_mutexLowIsr=0;
+								gl_mutexLowIsr=1;gl_GPIOchar[request[REQ_COMMAND_REQUEST_GPIO_NUMBER]]=request[REQ_COMMAND_REQUEST_GPIO_LEVEL]; gl_mutexLowIsr=0;
 								if (sendPrompt==TRUE) prompt(gl_message);
 								return(TRUE);
 							}
 							else {
+								sprintf(gl_errorInfo,"GPIO %d => %d",request[REQ_COMMAND_REQUEST_GPIO_NUMBER],request[REQ_COMMAND_REQUEST_GPIO_LEVEL]);								
 								gl_parserErrorCode=BAD_GPIO_LEVEL;
 								return(FALSE);
 							}
 						}
 						else {
+							sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_GPIO_NUMBER]);								
 							gl_parserErrorCode=BAD_GPIO_NUMBER;
 							return(FALSE);
 						}				
@@ -1975,11 +2029,13 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 								return(TRUE);
 							}
 							else {
+								sprintf(gl_errorInfo,"TIMER %d => %d",request[REQ_COMMAND_REQUEST_TIMER_NUMBER],request[REQ_COMMAND_REQUEST_TIMER_DELAY]);								
 								gl_parserErrorCode=BAD_TIMER_VALUE;
 								return(FALSE);
 							}
 						}
 						else {
+							sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_TIMER_NUMBER]);								
 							gl_parserErrorCode=BAD_TIMER_NUMBER;
 							return(FALSE);
 						}				
@@ -1991,12 +2047,19 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							if (sendPrompt==TRUE) prompt(gl_message);
 							return(TRUE);
 						}
+						else if(request[REQ_COMMAND_REQUEST_LPO_LEVEL]==2) { // flashing mode
+							gl_mutexLowIsr=1;gl_OUTchar[request[REQ_COMMAND_REQUEST_LPO_NUMBER]]=request[REQ_COMMAND_REQUEST_LPO_LEVEL];gl_mutexLowIsr=0;
+							if (sendPrompt==TRUE) prompt(gl_message);
+							return(TRUE);
+						}
 						else {
+							sprintf(gl_errorInfo,"LPO %d => %d",request[REQ_COMMAND_REQUEST_LPO_NUMBER],request[REQ_COMMAND_REQUEST_LPO_LEVEL]);									
 							gl_parserErrorCode=BAD_LPO_LEVEL;
 							return(FALSE);
 						}
 					}
 					else {
+						sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_LPO_NUMBER]);								
 						gl_parserErrorCode=BAD_LPO_NUMBER;
 						return(FALSE);
 					}
@@ -2014,21 +2077,24 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 								}
 								if (!notEqual) {								
 									// update automation status
-									gl_automation[automationCounter][NEW_AUTOMATION_STATUS]=request[REQ_COMMAND_REQUEST_AUT_STATUS];
+									gl_mutexLowIsr=1;gl_automation[automationCounter][NEW_AUTOMATION_STATUS]=request[REQ_COMMAND_REQUEST_AUT_STATUS];gl_mutexLowIsr=0;
 									if (sendPrompt==TRUE) prompt(gl_message);
 									return(TRUE);
 								}
 							}
+							if (length<MAXERRORINFO) sprintf(gl_errorInfo,"%s",&request[REQ_COMMAND_REQUEST_AUT_IDENT]);								
 							gl_parserErrorCode=BAD_AUT_IDENT;
 							return(FALSE);
 						}
 						else {
+							sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_AUT_STATUS]);								
 							gl_parserErrorCode=BAD_AUT_STATUS;
 							return(FALSE);
 						}
 				}
 				else if (request[REQ_COMMAND_REQUEST_SET_TRACK] == TRUE) {
 						if (gl_boardMode==DCCValue) {
+							sprintf(gl_errorInfo,"Current mode DCC");								
 							gl_parserErrorCode=BAD_BOARD_MODE;
 							return(FALSE);
 						}
@@ -2037,7 +2103,6 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 							if (((request[REQ_COMMAND_REQUEST_TRACK_SPEED]>=0 && request[REQ_COMMAND_REQUEST_TRACK_SPEED]<=MAXSPEEDVALUE)|| request[REQ_COMMAND_REQUEST_TRACK_SPEED]==KNOB0Value || request[REQ_COMMAND_REQUEST_TRACK_SPEED]==KNOB1Value) &&
 							    (request[REQ_COMMAND_REQUEST_TRACK_DIR]==FORWValue || request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) &&
 								((request[REQ_COMMAND_REQUEST_TRACK_INERTIA]>=0 && request[REQ_COMMAND_REQUEST_TRACK_INERTIA]<=100)|| request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB0Value || request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB1Value)) {
-								gl_mutexLowIsr=1;
 
 								if (request[REQ_COMMAND_REQUEST_TRACK_SPEED]==KNOB0Value) speed=gl_knobValue0;
 								else if (request[REQ_COMMAND_REQUEST_TRACK_SPEED]==KNOB1Value) speed=gl_knobValue1;
@@ -2046,8 +2111,10 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 								if (request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB0Value) step=gl_knobValue0;
 								else if (request[REQ_COMMAND_REQUEST_TRACK_INERTIA]==KNOB1Value) step=gl_knobValue1;
 								else step=request[REQ_COMMAND_REQUEST_TRACK_INERTIA];
-								
+							
 								if (step<0)step=-step;
+								if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==FORWValue) TM1637_display(speed,step);
+								else TM1637_display(-speed,step);
 	
 								// Manage all groups of tracks
 								// 17 = 0
@@ -2070,43 +2137,54 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 									for(trackNumber=0;trackNumber<4;trackNumber++) {
 										if ((request[REQ_COMMAND_REQUEST_TRACK_NUMBER] & 0x0F & (1<<trackNumber))== (1<<trackNumber)) {
 											setSpeed(speed,step,trackNumber);
-											if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];
+											if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) {
+												gl_mutexLowIsr=1;gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];gl_mutexLowIsr=0;
+											}
 										}
 										else {
 											setSpeed(0,0,trackNumber);
-											if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];
+											if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue){
+												gl_mutexLowIsr=1;gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];gl_mutexLowIsr=0;
+											}
 										}
 									}
 								}
 								else if (request[REQ_COMMAND_REQUEST_TRACK_NUMBER]<=3) {
 										trackNumber=request[REQ_COMMAND_REQUEST_TRACK_NUMBER];
 										setSpeed(speed,step,trackNumber);
-										if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];
+										if (request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue) {
+											gl_mutexLowIsr=1;gl_setPoint[trackNumber]=-gl_setPoint[trackNumber];gl_mutexLowIsr=0;
+										}
 								}
-								else {								
+								else {	
+									sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_TRACK_NUMBER]);															
 									gl_parserErrorCode=BAD_TRACK_NUMBER;
 									return(FALSE);
 								}
-								gl_mutexLowIsr=0;
+								
 								if (sendPrompt==TRUE) prompt(gl_message);
 								return(TRUE);
 							}
 							else {
 								if (!(request[REQ_COMMAND_REQUEST_TRACK_SPEED]>=0 && request[REQ_COMMAND_REQUEST_TRACK_SPEED]<=MAXSPEEDVALUE)) {
+									sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_TRACK_SPEED]);															
 									gl_parserErrorCode=BAD_TRACK_SPEED;
 									return(FALSE);
 								}
 								if (!(request[REQ_COMMAND_REQUEST_TRACK_DIR]==FORWValue || request[REQ_COMMAND_REQUEST_TRACK_DIR]==BACKValue)) {
+									sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_TRACK_DIR]);															
 									gl_parserErrorCode=BAD_TRACK_DIR;
 									return(FALSE);
 								}
 								if (!(request[REQ_COMMAND_REQUEST_TRACK_INERTIA]>=0 && request[REQ_COMMAND_REQUEST_TRACK_INERTIA]<=100)) {
+									sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_TRACK_INERTIA]);															
 									gl_parserErrorCode=BAD_TRACK_INERTIA;
 									return(FALSE);
 								}
 							}	
 						}
-						else {								
+						else {
+							sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_TRACK_NUMBER]);															
 							gl_parserErrorCode=BAD_TRACK_NUMBER;
 							return(FALSE);
 						}
@@ -2120,37 +2198,36 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 						request[REQ_COMMAND_REQUEST_USER_MODE]==AUTOMATICValue ) {
 
 						// Reset all timer if AUTOMATIC mode is set
-						if (request[REQ_COMMAND_REQUEST_USER_MODE]==AUTOMATICValue) {
-							for(TIMERCounter=0;TIMERCounter<MAXTIMER;TIMERCounter++) {
-								gl_TIMERValue[TIMERCounter]=0;
-								gl_TIMERNotification[TIMERCounter]=FALSE;
-							}
+						for(TIMERCounter=0;TIMERCounter<MAXTIMER;TIMERCounter++) {
+							gl_mutexLowIsr=1;gl_TIMERValue[TIMERCounter]=0;gl_mutexLowIsr=0;
+							gl_mutexLowIsr=1;gl_TIMERNotification[TIMERCounter]=FALSE;gl_mutexLowIsr=0;
 						}
 
-						gl_userMode=request[REQ_COMMAND_REQUEST_USER_MODE];
+						gl_mutexLowIsr=1;gl_userMode=request[REQ_COMMAND_REQUEST_USER_MODE];gl_mutexLowIsr=0;
 
 						// Set all automation status
 						for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
-							if (request[REQ_COMMAND_REQUEST_USER_MODE]!=AUTOMATICValue) gl_automation[automationCounter][NEW_AUTOMATION_STATUS]=gl_automation[automationCounter][NEW_AUTOMATION_STATUS_MANUAL];
-							else gl_automation[automationCounter][NEW_AUTOMATION_STATUS]=AUTONValue;
+							if (request[REQ_COMMAND_REQUEST_USER_MODE]!=AUTOMATICValue){gl_mutexLowIsr=1;gl_automation[automationCounter][NEW_AUTOMATION_STATUS]=gl_automation[automationCounter][NEW_AUTOMATION_STATUS_MANUAL];gl_mutexLowIsr=0;}
+							else {
+								gl_mutexLowIsr=1;gl_automation[automationCounter][NEW_AUTOMATION_STATUS]=AUTONValue;gl_mutexLowIsr=0;
+							}
 						}
-
 						if (sendPrompt==TRUE) prompt(gl_message);
 						return(TRUE);
 					}
 					else {
+						sprintf(gl_errorInfo,"%d",request[REQ_COMMAND_REQUEST_USER_MODE]);															
 						gl_parserErrorCode=BAD_USER_MODE;
 						return(FALSE);
 					}
 				}				
 				else if (request[REQ_COMMAND_REQUEST_SET_DCC]== TRUE) {
 						if (gl_boardMode==ANAValue) {
+							sprintf(gl_errorInfo,"Current mode ANA");								
 							gl_parserErrorCode=BAD_BOARD_MODE;
 							return(FALSE);
 						}
-						gl_mutexLowIsr=1;
-						setDcc(request[REQ_COMMAND_REQUEST_DCC_ADDRESS],request[REQ_COMMAND_REQUEST_DCC_COMMAND]);
-						gl_mutexLowIsr=0;
+						gl_mutexLowIsr=1;setDcc(request[REQ_COMMAND_REQUEST_DCC_ADDRESS],request[REQ_COMMAND_REQUEST_DCC_COMMAND]);gl_mutexLowIsr=0;
 						if (sendPrompt==TRUE) prompt(gl_message);
 						return(TRUE);
 				}
@@ -2215,7 +2292,9 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 				}
 				else if (request[REQ_COMMAND_REQUEST_GET_LPO_STATUS] == TRUE) {
 					for(statusCounter=0;statusCounter<6;statusCounter++) {
-						if (gl_OUTchar[statusCounter]==0) sprintf(gl_message,"LPO %d 1",statusCounter);else sprintf(gl_message,"LPO %d 0",statusCounter);
+						if (gl_OUTchar[statusCounter]==0) sprintf(gl_message,"LPO %d 1",statusCounter);
+						if (gl_OUTchar[statusCounter]==1) sprintf(gl_message,"LPO %d 0",statusCounter);
+						if (gl_OUTchar[statusCounter]>=2) sprintf(gl_message,"LPO %d flashing",statusCounter);
 						if (sendPrompt==TRUE) prompt(gl_message);
 					}
 					sprintf(gl_message,"");
@@ -2226,8 +2305,18 @@ unsigned char manageRequest (unsigned char* request,unsigned char sendPrompt) {
 					for(statusCounter=0;statusCounter<4;statusCounter++) {
 						sprintf(onTrack,"ONTRACK");
 						sprintf(offTrack,"OFFTRACK");
-						if (gl_setPoint[statusCounter]>0) sprintf(gl_message,"TRACK %d FORW SPEED %d %s",statusCounter,gl_setPoint[statusCounter]/(MAXINTERNALSPEED),gl_OUTSTATchar[statusCounter]==0 ? offTrack : onTrack );
-						else sprintf(gl_message,"TRACK %d BACK SPEED %d %s",statusCounter,-gl_setPoint[statusCounter]/(MAXINTERNALSPEED),gl_OUTSTATchar[statusCounter]==0 ? offTrack : onTrack );
+						if (gl_setPoint[statusCounter]>0) sprintf(gl_message,"TRACK %d FORW SPEED %d %s (%d / %d)",
+							statusCounter,
+							gl_setPoint[statusCounter]/(MAXINTERNALSPEED),
+							gl_OUTSTATchar[statusCounter]==0 ? offTrack : onTrack,
+							gl_average[statusCounter],
+							gl_noVehicule[statusCounter]);
+						else sprintf(gl_message,"TRACK %d BACK SPEED %d %s (%d / %d)",
+							 statusCounter,
+							 -gl_setPoint[statusCounter]/(MAXINTERNALSPEED),
+							 gl_OUTSTATchar[statusCounter]==0 ? offTrack : onTrack,
+							gl_average[statusCounter],
+							gl_noVehicule[statusCounter]);
 						if (sendPrompt==TRUE) prompt(gl_message);
 					}
 					sprintf(gl_message,"");
@@ -2262,7 +2351,7 @@ void initUSART() {
 	}
 
     //RX and TX pin configuration
-	TRISC=0b10110000; //  RC4, RC5, RC7 (RX) in (RC6 TX RS232 out, could be updated as standard GPIO in initSignal())
+	TRISC=0b10110000; //  RC4, RC5, RC7 (RX) in (RC6 TX RS232 out, could be updated as standard GPIO in initEnvironment())
 
     // USART module configuration
     TXSTAbits.TXEN = 1; // Activate USART transmitter
@@ -2338,7 +2427,6 @@ void prompt(unsigned char* gl_message) {
 	if (gl_master==TRUE) printf("\n\rMaster (%d) > %s",gl_boardNumber,gl_message);
 	else if(strlen(gl_message)>0){
 		printf("Board %d : %s",gl_boardNumber,gl_message);
-		//TM1637_writeString(gl_message);
 		if (gl_master==TRUE)prompt("");
 	}
 	flushOut();	
@@ -2524,18 +2612,18 @@ void CAN_SendSync(void){
 /*****************************************************************************/
 unsigned char getInputRequestFromCAN(unsigned char* request) {
 	
-	volatile unsigned char	requestHeaderTrameDetected;
-	volatile unsigned char	printHeaderTrameDetected;	
-	volatile unsigned char	requestFooterTrameDetected;
-	volatile unsigned char	printFooterTrameDetected;
-	volatile char			requestTrameEnd;
-	volatile char			printTrameEnd;
+	unsigned char	requestHeaderTrameDetected;
+	unsigned char	printHeaderTrameDetected;	
+	unsigned char	requestFooterTrameDetected;
+	unsigned char	printFooterTrameDetected;
+	char			requestTrameEnd;
+	char			printTrameEnd;
 
-	volatile unsigned char	dataInCounter;
-	volatile unsigned char	dataStructureCounter;
+	unsigned char	dataInCounter;
+	unsigned char	dataStructureCounter;
 
-	volatile unsigned char 	bufferNumber;
-	volatile unsigned char	data;
+	unsigned char 	bufferNumber;
+	unsigned char	data;
 
 	sprintf(gl_message,"");
 	for(bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
@@ -2553,10 +2641,6 @@ unsigned char getInputRequestFromCAN(unsigned char* request) {
 	
 				if (data==TRAMEPRINTHEADER) printHeaderTrameDetected++;		else printHeaderTrameDetected=0;				
 				if (data==TRAMEPRINTFOOTER) printFooterTrameDetected++;		else printFooterTrameDetected=0;
-
-				//sprintf(gl_message,"%d %x",gl_inputCANReadBufferPointer[bufferNumber],data);
-				//TM1637_displayString(gl_message);
-				//delayMainLoop(1);
 	
 				// REQUEST HEADER
 				if (requestHeaderTrameDetected==8) {
@@ -2758,6 +2842,8 @@ void TM1637_write(short number1,short number2){
 /////////////////////////////////////////////////////////////////////////////
 void TM1637_display(short number1,short number2){  
 
+	TM1637_setBrightness(4);
+
     twoWire_start();
     twoWire_write(0x40);
     twoWire_ack();
@@ -2817,6 +2903,8 @@ void TM1637_displayString(unsigned char *string) {
     unsigned char len = strlen(string);
     unsigned char start;
 
+	TM1637_setBrightness(4);
+
     if (len <= 6) {
         twoWire_start();
         twoWire_write(0x40);
@@ -2854,42 +2942,44 @@ void TM1637_displayString(unsigned char *string) {
 /////////////////////////////////////////////////////////////////////////////
 void TM1637_setBrightness(char level){  
 
-	gl_mutexLowIsr=1;
     twoWire_start();
     twoWire_write(0x87 + level);
     twoWire_ack();
     twoWire_stop();
-	gl_mutexLowIsr=0;
 }
+
+
 //////////////////////////////////////////////////////////////////////////////
 // function SetPort
 //////////////////////////////////////////////////////////////////////////////
 void setPort(){
 
-    unsigned char OUTCounter;
+
 	unsigned char myPortA; // used to better synchronised output updates
 	unsigned char myPortB; // used to better synchronised output updates
 	unsigned char myPortC; // used to better synchronised output updates
 	unsigned char myPortD; // used to better synchronised output updates
-
 
 	if (gl_stopAll==TRUE) {
 		gl_S1T0char=0; gl_S2T0char=0;
 		gl_S1T1char=0; gl_S2T1char=0;
 		gl_S1T2char=0; gl_S2T2char=0;
 		gl_S1T3char=0; gl_S2T3char=0;	
-		for(OUTCounter=0;OUTCounter<6;OUTCounter++) gl_OUTchar[OUTCounter]=1;
+		LATA=0xFF;
+  	 	LATB=0xFF;
+  	 	LATC=0xFF;
+    	LATD=0xFF;
 	}
-
-    myPortA=(gl_S1T0char<<4) + (gl_S1T1char<<6) + (gl_S2T0char<<7);
-    myPortB=(gl_OUTchar[2]) + (gl_OUTchar[3]<<1) + (gl_OUTchar[4]<<4) + (gl_OUTchar[5]<<5);
-	myPortC=(gl_S2T1char) + (gl_S1T2char<<1) + (gl_S2T2char<<2) + (gl_S1T3char<<3) +(TRISCbits.RC4==0 ? gl_GPIOchar[3] <<4 : 0);
-	myPortD=(gl_S2T3char) + (TRISDbits.RD1==0 ? gl_GPIOchar[0] <<1 :0) + (TRISDbits.RD2==0 ? gl_GPIOchar[1] <<2:0) +(TRISDbits.RD3==0 ? gl_GPIOchar[2] <<3:0) + (gl_OUTchar[0]<<6) +  (gl_OUTchar[1]<<7);
-
-	LATA=myPortA;
-    LATB=myPortB;
-    LATC=myPortC;
-    LATD=myPortD;
+	else {
+	    myPortA=(gl_S1T0char<<4) + (gl_S1T1char<<6) + (gl_S2T0char<<7);
+	    myPortB=(gl_OUTchar[2]&1) + ((gl_OUTchar[3]&1)<<1) + ((gl_OUTchar[4]&1)<<4) + ((gl_OUTchar[5]&1)<<5);
+		myPortC=(gl_S2T1char) + (gl_S1T2char<<1) + (gl_S2T2char<<2) + (gl_S1T3char<<3) +(TRISCbits.RC4==0 ? gl_GPIOchar[3] <<4 : 0);
+		myPortD=(gl_S2T3char) + (TRISDbits.RD1==0 ? gl_GPIOchar[0] <<1 :0) + (TRISDbits.RD2==0 ? gl_GPIOchar[1] <<2:0) +(TRISDbits.RD3==0 ? gl_GPIOchar[2] <<3:0) + ((gl_OUTchar[0]&1)<<6) +  ((gl_OUTchar[1]&1)<<7);
+		LATA=myPortA;
+	    LATB=myPortB;
+	    LATC=myPortC;
+	    LATD=myPortD;
+	}
 
 }
 
@@ -2995,6 +3085,10 @@ unsigned char 	bitNumber;
 unsigned char 	bitValue;
 short 			ADC;
 
+	if (gl_goFlashingCounter==1)gl_flashingCounter++;
+	if (((gl_flashingCounter & 0xFFF) == 0) || ((gl_flashingCounter & 0xFFF) == 0x7FF))gl_goFlashingCounter=0;
+
+	// KNOBS MANAGEMENT
 	gl_getKnobValue++;
 	if (gl_getKnobValue==0) {
 
@@ -3035,12 +3129,16 @@ short 			ADC;
 			gl_knobValue0=(31*((unsigned long)(gl_adcKnobValue0-gl_minAdcKnobValue0))/(unsigned long)(gl_deltaKnob0))-15;
 			gl_knobValue1=(101*(unsigned long)(gl_adcKnobValue1-gl_minAdcKnobValue1))/(unsigned long)(gl_deltaKnob1);
 			if (gl_knobValue0>15)gl_knobValue0=15;
+			else if (gl_knobValue0==-1 || gl_knobValue0==1)gl_knobValue0=0;
 			if (gl_knobValue1>100)gl_knobValue1=100;
+			
 
 			gl_adcKnobValue0=0;
 			gl_adcKnobValue1=0;
 		}
 	}
+
+
 	// GPIO IN Detection
 	if(TRISDbits.RD1==1 && PORTDbits.RD1!=gl_GPIOchar[0]){
 		gl_GPIOstabilized[0]++;
@@ -3172,13 +3270,12 @@ short 			ADC;
 		        	case 3:gl_S1T3char=0; gl_S2T3char=0;break;
 		    	}
 			}
-
 			setPort();
 		}
 
 		//////////// MODE DIGITAL ////////////////
 
-		if(gl_boardMode==DCCValue && gl_dcc_ready==0) {		
+		else if(gl_boardMode==DCCValue && gl_dcc_ready==0) {		
 
 			for (bitStateCounter=0;bitStateCounter<FRAME_SIZE;bitStateCounter++) {
 
@@ -3205,12 +3302,13 @@ short 			ADC;
 			gl_S1T2char=0; gl_S2T2char=1;	
 			gl_S1T3char=0; gl_S2T3char=1;
        		setPort();
+
 			for (delay=0;delay<selectBitDelay;delay++);	
 			for (bitStateCounter=0;bitStateCounter<FRAME_SIZE;bitStateCounter++)gl_dcc[bitStateCounter]=1;
 		}
 		gl_dcc_ready--;
 		if (gl_dcc_ready<0) gl_dcc_ready=INITWAITDCCCOUNTER;
-		setPort();
+
 
 		// TRACK DETECTION 
 
@@ -3221,7 +3319,7 @@ short 			ADC;
 	   		case 3 : ADCON0=CURT3;break;
 		}
 		// NEED TO GET LOW VOLTAGE VALUE WHEN TRACK IS OFF FOR CALIBRATION AT POWER ON
- 		if (gl_calibration==TRUE) {
+ 		if (gl_trackCalibration==TRUE) {
 			ADCON0bits.GO = 1;                            // ADCON0.GODONE = 1 
 			while(ADCON0bits.GO == 1);                    // wait till GODONE bit is zero
 			ADC = 0;
@@ -3280,17 +3378,16 @@ void low_isr(void){
 //////////////////////////////////////////////////////////////////////////////
 
 /*****************************************************************************/
-/* initSignal */
+/* initEnvironment */
 /*****************************************************************************/
-void initSignal() {
+void initEnvironment() {
 
     unsigned char trackNumber;
 	unsigned char OUTCounter;	
 	unsigned char GPIOCounter;
 	unsigned char TIMERCounter;
 
-	gl_mutexLowIsr=1; // should not be necessary because interrupt not yet enabled
-
+	// GPIO //////////////////////////
     ADCON1 	= 0x9; // AN0 to AN5 
     ADCON2 	= 0x9D; 
 	TRISA 	= 0b00101111; // PORTA AN0 to AN4 in 
@@ -3310,71 +3407,86 @@ void initSignal() {
 	ECCP1CON = 0; // Disable ENHANCED CAPTURE/COMPARE/PWM (ECCP1) MODULE
 	LATD	= 0;
 
-
-    for(trackNumber=0;trackNumber<4;trackNumber++) {
-      gl_average[trackNumber]=0;
-	  gl_noVehicule[trackNumber]=0xFF;
-      gl_speed[trackNumber]=0;
-      gl_direction[trackNumber]=0;
-      gl_setPoint[trackNumber]=0;
-      gl_setStep[trackNumber]=0;
-      gl_setStepCounter[trackNumber]=0;
-      gl_curSpeed[trackNumber]=0;
-	  gl_OUTSTATchar[trackNumber]=0;
-	  gl_trackNotification[trackNumber]=FALSE;
-    }
-
-	for(OUTCounter=0;OUTCounter<6;OUTCounter++) gl_OUTchar[OUTCounter]=1;
-	
 	for(GPIOCounter=0;GPIOCounter<4;GPIOCounter++) {
+		gl_mutexLowIsr=1; 
 		gl_GPIOchar[GPIOCounter]=0;
 		gl_GPIOcounter[GPIOCounter]=0;
 		gl_GPIOstabilized[GPIOCounter]=0;
-		gl_GPIONotification[GPIOCounter]=FALSE;
+		gl_GPIONotification[GPIOCounter]=TRUE; // To read current value on TCO
+		gl_mutexLowIsr=0; 
 	}
+	gl_mutexLowIsr=1; gl_goFlashingCounter=1;gl_mutexLowIsr=0; 
+
+	// Internal setting initialisation //////////////////////////
+    for(trackNumber=0;trackNumber<4;trackNumber++) {
+		gl_mutexLowIsr=1;
+		gl_average[trackNumber]=0;
+		gl_noVehicule[trackNumber]=0;
+		gl_speed[trackNumber]=0;
+		gl_direction[trackNumber]=0;
+		gl_setPoint[trackNumber]=0;
+		gl_setStep[trackNumber]=0;
+		gl_setStepCounter[trackNumber]=0;
+		gl_curSpeed[trackNumber]=0;
+		gl_OUTSTATchar[trackNumber]=0;
+		gl_trackNotification[trackNumber]=FALSE;
+		gl_mutexLowIsr=0;
+    }
+
+	// TRACK //////////////////////////
+	for(OUTCounter=0;OUTCounter<6;OUTCounter++) {gl_mutexLowIsr=1;gl_OUTchar[OUTCounter]=1;gl_mutexLowIsr=0;}
+	gl_mutexLowIsr=1;
+	gl_trackNumber=0;
+	gl_speedCounter=0;
+	gl_syncRequested=0;
+	gl_trackCalibration=FALSE;
+	gl_mutexLowIsr=0;
+
+	// TIMER //////////////////////////
 	for(TIMERCounter=0;TIMERCounter<MAXTIMER;TIMERCounter++) {
+		gl_mutexLowIsr=1;
 		gl_TIMERValue[TIMERCounter]=0;
 		gl_TIMERNotification[TIMERCounter]=FALSE;
+		gl_mutexLowIsr=0;
 	}
+	gl_mutexLowIsr=1;
 	gl_timerNumber=0;
 	gl_timer=0;
-	gl_speedCounter=0;	
+	gl_mutexLowIsr=0;
 
 	// DCC TEMPO BETWEEN TWO TRAMES
     gl_dcc_ready=INITWAITDCCCOUNTER;
 
-	// Start
-	gl_calibration=FALSE;
-	gl_stopAll=FALSE;
-	gl_trackNumber=0;
-	
-	// Get board number
-	gl_boardNumber=IN4 + 2*IN3 + 4*IN0 + 8*IN1 + 16*IN2;
-
-	// Detect master board
-	if (gl_boardNumber==31) gl_master=TRUE;
-	else gl_master=FALSE;
-
-	// Init structure 
-	gl_outputCANbufferCounter=0;
+	// Command and Program input request
 	initRequest(&gl_request);
 
 	// Knob
+	gl_mutexLowIsr=1;
 	gl_adcKnobValue0=0;
 	gl_adcKnobValue1=0;
 	gl_getKnobValue=0;
 	gl_calibKnob=0;
-
-	// Update form EEPROM
+	gl_knobValue0=0;
+	gl_knobValue1=0;
+	gl_numberKnobData=0;
 	gl_mutexLowIsr=0;
 
+
+	// Default user mode is automatic 
+	gl_mutexLowIsr=1;gl_userMode=AUTOMATICValue;gl_mutexLowIsr=0;
+
+	// Update form EEPROM
 	ReadEEPROMConfig();
 
+	gl_mutexLowIsr=1;
 	if(TRISDbits.RD1==0)gl_GPIOchar[0]=1; else gl_GPIOchar[0]=0xFF; // out default value is 1 
 	if(TRISDbits.RD2==0)gl_GPIOchar[1]=1; else gl_GPIOchar[1]=0xFF; // out default value is 1 
 	if(TRISDbits.RD3==0)gl_GPIOchar[2]=1; else gl_GPIOchar[2]=0xFF; // out default value is 1 
 	if(TRISCbits.RC4==0)gl_GPIOchar[3]=1; else gl_GPIOchar[3]=0xFF; // out default value is 1 	
+	gl_mutexLowIsr=0;
 
+	// Error clean
+	clearError();
 }
 
 /*****************************************************************************/
@@ -3407,56 +3519,80 @@ void PIC18FMainSettings (){
 void init() {
  
 	unsigned char bufferNumber;
+	unsigned char automationCounter;
+
+	// Watchdog off
+    WDTCONbits.SWDTEN = 0;  
+
+	// Stop board
+	gl_mutexLowIsr=1;gl_stopAll=TRUE;gl_mutexLowIsr=0;
 
     // Main settings + Start timer
     PIC18FMainSettings(); 
 
     // RS232
 	initUSART(); // Serial USART init on master board only
+	gl_inputCounter=0; // for UART
+	sprintf(gl_inputUartString,"");
 
 	// Use user putc function
 	stdout = _H_USER;
     
     // ECAN
     TRISBbits.TRISB3 = 1; // CANRX input setting
-
+	gl_outputCANbufferCounter=0;
 	for(bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
 		gl_inputCANWriteBufferPointer[bufferNumber]=0;
 		gl_inputCANReadBufferPointer[bufferNumber]=0;
 		gl_inputCANmode[bufferNumber]=CAN_FREE;
 	}
-
     ECANInitialize(); // init ECAN
-	gl_syncRequested=0;
 	PIE3bits.RXB0IE=1; // enable interrupt for CAN
 	PIE3bits.RXB1IE=1; // enable interrupt for CAN
 
-    // Signal
-     initSignal();
-
-	// Default user mode is automatic 
-	gl_userMode=AUTOMATICValue;
-
+	// Display
     TM1637_init();
    	TM1637_setBrightness(0);
+
+    // Environment
+     initEnvironment();
+
+	// Get board number
+	gl_boardNumber=IN4 + 2*IN3 + 4*IN0 + 8*IN1 + 16*IN2;
+
+	// Detect master board
+	if (gl_boardNumber==31) gl_master=TRUE;
+	else gl_master=FALSE;
+
+	// Start board
+	gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;
+
+	// CALIBRATION FOR TRACK DETECTION
+    trackCalibration();
+
 }
 
 /*****************************************************************************/
-/* calibration */
+/* trackCalibration */
 /*****************************************************************************/
-void calibration() {
+void trackCalibration() {
 
-	 unsigned short trackNumberCalibration;
-	 unsigned char 	trackNumber;
+    unsigned short trackNumberCalibration;
+	unsigned char 	trackNumber;
 
-	gl_mutexLowIsr=1;	gl_calibration=TRUE; gl_mutexLowIsr = 0;
-	for(trackNumberCalibration=0;trackNumberCalibration<TIMECALIBRATION;trackNumberCalibration++);
+	if (RCONbits.TO == 1) { // Only print this information if not watchdog occured before
+		sprintf(gl_message,TRACK_CALIBRATION_STRING);
+		TM1637_displayString(gl_message);
+	}
+
+	gl_mutexLowIsr=1;	gl_trackCalibration=TRUE; gl_mutexLowIsr = 0;
+	delayMainLoop(TRACKCALIBRATIONDELAY);
 
     for(trackNumber=0;trackNumber<4;trackNumber++) {
 	  gl_noVehicule[trackNumber]=0xFF;
 	}
-	for(trackNumberCalibration=0;trackNumberCalibration<TIMECALIBRATION;trackNumberCalibration++);	
-	gl_mutexLowIsr=1;	gl_calibration=FALSE;  gl_mutexLowIsr = 0;
+	delayMainLoop(TRACKCALIBRATIONDELAY);
+	gl_mutexLowIsr=1;	gl_trackCalibration=FALSE;  gl_mutexLowIsr = 0;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -3537,27 +3673,32 @@ void getEventFromKNOB() {
 	unsigned char trackNumber;
 
 	// Manage knob value
-	if (gl_lastKnobValue0!=gl_knobValue0||gl_lastKnobValue1!=gl_knobValue1) {
-		gl_lastKnobValue0=gl_knobValue0;
-		gl_lastKnobValue1=gl_knobValue1;
-		TM1637_setBrightness(4);
-		TM1637_display(gl_lastKnobValue0,gl_lastKnobValue1);
-		if (gl_userMode==MANUALValue) {
-			for(trackNumber=0;trackNumber<4;trackNumber++) {
-				setSpeed(gl_knobValue0,gl_knobValue1,trackNumber);
+	if (gl_userMode!=AUTOMATICValue) {
+		if (gl_lastKnobValue0!=gl_knobValue0||gl_lastKnobValue1!=gl_knobValue1) {
+			gl_lastKnobValue0=gl_knobValue0;
+			gl_lastKnobValue1=gl_knobValue1;
+
+			TM1637_display(gl_lastKnobValue0,gl_lastKnobValue1);
+
+			// MANUAL
+			if (gl_userMode==MANUALValue) {
+				for(trackNumber=0;trackNumber<4;trackNumber++) {
+					setSpeed(gl_knobValue0,gl_knobValue1,trackNumber);
+				}
 			}
-		}
-		else if (gl_userMode==MANUAL0Value) {
-			setSpeed(gl_knobValue0,gl_knobValue1,0);
-		}
-		else if (gl_userMode==MANUAL1Value) {
-			setSpeed(gl_knobValue0,gl_knobValue1,1);
-		}
-		else if (gl_userMode==MANUAL2Value) {
-			setSpeed(gl_knobValue0,gl_knobValue1,2);
-		}
-		else if (gl_userMode==MANUAL3Value) {
-			setSpeed(gl_knobValue0,gl_knobValue1,3);
+			// MANUAL SPECIFIC
+			else if (gl_userMode==MANUAL0Value) {
+				setSpeed(gl_knobValue0,gl_knobValue1,0);
+			}
+			else if (gl_userMode==MANUAL1Value) {
+				setSpeed(gl_knobValue0,gl_knobValue1,1);
+			}
+			else if (gl_userMode==MANUAL2Value) {
+				setSpeed(gl_knobValue0,gl_knobValue1,2);
+			}
+			else if (gl_userMode==MANUAL3Value) {
+				setSpeed(gl_knobValue0,gl_knobValue1,3);
+			}
 		}
 	}
 }
@@ -3567,29 +3708,28 @@ void getEventFromKNOB() {
 void main()
 {
 
-	gl_inputCounter=0; // for UART
-	sprintf(gl_inputUartString,"");
-	gl_parserErrorCode=0;
-	TM1637_setBrightness(0);
+    unsigned char OUTCounter;
 
 	// Full init of PIC18F
     init();
 
-	// CALIBRATION FOR TRACK DETECTION
-    calibration();
-
-	// Wait 1 sec
-	delayMainLoop(2);
-
 	// BOARD STATUS
 	boardStatus();
 
-	// START MESSAGE ON DISPLAY
-	TM1637_setBrightness(4);
-	sprintf(gl_message,"START");
+    // Warning watchdog
+    if (RCONbits.TO == 0) {
+		sprintf(gl_message,WATCHDOG_STRING);
+		TM1637_displayString(gl_message);
+		delayMainLoop(5);
+		gl_mutexLowIsr=1;gl_OUTchar[3]=2;gl_mutexLowIsr=0; // Led mode manual flashing for warning
+	}
+	RCONbits.TO = 1; // Remet le flag à 1
+
+	// MESSAGE ON DISPLAY
+	sprintf(gl_message,START_STRING);
 	TM1637_displayString(gl_message);
-	delayMainLoop(5); // 2.5 s
-	TM1637_display(gl_knobValue0,gl_knobValue1);
+
+	WDTCONbits.SWDTEN = 1; //start watchdog
 
 	// START MAIN LOOP
     while (1){
@@ -3597,9 +3737,29 @@ void main()
 		// In this loop we wait to get something to manage
 		while(1) {	
 
-			// Board synchronisation
+			// Watchdog 
+			ClrWdt();
+		
+			if ((gl_flashingCounter & 0xFFF) == 0) {
+				for(OUTCounter=0;OUTCounter<6;OUTCounter++) {
+					if (gl_OUTchar[OUTCounter]==3) {
+						gl_mutexLowIsr=1;gl_OUTchar[OUTCounter]=2;gl_mutexLowIsr=0;
+					}
+				}
+				gl_goFlashingCounter=1;
+			}
+			else if ((gl_flashingCounter & 0xFFF) == 0x7FF) {
+				for(OUTCounter=0;OUTCounter<6;OUTCounter++) {
+					if (gl_OUTchar[OUTCounter]==2) {
+						gl_mutexLowIsr=1;gl_OUTchar[OUTCounter]=3;gl_mutexLowIsr=0;
+					}
+				}
+				gl_goFlashingCounter=1;
+			}
+
+			// Board synchronisation information
 			if (gl_syncRequested) {
-				sprintf(gl_message," SYNC ");
+				sprintf(gl_message,SYNC_STRING);
 				TM1637_displayString(gl_message);
 				gl_syncRequested=0;
 			}
