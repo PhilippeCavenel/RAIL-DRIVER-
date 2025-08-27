@@ -54,6 +54,8 @@ rom char WATCHDOG_STRING[]				= "ERROR\0";
 rom char ONTRACK_STRING[]				= "ONTRACK\0";
 rom char OFFTRACK_STRING[]				= "OFFTRACK\0";
 rom char BOARD_PROMPT_STRING[]			= "\n\rBoard \0";
+rom char SPEED_STRING[]					= "SP \0";
+rom char INERTIA_STRING[]				= "IN \0";
 
 // PROTOCOL
 #define MAXSTRING						160
