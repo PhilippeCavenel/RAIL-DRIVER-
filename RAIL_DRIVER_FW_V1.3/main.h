@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <errno.h>
+#include <string.h>
 
 #include "ECANPoll.h"
 
@@ -35,31 +36,33 @@
 #define TRUE							1
 #define FALSE							0
                          
-rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.38";
-rom char VERSION_STRING[] 				= "VERSION 21-08-2025";
-rom char BOARD_NUMBER_STRING[] 			= "BOARD ";
-rom char MODE_STRING[] 					= "MODE ";
-rom char MEMORY_STRING[] 				= "MEMORY ";
-rom char AUTOMATION_STRING[] 			= "AUTOMATION MODE ";
-rom char AUTOMATION_NUMBER_STRING[] 	= "NUMBER OF AUTOMATION ";
+rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39\0";
+rom char VERSION_STRING[] 				= "VERSION 26-08-2025\0";
+rom char BOARD_NUMBER_STRING[] 			= "BOARD \0";
+rom char MODE_STRING[] 					= "MODE \0";
+rom char MEMORY_STRING[] 				= "MEMORY \0";
+rom char AUTOMATION_STRING[] 			= "AUTOMATION MODE \0";
+rom char AUTOMATION_NUMBER_STRING[] 	= "NUMBER OF AUTOMATION \0";
 
-rom char START_STRING[] 				= "START";
-rom char RESET_STRING[] 				= "RESET";
-rom char STOP_STRING[] 					= " STOP ";
-rom char RUN_STRING[] 					= " RUN ";
-rom char SYNC_STRING[] 					= " SYNC ";
-rom char DONE_STRING[] 					= " DONE ";
-rom char WATCHDOG_STRING[]				= "ERROR";
+rom char START_STRING[] 				= "START\0";
+rom char RESET_STRING[] 				= "RESET\0";
+rom char STOP_STRING[] 					= " STOP \0";
+rom char RUN_STRING[] 					= " RUN \0";
+rom char SYNC_STRING[] 					= " SYNC \0";
+rom char DONE_STRING[] 					= " DONE \0";
+rom char WATCHDOG_STRING[]				= "ERROR\0";
+rom char ONTRACK_STRING[]				= "ONTRACK\0";
+rom char OFFTRACK_STRING[]				= "OFFTRACK\0";
+rom char BOARD_PROMPT_STRING[]			= "\n\rBoard \0";
 
 // PROTOCOL
-#define MAXINPUTSTRING					160
-#define MAXOUTPUTSTRING					160
+#define MAXSTRING						160
 #define MAXSIZETOKEN					10
 #define MAXERRORINFO					60
 #define MAXSIZEIDENT					3
 #define MAXTRAMESIZE					80 // Should be multiple of 8
 #define MAXTRAMECAN						MAXTRAMESIZE-24 
-#define MAXMESSAGESIZE					MAXTRAMECAN-2 // We need to add last char and end of string
+#define MAXMESSAGESIZE					MAXTRAMECAN-2 // We need to add lastchar and end of string
 
 #define TRAMESYNCTRACE					0xAA
 #define TRAMEPRINTHEADER				0xCC
@@ -174,7 +177,7 @@ rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
 #pragma config FCMEN 	= 				OFF
 #pragma config IESO 	= 				OFF
 #pragma config PWRT 	= 				ON
-#pragma config BOREN 	= 				OFF
+#pragma config BOREN 	= 				BOHW
 #pragma config BORV 	= 				3
 #pragma config WDT 		= 				OFF  
 #pragma config WDTPS 	= 				128     // ~2.3 s
@@ -592,260 +595,261 @@ const char digits[] = {
 };
 
 
-volatile unsigned char  			gl_S1T0char = 0;
-volatile unsigned char  			gl_S2T0char = 0;
+volatile char  	gl_S1T0char = 0;
+volatile char  	gl_S2T0char = 0;
 
-volatile unsigned char  			gl_S1T1char = 0;
-volatile unsigned char  			gl_S2T1char = 0;
+volatile char  	gl_S1T1char = 0;
+volatile char  	gl_S2T1char = 0;
 
-volatile unsigned char  			gl_S2T2char = 0;
-volatile unsigned char  			gl_S1T2char = 0;
+volatile char  	gl_S2T2char = 0;
+volatile char  	gl_S1T2char = 0;
 
-volatile unsigned char  			gl_S1T3char = 0;
-volatile unsigned char  			gl_S2T3char = 0;
+volatile char  	gl_S1T3char = 0;
+volatile char  	gl_S2T3char = 0;
 
 #pragma udata GLOBAL_DATA
-volatile unsigned char  			gl_OUTchar[6];
+volatile char  	gl_OUTchar[6];
 #pragma udata
 
 // BOARD NUMBER FROM SWITCH SETTING
-volatile unsigned char				gl_boardNumber;
+volatile char	gl_boardNumber;
 
 // MASTER 
-volatile unsigned char				gl_master;
+volatile char	gl_master;
 
 // SPEED MANAGEMENT IN ANALOG MODE
-volatile unsigned char				gl_speedCounter;
+volatile char	gl_speedCounter;
  
 // SPEED CIRCUIT 
 
 #pragma udata GLOBAL_DATA
-volatile short						gl_setPoint[4];	  			// SPEED AND DIRECTION REQUESTED							
-volatile short 						gl_setStep[4];	  			// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
-volatile short 						gl_setStepCounter[4];	  	// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
-volatile short 						gl_curSpeed[4];	  			// CUR SPEED AND DIRECTION
+volatile short		gl_setPoint[4];	  			// SPEED AND DIRECTION REQUESTED							
+volatile short 		gl_setStep[4];	  			// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
+volatile short 		gl_setStepCounter[4];	  	// INERTIA TO CHANGE SPEED AND DIRECTION REQUESTED
+volatile short 		gl_curSpeed[4];	  			// CUR SPEED AND DIRECTION
 
 // low level value
-volatile unsigned char 				gl_speed[4];  
-volatile unsigned char 				gl_direction[4];  // DIRECTION CIRCUIT 
+volatile char 		gl_speed[4];  
+volatile char 		gl_direction[4];  // DIRECTION CIRCUIT 
 #pragma udata
 
 // SIGNAL MANAGEMENT IN DIGITAL MODE
-volatile unsigned char 				gl_signalState;
+volatile char 		gl_signalState;
 
 #pragma udata GLOBAL_DATA
-volatile unsigned char 				gl_dcc[FRAME_SIZE]; 
+volatile char 		gl_dcc[FRAME_SIZE]; 
 #pragma udata
 
-volatile char 						gl_dcc_ready;
+volatile char 		gl_dcc_ready;
 
 // FLASHING LED
-volatile unsigned int				gl_flashingCounter;
-volatile unsigned char				gl_goFlashingCounter;
+volatile int		gl_flashingCounter;
+volatile char		gl_goFlashingCounter;
 
 // MODE
-volatile unsigned char 				gl_boardMode;	// ANA or DCC	
+volatile char 		gl_boardMode;	// ANA or DCC	
 
 // MUTEX
-volatile unsigned char 				gl_mutexLowIsr;
+volatile char 		gl_mutexLowIsr;
 
 // USART
 
 #pragma udata GLOBAL_DATA
-volatile static unsigned char 		gl_receivedUSARTData[USARTBUFFERSIZE];
+volatile static char 	gl_receivedUSARTData[USARTBUFFERSIZE];
 #pragma udata 
-volatile unsigned char				gl_waitCanPrint;
+volatile char		gl_waitCanPrint;
 
 // CAN
 #pragma udata GLOBAL_DATA
-volatile unsigned char 				gl_outputCANbuffer[MAXTRAMESIZE];
-volatile unsigned char				gl_outputCANbufferCounter;
+volatile char 		gl_outputCANbuffer[MAXTRAMESIZE];
+volatile char		gl_outputCANbufferCounter;
 
-volatile unsigned char 				gl_inputCANbuffer[MAXINPUTCANBUFFER][MAXTRAMESIZE];
-volatile unsigned char				gl_inputCANWriteBufferPointer[MAXINPUTCANBUFFER];
-volatile unsigned char 				gl_inputCANReadBufferPointer[MAXINPUTCANBUFFER];
+volatile char 		gl_inputCANbuffer[MAXINPUTCANBUFFER][MAXTRAMESIZE];
+volatile char		gl_inputCANWriteBufferPointer[MAXINPUTCANBUFFER];
+volatile char 		gl_inputCANReadBufferPointer[MAXINPUTCANBUFFER];
 
-volatile unsigned char 				gl_inputCANmode[MAXINPUTCANBUFFER];
-volatile unsigned char				gl_requestInputCANtrameStart[MAXINPUTCANBUFFER];
-volatile unsigned char				gl_printInputCANtrameStart[MAXINPUTCANBUFFER];
-volatile unsigned char				gl_currentCANid[MAXINPUTCANBUFFER];
+volatile char 		gl_inputCANmode[MAXINPUTCANBUFFER];
+volatile char		gl_requestInputCANtrameStart[MAXINPUTCANBUFFER];
+volatile char		gl_printInputCANtrameStart[MAXINPUTCANBUFFER];
+volatile char		gl_currentCANid[MAXINPUTCANBUFFER];
 
-volatile unsigned char 				gl_data[MAXTRAMESIZE];
+volatile BYTE 		gl_data[MAXTRAMESIZE];
 #pragma udata 
 
 // SYNCHRO BOARD VIA CAN
 
-volatile unsigned char 				gl_syncRequested; 
+volatile char 		gl_syncRequested; 
 
 // UART
 #pragma udata GLOBAL_DATA
-volatile unsigned char 				gl_inputUartString[MAXINPUTSTRING];
-volatile char 						gl_message[MAXOUTPUTSTRING];
-volatile unsigned char 				gl_errorInfo[MAXERRORINFO];
+volatile char 		gl_inputUartString[MAXSTRING];
+volatile char 		gl_message[MAXSTRING];
+volatile char 		gl_errorInfo[MAXERRORINFO];
 #pragma udata
 
-volatile unsigned char 				gl_receivedUSARTPointer;
-volatile unsigned char 				gl_getDataUSARTPointer;
-volatile char						gl_inputCounter;
+volatile char 		gl_receivedUSARTPointer;
+volatile char 		gl_getDataUSARTPointer;
+volatile char		gl_inputCounter;
 
 // PROTOCOL AND AUTOMATION
 #pragma udata GLOBAL_DATA
-volatile unsigned char 				gl_request[REQUESTSIZE];
-volatile unsigned char 				gl_tmpBuffer[REQUESTSIZE];
-volatile unsigned char		 		gl_automation[MAXAUTOMATION][NEW_AUTOMATIONSIZE];
+volatile char 		gl_request[REQUESTSIZE];
+volatile char 		gl_tmpBuffer[REQUESTSIZE];
+volatile char		gl_automation[MAXAUTOMATION][NEW_AUTOMATIONSIZE];
 #pragma udata
-volatile unsigned char 				gl_nexAvailableAutomation;
+volatile char 		gl_nexAvailableAutomation;
 
 // error info
-volatile unsigned char 				gl_parserErrorCode;
+volatile char 		gl_parserErrorCode;
 
 // CUR TRACK STATUS
 #pragma udata GLOBAL_DATA
-volatile unsigned int				gl_average[4];
-volatile unsigned int 				gl_noVehicule[4];
-volatile unsigned char  			gl_OUTSTATchar[4];
-volatile unsigned char  			gl_trackNotification[4];
+volatile  short		gl_average[4];
+volatile  short 	gl_noVehicule[4];
+volatile char  		gl_OUTSTATchar[4];
+volatile char  		gl_trackNotification[4];
 
 #pragma udata
-volatile unsigned char  			gl_trackCalibration;
-volatile unsigned char				gl_trackNumber;
+volatile char  		gl_trackCalibration;
+volatile char		gl_trackNumber;
 
 // MANUAL or AUTOMATIC
-volatile unsigned char				gl_userMode;	
+volatile char		gl_userMode;	
 
 // CUR GPIO STATUS
 #pragma udata GLOBAL_DATA
-volatile unsigned char				gl_GPIONotification[4];
-volatile unsigned char				gl_GPIOchar[4];
-volatile unsigned char				gl_GPIOcounter[4];
-volatile unsigned int				gl_GPIOstabilized[4];
+volatile char		gl_GPIONotification[4];
+volatile char		gl_GPIOchar[4];
+volatile char		gl_GPIOcounter[4];
+volatile  unsigned int		gl_GPIOstabilized[4];
 #pragma udata
 
 // CUR TIMER 
 #pragma udata GLOBAL_DATA
-volatile unsigned char				gl_TIMERValue[MAXTIMER];
-volatile unsigned char				gl_TIMERNotification[MAXTIMER];
+volatile char		gl_TIMERValue[MAXTIMER];
+volatile char		gl_TIMERNotification[MAXTIMER];
 #pragma udata
-volatile unsigned char				gl_timerNumber;
-volatile unsigned short				gl_timer;
+volatile char		gl_timerNumber;
+volatile  unsigned short		gl_timer;
 
 // RUN OR STOP ALL
-volatile unsigned char 				gl_stopAll;
+volatile char 		gl_stopAll;
 
 // KNOBS
-volatile char						gl_numberKnobData;
-volatile int						gl_knobValue0; // Between -15 and 15
-volatile int						gl_knobValue1; // Between 0 and 100
-volatile short 						gl_lastKnobValue0;
-volatile short 						gl_lastKnobValue1;
+volatile char		gl_numberKnobData;
+volatile int		gl_knobValue0; // Between -15 and 15
+volatile int		gl_knobValue1; // Between 0 and 100
+volatile int 		gl_lastKnobValue0;
+volatile int 		gl_lastKnobValue1;
 
-volatile unsigned short 			gl_adcKnobValue0;
-volatile unsigned short 			gl_adcKnobValue1;
-volatile unsigned short 			gl_minAdcKnobValue0;
-volatile unsigned short 			gl_maxAdcKnobValue0;
-volatile unsigned short 			gl_minAdcKnobValue1;
-volatile unsigned short 			gl_maxAdcKnobValue1;
+volatile  unsigned short 	gl_adcKnobValue0;
+volatile  unsigned short 	gl_adcKnobValue1;
+volatile  unsigned short 	gl_minAdcKnobValue0;
+volatile  unsigned short 	gl_maxAdcKnobValue0;
+volatile  unsigned short 	gl_minAdcKnobValue1;
+volatile  unsigned short 	gl_maxAdcKnobValue1;
 
-volatile char						gl_getKnobValue;
-volatile char						gl_calibKnob;
-volatile short						gl_deltaKnob0;
-volatile short						gl_deltaKnob1;
+volatile char		gl_getKnobValue;
+volatile char		gl_calibKnob;
+volatile unsigned short		gl_deltaKnob0;
+volatile unsigned short		gl_deltaKnob1;
 
 ///////////////////////////////////////////////
 // function declaration
 ///////////////////////////////////////////////
 
+// SPRINTF & PRINTF
+int mySprintf(char *buf,const rom char *fmt, ...);
+
 // EEPROM READ / WRITE FUNCTION
-unsigned char 	ReadEEPROM(unsigned int adr, unsigned char *data);
-void		 	CalibMinMaxKnob();
-void 			ResetEEPROM();
-void 			ReadEEPROMConfig(void);
-unsigned char 	WriteCompletedEEPROM(void);
-unsigned char 	WriteRdyEEPROM(void);
-unsigned char 	WriteEEPROM(unsigned short adr, unsigned char data);
-unsigned char	getAutomationFromEEPROM();
+char 	ReadEEPROM( int adr, char *data);
+void	CalibMinMaxKnob(void);
+void 	ResetEEPROM(void);
+void 	ReadEEPROMConfig(void);
+char 	WriteCompletedEEPROM(void);
+char 	WriteRdyEEPROM(void);
+char 	WriteEEPROM( short adr, char data);
+char	getAutomationFromEEPROM(void);
 
 // PARSER AND REQUEST MANAGEMENT
-unsigned char 	isAdigit(unsigned char car);
-unsigned char 	isAhexaDigit(unsigned char car);
-unsigned char 	toUpperCase(unsigned char car);
-unsigned short 	strtol(const char* nptr);
-void			clearError();
-void 			traceError();
-unsigned char 	getToken(unsigned char* inputString, unsigned char* inputToken, unsigned char* stringPointer);
-unsigned char 	getValue(unsigned char* inputString, unsigned char* Value, unsigned char* stringPointer);
-unsigned char   getIdent(unsigned char* inputString, unsigned char* stringPointer,unsigned char *ident);
-unsigned char 	parser(unsigned char* inputString, unsigned char* request);
-unsigned char 	memAvailable();
-void			boardStatus();
-unsigned char 	uncompressData(unsigned char* data);
-unsigned char 	compressData(unsigned char* data);
-void 			initRequest(unsigned char* request);
-unsigned char 	removeAutomation(unsigned char automationNumber);
-unsigned char 	saveAutomation(unsigned char automationNumber,unsigned char* data);
-void 			assignAutomation(char *request,unsigned char automationCounter);
-void 			setSpeed(char speed,char step,unsigned char trackNumber);
-unsigned char 	manageRequest (unsigned char* request,unsigned char sendPrompt);
-void 			setRequest(unsigned char* request, unsigned char* data,unsigned char init);
-unsigned char 	getDataFromRequest(unsigned char* request, unsigned char* data);
+char 	isAdigit(char car);
+char 	isAhexaDigit(char car);
+char 	toUpperCase(char car);
+short 	strtol(const char* nptr);
+void	clearError(void);
+void 	traceError(void);
+char 	getToken(char* inputString,char* inputToken,char* stringPointer);
+char 	getValue(char* inputString,char* Value,char* stringPointer);
+char    getIdent(char* inputString, char* stringPointer,char *ident);
+char 	parser(char* inputString);
+char 	memAvailable(void);
+void	boardStatus(void);
+char 	uncompressData(void);
+char 	compressData(void);
+void 	initRequest(void);
+char 	removeAutomation(char automationNumber);
+char 	saveAutomation(char automationNumber);
+void 	assignAutomation(char automationCounter);
+void 	setSpeed(char speed,char step,char trackNumber);
+char 	manageRequest (char sendPrompt);
 
 // UART
-void 			initUSART();
-void 			sendUSART(unsigned char data);
-unsigned char 	getInputRequestFromUSART(unsigned char *inputString,char *inputCounter);
-void 			prompt(unsigned char* message);
+void 	initUSART(void);
+void 	sendUSART(char data);
+char 	getInputRequestFromUSART(char *inputString,char *inputCounter);
+void 	prompt(char* message);
 
 // CAN
-void 			flushOut();
-void			CANsendDelay();
-int 			_user_putc(char c);
-void 			sendRequestToCAN(unsigned char* request);
-void 			CAN_SendSync(void);
+void 	flushOut(void);
+void	CANsendDelay(void);
+int 	_user_putc(char c);
+void 	sendRequestToCAN(void);
+void 	CAN_SendSync(void);
 
 
-unsigned char	getInputRequestFromCAN(unsigned char* request);
-void			sendPrintToCAN();
+char	getInputRequestFromCAN(void);
+void	sendPrintToCAN(void);
 
 // 7 SEGMENT TM1637
-void 			set7segmentPort(unsigned char CLK, unsigned char DIO);
-void 			twoWire_init();
-void 			twoWire_start();
-void 			twoWire_stop();
-void 			twoWire_ack();
-char 			twoWire_write(char data);
-void 			TM1637_init(void);
-void			TM1637_write(short number1,short number2);
-void 			TM1637_display(short number1, short number2);
-void 			TM1637_setBrightness(char level);
-void 			TM1637_displayString(unsigned char *string);
-void 			TM1637_writeStringWindow(const char *s, unsigned char start, unsigned char len);
-unsigned char 	charToSegments(char c);
-void 			delayMainLoop(int delay);
+void 	set7segmentPort(char CLK, char DIO);
+void 	twoWire_init(void);
+void 	twoWire_start(void);
+void 	twoWire_stop(void);
+void 	twoWire_ack(void);
+char 	twoWire_write(char data);
+void 	TM1637_init(void);
+void	TM1637_write(short number1,short number2);
+void 	TM1637_display(short number1, short number2);
+void 	TM1637_setBrightness(char level);
+void 	TM1637_displayString(char *string);
+void 	TM1637_writeStringWindow(const char *s, char start, char len);
+char 	charToSegments(char c);
+void 	delayMainLoop(int delay);
 
 
 // INTERRUPT AND SIGNAL MANAGEMENT
-void 			setDcc(unsigned char address, unsigned char command);
-void 			setPort();
+void 	setDcc(char address, char command);
+void 	setPort(void);
 
-void 			interrupt_at_high_vector(void);
-void 			high_isr(void);
+void 	interrupt_at_high_vector(void);
+void 	high_isr(void);
 
-void  			interrupt_at_low_vector(void);
-void 			low_interrupt();
-void 			low_isr(void);
-void			low_isr_task();
+void  	interrupt_at_low_vector(void);
+void 	low_interrupt();
+void 	low_isr(void);
+void	low_isr_task(void);
 
 // CODE INITIALISATION
-void 			initEnvironment();
-void 			PIC18FMainSettings();
-void 			init();
-void 			trackCalibration();
+void 	initEnvironment(void);
+void 	PIC18FMainSettings(void);
+void 	init(void);
+void 	trackCalibration(void);
 
 // EVENT MANAGEMENT
-unsigned char 	getEventRequestFromTrack(unsigned char* request);
-unsigned char 	getEventRequestFromGPIO(unsigned char* request);
-unsigned char 	getEventRequestFromTIMER(unsigned char* request);
-void 			getEventFromKNOB();
+char 	getEventRequestFromTrack(void);
+char 	getEventRequestFromGPIO(void);
+char 	getEventRequestFromTIMER(void);
+void 	getEventFromKNOB(void);
 
 
 
