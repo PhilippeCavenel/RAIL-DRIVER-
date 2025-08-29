@@ -68,8 +68,6 @@ void CalibMinMaxKnob(void) {
 	 short adr;
 	 char counter;
 
-    WDTCONbits.SWDTEN = 0; // Watchdog off
-
 	// Knob min & max
 	adr=(short)KNOB_ADDRESS;
 	
@@ -118,8 +116,6 @@ void CalibMinMaxKnob(void) {
 
 	WriteEEPROM(adr++,(gl_maxAdcKnobValue1>>8) & 0xFF);	
 	WriteEEPROM(adr,gl_maxAdcKnobValue1 & 0xFF);
-
-    WDTCONbits.SWDTEN = 1; // Watchdog on
 
 }
 /* ==============================================================================
@@ -310,8 +306,6 @@ char memAvailable(void) {
  * automation index to the prompt/LED display.
  * ============================================================================== */
 void boardStatus(void) {
-
-	WDTCONbits.SWDTEN = 0; // watchdog off
 				
 	mySprintf((char *)gl_message,"%S",RAIL_DRIVER_HEADER_STRING);
 	prompt((char *)gl_message);
@@ -343,8 +337,6 @@ void boardStatus(void) {
 
 	mySprintf((char *)gl_message,"");
 	prompt((char *)gl_message);
-
-	WDTCONbits.SWDTEN = 1; // watchdog on
 }	
 /* ==============================================================================
  * Function: getAutomationFromEEPROM
@@ -1905,22 +1897,25 @@ char manageRequest (char sendPrompt) {
 			if ((char)gl_request[REQ_BOARD_NUMBER] != (char)gl_boardNumber && (char)gl_master==(char)TRUE) sendRequestToCAN();
 			else if ((char)gl_request[REQ_BOARD_NUMBER] == (char)gl_boardNumber) {
 				gl_mutexLowIsr=1;gl_stopAll=TRUE;gl_mutexLowIsr=0;
+				WDTCONbits.SWDTEN = 0; // watchdog off
 			    CalibMinMaxKnob();
+				WDTCONbits.SWDTEN = 1; // watchdog on
 				gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;			
 			}
 			if ((char)sendPrompt==(char)TRUE) {
-				prompt((char *)gl_message);prompt((char *)gl_message);
+				prompt((char *)gl_message);
 			}
 		 	return(TRUE);
  
 		case RESETValue :
 			if ((char)gl_request[REQ_BOARD_NUMBER] != (char)gl_boardNumber && (char)gl_master==(char)TRUE) sendRequestToCAN();
 			else if ((char)gl_request[REQ_BOARD_NUMBER] == (char)gl_boardNumber) {
+				WDTCONbits.SWDTEN = 0; // watchdog off
 				mySprintf((char *)gl_message,RESET_STRING);
 				TM1637_displayString((char *)gl_message);
 				gl_mutexLowIsr=1;gl_stopAll=TRUE;gl_mutexLowIsr=0;
-				WDTCONbits.SWDTEN = 0; // watchdog off
 				ResetEEPROM();
+				delayMainLoop(2);
 				init();
 				WDTCONbits.SWDTEN = 1; // watchdog on
 			}
@@ -2358,8 +2353,12 @@ char manageRequest (char sendPrompt) {
 					return(TRUE);
 				}
 				else if ((char)gl_request[REQ_COMMAND_REQUEST_GET_BOARD_STATUS] == (char) TRUE) {
-					if ((char)sendPrompt==(char)TRUE) boardStatus();		
-					return(TRUE);
+					if ((char)sendPrompt==(char)TRUE) {
+						WDTCONbits.SWDTEN = 0; // Watchdog off
+						boardStatus();	
+						WDTCONbits.SWDTEN = 1; // Watchdog on	
+						return(TRUE);
+					}
 				}
 				else if ((char)gl_request[REQ_COMMAND_REQUEST_GET_GPIO_STATUS] == (char) TRUE) {
 					if ((char)sendPrompt==(char)TRUE) {
@@ -3726,6 +3725,20 @@ void init(void) {
 	// CALIBRATION FOR TRACK DETECTION
     trackCalibration();
 
+    // Warning watchdog
+    if ((char)RCONbits.TO == (char)0) {
+		mySprintf((char *)gl_message,WATCHDOG_STRING);
+		TM1637_displayString((char *)gl_message);
+		gl_mutexLowIsr=1;gl_OUTchar[3]=2;gl_mutexLowIsr=0; // Led mode manual flashing for warning
+	}
+	else {
+		// MESSAGE ON DISPLAY
+		mySprintf((char *)gl_message,START_STRING);
+		TM1637_displayString((char *)gl_message);
+
+	}
+	prompt((char *)gl_message);
+
 }
 /* ==============================================================================
  * Function: trackCalibration
@@ -3886,21 +3899,6 @@ void main(void)
 
 	// Full init of PIC18F
     init();
-
-	// BOARD STATUS
-	boardStatus();
-
-    // Warning watchdog
-    if ((char)RCONbits.TO == (char)0) {
-		mySprintf((char *)gl_message,WATCHDOG_STRING);
-		TM1637_displayString((char *)gl_message);
-		gl_mutexLowIsr=1;gl_OUTchar[3]=2;gl_mutexLowIsr=0; // Led mode manual flashing for warning
-	}
-	else {
-		// MESSAGE ON DISPLAY
-		mySprintf((char *)gl_message,START_STRING);
-		TM1637_displayString((char *)gl_message);
-	}
 
 	RCONbits.TO = 1; // Reset flag status
 	WDTCONbits.SWDTEN = 1; //start watchdog

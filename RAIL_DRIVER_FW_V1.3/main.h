@@ -182,7 +182,7 @@ rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
 #pragma config BOREN 	= 				BOHW
 #pragma config BORV 	= 				3
 #pragma config WDT 		= 				OFF  
-#pragma config WDTPS 	= 				128     // ~2.3 s Watchdog
+#pragma config WDTPS 	= 				1024	// Watchdog entre 7 et 33 secondes     
 #pragma config PBADEN 	= 				OFF
 #pragma config MCLRE 	= 				OFF
 #pragma config LVP 		= 				OFF
@@ -221,7 +221,7 @@ rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
 #define INITWAITDCCCOUNTER				4
 
 // CURRENT DETECTION 
-#define HYSTERERISHIGH					2
+#define HYSTERERISHIGH					3
 #define HYSTERERISLOW					1
 #define SAMPLEFORAVERAGE				30
 #define SAMPLEFORCALIBRATION			5

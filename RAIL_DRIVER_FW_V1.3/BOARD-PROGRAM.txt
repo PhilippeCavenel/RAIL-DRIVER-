@@ -519,13 +519,13 @@ PROG 0 AUT DD AUTOFF  BOARD 2 GPIO 0 5 ACT TIMER 1 8
 /////////////////////////////////////////////////////////
 
 // Passage en mode automatique 
-PROG 1 AUT A0 AUTON BOARD 1 GPIO 3 1 ACT AUTOMATIC
+PROG 1 AUT A1 AUTON BOARD 1 GPIO 3 1 ACT AUTOMATIC
 
 // Eteint la led rouge du bouton mode manuel 
-PROG 1 AUT A1 AUTON BOARD 1 GPIO 3 1 ACT LPO 3 0
+PROG 1 AUT A2 AUTON BOARD 1 GPIO 3 1 ACT LPO 3 0
 
 // Allume la led du bouton démarrer (Clignotement)
-PROG 1 AUT A2 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 2 2
+PROG 1 AUT A3 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 2 2
 
 // Lance la séquence automatique programmée 
 
@@ -534,13 +534,16 @@ PROG 1 AUT A2 AUTOFF BOARD 1 GPIO 1 1 ACT LPO 2 2
 // Sur appui bouton démarrer, le train à crémaillère quitte la gare principale pour se rendre à la gare du haut. Après un temps d'attente de 5 unités, la locomotive se decroche et se positionne à l'arrière du train pour revenir vers la gare centrale. A l'arrivée à la gare centrale, après un temps d'attente de 5 unités, le train à crémaillère va sur la voie interne pour un décrochage de la locomotive et positionnement à l'avant du train en voie cachée avant de revenir en gare centrale puis remonter directement à la gare du haut
 
 // Arme TIMER 3 pour déclenchement mode normal automatique
-PROG 1 AUT A3 AUTOFF BOARD 1 GPIO 1 1 ACT TIMER 3 1
+PROG 1 AUT A4 AUTOFF BOARD 1 GPIO 1 1 ACT TIMER 3 1
+
+// Désactive l'armement du TIMER 2
+// PROG 1 AUT A4 AUTOFF BOARD 1 GPIO 1 1 ACT AUTOFF D4
 
 // Positionne correctement les aiguillages du haut
-PROG 1 AUT A4 AUTOFF BOARD 1 TIMER 3 ACT LPO 4 0
+PROG 1 AUT A5 AUTOFF BOARD 1 TIMER 3 ACT LPO 4 0
 
 // Demarre le train (qui doit être quelque part sur la voie I0 ou L3 (gare) )
-PROG 1 AUT A5 AUTOFF BOARD 1 TIMER 3 ACT TRACK 31 SPEED 8 FORW INERTIA 27
+PROG 1 AUT A6 AUTOFF BOARD 1 TIMER 3 ACT TRACK 31 SPEED 8 FORW INERTIA 27
 
 // Active détection arrivée en gare du haut et activation TIMER
 PROG 1 AUT A7 AUTOFF BOARD 1 TIMER 3 ACT AUTON D2
@@ -550,56 +553,57 @@ PROG 1 AUT A8 AUTOFF BOARD 1 TIMER 3 ACT AUTON D3
 PROG 1 AUT A9 AUTOFF BOARD 1 TIMER 3 ACT AUTOFF D1
 
 // Désactive armement TIMER 2 pour décrochage bas
-PROG 1 AUT A9 AUTOFF BOARD 1 TIMER 3 ACT AUTOFF D4
-PROG 1 AUT AA AUTOFF BOARD 1 TIMER 3 ACT AUTOFF D5
+PROG 1 AUT AA AUTOFF BOARD 1 TIMER 3 ACT AUTOFF D4
+PROG 1 AUT AB AUTOFF BOARD 1 TIMER 3 ACT AUTOFF D5
 
 // Désactive Détection arrivée en gare du haut et activation TIMER
-PROG 1 AUT AB AUTOFF BOARD 1 TIMER 1 ACT AUTOFF D2
-PROG 1 AUT AC AUTOFF BOARD 1 TIMER 1 ACT AUTOFF D3
+PROG 1 AUT AC AUTOFF BOARD 1 TIMER 1 ACT AUTOFF D2
+PROG 1 AUT AD AUTOFF BOARD 1 TIMER 1 ACT AUTOFF D3
 
 // Démarrage pour décrochage wagon 
-PROG 1 AUT AD AUTOFF BOARD 1 TIMER 1 ACT TRACK 31 SPEED 4 FORW INERTIA 40
+PROG 1 AUT AE AUTOFF BOARD 1 TIMER 1 ACT TRACK 31 SPEED 4 FORW INERTIA 40
 
 // Arme TIMER 4 pour retour arrière locomotive
-PROG 1 AUT AE AUTOFF BOARD 1 TIMER 1 ACT TIMER 4 2
+PROG 1 AUT AF AUTOFF BOARD 1 TIMER 1 ACT TIMER 4 2
 
 // retour arrière locomotive sur déclenchement TIMER 4
-PROG 1 AUT AF AUTOFF BOARD 1 TIMER 4 ACT TRACK 31 SPEED 5  BACK INERTIA 10
+PROG 1 AUT AG AUTOFF BOARD 1 TIMER 4 ACT TRACK 31 SPEED 5  BACK INERTIA 10
 
 // changement aiguillage sur déclenchement TIMER 4
-PROG 1 AUT AG AUTOFF BOARD 1 TIMER 4 ACT LPO 4 1
+PROG 1 AUT AH AUTOFF BOARD 1 TIMER 4 ACT LPO 4 1
 
 // Arme TIMER 5 pour retour avant locomotive 
-PROG 1 AUT AH AUTOFF BOARD 1 TIMER 4 ACT TIMER 5 2
+PROG 1 AUT AI AUTOFF BOARD 1 TIMER 4 ACT TIMER 5 2
 
 //Retour avant de la locomotive au déclenchement TIMER 5
-PROG 1 AUT AI AUTOFF BOARD 1 TIMER 5 ACT TRACK 31 SPEED 4 FORW INERTIA 27
+PROG 1 AUT AJ AUTOFF BOARD 1 TIMER 5 ACT TRACK 31 SPEED 4 FORW INERTIA 27
 
 // changement aiguillage sur déclenchement TIMER 5
-PROG 1 AUT AJ AUTOFF BOARD 1 TIMER 5 ACT LPO 4 0
+PROG 1 AUT AK AUTOFF BOARD 1 TIMER 5 ACT LPO 4 0
 
 // Arme TIMER 6 pour retour final locomotive
-PROG 1 AUT AK AUTOFF BOARD 1 TIMER 5 ACT TIMER 6 2
+PROG 1 AUT AL AUTOFF BOARD 1 TIMER 5 ACT TIMER 6 2
 
 // Retour du train vers la gare centrale (voie I0, J1, K2 et L3)
-PROG 1 AUT AL AUTOFF BOARD 1 TIMER 6 ACT TRACK 31 SPEED 5  BACK INERTIA 15
+PROG 1 AUT AM AUTOFF BOARD 1 TIMER 6 ACT TRACK 31 SPEED 5  BACK INERTIA 15
 
 // Active arret du train en gare centrale 
-PROG 1 AUT AM AUTOFF BOARD 1 TIMER 6 ACT AUTON D1
+PROG 1 AUT AN AUTOFF BOARD 1 TIMER 6 ACT AUTON D1
 
 // Active armement TIMER 2 pour décrochage bas
-PROG 1 AUT AN AUTOFF BOARD 1 TIMER 6 ACT AUTON D4
-PROG 1 AUT AO AUTOFF BOARD 1 TIMER 6 ACT AUTON D5
+PROG 1 AUT AO AUTOFF BOARD 1 TIMER 6 ACT AUTON D4
+PROG 1 AUT AP AUTOFF BOARD 1 TIMER 6 ACT AUTON D5
 
 ////////////////////////////////////////////////////////////////////////
 // Démarre le train qui passe sur la CARTE 0
-PROG 1 AUT AP AUTOFF BOARD 1 TIMER 2 ACT TRACK 31 SPEED 7  BACK INERTIA 15
+PROG 1 AUT AQ AUTOFF BOARD 1 TIMER 2 ACT TRACK 31 SPEED 7  BACK INERTIA 15
 
 // Désactive Arret du train lors de l'arrivée en gare centrale
-PROG 1 AUT AQ AUTOFF BOARD 1 TIMER 2 ACT AUTOFF D1
+PROG 1 AUT AR AUTOFF BOARD 1 TIMER 2 ACT AUTOFF D1
 
 // Arme TIMER 3 pour remise en mode normal de la voie
-PROG 1 AUT AR AUTOFF BOARD 1 TIMER 2 ACT TIMER 3 2
+PROG 1 AUT AS AUTOFF BOARD 1 TIMER 2 ACT TIMER 3 2
+
 
 ////////////////////////////////////////////////////////////////////////
 
