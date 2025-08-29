@@ -1193,7 +1193,8 @@ void ScribeMainWindow::openSerial() {
         connect(serial, &QSerialPort::readyRead, this, &ScribeMainWindow::onDataReceived);
     }
     serial->setPortName(gl_currentComPort);
-    serial->setBaudRate(QSerialPort::Baud115200);
+    //serial->setBaudRate(QSerialPort::Baud115200);
+    serial->setBaudRate(500000);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
     serial->setStopBits(QSerialPort::OneStop);

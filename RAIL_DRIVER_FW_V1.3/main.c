@@ -1,39 +1,47 @@
-/*********************************************************************
+/*********************************************************************************
 *
 * DRIVER RAIL V 1.3
 *
 * MAIN.C
 *
-*********************************************************************
+**********************************************************************************
+
+
 * Processor: PIC18F4680
 * Frequency: 32 Mhz
 * Compiler: C18
-*********************************************************************/
+*********************************************************************************/
 
 #include "main.h"
 
-/**********************************************************
-int mySprintf()
-**********************************************************/
-
+/* ==============================================================================
+ * Function: mySprintf
+ * Returns: int = the number of characters written to str (excluding the 
+ * terminating null character '\0').
+ * Description : Replace sprintf()
+ * ============================================================================== */
 int mySprintf(char *buf, const rom char *fmt, ...)
 {
     int n;
     va_list args;
     va_start(args, fmt);
-    n = vsprintf(buf, (const far rom char *)fmt, args); // obligatoire ici
+    n = vsprintf(buf, (const far rom char *)fmt, args); // Mandatory
     va_end(args);
     return n;
 }
-//////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////
 // EEPROM READ / WRITE FUNCTION 
-//////////////////////////////////////////////////////////////////////////////
-/**********************************************************
-	This function reads a byte at given addresse in EEPROM.
-	IN:		address
-	OUT:	data
-	Return Value: ERROR, SUCCESS
-**********************************************************/
+/////////////////////////////////////////////////////////////////////////////////
+///
+///
+/* ==============================================================================
+ * Function: ReadEEPROM
+ * Returns: char = SUCCESS on read, ERROR if address invalid.
+ * Description: Reads one byte from data EEPROM at the given address into *data. 
+ * Checks bounds and selects data EEPROM space.
+ * ============================================================================== */
 char ReadEEPROM(int adr, char *data){
 
 	if(adr > 0x3FF){
@@ -48,20 +56,19 @@ char ReadEEPROM(int adr, char *data){
 		*data = EEDATA;			// Load data
 		return(SUCCESS);
 	}
-} // end of ReadEEPROM()
-
-/****************************************************************************
-*
-* Function MinMaxKnob
-*
-****************************************************************************/
+} 
+/* ==============================================================================
+ * Function: CalibMinMaxKnob
+ * Returns: void = no return.
+ * Description: Interactive calibration routine for two knobs. Collects min/max 
+ * ADC values, displays countdowns, stores results to EEPROM, and restores watchdog.
+ * ============================================================================== */
 void CalibMinMaxKnob(void) {
 
 	 short adr;
 	 char counter;
 
-	// Watchdog off
-    WDTCONbits.SWDTEN = 0; 
+    WDTCONbits.SWDTEN = 0; // Watchdog off
 
 	// Knob min & max
 	adr=(short)KNOB_ADDRESS;
@@ -112,15 +119,15 @@ void CalibMinMaxKnob(void) {
 	WriteEEPROM(adr++,(gl_maxAdcKnobValue1>>8) & 0xFF);	
 	WriteEEPROM(adr,gl_maxAdcKnobValue1 & 0xFF);
 
-    WDTCONbits.SWDTEN = 1;
+    WDTCONbits.SWDTEN = 1; // Watchdog on
 
 }
-
-/****************************************************************************
-*
-* Function ResetEEPROM
-*
-****************************************************************************/
+/* ==============================================================================
+ * Function: ResetEEPROM
+ * Returns: void = no return.
+ * Description: Initializes EEPROM to default values (magic number, ANA mode, 
+ * clears automation, sets GPIO directions) and syncs globals.
+ * ============================================================================== */
 void ResetEEPROM(void){
 
 	 char 	value;
@@ -148,12 +155,12 @@ void ResetEEPROM(void){
 	for(adr=(short)GPIO0DIR_ADDRESS;adr<=(short)GPIO0DIR_ADDRESS+3;adr++)WriteEEPROM(adr,1);
 
 }
-
-/****************************************************************************
-*
-* Function ReadEEPROMConfig
-*
-****************************************************************************/
+/* ==============================================================================
+ * Function: ReadEEPROMConfig
+ * Returns: void = no return.
+ * Description: Loads configuration from EEPROM: validates magic, board mode,
+ * GPIO directions, knob calibration, and automation cache.
+ * ============================================================================== */
 void ReadEEPROMConfig(void) {
 
 	 char 	value;
@@ -215,13 +222,11 @@ void ReadEEPROMConfig(void) {
 	// Read in EEPROM last automation
 	dummy=getAutomationFromEEPROM();
 }
-
-/**********************************************************
-	This function informs on if write to EEPROM is completed.
-	IN:		None
-	OUT:	None
-	Return Value: IN_PROGRESS, SUCCESS
-**********************************************************/
+/* ==============================================================================
+ * Function: WriteCompletedEEPROM
+ * Returns: char = SUCCESS when complete, ERROR otherwise.
+ * Description: Reports whether an EEPROM write cycle has completed and clears flags.
+ * ============================================================================== */
 char WriteCompletedEEPROM(void) {
 
 	if(PIR2bits.EEIF){
@@ -233,13 +238,11 @@ char WriteCompletedEEPROM(void) {
 		return(ERROR);			// Write to EEPROM not completed
 	}
 }
-
-/**********************************************************
-	This function informs on if it is possible to write in EEPROM.
-	IN:		None
-	OUT:	None
-	Return Value: ERROR, SUCCESS
-**********************************************************/
+/* ==============================================================================
+ * Function: WriteRdyEEPROM
+ * Returns: char = SUCCESS when ready, ERROR when busy.
+ * Description: Indicates if EEPROM is ready for a new write (no write in progress).
+ * ============================================================================== */
 char WriteRdyEEPROM(void){
 
 	if(!EECON1bits.WR) {
@@ -249,12 +252,12 @@ char WriteRdyEEPROM(void){
 		return(ERROR);		// new Write Disabled
 	}
 }
-
-/**********************************************************
-	This function writes a byte at given addresse in EEPROM.
-	IN:		addresse, data
-	Return Value: ERROR, SUCCESS
-**********************************************************/
+/* ==============================================================================
+ * Function: WriteEEPROM
+ * Returns: char = SUCCESS on write, ERROR if address invalid.
+ * Description: Writes one byte to data EEPROM at the given address with unlock 
+ * sequence; skips write if data unchanged.
+ * ============================================================================== */
 char WriteEEPROM(short adr, char data){
 
 	char checkValue;
@@ -289,19 +292,26 @@ char WriteEEPROM(short adr, char data){
 	
 		return(SUCCESS);
 	}
-} // end of WriteEEPROM()
-
-/////////////////////////////////////////////////////////////////////////////
-// memAvailable
-/////////////////////////////////////////////////////////////////////////////
+} 
+/* ==============================================================================
+ * Function: memAvailable
+ * Returns: char = percentage 0..100.
+ * Description: Computes approximate free automation memory percentage based on 
+ * EEPROM usage.
+ * ============================================================================== */
 char memAvailable(void) {
 
 	return(getAutomationFromEEPROM());
 }
-/////////////////////////////////////////////////////////////////////////////
-// boardStatus()
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: boardStatus
+ * Returns: void = no return.
+ * Description: Prints board identity, mode, memory usage, user mode and next 
+ * automation index to the prompt/LED display.
+ * ============================================================================== */
 void boardStatus(void) {
+
+	WDTCONbits.SWDTEN = 0; // watchdog off
 				
 	mySprintf((char *)gl_message,"%S",RAIL_DRIVER_HEADER_STRING);
 	prompt((char *)gl_message);
@@ -333,11 +343,15 @@ void boardStatus(void) {
 
 	mySprintf((char *)gl_message,"");
 	prompt((char *)gl_message);
-}	
 
-/////////////////////////////////////////////////////////////////////////////
-// getAutomationFromEEPROM
-/////////////////////////////////////////////////////////////////////////////
+	WDTCONbits.SWDTEN = 1; // watchdog on
+}	
+/* ==============================================================================
+ * Function: getAutomationFromEEPROM
+ * Returns: char = percentage 0..100 (100 if none).
+ * Description: Reads automation entries from EEPROM into RAM and returns free 
+ * space percentage.
+ * ============================================================================== */
 char getAutomationFromEEPROM(void) {
 
     char  automationCounter;
@@ -363,10 +377,12 @@ char getAutomationFromEEPROM(void) {
 	percentage=100*(1024-(long)adr)/(1024-(long)AUTOMATION_ADDRESS);
 	return((char)percentage);
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// setAutomationToEEPROM
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: setAutomationToEEPROM
+ * Returns: char = TRUE on success, FALSE on overflow.
+ * Description: Writes automation entries from RAM to EEPROM and updates the 
+ * 'next automation' pointer.
+ * ============================================================================== */
 char setAutomationToEEPROM(void) {
 
     char  automationCounter;
@@ -394,30 +410,29 @@ char setAutomationToEEPROM(void) {
 	WriteEEPROM(adr,value);
 	return(TRUE);	
 }
-
-//////////////////////////////////////////////////////////////////////////////
-// PARSER AND REQUEST MANAGEMENT
-//////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////
-// isAdigit
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: isAdigit
+ * Returns: char = TRUE or FALSE.
+ * Description: Checks if character is an ASCII decimal digit '0'..'9'.
+ * ============================================================================== */
 char isAdigit(char car) {
 	if ((char)car >=(rom char)'0' && (char)car <=(rom char)'9') return TRUE;
 	else return FALSE;
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// isAhexaDigit
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: isAhexaDigit
+ * Returns: char = TRUE or FALSE.
+ * Description: Checks if character is an uppercase hex digit 'A'..'F'.
+ * ============================================================================== */
 char isAhexaDigit(char car) {
 	if ((char)car >=(rom char)'A' && (char)car <=(rom char) 'F') return TRUE;
 	else return FALSE;
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// toUpperCase
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: toUpperCase
+ * Returns: char = uppercased character.
+ * Description: Converts ASCII letter to uppercase; returns input unchanged otherwise.
+ * ============================================================================== */
 char toUpperCase(char car) {
 
     char returnValue;
@@ -427,16 +442,24 @@ char toUpperCase(char car) {
 
 	return(returnValue);
 }
-/////////////////////////////////////////////////////////////////////////////
-// strtol for positive number
-/////////////////////////////////////////////////////////////////////////////
-//short strtol_with_atoi(const char* nptr, short base) {
+/* ==============================================================================
+ * Function: strtol
+ * Returns: short = parsed value (>=0).
+ * Description: Parses a positive integer in decimal or 0x/ x-prefixed hex into 
+ * a short; sets errno on error.
+ * ============================================================================== */
 short strtol(const char* nptr) {
 
-    short 			result16=0;
-    short 			result10=0;
-	char 	base=10;
-	short	result=0;
+    short 	result16;
+    short 	result10;
+	char 	base;
+	short	result;
+
+	// init
+    result16=0;
+    result10=0;
+	base=10;
+	result=0;
 
 	if ((char)*nptr == (rom char)'0') 	nptr++;
 	if ((char)*nptr == (rom char)'\0'|| (char)*nptr == (rom char)' ') return result; // 0
@@ -474,18 +497,21 @@ short strtol(const char* nptr) {
  		}
 	return((short)result);
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// clearError 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: clearError
+ * Returns: void = no return.
+ * Description: Clears parser error code and associated message buffer.
+ * ============================================================================== */
 void clearError(void) {
 		mySprintf((char *)gl_errorInfo,"");
 		gl_parserErrorCode=0;
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// traceError 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: traceError
+ * Returns: void = no return.
+ * Description: Formats and prints a human-readable error message for the
+ * current parser error, then clears it.
+ * ============================================================================== */
 void traceError(void) {
 
 	switch (gl_parserErrorCode) {	
@@ -525,17 +551,21 @@ void traceError(void) {
 	prompt((char *)gl_message);	
 	clearError();
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// getToken 
-// return value TRUE if parsing correct, otherwise FALSE 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: getToken
+ * Returns: char = TRUE on match, FALSE otherwise.
+ * Description: Parses expected token from input string, advancing stringPointer;
+ * records offending token on failure.
+ * ============================================================================== */
 char getToken(char* inputString, char* inputToken, char* stringPointer) {
 
-	 char carCounter = 0;
-	 char tokenCarPointer = 0;
+	 char carCounter;
+	 char tokenCarPointer;
 	 char testToken[MAXSIZETOKEN];
 
+	// init
+	carCounter = 0;
+	tokenCarPointer = 0;
 
 	for (carCounter=0; (int)carCounter < (int)strlen(inputString); carCounter++) {
 		if ((char)inputString[carCounter]==(rom char)' ') {
@@ -560,17 +590,22 @@ char getToken(char* inputString, char* inputToken, char* stringPointer) {
 	gl_parserErrorCode = UNKNOWN_TOKEN;
 	return(FALSE);
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// getValue 
-// return value TRUE if parsing correct, otherwise FALSE 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: getValue
+ * Returns: char = TRUE on success, FALSE on error.
+ * Description: Parses a numeric value (0..255) from input string, sets
+ * errno/globals on errors.
+ * ============================================================================== */
 char getValue(char* inputString, char* Value, char* stringPointer) {
 
-	 char carCounter = 0;
-	 char tokenCarPointer = 0;
-	 char dataFound;
-	 short number;
+	char carCounter;
+	char tokenCarPointer;
+	char dataFound;
+	short number;
+
+	// Init
+	carCounter = 0;
+	tokenCarPointer = 0;
 
 	errno = 0;
 	while ((char)inputString[carCounter] == (rom char)' ' && carCounter < (int)strlen(inputString)) {
@@ -606,21 +641,26 @@ char getValue(char* inputString, char* Value, char* stringPointer) {
 		return(FALSE);
 	}
 }
-/////////////////////////////////////////////////////////////////////////////
-// getIdent 
-// return value TRUE if parsing correct, otherwise FALSE 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: getIdent
+ * Returns: char = TRUE on success, FALSE on error.
+ * Description: Parses an automation identifier (word after a space), enforcing
+ * size limits.
+ * ============================================================================== */
 char getIdent(char* inputString, char* stringPointer,char *ident) {
 
 	char getFirstSpace;
-	char identCounter=0;
+	char identCounter;
+
+	// init
+	identCounter=0;
 
 	// GET AUTOMATION IDENT
 	getFirstSpace=FALSE;
 	while(identCounter<MAXSIZEIDENT) {
 		if ((char)inputString[*stringPointer]!=(char)' ') {
 			if(identCounter==0 && (char)getFirstSpace==(char)FALSE) {
-				mySprintf((char *)gl_errorInfo,"row %d",(int)*stringPointer);
+				mySprintf((char *)gl_errorInfo,"Column %d =>%c",(int)*stringPointer,(char)inputString[*stringPointer]);
 				gl_parserErrorCode = MISSING_SPACE;
 				return(FALSE);
 			}
@@ -657,18 +697,22 @@ char getIdent(char* inputString, char* stringPointer,char *ident) {
 	}
 	return(TRUE);
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// Parser 
-// return value TRUE if parsing correct, otherwise FALSE 
-// Semantic analysis on values should be done on char content
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: parser
+ * Returns: char = TRUE when parsed, FALSE on syntax error.
+ * Description: Topâ€‘level textual command parser. Decodes PROG/COM and subcommands 
+ * into the gl_request structure.
+ * ============================================================================== */
 char parser(char* inputString) {
 
-	 char stringPointer = 0;
-	 char keepStringPointer = 0;
-     char token[MAXSIZETOKEN];
-	 char boardNumber;
+	char stringPointer;
+	char keepStringPointer;
+    char token[MAXSIZETOKEN];
+	char boardNumber;
+
+	// init
+	stringPointer = 0;
+	keepStringPointer = 0;
 
 	initRequest();
 
@@ -1439,10 +1483,12 @@ char parser(char* inputString) {
 	}
 	return(FALSE);
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// uncompressData 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: uncompressData
+ * Returns: char = TRUE on success, FALSE on overflow.
+ * Description: Runâ€‘length decodes gl_request buffer from (count,value) pairs 
+ * into raw bytes.
+ * ============================================================================== */
 char uncompressData(void) {
 	char dataCounter;
 	char tmpDataCounter;
@@ -1466,10 +1512,12 @@ char uncompressData(void) {
 	for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++) gl_request[dataCounter]=gl_tmpBuffer[dataCounter];
 	return(TRUE);
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// compressData 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: compressData
+ * Returns: char = number of bytes produced (0 on failure).
+ * Description: Runâ€‘length encodes gl_request into (count,value) pairs for 
+ * CAN transmission.
+ * ============================================================================== */
 char compressData(void) {
 
 	char tmpDataCounter;
@@ -1477,6 +1525,7 @@ char compressData(void) {
 	char quantityValue;
 	char curValue;
 
+	// Init
 	dataCounter=0;
 	tmpDataCounter=0;
 	curValue=gl_request[0];
@@ -1503,18 +1552,21 @@ char compressData(void) {
 	for(;dataCounter<REQUESTSIZE;dataCounter++) gl_request[dataCounter]=0;
 	return(tmpDataCounter);
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// InitRequest 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: initRequest
+ * Returns: void = no return.
+ * Description: Zeros the gl_request buffer to a clean state.
+ * ============================================================================== */
 void initRequest(void) {	
 	char dataCounter;
 	for (dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++)gl_request[dataCounter]=0;
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// Remove Automation 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: removeAutomation
+ * Returns: char = TRUE on success, FALSE on error.
+ * Description: Deletes an automation by index by compacting the array and
+ * persisting to EEPROM.
+ * ============================================================================== */
 char removeAutomation(char automationNumber) {
 
     char  automationDataCounter;
@@ -1530,10 +1582,12 @@ char removeAutomation(char automationNumber) {
 	// update in EEPROM automation
 	return(setAutomationToEEPROM());
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// Save Automation 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: saveAutomation
+ * Returns: char = TRUE on success, FALSE on error.
+ * Description: Copies the currently parsed program request into an automation
+ * slot and persists it.
+ * ============================================================================== */
 char saveAutomation(char automationNumber) {
 
     char  automationCounter;
@@ -1591,7 +1645,6 @@ char saveAutomation(char automationNumber) {
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_2]=gl_request[REQ_PROGAM_REQUEST_ACTION_AUT_SET_IDENT+1];
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_3]=gl_request[REQ_PROGRAM_REQUEST_ACTION_AUT_SET_STATUS];
 	}
-
 	else if ((char)gl_request[REQ_PROGRAM_REQUEST_TRACK_SETTING]==(char)TRUE) {
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_TRACK;
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=gl_request[REQ_PROGRAM_REQUEST_ACTION_TRACK_SET_NUMBER];
@@ -1599,12 +1652,10 @@ char saveAutomation(char automationNumber) {
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_3]=gl_request[REQ_PROGRAM_REQUEST_ACTION_TRACK_SET_DIR];
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_4]=gl_request[REQ_PROGRAM_REQUEST_ACTION_TRACK_SET_INERTIA];
 	}
-
 	else if ((char)gl_request[REQ_PROGRAM_REQUEST_SET_USER_MODE]==(char)TRUE) {
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_USER_MODE;
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=gl_request[REQ_PROGRAM_REQUEST_ACTION_USER_MODE];
 	}
-
 	else if ((char)gl_request[REQ_PROGRAM_REQUEST_DCC_SETTING]==(char)TRUE) {
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_COMMAND]=SET_DCC;
 		gl_automation[automationNumber][NEW_AUTOMATION_SET_PARAM_1]=gl_request[REQ_PROGRAM_REQUEST_ACTION_DCC_ADDRESS_SETTING];
@@ -1623,10 +1674,11 @@ char saveAutomation(char automationNumber) {
 	// update in EEPROM automation
 	return(setAutomationToEEPROM());
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// assignAutomation 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: assignAutomation
+ * Returns: void = no return.
+ * Description: Builds a COM request in gl_request from a stored automation entry.
+ * ============================================================================== */
 void assignAutomation(char automationCounter) {
 
 	char counterCommand;
@@ -1684,16 +1736,22 @@ void assignAutomation(char automationCounter) {
 
 	}
 }
-
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: setSpeed
+ * Returns: void = no return.
+ * Description: Sets target speed and inertia step for a track index (internal
+ * fixedâ€‘point).
+ * ============================================================================== */
 void setSpeed(char speed,char step,char trackNumber) {
 	gl_mutexLowIsr=1;gl_setPoint[trackNumber]=((int)speed * (int)MAXINTERNALSPEED);	gl_mutexLowIsr=0;
 		gl_mutexLowIsr=1;gl_setStep[trackNumber]=step;	gl_mutexLowIsr=0;
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// manageRequest 
-/////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: manageRequest
+ * Returns: char = TRUE on handled, FALSE on validation error.
+ * Description: Executes the request described by gl_request: events, global
+ * commands, or COM/PROG actions; may send/receive via CAN.
+ * ============================================================================== */
 char manageRequest (char sendPrompt) {
 
 	 char automationCounter;	 
@@ -1784,7 +1842,6 @@ char manageRequest (char sendPrompt) {
 			}	
 			return(TRUE);
 	}
-
 	else if ((char)gl_request[REQ_EVENT_REQUEST_TIMER_EVENT] == (char) TRUE) {
 
 		// Event from this board is sent to the others 
@@ -1809,8 +1866,7 @@ char manageRequest (char sendPrompt) {
 			return(TRUE);
 	}
 
-	//Global command
-
+    //Global command
     switch (gl_request[REQ_GLOBAL_COMMAND]) {
 
 		case STOPValue: 
@@ -1863,9 +1919,10 @@ char manageRequest (char sendPrompt) {
 				mySprintf((char *)gl_message,RESET_STRING);
 				TM1637_displayString((char *)gl_message);
 				gl_mutexLowIsr=1;gl_stopAll=TRUE;gl_mutexLowIsr=0;
+				WDTCONbits.SWDTEN = 0; // watchdog off
 				ResetEEPROM();
-				initEnvironment();
-				gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;
+				init();
+				WDTCONbits.SWDTEN = 1; // watchdog on
 			}
 			if ((char)sendPrompt==(char)TRUE) prompt((char *)gl_message);
 		 	return(TRUE); 
@@ -2248,8 +2305,7 @@ char manageRequest (char sendPrompt) {
 				}
 				else if ((char)gl_request[REQ_COMMAND_REQUEST_GET_AUTOMATION_LIST] == (char) TRUE) {
 
-					// Watchdog off
-   					 WDTCONbits.SWDTEN = 0;  
+   				 	WDTCONbits.SWDTEN = 0; // Watchdog off
 
 				 	 gl_mutexLowIsr=1;gl_stopAll=TRUE;	gl_mutexLowIsr=0;
 
@@ -2266,17 +2322,15 @@ char manageRequest (char sendPrompt) {
 
 				 	gl_mutexLowIsr=1;gl_stopAll=FALSE;	gl_mutexLowIsr=0;
 
-					// Watchdog on
- 					WDTCONbits.SWDTEN = 1;  
+    				WDTCONbits.SWDTEN = 1; // Watchdog on
 
 					return(TRUE);
 				}
 				else if ((char)gl_request[REQ_COMMAND_REQUEST_GET_DUMP] == (char) TRUE) {
 
-					// Watchdog off
-   					 WDTCONbits.SWDTEN = 0;  
+   				 	WDTCONbits.SWDTEN = 0; // Watchdog off
 
-				 	 gl_mutexLowIsr=1;gl_stopAll=TRUE;	gl_mutexLowIsr=0;
+				 	gl_mutexLowIsr=1;gl_stopAll=TRUE;	gl_mutexLowIsr=0;
 
 					for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
 						mySprintf((char *)gl_message,"");
@@ -2299,8 +2353,7 @@ char manageRequest (char sendPrompt) {
 					}
 			 	 	gl_mutexLowIsr=1;gl_stopAll=FALSE;	gl_mutexLowIsr=0; 
 
-					// Watchdog on
-					WDTCONbits.SWDTEN = 1; 
+   				 	WDTCONbits.SWDTEN = 1; // Watchdog on
 
 					return(TRUE);
 				}
@@ -2370,14 +2423,12 @@ char manageRequest (char sendPrompt) {
 		}
 	}
 }
-
-//////////////////////////////////////////////////////////////////////////////
-// UART
-//////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////
-// initUSART
-//////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: initUSART
+ * Returns: void = no return.
+ * Description: Initializes the UART (pins, baud rate, interrupts) and input 
+ * buffer on master board.
+ * ============================================================================== */
 void initUSART(void) {
 
  	char 	readUSARTPointer;
@@ -2387,28 +2438,32 @@ void initUSART(void) {
 	for(readUSARTPointer=0;readUSARTPointer<USARTBUFFERSIZE;readUSARTPointer++) {
 		gl_receivedUSARTData[readUSARTPointer]=0;
 	}
+	gl_receivedUSARTPointer=0;
+	gl_getDataUSARTPointer=0;
 
     //RX and TX pin configuration
 	TRISC=0b10110000; //  RC4, RC5, RC7 (RX) in (RC6 TX RS232 out, could be updated as standard GPIO in initEnvironment())
 
-    // USART module configuration
+     // USART module configuration
     TXSTAbits.TXEN = 1; // Activate USART transmitter
     TXSTAbits.SYNC = 0; // Asynchronous mode
     TXSTAbits.BRGH = 1; // High Baud Rate Select bit
     RCSTAbits.SPEN = 1; // Enable serial module (TX and RX)
     RCSTAbits.CREN = 1; // Enable USART receiver
+    BAUDCONbits.BRG16 = 1;  // Mode 16 bits
+
+    SPBRGH = 0;
+    SPBRG  = 15; // 500000 bauds
    
     // Speed register configuration
-    SPBRG = ((_XTAL_FREQ / 16) / _BAUD) - 1; // _BAUD defined in main.h
-
-	gl_receivedUSARTPointer=0;
-	gl_getDataUSARTPointer=0;
 
     PIE1bits.RCIE = 1;      // Enable USART interrupt reception
 }
-/*****************************************************************************/
-/* sendUSART */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: sendUSART
+ * Returns: void = no return.
+ * Description: Blocking transmit of one byte over UART on master board.
+ * ============================================================================== */
 void sendUSART(char data){
 
 	if ((char)gl_master==(char)FALSE)return;
@@ -2418,9 +2473,12 @@ void sendUSART(char data){
 	TXREG = data;
 	while(!PIR1bits.TXIF);
 }
-/*****************************************************************************/
-/* getInputRequestFromUSART() */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: getInputRequestFromUSART
+ * Returns: char = TRUE when a full line is ready, FALSE otherwise.
+ * Description: Consumes bytes from the UART ring buffer to assemble a lineâ€‘based 
+ * input string (CRâ€‘terminated).
+ * ============================================================================== */
 char getInputRequestFromUSART(char *inputString,char *inputCounter) {
 
    char  getData;
@@ -2457,9 +2515,12 @@ char getInputRequestFromUSART(char *inputString,char *inputCounter) {
 		return(FALSE);
 	}	
 }
-/*****************************************************************************/
-/* prompt*/
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: prompt
+ * Returns: void = no return.
+ * Description: Prints a shellâ€‘like prompt 'BRD>' + message via _user_putc and 
+ * flushes.
+ * ============================================================================== */
 void prompt(char* gl_message) {
 
 	int i;
@@ -2488,26 +2549,29 @@ void prompt(char* gl_message) {
     }
 	flushOut();	
 }
-//////////////////////////////////////////////////////////////////////////////
-// CAN
-//////////////////////////////////////////////////////////////////////////////
-/*****************************************************************************/
-/* flushOut*/
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: flushOut
+ * Returns: void = no return.
+ * Description: Emits endâ€‘ofâ€‘print marker on output channel.
+ * ============================================================================== */
 void flushOut(void) {
 	_user_putc(ENDOFPRINTFTRAME);
 }
-
-/*****************************************************************************/
-/* CANsendDelay*/
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: CANsendDelay
+ * Returns: void = no return.
+ * Description: Small busyâ€‘wait delay between CAN frames.
+ * ============================================================================== */
 void CANsendDelay(void) {
 	short	delay;
 	for(delay=0;delay<WAITDELAYTRAMECAN;delay++);
 }
-/*****************************************************************************/
-/* sendPrintToCAN() */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: sendPrintToCAN
+ * Returns: void = no return.
+ * Description: Packages the output buffer into CAN 'PRINT' frames with header/footer
+ * and sends.
+ * ============================================================================== */
 void sendPrintToCAN(void){
 
 	long 	id;			// Id of sender
@@ -2522,9 +2586,6 @@ void sendPrintToCAN(void){
 	dataLen=8;
 	flags=ECAN_TX_STD_FRAME;
 	id=gl_boardNumber;
-
-	// Watchdog off
-	WDTCONbits.SWDTEN = 0;
 
 	// header trame
 	for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) dataOut[dataOutCounter]=TRAMEPRINTHEADER;
@@ -2559,15 +2620,13 @@ void sendPrintToCAN(void){
 	while(!ECANSendMessage(id,dataOut,dataLen,flags));
 	CANsendDelay();
 
-	// Watchdog on
-	WDTCONbits.SWDTEN = 1;
-
-
 }
-
-/*****************************************************************************/
-/* _user_putc*/
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: _user_putc
+ * Returns: int = the character written.
+ * Description: Writes a character to UART on master or queues to CAN on slave; 
+ * triggers CAN send on buffer/full or terminator.
+ * ============================================================================== */
 int _user_putc (char c) {
 
 	// On master board send to UART via standart putc()
@@ -2584,16 +2643,18 @@ int _user_putc (char c) {
 	}
 	return(c);
 }
-
-/*****************************************************************************/
-/* sendRequestToCAN() */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: sendRequestToCAN
+ * Returns: void = no return.
+ * Description: Compresses gl_request and transmits it as a CAN 'REQUEST' frame 
+ * sequence; restores request via RLE decode.
+ * ============================================================================== */
 void sendRequestToCAN(void) {
 	
-	 long 	id;			// Id of sender
-     BYTE 	dataOut[8];	// DATA to CAN	
-	 char 	dataCounter;
-	 char	dataOutCounter;
+	long 	id;			// Id of sender
+    BYTE 	dataOut[8];	// DATA to CAN	
+	char 	dataCounter;
+	char	dataOutCounter;
 	BYTE dataLen; 				// Number of bytes transmitted in the gl_message
 	ECAN_TX_MSG_FLAGS flags; 	// Flags
 	char trameSize;
@@ -2636,11 +2697,12 @@ void sendRequestToCAN(void) {
 	while(!ECANSendMessage(id,dataOut,dataLen,flags));
 	uncompressData(); // get back to initial data for other action in manageRequest()
 }
-
-/*****************************************************************************/
-/* CAN_SendSync(void)
-/*****************************************************************************/
-
+/* ==============================================================================
+ * Function: CAN_SendSync
+ * Returns: void = no return.
+ * Description: Broadcasts a CAN SYNC frame and reâ€‘phases timers and counters 
+ * across boards.
+ * ============================================================================== */
 void CAN_SendSync(void){
 
 	BYTE dataLen; 				// Number of bytes transmitted in the gl_message
@@ -2670,10 +2732,12 @@ void CAN_SendSync(void){
     gl_mutexLowIsr = 0;
 	CANsendDelay();
 }
-
-/*****************************************************************************/
-/* getInputRequestFromCAN() */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: getInputRequestFromCAN
+ * Returns: char = TRUE when a request was assembled, FALSE otherwise.
+ * Description: Parses incoming CAN buffers, extracting REQUEST or PRINT trames; 
+ * fills gl_request or prints content.
+ * ============================================================================== */
 char getInputRequestFromCAN(void) {
 	
 	char	requestHeaderTrameDetected;
@@ -2713,16 +2777,12 @@ char getInputRequestFromCAN(void) {
 					gl_requestInputCANtrameStart[bufferNumber]=gl_inputCANReadBufferPointer[bufferNumber]+1;
 					if ((int)gl_requestInputCANtrameStart[bufferNumber]>=MAXTRAMESIZE)gl_requestInputCANtrameStart[bufferNumber]=0;
 				}
-				
-				// PRINT HEADER
 				else if (printHeaderTrameDetected==8) {
 					gl_inputCANmode[bufferNumber]=CAN_PRINT;
 					printHeaderTrameDetected=0;
 					gl_printInputCANtrameStart[bufferNumber]=gl_inputCANReadBufferPointer[bufferNumber]+1;
 					if ((char)gl_printInputCANtrameStart[bufferNumber]>=(char)MAXTRAMESIZE)gl_printInputCANtrameStart[bufferNumber]=0;
 				}
-	
-				// REQUEST FOOTER
 				else if (requestFooterTrameDetected==8 && gl_inputCANmode[bufferNumber]==CAN_REQUEST) {
 					gl_inputCANmode[bufferNumber]=CAN_FREE; 
 					requestTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
@@ -2741,25 +2801,17 @@ char getInputRequestFromCAN(void) {
 					if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
 						return(uncompressData()); // Mean request available to proceed
 				}
-					
-				// PRINT FOOTER	
 				else if (printFooterTrameDetected==8 && gl_inputCANmode[bufferNumber]==CAN_PRINT) {
 					gl_inputCANmode[bufferNumber]=CAN_FREE; 
 					printTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
 					if (printTrameEnd<0)printTrameEnd+=MAXTRAMESIZE;
-					dataInCounter=gl_printInputCANtrameStart[bufferNumber];
-	
-					// Watchdog off
-   					 WDTCONbits.SWDTEN = 0;
+					dataInCounter=gl_printInputCANtrameStart[bufferNumber];	
 
 					while(dataInCounter!=printTrameEnd) {
 						if ((char)gl_master==(char)TRUE && (char)gl_inputCANbuffer[bufferNumber][dataInCounter]!=(char)0) _user_putc(gl_inputCANbuffer[bufferNumber][dataInCounter]);
 						dataInCounter++;
 						if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
 					}
-
-					// Watchdog on
-   					 WDTCONbits.SWDTEN = 1;
 
 					gl_inputCANReadBufferPointer[bufferNumber]++;		
 					if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
@@ -2773,14 +2825,226 @@ char getInputRequestFromCAN(void) {
 	}
 	return(FALSE); // Nothing to do
 }
+/* ==============================================================================
+ * Function: set7segmentPort
+ * Returns: void = no return.
+ * Description: Sets the TM1637 lines (CLK,DIO) on a shared port mapping.
+ * ============================================================================== */
+void set7segmentPort(char CLK, char DIO) {
 
-//////////////////////////////////////////////////////////////////////////////
-// INTERRUPT AND SIGNAL MANAGEMENT
-//////////////////////////////////////////////////////////////////////////////
+	char myPortE; // used to better synchronised output updates
+	char delay;
 
-/////////////////////////////////////////////////////////////////////////////
-// setDcc
-/////////////////////////////////////////////////////////////////////////////
+    myPortE= (CLK<<1) + (DIO<<2);
+    LATE=myPortE;
+}
+/* ==============================================================================
+ * Function: twoWire_init
+ * Returns: void = no return.
+ * Description: Initializes pseudo twoâ€‘wire interface for TM1637.
+ * ============================================================================== */
+void twoWire_init(void) {
+	set7segmentPort(0,0);
+}
+/* ==============================================================================
+ * Function: twoWire_start
+ * Returns: void = no return.
+ * Description: Generates TM1637 start sequence.
+ * ============================================================================== */
+void twoWire_start(void){
+    
+	set7segmentPort(1,1);
+	set7segmentPort(1,0);
+}
+/* ==============================================================================
+ * Function: twoWire_stop
+ * Returns: void = no return.
+ * Description: Generates TM1637 stop sequence.
+ * ============================================================================== */
+void twoWire_stop(void){
+	set7segmentPort(0,0);
+	set7segmentPort(1,0);
+	set7segmentPort(1,1);
+}
+/* ==============================================================================
+ * Function: twoWire_ack
+ * Returns: void = no return.
+ * Description: Generates a TM1637 dummy ACK pulse.
+ * ============================================================================== */
+void twoWire_ack(void){
+
+	set7segmentPort(0,0);
+	set7segmentPort(1,0);
+}
+/* ==============================================================================
+ * Function: twoWire_write
+ * Returns: char = unspecified / not used.
+ * Description: Clocks out 8 bits LSBâ€‘first on TM1637 (bitâ€‘bang).
+ * ============================================================================== */
+char twoWire_write(char data){
+
+	char tx;
+	char DIO;
+	for(tx = 0 ; tx < 8 ; tx++) {
+		DIO = ((data >> tx) & 0x01) ? 1 : 0 ; //LSB first (Real 12c sends MSB first)
+		set7segmentPort(0,DIO);
+		set7segmentPort(1,DIO);
+		set7segmentPort(0,DIO);
+	}
+}
+/* ==============================================================================
+ * Function: TM1637_init
+ * Returns: void = no return.
+ * Description: Initializes the TM1637 display driver.
+ * ============================================================================== */
+void TM1637_init(void){
+    twoWire_init();    
+}
+/* ==============================================================================
+ * Function: TM1637_write
+ * Returns: void = no return.
+ * Description: Converts two 3â€‘digit numbers to 6 digits and writes segment bytes.
+ * ============================================================================== */
+void TM1637_write(short number1,short number2){
+
+    char str1Num[4];
+    char str2Num[4];
+    char strNum[8];
+    char size;
+
+	mySprintf(str1Num,"%3d",number1); 
+	mySprintf(str2Num,"%3d",number2); // 3 characters
+	mySprintf(strNum,"%s%s",str2Num,str1Num);
+
+    for(size=5;size>=0;size--) {
+		if ((char)strNum[size]==(char)' ')twoWire_write(digits[11]);
+		else if ((char)strNum[size]==(char)'-')twoWire_write(digits[10]);
+        else {
+			char i = strNum[size] - '0';  //Get index 0 - 9 
+        	twoWire_write(digits[i]);
+		}
+        twoWire_ack();
+    }
+}
+/* ==============================================================================
+ * Function: TM1637_display
+ * Returns: void = no return.
+ * Description: Configures TM1637 and displays two numbers with given brightness.
+ * ============================================================================== */
+void TM1637_display(short number1,short number2){  
+
+	TM1637_setBrightness(4);
+
+    twoWire_start();
+    twoWire_write(0x40);
+    twoWire_ack();
+    twoWire_stop();
+    
+    twoWire_start();
+    twoWire_write(0xC0);
+    twoWire_ack();
+    TM1637_write(number1,number2);
+    
+    twoWire_stop();
+
+}
+/* ==============================================================================
+ * Function: charToSegments
+ * Returns: char = segment bitmap.
+ * Description: Maps ASCII char to 7â€‘segment encoding for commonâ€‘anode TM1637.
+ * ============================================================================== */
+char charToSegments(char c) {
+
+    if((char)c >= (char)'0' && (char)c <= (char)'9')        return digits[c - '0'];
+    else if((char)c == (char)'-')               return digits[10];
+    else if((char)c == (char)' ')               return digits[11];
+    else if((char)c >= (char)'A' && (char)c <= (char)'Z')   return digits[12 + (c - 'A')];
+    else if((char)c >= (char)'a' && (char)c <= (char)'z')   return digits[12 + (c - 'a')];
+    else                            return 0x00;
+}
+/* ==============================================================================
+ * Function: TM1637_writeStringWindow
+ * Returns: void = no return.
+ * Description: Writes exactly 6 characters to TM1637 using physical position mapping.
+ * ============================================================================== */
+void TM1637_writeStringWindow(const char *s, char start, char len) {
+
+	// physical order of the positions on screen (0 = left, 5 = right)
+	// adjust this array if the order is different
+
+    const char mapping[6] = {2,1,0,5,4,3};
+
+    char i;
+    for (i = 0; i < 6; i++) {
+        char idx = start + mapping[i];
+        char ch;
+        if (idx < len) ch = s[idx];
+        else ch = ' ';
+        twoWire_write(charToSegments(ch));
+        twoWire_ack();
+    }
+}
+/* ==============================================================================
+ * Function: TM1637_displayString
+ * Returns: void = no return.
+ * Description: Displays a string on 6 digits; scrolls if longer than 6.
+ * ============================================================================== */
+void TM1637_displayString(char *string) {
+
+    char len;
+    char start;
+
+	// init
+	len = strlen(string);
+
+	TM1637_setBrightness(4);
+
+    if (len <= 6) {
+        twoWire_start();
+        twoWire_write(0x40);
+        twoWire_ack();
+        twoWire_stop();
+
+        twoWire_start();
+        twoWire_write(0xC0);
+        twoWire_ack();
+        TM1637_writeStringWindow(string, 0, len);
+        twoWire_stop();
+    } 
+    else {
+        for (start = 0; start <= (len - 6); start++) {
+            twoWire_start();
+            twoWire_write(0x40);
+            twoWire_ack();
+            twoWire_stop();
+
+            twoWire_start();
+            twoWire_write(0xC0);
+            twoWire_ack();
+            TM1637_writeStringWindow(string, start, len);
+            twoWire_stop();
+
+            delayMainLoop(1);
+        }
+    }
+}
+/* ==============================================================================
+ * Function: TM1637_setBrightness
+ * Returns: void = no return.
+ * Description: Sets TM1637 brightness (0..8). 0 turns display off.
+ * ============================================================================== */
+void TM1637_setBrightness(char level){  
+
+    twoWire_start();
+    twoWire_write(0x87 + level);
+    twoWire_ack();
+    twoWire_stop();
+}
+/* ==============================================================================
+ * Function: setDcc
+ * Returns: void = no return.
+ * Description: Builds a full DCC packet from address and command into gl_dcc buffer.
+ * ============================================================================== */
 void setDcc(char address, char command) {
 
 	 char i;			
@@ -2819,211 +3083,13 @@ void setDcc(char address, char command) {
 	gl_dcc[bitNumber++]=1;			
 	gl_dcc[bitNumber++]=1; // Only one is enough, but in case of....
 }
-//////////////////////////////////////////////////////////////////////////////
-// function set7segmentPort
-//////////////////////////////////////////////////////////////////////////////
-void set7segmentPort(char CLK, char DIO) {
-
-	char myPortE; // used to better synchronised output updates
-	char delay;
-
-    myPortE= (CLK<<1) + (DIO<<2);
-    LATE=myPortE;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// function twoWire_init()
-/////////////////////////////////////////////////////////////////////////////
-void twoWire_init(void) {
-	set7segmentPort(0,0);
-}
-/////////////////////////////////////////////////////////////////////////////
-// function twoWire_start()
-/////////////////////////////////////////////////////////////////////////////
-void twoWire_start(void){
-    
-	set7segmentPort(1,1);
-	set7segmentPort(1,0);
-}
-/////////////////////////////////////////////////////////////////////////////
-// function twoWire_stop()
-/////////////////////////////////////////////////////////////////////////////
-void twoWire_stop(void){
-	set7segmentPort(0,0);
-	set7segmentPort(1,0);
-	set7segmentPort(1,1);
-}
-/////////////////////////////////////////////////////////////////////////////
-// function twoWire_ack()
-/////////////////////////////////////////////////////////////////////////////
-void twoWire_ack(void){
-
-	set7segmentPort(0,0);
-	set7segmentPort(1,0);
-}
-/////////////////////////////////////////////////////////////////////////////
-// function twoWire_write(char data)
-/////////////////////////////////////////////////////////////////////////////
-char twoWire_write(char data){
-
-	char tx;
-	char DIO;
-	for(tx = 0 ; tx < 8 ; tx++) {
-		DIO = ((data >> tx) & 0x01) ? 1 : 0 ; //LSB first (Real 12c sends MSB first)
-		set7segmentPort(0,DIO);
-		set7segmentPort(1,DIO);
-		set7segmentPort(0,DIO);
-	}
-}
-/////////////////////////////////////////////////////////////////////////////
-// function 
-/////////////////////////////////////////////////////////////////////////////
-void TM1637_init(void){
-    twoWire_init();    
-}
-/////////////////////////////////////////////////////////////////////////////
-// function TM1637_write(char number1, char number2)
-/////////////////////////////////////////////////////////////////////////////
-void TM1637_write(short number1,short number2){
-		
-
-    char str1Num[4];
-    char str2Num[4];
-    char strNum[8];
-    char size;
-
-	mySprintf(str1Num,"%3d",number1); 
-	mySprintf(str2Num,"%3d",number2); // 3 characters
-	mySprintf(strNum,"%s%s",str2Num,str1Num);
-
-    for(size=5;size>=0;size--) {
-		if ((char)strNum[size]==(char)' ')twoWire_write(digits[11]);
-		else if ((char)strNum[size]==(char)'-')twoWire_write(digits[10]);
-        else {
-			char i = strNum[size] - '0';  //Get index 0 - 9 
-        	twoWire_write(digits[i]);
-		}
-        twoWire_ack();
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// main function for display TM1637_display(char number1, char number2)
-/////////////////////////////////////////////////////////////////////////////
-void TM1637_display(short number1,short number2){  
-
-	TM1637_setBrightness(4);
-
-    twoWire_start();
-    twoWire_write(0x40);
-    twoWire_ack();
-    twoWire_stop();
-    
-    twoWire_start();
-    twoWire_write(0xC0);
-    twoWire_ack();
-    TM1637_write(number1,number2);
-    
-    twoWire_stop();
-
-}
-/////////////////////////////////////////////////////////////////////////////
-// Convertit un caractère ASCII en code 7 segments (Common Anode)
-/////////////////////////////////////////////////////////////////////////////
-char charToSegments(char c) {
-    if((char)c >= (char)'0' && (char)c <= (char)'9')        return digits[c - '0'];
-    else if((char)c == (char)'-')               return digits[10];
-    else if((char)c == (char)' ')               return digits[11];
-    else if((char)c >= (char)'A' && (char)c <= (char)'Z')   return digits[12 + (c - 'A')];
-    else if((char)c >= (char)'a' && (char)c <= (char)'z')   return digits[12 + (c - 'a')];
-    else                            return 0x00;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Pause active 0.5 s
-/////////////////////////////////////////////////////////////////////////////
-void delayMainLoop(int delay) {
-    long i;
-    for(i = 0; i <(long)(delay*5000UL); i++);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Écrit exactement 6 caractères (fenêtre) dans l'ordre correct à l'écran
-/////////////////////////////////////////////////////////////////////////////
-void TM1637_writeStringWindow(const char *s, char start, char len) {
-    // ordre physique des positions à l'écran (0 = gauche, 5 = droite)
-    // adapte ce tableau si l'ordre est différent
-    const char mapping[6] = {2,1,0,5,4,3};
-
-    char i;
-    for (i = 0; i < 6; i++) {
-        char idx = start + mapping[i];
-        char ch;
-        if (idx < len) ch = s[idx];
-        else ch = ' ';
-        twoWire_write(charToSegments(ch));
-        twoWire_ack();
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Affiche une chaîne sur 6 digits, défilement si >6
-/////////////////////////////////////////////////////////////////////////////
-void TM1637_displayString(char *string) {
-    char len = strlen(string);
-    char start;
-
-	TM1637_setBrightness(4);
-
-    if (len <= 6) {
-        twoWire_start();
-        twoWire_write(0x40);
-        twoWire_ack();
-        twoWire_stop();
-
-        twoWire_start();
-        twoWire_write(0xC0);
-        twoWire_ack();
-        TM1637_writeStringWindow(string, 0, len);
-        twoWire_stop();
-    } 
-    else {
-        for (start = 0; start <= (len - 6); start++) {
-            twoWire_start();
-            twoWire_write(0x40);
-            twoWire_ack();
-            twoWire_stop();
-
-            twoWire_start();
-            twoWire_write(0xC0);
-            twoWire_ack();
-            TM1637_writeStringWindow(string, start, len);
-            twoWire_stop();
-
-            delayMainLoop(1);
-        }
-    }
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Valid brightness values: 0 - 8.
-// 0 = display off.
-// main function for display TM1637_setBrightness(char level)
-/////////////////////////////////////////////////////////////////////////////
-void TM1637_setBrightness(char level){  
-
-    twoWire_start();
-    twoWire_write(0x87 + level);
-    twoWire_ack();
-    twoWire_stop();
-}
-
-
-//////////////////////////////////////////////////////////////////////////////
-// function SetPort
-//////////////////////////////////////////////////////////////////////////////
+/* ==============================================================================
+ * Function: setPort
+ * Returns: void = no return.
+ * Description: Updates microcontroller output latches (A..D) from current state
+ * variables; handles stopAll.
+ * ============================================================================== */
 void setPort(void){
-
 
 	char myPortA; // used to better synchronised output updates
 	char myPortB; // used to better synchronised output updates
@@ -3053,19 +3119,28 @@ void setPort(void){
 
 }
 
-/*****************************************************************************/
-/* interrupt_at_high_vector */
-/*****************************************************************************/
+/******************************************************************************** 
+ * interrupt_at_high_vector 
+ ********************************************************************************/
+
 #pragma code high_vector=0x08
+/* ==============================================================================
+ * Function: interrupt_at_high_vector
+ * Returns: void = no return.
+ * Description: Call high interrupt code
+ * ============================================================================== */
 void interrupt_at_high_vector(void){
     _asm goto high_isr _endasm
 }
 #pragma code
 
 #pragma interrupt high_isr
-/****************************************************************************/
-/* high_isr */
-/****************************************************************************/
+/* ==============================================================================
+ * Function: high_isr
+ * Returns: void = ISR, no return.
+ * Description: Hight priority interrupt service routine: receives CAN messages, 
+ * sync handling, buffers data, and UART RX.
+ * ============================================================================== */
 void high_isr(void){
 
 	BYTE dataLen; 				// Number of bytes transmitted in the message
@@ -3133,19 +3208,27 @@ void high_isr(void){
 }
 #pragma code
 
-/*****************************************************************************/
-/* low_interrupt */
-/*****************************************************************************/
+/********************************************************************************
+ * low_interrupt 
+ ********************************************************************************/
 #pragma code low_vector=0x18
+/* ==============================================================================
+ * Function: low_interrupt
+ * Returns: void = vector stub.
+ * Description: Lowâ€‘priority interrupt vector stub that jumps to low_isr.
+ * ============================================================================== */
 void low_interrupt (void){
     _asm goto low_isr _endasm
 }
 #pragma code
 
 #pragma interruptlow low_isr
-/*****************************************************************************/
-/* low_isr_task */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: low_isr_task
+ * Returns: void = no return.
+ * Description: Lowâ€‘priority background task called from ISR: manages flashing, 
+ * reads knobs/ADC and computes averages.
+ * ============================================================================== */
 void low_isr_task(void) {
 
 char 	bitStateCounter;
@@ -3154,6 +3237,7 @@ char 	selectBitDelay;
 char 	bitNumber;
 char 	bitValue;
 short 	ADC;
+int 	knobValue1;
 
 	if (gl_goFlashingCounter==1)gl_flashingCounter++;
 	if (((gl_flashingCounter & 0xFFF) == 0) || ((gl_flashingCounter & 0xFFF) == 0x7FF))gl_goFlashingCounter=0;
@@ -3167,7 +3251,7 @@ short 	ADC;
 		// KNOB VALUE
 		ADCON0=INKNOB0;
 		ADCON0bits.GO = 1;                            // ADCON0.GODONE = 1 
-		while((char)ADCON0bits.GO == (char)1);                    // wait till GODONE bit is zero
+		while((char)ADCON0bits.GO == (char)1);        // wait till GODONE bit is zero
 		ADC = ADRESH;    //Read converted result 
 		ADC = (ADC<<8) + ADRESL;
 
@@ -3175,16 +3259,16 @@ short 	ADC;
 
 		ADCON0=INKNOB1;
 		ADCON0bits.GO = 1;                            // ADCON0.GODONE = 1 
-		while((char)ADCON0bits.GO == (char)1);                    // wait till GODONE bit is zero
+		while((char)ADCON0bits.GO == (char)1);        // wait till GODONE bit is zero
 		ADC = ADRESH;    //Read converted result 
 		ADC = (ADC<<8) + ADRESL;
 
 		gl_adcKnobValue1+=ADC;
 
-		if(gl_numberKnobData>=20) {
+		if(gl_numberKnobData>=40) {
 			gl_numberKnobData=0;
-			gl_adcKnobValue0=gl_adcKnobValue0/10;
-			gl_adcKnobValue1=gl_adcKnobValue1/10;
+			gl_adcKnobValue0=gl_adcKnobValue0/20;
+			gl_adcKnobValue1=gl_adcKnobValue1/20;
 
 			if (gl_calibKnob==1) {
 				if (gl_minAdcKnobValue0>gl_adcKnobValue0)gl_minAdcKnobValue0=gl_adcKnobValue0;
@@ -3196,18 +3280,21 @@ short 	ADC;
 				
 			}
 
+			// Speed
 			gl_knobValue0=(31*((long)(gl_adcKnobValue0-gl_minAdcKnobValue0))/(long)(gl_deltaKnob0))-15;
-			gl_knobValue1=(101*(long)(gl_adcKnobValue1-gl_minAdcKnobValue1))/(long)(gl_deltaKnob1);
 			if (gl_knobValue0>15)gl_knobValue0=15;
-			else if (gl_knobValue0==-1 || gl_knobValue0==1)gl_knobValue0=0;
-			if (gl_knobValue1>100)gl_knobValue1=100;
-			
+			else if (gl_knobValue0==-1 || gl_knobValue0==1)gl_knobValue0=0; // For stability around 0
 
+			// Inertia
+			knobValue1=(101*(long)(gl_adcKnobValue1-gl_minAdcKnobValue1))/(long)(gl_deltaKnob1);
+			if (knobValue1>100)knobValue1=100;
+			if(gl_knobValue1==0 && knobValue1==100)knobValue1=0; // Should happen if potentiometer lost contact
+			gl_knobValue1=knobValue1;
+			
 			gl_adcKnobValue0=0;
 			gl_adcKnobValue1=0;
 		}
 	}
-
 
 	// GPIO IN Detection
 	if((char)TRISDbits.RD1==(char)1 && (char)PORTDbits.RD1!=(char)gl_GPIOchar[0]){
@@ -3256,6 +3343,9 @@ short 	ADC;
 
 	if ((char)gl_stopAll==(char)FALSE) {
 
+		gl_trackNumber=gl_trackNumber+1;
+		if (gl_trackNumber>3)gl_trackNumber=0;
+
 		// TIMER
 		gl_timer--;
 		if ((unsigned short)gl_timer==(unsigned short)0) {
@@ -3267,9 +3357,6 @@ short 	ADC;
 			gl_timerNumber++;
 			if(gl_timerNumber>MAXTIMER)gl_timerNumber=0;
 		}
-
-		gl_trackNumber=gl_trackNumber+1;
-		if (gl_trackNumber>3)gl_trackNumber=0;
 
 		//////////// MODE ANALOG ////////////////
 		if(gl_boardMode==ANAValue) {
@@ -3306,45 +3393,48 @@ short 	ADC;
 				}
 			}
 
-			if (gl_speed[gl_trackNumber]>=gl_speedCounter) {
-				if (gl_direction[gl_trackNumber]==TRACK_FORWARD) {
-		    		switch (gl_trackNumber) {
-		           		case 0:gl_S1T0char=1; gl_S2T0char=0;break;
-		          	 	case 1:gl_S1T1char=1; gl_S2T1char=0;break;
-		           	 	case 2:gl_S1T2char=1; gl_S2T2char=0;break;
-		           		case 3:gl_S1T3char=1; gl_S2T3char=0;break;
-		        	}
-		    	}
-		    	if (gl_direction[gl_trackNumber]==TRACK_BACKWARD) {
-		        	switch (gl_trackNumber) {
-		            	case 0:gl_S1T0char=0; gl_S2T0char=1;break;
-		            	case 1:gl_S1T1char=0; gl_S2T1char=1;break;
-		            	case 2:gl_S1T2char=0; gl_S2T2char=1;break;
-		            	case 3:gl_S1T3char=0; gl_S2T3char=1;break;
-		        	}
-		    	}
-		    	if (gl_direction[gl_trackNumber]==TRACK_STOP) {
-		        	switch (gl_trackNumber) {
-		            	case 0:gl_S1T0char=0; gl_S2T0char=0;break;
-		            	case 1:gl_S1T1char=0; gl_S2T1char=0;break;
-		            	case 2:gl_S1T2char=0; gl_S2T2char=0;break;
-		            	case 3:gl_S1T3char=0; gl_S2T3char=0;break;
-		        	}
-		    	}
+			// Set Port Value when all tracks have been updated
+			if (gl_trackNumber==0) {
+				for(gl_trackNumber=0;gl_trackNumber<4;gl_trackNumber++) {
+					if (gl_speed[gl_trackNumber]>=gl_speedCounter) {
+						if (gl_direction[gl_trackNumber]==TRACK_FORWARD) {
+				    		switch (gl_trackNumber) {
+				           		case 0:gl_S1T0char=1; gl_S2T0char=0;break;
+				          	 	case 1:gl_S1T1char=1; gl_S2T1char=0;break;
+				           	 	case 2:gl_S1T2char=1; gl_S2T2char=0;break;
+				           		case 3:gl_S1T3char=1; gl_S2T3char=0;break;
+				        	}
+				    	}
+				    	if (gl_direction[gl_trackNumber]==TRACK_BACKWARD) {
+				        	switch (gl_trackNumber) {
+				            	case 0:gl_S1T0char=0; gl_S2T0char=1;break;
+				            	case 1:gl_S1T1char=0; gl_S2T1char=1;break;
+				            	case 2:gl_S1T2char=0; gl_S2T2char=1;break;
+				            	case 3:gl_S1T3char=0; gl_S2T3char=1;break;
+				        	}
+				    	}
+				    	if (gl_direction[gl_trackNumber]==TRACK_STOP) {
+				        	switch (gl_trackNumber) {
+				            	case 0:gl_S1T0char=0; gl_S2T0char=0;break;
+				            	case 1:gl_S1T1char=0; gl_S2T1char=0;break;
+				            	case 2:gl_S1T2char=0; gl_S2T2char=0;break;
+				            	case 3:gl_S1T3char=0; gl_S2T3char=0;break;
+				        	}
+				    	}
+					}
+					else {
+						switch (gl_trackNumber) {
+				        	case 0:gl_S1T0char=0; gl_S2T0char=0;break;
+				        	case 1:gl_S1T1char=0; gl_S2T1char=0;break;
+				        	case 2:gl_S1T2char=0; gl_S2T2char=0;break;
+				        	case 3:gl_S1T3char=0; gl_S2T3char=0;break;
+				    	}
+					}
+				}
+				gl_trackNumber=0;
+				setPort();
 			}
-			else {
-				switch (gl_trackNumber) {
-		        	case 0:gl_S1T0char=0; gl_S2T0char=0;break;
-		        	case 1:gl_S1T1char=0; gl_S2T1char=0;break;
-		        	case 2:gl_S1T2char=0; gl_S2T2char=0;break;
-		        	case 3:gl_S1T3char=0; gl_S2T3char=0;break;
-		    	}
-			}
-			setPort();
 		}
-
-		//////////// MODE DIGITAL ////////////////
-
 		else if(gl_boardMode==DCCValue && gl_dcc_ready==0) {		
 
 			for (bitStateCounter=0;bitStateCounter<FRAME_SIZE;bitStateCounter++) {
@@ -3421,11 +3511,11 @@ short 	ADC;
 	}
 	else setPort();
 }
-
-/*****************************************************************************/
-/* low_isr */
-/*****************************************************************************/
-
+/* ==============================================================================
+ * Function: low_isr
+ * Returns: void = no return.
+ * Description: Call low interrupt code
+ * ============================================================================== */
 void low_isr(void){
 	
 	if (!gl_mutexLowIsr) {
@@ -3442,14 +3532,12 @@ void low_isr(void){
     }
 }
 #pragma code
-
-//////////////////////////////////////////////////////////////////////////////
-// CODE INITIALISATION
-//////////////////////////////////////////////////////////////////////////////
-
-/*****************************************************************************/
-/* initEnvironment */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: initEnvironment
+ * Returns: void = no return.
+ * Description: Init all the structures and global variables
+ * Warning : Don't call this function without disabling access to low_isr
+ * ============================================================================== */
 void initEnvironment(void) {
 
     char trackNumber;
@@ -3485,11 +3573,10 @@ void initEnvironment(void) {
 		gl_GPIONotification[GPIOCounter]=TRUE; // To read current value on TCO
 		gl_mutexLowIsr=0; 
 	}
-	gl_mutexLowIsr=1; gl_goFlashingCounter=1;gl_mutexLowIsr=0; 
+	gl_goFlashingCounter=1;
 
 	// Internal setting initialisation //////////////////////////
     for(trackNumber=0;trackNumber<4;trackNumber++) {
-		gl_mutexLowIsr=1;
 		gl_average[trackNumber]=0;
 		gl_noVehicule[trackNumber]=0;
 		gl_speed[trackNumber]=0;
@@ -3500,29 +3587,22 @@ void initEnvironment(void) {
 		gl_curSpeed[trackNumber]=0;
 		gl_OUTSTATchar[trackNumber]=0;
 		gl_trackNotification[trackNumber]=FALSE;
-		gl_mutexLowIsr=0;
     }
 
 	// TRACK //////////////////////////
 	for(OUTCounter=0;OUTCounter<6;OUTCounter++) {gl_mutexLowIsr=1;gl_OUTchar[OUTCounter]=1;gl_mutexLowIsr=0;}
-	gl_mutexLowIsr=1;
 	gl_trackNumber=0;
 	gl_speedCounter=0;
 	gl_syncRequested=0;
 	gl_trackCalibration=FALSE;
-	gl_mutexLowIsr=0;
 
 	// TIMER //////////////////////////
 	for(TIMERCounter=0;TIMERCounter<MAXTIMER;TIMERCounter++) {
-		gl_mutexLowIsr=1;
 		gl_TIMERValue[TIMERCounter]=0;
 		gl_TIMERNotification[TIMERCounter]=FALSE;
-		gl_mutexLowIsr=0;
 	}
-	gl_mutexLowIsr=1;
 	gl_timerNumber=0;
 	gl_timer=0;
-	gl_mutexLowIsr=0;
 
 	// DCC TEMPO BETWEEN TWO TRAMES
     gl_dcc_ready=INITWAITDCCCOUNTER;
@@ -3531,7 +3611,6 @@ void initEnvironment(void) {
 	initRequest();
 
 	// Knob
-	gl_mutexLowIsr=1;
 	gl_adcKnobValue0=0;
 	gl_adcKnobValue1=0;
 	gl_getKnobValue=0;
@@ -3539,35 +3618,45 @@ void initEnvironment(void) {
 	gl_knobValue0=0;
 	gl_knobValue1=0;
 	gl_numberKnobData=0;
-	gl_mutexLowIsr=0;
-
 
 	// Default user mode is automatic 
-	gl_mutexLowIsr=1;gl_userMode=AUTOMATICValue;gl_mutexLowIsr=0;
+	gl_userMode=AUTOMATICValue;
+	gl_stopAll=FALSE;
 
 	// Update form EEPROM
 	ReadEEPROMConfig();
 
-	gl_mutexLowIsr=1;
 	if((char)TRISDbits.RD1==(char)0)gl_GPIOchar[0]=1; else gl_GPIOchar[0]=0xFF; // out default value is 1 
 	if((char)TRISDbits.RD2==(char)0)gl_GPIOchar[1]=1; else gl_GPIOchar[1]=0xFF; // out default value is 1 
 	if((char)TRISDbits.RD3==(char)0)gl_GPIOchar[2]=1; else gl_GPIOchar[2]=0xFF; // out default value is 1 
 	if((char)TRISCbits.RC4==(char)0)gl_GPIOchar[3]=1; else gl_GPIOchar[3]=0xFF; // out default value is 1 	
-	gl_mutexLowIsr=0;
 
 	// Error clean
 	clearError();
-}
 
-/*****************************************************************************/
-/* PIC18FMainSettings */
-/*****************************************************************************/
+}
+/* ==============================================================================
+ * Function: delayMainLoop
+ * Returns: void = no return.
+ * Description: Deliver a delay for the main loop
+ * ============================================================================== */
+void delayMainLoop(int delay) {
+
+    long i;
+
+    for(i = 0; i <(long)(delay*5000UL); i++);
+}
+/* ==============================================================================
+ * Function: PIC18FMainSettings
+ * Returns: void = no return.
+ * Description: Set PIC18F4680 
+ * ============================================================================== */
 void PIC18FMainSettings (void){
 
     // PIC setting and enable interrupts
+
     OSCCON                  = 0x70;  // no pre-divider => 8MHz 
     OSCTUNE                 = 0x40;  // PLL *4 => 32MHz 
-
     T0CONbits.T08BIT        = 1;   // 8-bit timer 
     T0CONbits.T0CS          = 0;   // increment on instruction cycle input
     T0CONbits.T0SE          = 0;   // increment on low--> high transition of clock
@@ -3582,23 +3671,24 @@ void PIC18FMainSettings (void){
     INTCONbits.TMR0IF       = 0;   // T0 int flag bit cleared before starting
     T0CONbits.TMR0ON        = 1;   // timer0 START
 }
-
-/*****************************************************************************/
-/* init */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: init
+ * Returns: void = no return.
+ * Description: Init PIC18F4680
+ * ============================================================================== */
 void init(void) {
  
 	char bufferNumber;
 	char automationCounter;
 
-	// Watchdog off
-    WDTCONbits.SWDTEN = 0;  
-
-	// Stop board
-	gl_mutexLowIsr=1;gl_stopAll=TRUE;gl_mutexLowIsr=0;
+	gl_mutexLowIsr=1; 
 
     // Main settings + Start timer
+
     PIC18FMainSettings(); 
+
+    // Environment
+     initEnvironment();
 
     // RS232
 	initUSART(); // Serial USART init on master board only
@@ -3624,9 +3714,6 @@ void init(void) {
     TM1637_init();
    	TM1637_setBrightness(0);
 
-    // Environment
-     initEnvironment();
-
 	// Get board number
 	gl_boardNumber=IN4 + 2*IN3 + 4*IN0 + 8*IN1 + 16*IN2;
 
@@ -3634,44 +3721,42 @@ void init(void) {
 	if (gl_boardNumber==31) gl_master=TRUE;
 	else gl_master=FALSE;
 
-	// Start board
-	gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;
+	gl_mutexLowIsr=0; 
 
 	// CALIBRATION FOR TRACK DETECTION
     trackCalibration();
 
 }
-
-/*****************************************************************************/
-/* trackCalibration */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: trackCalibration
+ * Returns: void = no return.
+ * Description: Evaluate track voltage at power on for later train detection
+ * No calibration after a reset due to watchdog event
+ * ============================================================================== */
 void trackCalibration(void) {
 
     short trackNumberCalibration;
 	char 	trackNumber;
 
-	if ((char)RCONbits.TO ==(char) 1) { // Only print this information if not watchdog occured before
+	if ((char)RCONbits.TO ==(char) 1) { // Only if not watchdog occured before
 		mySprintf((char *)gl_message,TRACK_CALIBRATION_STRING);
 		TM1637_displayString((char *)gl_message);
-	}
 
-	gl_mutexLowIsr=1;	gl_trackCalibration=TRUE; gl_mutexLowIsr = 0;
-	delayMainLoop(TRACKCALIBRATIONDELAY);
-
-    for(trackNumber=0;trackNumber<4;trackNumber++) {
-	  gl_noVehicule[trackNumber]=0xFF;
+		gl_mutexLowIsr=1;	gl_trackCalibration=TRUE; gl_mutexLowIsr = 0;
+		delayMainLoop(TRACKCALIBRATIONDELAY);
+	
+	    for(trackNumber=0;trackNumber<4;trackNumber++) {
+		  gl_noVehicule[trackNumber]=0xFF;
+		}
+		delayMainLoop(TRACKCALIBRATIONDELAY);
+		gl_mutexLowIsr=1;	gl_trackCalibration=FALSE;  gl_mutexLowIsr = 0;
 	}
-	delayMainLoop(TRACKCALIBRATIONDELAY);
-	gl_mutexLowIsr=1;	gl_trackCalibration=FALSE;  gl_mutexLowIsr = 0;
 }
-
-//////////////////////////////////////////////////////////////////////////////
-// EVENT MANAGEMENT
-//////////////////////////////////////////////////////////////////////////////
-
-/*****************************************************************************/
-/* getEventRequestFromTrack() */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: getEventRequestFromTrack
+ * Returns: char = implementation-defined.
+ * Description: Notify when a train arrives at or leaves a track.
+ * ============================================================================== */
 char getEventRequestFromTrack(void) {
 
 	 char trackNumber;
@@ -3690,10 +3775,11 @@ char getEventRequestFromTrack(void) {
 	}
 	return(FALSE);	
 }
-
-/*****************************************************************************/
-/* getEventRequestFromGPIO() */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: getEventRequestFromGPIO
+ * Returns: char = implementation-defined.
+ * Description: Notify when a GPIO value has changed
+ * ============================================================================== */
 char getEventRequestFromGPIO(void) {
 
 	 char GPIONumber;
@@ -3713,10 +3799,11 @@ char getEventRequestFromGPIO(void) {
 	}
 	return(FALSE);	
 }
-
-/*****************************************************************************/
-/* getEventRequestFromTIMER() */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: getEventRequestFromTIMER
+ * Returns: char = implementation-defined.
+ * Description: Notify when a timer has triggered
+ * ============================================================================== */
 char getEventRequestFromTIMER(void) {
 
 	 char TIMERNumber;
@@ -3734,29 +3821,43 @@ char getEventRequestFromTIMER(void) {
 	}
 	return(FALSE);	
 }
-
-/*****************************************************************************/
-/* getEventFromKNOB() */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function: getEventFromKNOB
+ * Returns: void = no return.
+ * Description: get current value of knobs
+ * ============================================================================== */
 void getEventFromKNOB(void) {
 
 	char trackNumber;
 
 	// Manage knob value
-	if (gl_userMode!=AUTOMATICValue) {
-		if (gl_lastKnobValue0!=gl_knobValue0||gl_lastKnobValue1!=gl_knobValue1) {
+
+	if (gl_lastKnobValue0!=gl_knobValue0||gl_lastKnobValue1!=gl_knobValue1) {
+
+		if (gl_userMode==AUTOMATICValue) {
+	
+			if (gl_lastKnobValue0!=gl_knobValue0) {
+					mySprintf((char *)gl_message,"%S%d",SPEED_STRING,gl_knobValue0);
+					TM1637_displayString((char *)gl_message);
+					gl_lastKnobValue0=gl_knobValue0;
+			}
+			if (gl_lastKnobValue1!=gl_knobValue1) {
+					mySprintf((char *)gl_message,"%S%d",INERTIA_STRING,gl_knobValue1);
+					TM1637_displayString((char *)gl_message);
+					gl_lastKnobValue1=gl_knobValue1;
+			}
+		}				
+		else {
 			gl_lastKnobValue0=gl_knobValue0;
 			gl_lastKnobValue1=gl_knobValue1;
-
 			TM1637_display(gl_lastKnobValue0,gl_lastKnobValue1);
-
+	
 			// MANUAL
 			if (gl_userMode==MANUALValue) {
 				for(trackNumber=0;trackNumber<4;trackNumber++) {
 					setSpeed(gl_knobValue0,gl_knobValue1,trackNumber);
 				}
 			}
-			// MANUAL SPECIFIC
 			else if (gl_userMode==MANUAL0Value) {
 				setSpeed(gl_knobValue0,gl_knobValue1,0);
 			}
@@ -3772,13 +3873,16 @@ void getEventFromKNOB(void) {
 		}
 	}
 }
-/*****************************************************************************/
-/* MAIN */
-/*****************************************************************************/
+/* ==============================================================================
+ * Function main() 
+ * ============================================================================== */
+ 
 void main(void)
 {
 
     char OUTCounter;
+
+	WDTCONbits.SWDTEN = 0; // watchdog off
 
 	// Full init of PIC18F
     init();
@@ -3790,15 +3894,15 @@ void main(void)
     if ((char)RCONbits.TO == (char)0) {
 		mySprintf((char *)gl_message,WATCHDOG_STRING);
 		TM1637_displayString((char *)gl_message);
-		delayMainLoop(5);
 		gl_mutexLowIsr=1;gl_OUTchar[3]=2;gl_mutexLowIsr=0; // Led mode manual flashing for warning
 	}
-	RCONbits.TO = 1; // Remet le flag à 1
+	else {
+		// MESSAGE ON DISPLAY
+		mySprintf((char *)gl_message,START_STRING);
+		TM1637_displayString((char *)gl_message);
+	}
 
-	// MESSAGE ON DISPLAY
-	mySprintf((char *)gl_message,START_STRING);
-	TM1637_displayString((char *)gl_message);
-
+	RCONbits.TO = 1; // Reset flag status
 	WDTCONbits.SWDTEN = 1; //start watchdog
 
 	// START MAIN LOOP
@@ -3807,7 +3911,7 @@ void main(void)
 		// In this loop we wait to get something to manage
 		while(1) {	
 
-			// Watchdog 
+			// Watchdog wake up
 			ClrWdt();
 		
 			if ((gl_flashingCounter & 0xFFF) == 0) {

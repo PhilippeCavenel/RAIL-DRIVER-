@@ -64,7 +64,7 @@ private:
     MetricReporter *metricReporter;
     Settings *settings = Settings::instance();
     QSerialPort *serial=Q_NULLPTR;
-    int m_waitTimeout = 5;
+    int m_waitTimeout = 1;
     QStringList sendQueue;
 
     // Used for storing application state upon termination

@@ -36,8 +36,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39\0";
-rom char VERSION_STRING[] 				= "VERSION 26-08-2025\0";
+rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39a\0";
+rom char VERSION_STRING[] 				= "VERSION 29-08-2025\0";
 rom char BOARD_NUMBER_STRING[] 			= "BOARD \0";
 rom char MODE_STRING[] 					= "MODE \0";
 rom char MEMORY_STRING[] 				= "MEMORY \0";
@@ -54,6 +54,8 @@ rom char WATCHDOG_STRING[]				= "ERROR\0";
 rom char ONTRACK_STRING[]				= "ONTRACK\0";
 rom char OFFTRACK_STRING[]				= "OFFTRACK\0";
 rom char BOARD_PROMPT_STRING[]			= "\n\rBoard \0";
+rom char SPEED_STRING[]					= "SP \0";
+rom char INERTIA_STRING[]				= "IN \0";
 
 // PROTOCOL
 #define MAXSTRING						160
@@ -180,7 +182,7 @@ rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
 #pragma config BOREN 	= 				BOHW
 #pragma config BORV 	= 				3
 #pragma config WDT 		= 				OFF  
-#pragma config WDTPS 	= 				128     // ~2.3 s
+#pragma config WDTPS 	= 				128     // ~2.3 s Watchdog
 #pragma config PBADEN 	= 				OFF
 #pragma config MCLRE 	= 				OFF
 #pragma config LVP 		= 				OFF
