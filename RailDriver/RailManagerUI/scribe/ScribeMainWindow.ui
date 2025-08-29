@@ -527,7 +527,7 @@ QPushButton:pressed {
     <string>Check_Program</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::MenuRole::NoRole</enum>
+    <enum>QAction::MenuRole::TextHeuristicRole</enum>
    </property>
   </action>
   <action name="actionParser_Lang">
