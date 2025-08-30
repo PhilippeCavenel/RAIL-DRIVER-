@@ -36,8 +36,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39a\0";
-rom char VERSION_STRING[] 				= "VERSION 29-08-2025\0";
+rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39b\0";
+rom char VERSION_STRING[] 				= "VERSION 30-08-2025\0";
 rom char BOARD_NUMBER_STRING[] 			= "BOARD \0";
 rom char MODE_STRING[] 					= "MODE \0";
 rom char MEMORY_STRING[] 				= "MEMORY \0";
@@ -50,7 +50,8 @@ rom char STOP_STRING[] 					= " STOP \0";
 rom char RUN_STRING[] 					= " RUN \0";
 rom char SYNC_STRING[] 					= " SYNC \0";
 rom char DONE_STRING[] 					= " DONE \0";
-rom char WATCHDOG_STRING[]				= "ERROR\0";
+rom char WATCHDOG_STRING[]				= "ERR WD\0";
+rom char STACK_OVERFLOW_STRING[]		= "ERR SO\0";
 rom char ONTRACK_STRING[]				= "ONTRACK\0";
 rom char OFFTRACK_STRING[]				= "OFFTRACK\0";
 rom char BOARD_PROMPT_STRING[]			= "\n\rBoard \0";
@@ -58,7 +59,6 @@ rom char SPEED_STRING[]					= "SP \0";
 rom char INERTIA_STRING[]				= "IN \0";
 
 // PROTOCOL
-#define MAXSTRING						160
 #define MAXSIZETOKEN					10
 #define MAXERRORINFO					60
 #define MAXSIZEIDENT					3
@@ -182,6 +182,7 @@ rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
 #pragma config BOREN 	= 				BOHW
 #pragma config BORV 	= 				3
 #pragma config WDT 		= 				OFF  
+#pragma config STVREN   =				OFF
 #pragma config WDTPS 	= 				1024	// Watchdog entre 7 et 33 secondes     
 #pragma config PBADEN 	= 				OFF
 #pragma config MCLRE 	= 				OFF
@@ -194,15 +195,13 @@ rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
 #define CAN_GET_DATA					4
 #define WAITDELAYTRAMECAN				500
 #define SYNCHROSENDDELAY				100
-#define MAXINPUTCANBUFFER				3
+#define MAXINPUTCANBUFFER				4
 
 // SYNCHRO BOARD VIA CAN
 #define SYNC_ID 0x0FF
 
 
 // RS232
-#define _XTAL_FREQ    					32000000
-#define _BAUD         					115200
 #define USARTBUFFERSIZE					127
 
 // VALUES TRACK DIRECTION
@@ -684,8 +683,8 @@ volatile char 		gl_syncRequested;
 
 // UART
 #pragma udata GLOBAL_DATA
-volatile char 		gl_inputUartString[MAXSTRING];
-volatile char 		gl_message[MAXSTRING];
+volatile char 		gl_inputUartString[USARTBUFFERSIZE];
+volatile char 		gl_message[USARTBUFFERSIZE];
 volatile char 		gl_errorInfo[MAXERRORINFO];
 #pragma udata
 

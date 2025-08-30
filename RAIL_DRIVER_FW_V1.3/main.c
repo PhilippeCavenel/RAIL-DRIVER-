@@ -554,12 +554,17 @@ char getToken(char* inputString, char* inputToken, char* stringPointer) {
 	 char carCounter;
 	 char tokenCarPointer;
 	 char testToken[MAXSIZETOKEN];
+	 int length;
+	 int tokenLength;
 
-	// init
+ 	// init
 	carCounter = 0;
 	tokenCarPointer = 0;
+	
+	length=strlen(inputString);
+	tokenLength=strlen(inputToken);
 
-	for (carCounter=0; (int)carCounter < (int)strlen(inputString); carCounter++) {
+	for (carCounter=0; (int)carCounter < length; carCounter++) {
 		if ((char)inputString[carCounter]==(rom char)' ') {
 			(*stringPointer)++;
 			continue; // remove space
@@ -567,18 +572,18 @@ char getToken(char* inputString, char* inputToken, char* stringPointer) {
 		testToken[tokenCarPointer++] = inputString[carCounter];
 
 		(*stringPointer)++;
-		if (!strncmp(testToken, inputToken, strlen(inputToken))) {
+		if (!strncmp(testToken, inputToken, tokenLength)) {
 			return(TRUE);
 		}
 
 		// Error
-		if (tokenCarPointer == (((int)strlen(inputToken)<MAXSIZETOKEN-1) ? (int)strlen(inputToken):MAXSIZETOKEN - 1)) {
+		if (tokenCarPointer == (((int)strlen(inputToken)<MAXSIZETOKEN-1) ? tokenLength :MAXSIZETOKEN - 1)) {
 			break;
 
 		}
 	} 
 	testToken[tokenCarPointer]='\0';
-	mySprintf((char *)gl_errorInfo,"%s",testToken);
+	mySprintf((char *)gl_errorInfo,"%s (testing %s)",testToken,inputToken);
 	gl_parserErrorCode = UNKNOWN_TOKEN;
 	return(FALSE);
 }
@@ -594,13 +599,15 @@ char getValue(char* inputString, char* Value, char* stringPointer) {
 	char tokenCarPointer;
 	char dataFound;
 	short number;
+	int length;
 
 	// Init
 	carCounter = 0;
 	tokenCarPointer = 0;
 
 	errno = 0;
-	while ((char)inputString[carCounter] == (rom char)' ' && carCounter < (int)strlen(inputString)) {
+	length=strlen(inputString);
+	while ((char)inputString[carCounter] == (rom char)' ' && carCounter < length) {
 		(*stringPointer)++;
 		carCounter++;
 	}
@@ -619,7 +626,7 @@ char getValue(char* inputString, char* Value, char* stringPointer) {
 	
 	if ((char)dataFound==(char)TRUE) {
 
-		while ((char)inputString[carCounter] != (rom char)' ' && carCounter < (int)strlen(inputString)) {
+		while ((char)inputString[carCounter] != (rom char)' ' && carCounter < length) {
 			(*stringPointer)++;
 			carCounter++;
 		}
@@ -1550,8 +1557,8 @@ char compressData(void) {
  * Description: Zeros the gl_request buffer to a clean state.
  * ============================================================================== */
 void initRequest(void) {	
-	char dataCounter;
-	for (dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++)gl_request[dataCounter]=0;
+	unsigned char dataCounter;
+	for (dataCounter=0;dataCounter<(unsigned char)REQUESTSIZE;dataCounter++)gl_request[dataCounter]=0;
 }
 /* ==============================================================================
  * Function: removeAutomation
@@ -1674,6 +1681,7 @@ char saveAutomation(char automationNumber) {
 void assignAutomation(char automationCounter) {
 
 	char counterCommand;
+	char command;
 
 	// set request for command
 	initRequest();
@@ -1688,7 +1696,8 @@ void assignAutomation(char automationCounter) {
 
 	// Copy from automation
 
-	switch (gl_automation[automationCounter][NEW_AUTOMATION_SET_COMMAND]) {
+	command=gl_automation[automationCounter][NEW_AUTOMATION_SET_COMMAND];
+	switch (command) {
 		case SET_GPIO : gl_request[REQ_COMMAND_REQUEST_SET_GPIO]=TRUE;
 						gl_request[REQ_COMMAND_REQUEST_GPIO_NUMBER]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_1];
 					    gl_request[REQ_COMMAND_REQUEST_GPIO_LEVEL]=gl_automation[automationCounter][NEW_AUTOMATION_SET_PARAM_2];
@@ -1767,9 +1776,6 @@ char manageRequest (char sendPrompt) {
 	 short adrLast;
 	 char value;
 	 char writeEEPROMCounter;
- 	 volatile static char onTrack[MAXSIZETOKEN];
-	 volatile static char offTrack[MAXSIZETOKEN];
-
 	 char length;
 	 char i;
 	 char notEqual;
@@ -1781,7 +1787,9 @@ char manageRequest (char sendPrompt) {
 	 char trackNumber;
 	 char TIMERCounter;
 
-     mySprintf((char *)gl_message,"");
+	 char command;
+	 char type;	
+	 char gpio;
 
 	// CHECK EVENT FIRST
 	if ((char)gl_request[REQ_EVENT_REQUEST_TRACK_EVENT] == (char) TRUE) {
@@ -1857,9 +1865,10 @@ char manageRequest (char sendPrompt) {
 			}	
 			return(TRUE);
 	}
-
+	
     //Global command
-    switch (gl_request[REQ_GLOBAL_COMMAND]) {
+	command=gl_request[REQ_GLOBAL_COMMAND];
+    switch (command) {
 
 		case STOPValue: 
 			gl_mutexLowIsr=1;gl_stopAll=TRUE;	gl_mutexLowIsr=0;
@@ -1935,7 +1944,8 @@ char manageRequest (char sendPrompt) {
 				return(TRUE); // Not for us
 			}
 
-			switch(gl_request[REQ_TYPE_ENTRY]) {
+			type=gl_request[REQ_TYPE_ENTRY];
+			switch(type) {
 			case PROGValue: 
 				if ((char)gl_request[REQ_PROGRAM_REQUEST_SET_BOARD_MODE]==(char)TRUE) {
 					if((char)gl_request[REQ_PROGRAM_REQUEST_BOARD_MODE]==(char)DCCValue) {
@@ -1965,8 +1975,9 @@ char manageRequest (char sendPrompt) {
 				if ((char)gl_request[REQ_PROGRAM_REQUEST_SET_GPIO] == (char)TRUE) {		
 					if ((char)gl_request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR]==(char)INValue || (char)gl_request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR]==(char)OUTValue) {		
 						if ((int)gl_request[REQ_PROGRAM_REQUEST_SET_GPIO_NUMBER]>=0 && (int)gl_request[REQ_PROGRAM_REQUEST_SET_GPIO_NUMBER]<=3) {
-
-							switch(gl_request[REQ_PROGRAM_REQUEST_SET_GPIO_NUMBER]) {
+							
+							gpio=gl_request[REQ_PROGRAM_REQUEST_SET_GPIO_NUMBER];
+							switch(gpio) {
 								case 0 :TRISDbits.RD1 = gl_request[REQ_PROGRAM_REQUEST_SET_GPIO_DIR];
 										adr=(short)GPIO0DIR_ADDRESS;
 										WriteEEPROM(adr,TRISDbits.RD1);
@@ -2393,18 +2404,16 @@ char manageRequest (char sendPrompt) {
 				}
 				else if ((char)gl_request[REQ_COMMAND_REQUEST_GET_TRACK_STATUS] == (char) TRUE) {
 					for(statusCounter=0;statusCounter<4;statusCounter++) {
-						mySprintf((char *)onTrack,"%S",ONTRACK_STRING);
-						mySprintf((char *)offTrack,"%S",OFFTRACK_STRING);
-						if (gl_setPoint[statusCounter]>0) mySprintf((char *)gl_message,"TRACK %d FORW SPEED %d %s (%d / %d)",
-							(int)(int)statusCounter,
+						if (gl_setPoint[statusCounter]>0) mySprintf((char *)gl_message,"TRACK %d FORW SPEED %d %S (%d / %d)",
+							(int)statusCounter,
 							(int)gl_setPoint[statusCounter]/(MAXINTERNALSPEED),
-							gl_OUTSTATchar[statusCounter]==0 ? offTrack : onTrack,
+							gl_OUTSTATchar[statusCounter]==0 ? OFFTRACK_STRING : ONTRACK_STRING,
 							(int)gl_average[statusCounter],
 							(int)gl_noVehicule[statusCounter]);
-						else mySprintf((char *)gl_message,"TRACK %d BACK SPEED %d %s (%d / %d)",
+						else mySprintf((char *)gl_message,"TRACK %d BACK SPEED %d %S (%d / %d)",
 							 (int)statusCounter,
 							 (int)-gl_setPoint[statusCounter]/(MAXINTERNALSPEED),
-							 gl_OUTSTATchar[statusCounter]==0 ? offTrack : onTrack,
+							 gl_OUTSTATchar[statusCounter]==0 ? OFFTRACK_STRING : ONTRACK_STRING,
 							(int)gl_average[statusCounter],
 							(int)gl_noVehicule[statusCounter]);
 						if ((char)sendPrompt==(char)TRUE) prompt((char *)gl_message);
@@ -2452,7 +2461,7 @@ void initUSART(void) {
     BAUDCONbits.BRG16 = 1;  // Mode 16 bits
 
     SPBRGH = 0;
-    SPBRG  = 15; // 500000 bauds
+    SPBRG  = 68; // 115200 bauds
    
     // Speed register configuration
 
@@ -2492,7 +2501,7 @@ char getInputRequestFromUSART(char *inputString,char *inputCounter) {
 		if (gl_getDataUSARTPointer>=USARTBUFFERSIZE)gl_getDataUSARTPointer=0;
 
 		//Echo
-        if (getData!=0xD && *inputCounter<MAXSTRING-1) {
+        if (getData!=0xD && *inputCounter<USARTBUFFERSIZE-1) {
 		
 			if (getData==0x7F) {
 				(*inputCounter)--;
@@ -2524,6 +2533,7 @@ void prompt(char* gl_message) {
 
 	int i;
 	static char number[3];
+	int	length;
 
 	// Prompt
 	for (i = 0; BOARD_PROMPT_STRING[i]!=(const char)'\0'; i++) {
@@ -2532,18 +2542,20 @@ void prompt(char* gl_message) {
 		
 	// Board number
 	mySprintf((char *)number,"%d",(int)gl_boardNumber);
-	for (i = 0; i < (int)strlen(number); i++) {
+	length=strlen(number);
+	for (i = 0; i < length; i++) {
        	_user_putc(number[i]);
     }
 
 	// close parenthesis
-		_user_putc('>');
+	_user_putc('>');
 
 	// space
-		_user_putc(' ');
+	_user_putc(' ');
 
 	// message
-	for (i = 0; i < (int)strlen(gl_message); i++) {
+	length=strlen(gl_message);
+	for (i = 0; i < length; i++) {
        	_user_putc(gl_message[i]);
     }
 	flushOut();	
@@ -3909,6 +3921,17 @@ void main(void)
 		// In this loop we wait to get something to manage
 		while(1) {	
 
+			// Check stack overflow
+			if (STKPTRbits.STKFUL) {
+				mySprintf((char *)gl_message,STACK_OVERFLOW_STRING);
+				TM1637_displayString((char *)gl_message);
+				prompt((char *)gl_message);
+				delayMainLoop(2);
+				gl_mutexLowIsr=1;gl_OUTchar[3]=2;gl_mutexLowIsr=0; // Led mode manual flashing for warning
+				STKPTRbits.STKFUL = 0;
+			}
+							
+
 			// Watchdog wake up
 			ClrWdt();
 		
@@ -3961,11 +3984,12 @@ void main(void)
 
 			// Get Request from RS232 input
 			if (getInputRequestFromUSART((char *)gl_inputUartString,(char *)&gl_inputCounter)==(char)TRUE) {
+
 				if ((int)strlen(gl_inputUartString)!=0) {
 
 					// Call parser to analyse input request
 	       			if (parser((char *)gl_inputUartString)==(char)TRUE) {
-						mySprintf((char *)gl_inputUartString,"");
+						mySprintf((char *)gl_inputUartString,"");						
 						break;
 					}
 					else { // parsing error
