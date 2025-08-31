@@ -79,7 +79,7 @@ void CalibMinMaxKnob(void) {
 	gl_mutexLowIsr=0;
 
 	// Wait to get low value
-	for (counter=5;counter>0;counter--) {
+	for(counter=5;counter>0;counter--) {
 		mySprintf((char *)gl_message,"CAL0 %d",(int)counter);
 		TM1637_displayString((char *)gl_message);
 		delayMainLoop(2); 
@@ -92,7 +92,7 @@ void CalibMinMaxKnob(void) {
 	gl_mutexLowIsr=0;
 
 	// Wait to get high value
-	for (counter=5;counter>0;counter--) {
+	for(counter=5;counter>0;counter--) {
 		mySprintf((char *)gl_message,"CAL1 %d",(int)counter);
 		TM1637_displayString((char *)gl_message);
 		delayMainLoop(2); 
@@ -132,7 +132,7 @@ void ResetEEPROM(void){
 
 	// Init EEPROM after flashing the board
 	adr=(short)MAGICNUMBER_ADDRESS;
-	for (checkMagicNumberCounter=0;checkMagicNumberCounter<MAGICNUMBERSIZE;checkMagicNumberCounter++) {
+	for(checkMagicNumberCounter=0;checkMagicNumberCounter<MAGICNUMBERSIZE;checkMagicNumberCounter++) {
 		WriteEEPROM(adr++,checkMagicNumberCounter);
 	}
 	// Set ANA mode
@@ -148,7 +148,9 @@ void ResetEEPROM(void){
 	gl_mutexLowIsr=1;gl_boardMode = ANAValue;gl_nexAvailableAutomation=0;gl_mutexLowIsr=0;
 
 	// GPIO IN
-	for(adr=(short)GPIO0DIR_ADDRESS;adr<=(short)GPIO0DIR_ADDRESS+3;adr++)WriteEEPROM(adr,1);
+	for(adr=(short)GPIO0DIR_ADDRESS;adr<=(short)GPIO0DIR_ADDRESS+3;adr++){
+		WriteEEPROM(adr,1);
+	}
 
 }
 /* ==============================================================================
@@ -168,7 +170,7 @@ void ReadEEPROMConfig(void) {
 
 	// Read MAGIC NUMBER
 	adr=(char)MAGICNUMBER_ADDRESS;
-	for (checkMagicNumberCounter=0;checkMagicNumberCounter<MAGICNUMBERSIZE;checkMagicNumberCounter++) {
+	for(checkMagicNumberCounter=0;checkMagicNumberCounter<MAGICNUMBERSIZE;checkMagicNumberCounter++) {
 		ReadEEPROM(adr++,&value);
 		if (value!=checkMagicNumberCounter) {
 			
@@ -446,6 +448,7 @@ short strtol(const char* nptr) {
     short 	result10;
 	char 	base;
 	short	result;
+	int 	digit;
 
 	// init
     result16=0;
@@ -460,7 +463,6 @@ short strtol(const char* nptr) {
 		base=16;
 	}		
 	while ((char)*nptr !=(rom char) '\0' && (char)*nptr !=(rom char) ' ') {
-		int digit;
 		if (isAdigit(*nptr)) {
 			digit = *nptr - '0';
 		}
@@ -564,7 +566,7 @@ char getToken(char* inputString, char* inputToken, char* stringPointer) {
 	length=strlen(inputString);
 	tokenLength=strlen(inputToken);
 
-	for (carCounter=0; (int)carCounter < length; carCounter++) {
+	for(carCounter=0; (int)carCounter < length; carCounter++) {
 		if ((char)inputString[carCounter]==(rom char)' ') {
 			(*stringPointer)++;
 			continue; // remove space
@@ -1496,7 +1498,9 @@ char uncompressData(void) {
 	// Codage is simply a list of (X,Y) where X is the number of Y. If X = 0 there is no more data
 
 	tmpDataCounter=0;
-	for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++) gl_tmpBuffer[dataCounter]=0;
+	for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++){
+		 gl_tmpBuffer[dataCounter]=0;
+	}
 
 	for(dataCounter=0;dataCounter<MAXTRAMESIZE-2;dataCounter+=2) {
 		if(gl_request[dataCounter]==0) break;
@@ -1508,7 +1512,9 @@ char uncompressData(void) {
 			gl_tmpBuffer[tmpDataCounter++]=gl_request[dataCounter+1];
 		}
 	}
-	for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++) gl_request[dataCounter]=gl_tmpBuffer[dataCounter];
+	for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++){
+		gl_request[dataCounter]=gl_tmpBuffer[dataCounter];
+	}
 	return(TRUE);
 }
 /* ==============================================================================
@@ -1541,14 +1547,20 @@ char compressData(void) {
 			gl_tmpBuffer[tmpDataCounter++]=curValue;
 		}
 		if (tmpDataCounter>=MAXTRAMESIZE) {
-			for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++) gl_request[dataCounter]=0;
+			for(dataCounter=0;dataCounter<REQUESTSIZE;dataCounter++){
+				gl_request[dataCounter]=0;
+			}
 			return(0); // We loose the trame, because we can't compress it, should never happen.....
 		}
 		curValue=gl_request[dataCounter];
 		quantityValue=0;
 	}
-	for(dataCounter=0;dataCounter<tmpDataCounter;dataCounter++) gl_request[dataCounter]=gl_tmpBuffer[dataCounter];
-	for(;dataCounter<REQUESTSIZE;dataCounter++) gl_request[dataCounter]=0;
+	for(dataCounter=0;dataCounter<tmpDataCounter;dataCounter++){
+		gl_request[dataCounter]=gl_tmpBuffer[dataCounter];
+	}
+	for(;dataCounter<REQUESTSIZE;dataCounter++) {
+		gl_request[dataCounter]=0;
+	}
 	return(tmpDataCounter);
 }
 /* ==============================================================================
@@ -1558,7 +1570,9 @@ char compressData(void) {
  * ============================================================================== */
 void initRequest(void) {	
 	unsigned char dataCounter;
-	for (dataCounter=0;dataCounter<(unsigned char)REQUESTSIZE;dataCounter++)gl_request[dataCounter]=0;
+	for(dataCounter=0;dataCounter<(unsigned char)REQUESTSIZE;dataCounter++){
+		gl_request[dataCounter]=0;
+	}
 }
 /* ==============================================================================
  * Function: removeAutomation
@@ -1906,9 +1920,7 @@ char manageRequest (char sendPrompt) {
 			if ((char)gl_request[REQ_BOARD_NUMBER] != (char)gl_boardNumber && (char)gl_master==(char)TRUE) sendRequestToCAN();
 			else if ((char)gl_request[REQ_BOARD_NUMBER] == (char)gl_boardNumber) {
 				gl_mutexLowIsr=1;gl_stopAll=TRUE;gl_mutexLowIsr=0;
-				WDTCONbits.SWDTEN = 0; // watchdog off
 			    CalibMinMaxKnob();
-				WDTCONbits.SWDTEN = 1; // watchdog on
 				gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;			
 			}
 			if ((char)sendPrompt==(char)TRUE) {
@@ -1919,14 +1931,12 @@ char manageRequest (char sendPrompt) {
 		case RESETValue :
 			if ((char)gl_request[REQ_BOARD_NUMBER] != (char)gl_boardNumber && (char)gl_master==(char)TRUE) sendRequestToCAN();
 			else if ((char)gl_request[REQ_BOARD_NUMBER] == (char)gl_boardNumber) {
-				WDTCONbits.SWDTEN = 0; // watchdog off
 				mySprintf((char *)gl_message,RESET_STRING);
 				TM1637_displayString((char *)gl_message);
 				gl_mutexLowIsr=1;gl_stopAll=TRUE;gl_mutexLowIsr=0;
 				ResetEEPROM();
 				delayMainLoop(2);
 				init();
-				WDTCONbits.SWDTEN = 1; // watchdog on
 			}
 			if ((char)sendPrompt==(char)TRUE) prompt((char *)gl_message);
 		 	return(TRUE); 
@@ -2021,7 +2031,7 @@ char manageRequest (char sendPrompt) {
 					for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
 						notEqual=0;
 						if ((int)strlen(&(gl_automation[automationCounter][NEW_AUTOMATION_IDENT]))!=(int)length) continue; // they are not equal (strncmp doesn't work here)
-						for (i=0;i<length;i++)if ((char)gl_request[REQ_PROGRAM_REQUEST_IDENT+i]!=(char)gl_automation[automationCounter][NEW_AUTOMATION_IDENT+i]) {
+						for(i=0;i<length;i++)if ((char)gl_request[REQ_PROGRAM_REQUEST_IDENT+i]!=(char)gl_automation[automationCounter][NEW_AUTOMATION_IDENT+i]) {
 							notEqual=1;
 							break;
 						}
@@ -2149,7 +2159,7 @@ char manageRequest (char sendPrompt) {
 							for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
 								notEqual=0;
 								if ((int)strlen(&(gl_automation[automationCounter][NEW_AUTOMATION_IDENT]))!=(int)length) continue; // They are not equal (strncmp doesn't work here)
-								for (i=0;i<length;i++)if ((char)gl_request[REQ_COMMAND_REQUEST_AUT_IDENT+i]!=(char)gl_automation[automationCounter][NEW_AUTOMATION_IDENT+i]) {
+								for(i=0;i<length;i++)if ((char)gl_request[REQ_COMMAND_REQUEST_AUT_IDENT+i]!=(char)gl_automation[automationCounter][NEW_AUTOMATION_IDENT+i]) {
 									notEqual=1;
 									break;
 								}
@@ -2311,8 +2321,6 @@ char manageRequest (char sendPrompt) {
 				}
 				else if ((char)gl_request[REQ_COMMAND_REQUEST_GET_AUTOMATION_LIST] == (char) TRUE) {
 
-   				 	WDTCONbits.SWDTEN = 0; // Watchdog off
-
 				 	 gl_mutexLowIsr=1;gl_stopAll=TRUE;	gl_mutexLowIsr=0;
 
 					mySprintf((char *)gl_message,"");
@@ -2328,13 +2336,9 @@ char manageRequest (char sendPrompt) {
 
 				 	gl_mutexLowIsr=1;gl_stopAll=FALSE;	gl_mutexLowIsr=0;
 
-    				WDTCONbits.SWDTEN = 1; // Watchdog on
-
 					return(TRUE);
 				}
 				else if ((char)gl_request[REQ_COMMAND_REQUEST_GET_DUMP] == (char) TRUE) {
-
-   				 	WDTCONbits.SWDTEN = 0; // Watchdog off
 
 				 	gl_mutexLowIsr=1;gl_stopAll=TRUE;	gl_mutexLowIsr=0;
 
@@ -2359,15 +2363,11 @@ char manageRequest (char sendPrompt) {
 					}
 			 	 	gl_mutexLowIsr=1;gl_stopAll=FALSE;	gl_mutexLowIsr=0; 
 
-   				 	WDTCONbits.SWDTEN = 1; // Watchdog on
-
 					return(TRUE);
 				}
 				else if ((char)gl_request[REQ_COMMAND_REQUEST_GET_BOARD_STATUS] == (char) TRUE) {
 					if ((char)sendPrompt==(char)TRUE) {
-						WDTCONbits.SWDTEN = 0; // Watchdog off
 						boardStatus();	
-						WDTCONbits.SWDTEN = 1; // Watchdog on	
 						return(TRUE);
 					}
 				}
@@ -2536,14 +2536,14 @@ void prompt(char* gl_message) {
 	int	length;
 
 	// Prompt
-	for (i = 0; BOARD_PROMPT_STRING[i]!=(const char)'\0'; i++) {
+	for(i = 0; BOARD_PROMPT_STRING[i]!=(const char)'\0'; i++) {
        	_user_putc(BOARD_PROMPT_STRING[i]);
     }
 		
 	// Board number
 	mySprintf((char *)number,"%d",(int)gl_boardNumber);
 	length=strlen(number);
-	for (i = 0; i < length; i++) {
+	for(i = 0; i < length; i++) {
        	_user_putc(number[i]);
     }
 
@@ -2555,7 +2555,7 @@ void prompt(char* gl_message) {
 
 	// message
 	length=strlen(gl_message);
-	for (i = 0; i < length; i++) {
+	for(i = 0; i < length; i++) {
        	_user_putc(gl_message[i]);
     }
 	flushOut();	
@@ -2599,7 +2599,9 @@ void sendPrintToCAN(void){
 	id=gl_boardNumber;
 
 	// header trame
-	for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) dataOut[dataOutCounter]=TRAMEPRINTHEADER;
+	for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++){
+		dataOut[dataOutCounter]=TRAMEPRINTHEADER;
+	}
 
 	while(!ECANSendMessage(id,dataOut,dataLen,flags));
 	CANsendDelay();
@@ -2627,7 +2629,9 @@ void sendPrintToCAN(void){
 	gl_outputCANbufferCounter=0;
 
 	// footer trame
-	for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++) dataOut[dataOutCounter]=TRAMEPRINTFOOTER;
+	for(dataOutCounter=0;dataOutCounter<8;dataOutCounter++){
+		dataOut[dataOutCounter]=TRAMEPRINTFOOTER;
+	}
 	while(!ECANSendMessage(id,dataOut,dataLen,flags));
 	CANsendDelay();
 
@@ -2763,75 +2767,97 @@ char getInputRequestFromCAN(void) {
 
 	char 	bufferNumber;
 	char	data;
+	char	dataCounter;
 
 	mySprintf((char *)gl_message,"");
 	for(bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
-   
 		requestHeaderTrameDetected=0;
 		printHeaderTrameDetected=0;	
 		requestFooterTrameDetected=0;
 		printFooterTrameDetected=0;
+		dataCounter=0;
 
 		while (gl_inputCANReadBufferPointer[bufferNumber]!=gl_inputCANWriteBufferPointer[bufferNumber]) {
 			data=gl_inputCANbuffer[bufferNumber][gl_inputCANReadBufferPointer[bufferNumber]];
 		
-				if ((char)data==(char)TRAMEREQUESTHEADER) requestHeaderTrameDetected++;	else requestHeaderTrameDetected=0;
-				if ((char)data==(char)TRAMEREQUESTFOOTER) requestFooterTrameDetected++;	else requestFooterTrameDetected=0;
-	
-				if ((char)data==(char)TRAMEPRINTHEADER) printHeaderTrameDetected++;		else printHeaderTrameDetected=0;				
-				if ((char)data==(char)TRAMEPRINTFOOTER) printFooterTrameDetected++;		else printFooterTrameDetected=0;
-	
-				// REQUEST HEADER
-				if (requestHeaderTrameDetected==8) {
-					gl_inputCANmode[bufferNumber]=CAN_REQUEST;
-					requestHeaderTrameDetected=0;
-					gl_requestInputCANtrameStart[bufferNumber]=gl_inputCANReadBufferPointer[bufferNumber]+1;
-					if ((int)gl_requestInputCANtrameStart[bufferNumber]>=MAXTRAMESIZE)gl_requestInputCANtrameStart[bufferNumber]=0;
-				}
-				else if (printHeaderTrameDetected==8) {
-					gl_inputCANmode[bufferNumber]=CAN_PRINT;
-					printHeaderTrameDetected=0;
-					gl_printInputCANtrameStart[bufferNumber]=gl_inputCANReadBufferPointer[bufferNumber]+1;
-					if ((char)gl_printInputCANtrameStart[bufferNumber]>=(char)MAXTRAMESIZE)gl_printInputCANtrameStart[bufferNumber]=0;
-				}
-				else if (requestFooterTrameDetected==8 && gl_inputCANmode[bufferNumber]==CAN_REQUEST) {
-					gl_inputCANmode[bufferNumber]=CAN_FREE; 
-					requestTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
-					if (requestTrameEnd<0)requestTrameEnd+=MAXTRAMESIZE;
-					dataInCounter=gl_requestInputCANtrameStart[bufferNumber];
-					dataStructureCounter=0;
-					while(dataInCounter!=requestTrameEnd) {
-						gl_request[dataStructureCounter++]=gl_inputCANbuffer[bufferNumber][dataInCounter++];
-						if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
-						if (dataStructureCounter>=REQUESTSIZE){
-							return(FALSE);
-						}
-					}
-	
-					gl_inputCANReadBufferPointer[bufferNumber]++;		
-					if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
-						return(uncompressData()); // Mean request available to proceed
-				}
-				else if (printFooterTrameDetected==8 && gl_inputCANmode[bufferNumber]==CAN_PRINT) {
-					gl_inputCANmode[bufferNumber]=CAN_FREE; 
-					printTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
-					if (printTrameEnd<0)printTrameEnd+=MAXTRAMESIZE;
-					dataInCounter=gl_printInputCANtrameStart[bufferNumber];	
+			if ((char)data==(char)TRAMEREQUESTHEADER) requestHeaderTrameDetected++;	else requestHeaderTrameDetected=0;
+			if ((char)data==(char)TRAMEREQUESTFOOTER) requestFooterTrameDetected++;	else requestFooterTrameDetected=0;
 
-					while(dataInCounter!=printTrameEnd) {
-						if ((char)gl_master==(char)TRUE && (char)gl_inputCANbuffer[bufferNumber][dataInCounter]!=(char)0) _user_putc(gl_inputCANbuffer[bufferNumber][dataInCounter]);
-						dataInCounter++;
-						if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
-					}
+			if ((char)data==(char)TRAMEPRINTHEADER) printHeaderTrameDetected++;		else printHeaderTrameDetected=0;				
+			if ((char)data==(char)TRAMEPRINTFOOTER) printFooterTrameDetected++;		else printFooterTrameDetected=0;
 
-					gl_inputCANReadBufferPointer[bufferNumber]++;		
-					if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
-					return(FALSE); // Mean no more data to print
-				}	
-			
+			dataCounter++;
+
+			if (gl_inputCANmode[bufferNumber]==CAN_FREE && 
+				dataCounter==8 && 
+				requestHeaderTrameDetected<8 && 
+				printHeaderTrameDetected<8) {
+					mySprintf((char *)gl_message,ERROR_STRING);
+					TM1637_displayString((char *)gl_message);
+					mySprintf((char *)gl_message,CAN_ERROR_2_STRING);
+					prompt(gl_message);
+					return(FALSE);
+			}
+
+			// REQUEST HEADER
+			else if (requestHeaderTrameDetected==8) {
+				gl_inputCANmode[bufferNumber]=CAN_REQUEST;
+				requestHeaderTrameDetected=0;
+				gl_requestInputCANtrameStart[bufferNumber]=gl_inputCANReadBufferPointer[bufferNumber]+1;
+				if ((int)gl_requestInputCANtrameStart[bufferNumber]>=MAXTRAMESIZE)gl_requestInputCANtrameStart[bufferNumber]=0;
+			}
+			else if (printHeaderTrameDetected==8) {
+				gl_inputCANmode[bufferNumber]=CAN_PRINT;
+				printHeaderTrameDetected=0;
+				gl_printInputCANtrameStart[bufferNumber]=gl_inputCANReadBufferPointer[bufferNumber]+1;
+				if ((char)gl_printInputCANtrameStart[bufferNumber]>=(char)MAXTRAMESIZE)gl_printInputCANtrameStart[bufferNumber]=0;
+			}
+			else if (requestFooterTrameDetected==8 && gl_inputCANmode[bufferNumber]==CAN_REQUEST) {
+				gl_inputCANmode[bufferNumber]=CAN_GET_FOOTER; 
+				requestTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
+				if (requestTrameEnd<0)requestTrameEnd+=MAXTRAMESIZE;
+				dataInCounter=gl_requestInputCANtrameStart[bufferNumber];
+				dataStructureCounter=0;
+				while(dataInCounter!=requestTrameEnd) {
+					gl_request[dataStructureCounter++]=gl_inputCANbuffer[bufferNumber][dataInCounter++];
+					if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
+					if (dataStructureCounter>=REQUESTSIZE){
+						gl_inputCANmode[bufferNumber]=CAN_FREE; 
+						mySprintf((char *)gl_message,ERROR_STRING);
+						TM1637_displayString((char *)gl_message);
+						mySprintf((char *)gl_message,CAN_ERROR_1_STRING);
+						prompt(gl_message);
+						return(FALSE);
+					}
+				}
+
+				gl_inputCANReadBufferPointer[bufferNumber]++;		
+				if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
+				gl_inputCANmode[bufferNumber]=CAN_FREE; 
+				return(uncompressData()); // Mean request available to proceed
+			}
+			else if (printFooterTrameDetected==8 && gl_inputCANmode[bufferNumber]==CAN_PRINT) {
+				gl_inputCANmode[bufferNumber]=CAN_GET_FOOTER; 
+				printTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
+				if (printTrameEnd<0)printTrameEnd+=MAXTRAMESIZE;
+				dataInCounter=gl_printInputCANtrameStart[bufferNumber];	
+
+				while(dataInCounter!=printTrameEnd) {
+					if ((char)gl_master==(char)TRUE && (char)gl_inputCANbuffer[bufferNumber][dataInCounter]!=(char)0) _user_putc(gl_inputCANbuffer[bufferNumber][dataInCounter]);
+					dataInCounter++;
+					if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
+				}
+
+				gl_inputCANReadBufferPointer[bufferNumber]++;		
+				if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
+				gl_inputCANmode[bufferNumber]=CAN_FREE; 
+				return(FALSE); // Mean no more data to print
+			}
+			else {	
 				// read new data
 				gl_inputCANReadBufferPointer[bufferNumber]++;		
-				if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;					
+				if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
+			}				
 		}
 	}
 	return(FALSE); // Nothing to do
@@ -2984,11 +3010,12 @@ void TM1637_writeStringWindow(const char *s, char start, char len) {
 	// adjust this array if the order is different
 
     const char mapping[6] = {2,1,0,5,4,3};
+	char idx;
+	char ch;
 
     char i;
-    for (i = 0; i < 6; i++) {
-        char idx = start + mapping[i];
-        char ch;
+    for(i = 0; i < 6; i++) {
+        idx = start + mapping[i];
         if (idx < len) ch = s[idx];
         else ch = ' ';
         twoWire_write(charToSegments(ch));
@@ -3023,7 +3050,7 @@ void TM1637_displayString(char *string) {
         twoWire_stop();
     } 
     else {
-        for (start = 0; start <= (len - 6); start++) {
+        for(start = 0; start <= (len - 6); start++) {
             twoWire_start();
             twoWire_write(0x40);
             twoWire_ack();
@@ -3190,7 +3217,7 @@ void high_isr(void){
 	
 			if ((char)dataBuffered==(char)FALSE) {
 				for(bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
-					if (gl_inputCANmode[bufferNumber]==CAN_FREE) {
+					if ((gl_inputCANmode[bufferNumber]==CAN_FREE) && (gl_inputCANReadBufferPointer[bufferNumber]==gl_inputCANWriteBufferPointer[bufferNumber])) {
 						for(dataCounter=0;dataCounter<dataLen;dataCounter++) {
 							gl_inputCANbuffer[bufferNumber][gl_inputCANWriteBufferPointer[bufferNumber]]=gl_data[dataCounter];
 							gl_inputCANWriteBufferPointer[bufferNumber]++;
@@ -3447,9 +3474,7 @@ int 	knobValue1;
 			}
 		}
 		else if(gl_boardMode==DCCValue && gl_dcc_ready==0) {		
-
-			for (bitStateCounter=0;bitStateCounter<FRAME_SIZE;bitStateCounter++) {
-
+			for(bitStateCounter=0;bitStateCounter<FRAME_SIZE;bitStateCounter++) {
 				if (gl_dcc[bitStateCounter]==0) selectBitDelay=DCC_0;
 				else selectBitDelay=DCC_1;
 						
@@ -3458,24 +3483,22 @@ int 	knobValue1;
 				gl_S2T0char=1;gl_S2T1char=1;
 				gl_S2T2char=1;gl_S2T3char=1;
            		setPort();
-				for (delay=0;delay<selectBitDelay;delay++);
+				for(delay=0;delay<selectBitDelay;delay++);
 
 	    		gl_S2T0char=0;gl_S2T1char=0;
 				gl_S2T2char=0;gl_S2T3char=0;
 				gl_S1T0char=1;gl_S1T1char=1;
 				gl_S1T2char=1;gl_S1T3char=1;
            		setPort();
-				for (delay=0;delay<selectBitDelay;delay++);
+				for(delay=0;delay<selectBitDelay;delay++);
 			}
-
 			gl_S1T0char=0; gl_S2T0char=1;	
 			gl_S1T1char=0; gl_S2T1char=1;
 			gl_S1T2char=0; gl_S2T2char=1;	
 			gl_S1T3char=0; gl_S2T3char=1;
        		setPort();
-
-			for (delay=0;delay<selectBitDelay;delay++);	
-			for (bitStateCounter=0;bitStateCounter<FRAME_SIZE;bitStateCounter++)gl_dcc[bitStateCounter]=1;
+			for(delay=0;delay<selectBitDelay;delay++);	
+			for(bitStateCounter=0;bitStateCounter<FRAME_SIZE;bitStateCounter++)gl_dcc[bitStateCounter]=1;
 		}
 		gl_dcc_ready--;
 		if (gl_dcc_ready<0) gl_dcc_ready=INITWAITDCCCOUNTER;
@@ -3556,6 +3579,8 @@ void initEnvironment(void) {
 	char GPIOCounter;
 	char TIMERCounter;
 
+	gl_mutexLowIsr=1;gl_stopAll=TRUE;;gl_mutexLowIsr=0;
+
 	// GPIO //////////////////////////
     ADCON1 	= 0x9; // AN0 to AN5 
     ADCON2 	= 0x9D; 
@@ -3584,10 +3609,11 @@ void initEnvironment(void) {
 		gl_GPIONotification[GPIOCounter]=TRUE; // To read current value on TCO
 		gl_mutexLowIsr=0; 
 	}
-	gl_goFlashingCounter=1;
+	gl_mutexLowIsr=1;gl_goFlashingCounter=1;gl_mutexLowIsr=0;
 
 	// Internal setting initialisation //////////////////////////
     for(trackNumber=0;trackNumber<4;trackNumber++) {
+		gl_mutexLowIsr=1;
 		gl_average[trackNumber]=0;
 		gl_noVehicule[trackNumber]=0;
 		gl_speed[trackNumber]=0;
@@ -3598,30 +3624,40 @@ void initEnvironment(void) {
 		gl_curSpeed[trackNumber]=0;
 		gl_OUTSTATchar[trackNumber]=0;
 		gl_trackNotification[trackNumber]=FALSE;
+		gl_mutexLowIsr=0;
     }
 
 	// TRACK //////////////////////////
-	for(OUTCounter=0;OUTCounter<6;OUTCounter++) {gl_mutexLowIsr=1;gl_OUTchar[OUTCounter]=1;gl_mutexLowIsr=0;}
+	for(OUTCounter=0;OUTCounter<6;OUTCounter++) {
+		gl_mutexLowIsr=1;gl_OUTchar[OUTCounter]=1;gl_mutexLowIsr=0;
+	}
+	gl_mutexLowIsr=1;
 	gl_trackNumber=0;
 	gl_speedCounter=0;
 	gl_syncRequested=0;
 	gl_trackCalibration=FALSE;
+	gl_mutexLowIsr=0;
 
 	// TIMER //////////////////////////
 	for(TIMERCounter=0;TIMERCounter<MAXTIMER;TIMERCounter++) {
+		gl_mutexLowIsr=1;
 		gl_TIMERValue[TIMERCounter]=0;
 		gl_TIMERNotification[TIMERCounter]=FALSE;
+		gl_mutexLowIsr=0;
 	}
+	gl_mutexLowIsr=1;
 	gl_timerNumber=0;
 	gl_timer=0;
+	gl_mutexLowIsr=0;
 
 	// DCC TEMPO BETWEEN TWO TRAMES
-    gl_dcc_ready=INITWAITDCCCOUNTER;
+    gl_mutexLowIsr=1;gl_dcc_ready=INITWAITDCCCOUNTER;gl_mutexLowIsr=0;
 
 	// Command and Program input request
 	initRequest();
 
 	// Knob
+	gl_mutexLowIsr=1;
 	gl_adcKnobValue0=0;
 	gl_adcKnobValue1=0;
 	gl_getKnobValue=0;
@@ -3629,18 +3665,22 @@ void initEnvironment(void) {
 	gl_knobValue0=0;
 	gl_knobValue1=0;
 	gl_numberKnobData=0;
+	gl_mutexLowIsr=0;
 
 	// Default user mode is automatic 
+	gl_mutexLowIsr=1;
 	gl_userMode=AUTOMATICValue;
-	gl_stopAll=FALSE;
+	gl_mutexLowIsr=0;
 
 	// Update form EEPROM
 	ReadEEPROMConfig();
 
+	gl_mutexLowIsr=1;
 	if((char)TRISDbits.RD1==(char)0)gl_GPIOchar[0]=1; else gl_GPIOchar[0]=0xFF; // out default value is 1 
 	if((char)TRISDbits.RD2==(char)0)gl_GPIOchar[1]=1; else gl_GPIOchar[1]=0xFF; // out default value is 1 
 	if((char)TRISDbits.RD3==(char)0)gl_GPIOchar[2]=1; else gl_GPIOchar[2]=0xFF; // out default value is 1 
 	if((char)TRISCbits.RC4==(char)0)gl_GPIOchar[3]=1; else gl_GPIOchar[3]=0xFF; // out default value is 1 	
+	gl_mutexLowIsr=0;
 
 	// Error clean
 	clearError();
@@ -3666,6 +3706,7 @@ void PIC18FMainSettings (void){
 
     // PIC setting and enable interrupts
 
+	gl_mutexLowIsr=1; 
     OSCCON                  = 0x70;  // no pre-divider => 8MHz 
     OSCTUNE                 = 0x40;  // PLL *4 => 32MHz 
     T0CONbits.T08BIT        = 1;   // 8-bit timer 
@@ -3681,6 +3722,7 @@ void PIC18FMainSettings (void){
     INTCON2bits.TMR0IP      = 0;   // TMR0 set to low Priority Interrupt
     INTCONbits.TMR0IF       = 0;   // T0 int flag bit cleared before starting
     T0CONbits.TMR0ON        = 1;   // timer0 START
+	gl_mutexLowIsr=0; 
 }
 /* ==============================================================================
  * Function: init
@@ -3692,14 +3734,13 @@ void init(void) {
 	char bufferNumber;
 	char automationCounter;
 
-	gl_mutexLowIsr=1; 
-
-    // Main settings + Start timer
-
-    PIC18FMainSettings(); 
-
     // Environment
      initEnvironment();
+
+    // Main settings + Start timer
+    PIC18FMainSettings(); 
+	
+	gl_mutexLowIsr=1; 
 
     // RS232
 	initUSART(); // Serial USART init on master board only
@@ -3723,7 +3764,6 @@ void init(void) {
 
 	// Display
     TM1637_init();
-   	TM1637_setBrightness(0);
 
 	// Get board number
 	gl_boardNumber=IN4 + 2*IN3 + 4*IN0 + 8*IN1 + 16*IN2;
@@ -3734,22 +3774,21 @@ void init(void) {
 
 	gl_mutexLowIsr=0; 
 
+	mySprintf((char *)gl_message,INIT_STRING);
+	TM1637_displayString((char *)gl_message);
+	prompt((char *)gl_message);
+
+	gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;
+
 	// CALIBRATION FOR TRACK DETECTION
     trackCalibration();
 
-    // Warning watchdog
-    if ((char)RCONbits.TO == (char)0) {
-		mySprintf((char *)gl_message,WATCHDOG_STRING);
-		TM1637_displayString((char *)gl_message);
-		gl_mutexLowIsr=1;gl_OUTchar[3]=2;gl_mutexLowIsr=0; // Led mode manual flashing for warning
-	}
-	else {
-		// MESSAGE ON DISPLAY
-		mySprintf((char *)gl_message,START_STRING);
-		TM1637_displayString((char *)gl_message);
+	// MESSAGE ON DISPLAY
+	mySprintf((char *)gl_message,START_STRING);
+	TM1637_displayString((char *)gl_message);
 
-	}
-	prompt((char *)gl_message);
+	prompt((char *)gl_message);		
+	delayMainLoop(2);
 
 }
 /* ==============================================================================
@@ -3763,19 +3802,14 @@ void trackCalibration(void) {
     short trackNumberCalibration;
 	char 	trackNumber;
 
-	if ((char)RCONbits.TO ==(char) 1) { // Only if not watchdog occured before
-		mySprintf((char *)gl_message,TRACK_CALIBRATION_STRING);
-		TM1637_displayString((char *)gl_message);
+	gl_mutexLowIsr=1;	gl_trackCalibration=TRUE; gl_mutexLowIsr = 0;
+	delayMainLoop(TRACKCALIBRATIONDELAY);
 
-		gl_mutexLowIsr=1;	gl_trackCalibration=TRUE; gl_mutexLowIsr = 0;
-		delayMainLoop(TRACKCALIBRATIONDELAY);
-	
-	    for(trackNumber=0;trackNumber<4;trackNumber++) {
-		  gl_noVehicule[trackNumber]=0xFF;
-		}
-		delayMainLoop(TRACKCALIBRATIONDELAY);
-		gl_mutexLowIsr=1;	gl_trackCalibration=FALSE;  gl_mutexLowIsr = 0;
+    for(trackNumber=0;trackNumber<4;trackNumber++) {
+	  gl_noVehicule[trackNumber]=0xFF;
 	}
+	delayMainLoop(TRACKCALIBRATIONDELAY);
+	gl_mutexLowIsr=1;	gl_trackCalibration=FALSE;  gl_mutexLowIsr = 0;
 }
 /* ==============================================================================
  * Function: getEventRequestFromTrack
@@ -3786,7 +3820,7 @@ char getEventRequestFromTrack(void) {
 
 	 char trackNumber;
 
-	for (trackNumber=0;trackNumber<4;trackNumber++) {
+	for(trackNumber=0;trackNumber<4;trackNumber++) {
 		if ((char)gl_trackNotification[trackNumber]==(char)TRUE) {
 			initRequest();
 			gl_request[REQ_BOARD_NUMBER]=gl_boardNumber;
@@ -3809,7 +3843,7 @@ char getEventRequestFromGPIO(void) {
 
 	 char GPIONumber;
 
-	for (GPIONumber=0;GPIONumber<4;GPIONumber++) {
+	for(GPIONumber=0;GPIONumber<4;GPIONumber++) {
 		if ((char)gl_GPIONotification[GPIONumber]==(char)TRUE) {
 			initRequest();
 			gl_request[REQ_BOARD_NUMBER]=gl_boardNumber;
@@ -3833,7 +3867,7 @@ char getEventRequestFromTIMER(void) {
 
 	 char TIMERNumber;
 
-	for (TIMERNumber=0;TIMERNumber<MAXTIMER;TIMERNumber++) {
+	for(TIMERNumber=0;TIMERNumber<MAXTIMER;TIMERNumber++) {
 		if ((char)gl_TIMERNotification[TIMERNumber]==(char)TRUE) {
 			initRequest();
 			gl_request[REQ_BOARD_NUMBER]=gl_boardNumber;
@@ -3907,34 +3941,15 @@ void main(void)
 
     char OUTCounter;
 
-	WDTCONbits.SWDTEN = 0; // watchdog off
-
 	// Full init of PIC18F
     init();
-
-	RCONbits.TO = 1; // Reset flag status
-	WDTCONbits.SWDTEN = 1; //start watchdog
 
 	// START MAIN LOOP
     while (1){
 
 		// In this loop we wait to get something to manage
 		while(1) {	
-
-			// Check stack overflow
-			if (STKPTRbits.STKFUL) {
-				mySprintf((char *)gl_message,STACK_OVERFLOW_STRING);
-				TM1637_displayString((char *)gl_message);
-				prompt((char *)gl_message);
-				delayMainLoop(2);
-				gl_mutexLowIsr=1;gl_OUTchar[3]=2;gl_mutexLowIsr=0; // Led mode manual flashing for warning
-				STKPTRbits.STKFUL = 0;
-			}
-							
-
-			// Watchdog wake up
-			ClrWdt();
-		
+				
 			if ((gl_flashingCounter & 0xFFF) == 0) {
 				for(OUTCounter=0;OUTCounter<6;OUTCounter++) {
 					if (gl_OUTchar[OUTCounter]==3) {

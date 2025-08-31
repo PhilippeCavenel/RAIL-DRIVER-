@@ -36,8 +36,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39b\0";
-rom char VERSION_STRING[] 				= "VERSION 30-08-2025\0";
+rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39c\0";
+rom char VERSION_STRING[] 				= "VERSION 31-08-2025\0";
 rom char BOARD_NUMBER_STRING[] 			= "BOARD \0";
 rom char MODE_STRING[] 					= "MODE \0";
 rom char MEMORY_STRING[] 				= "MEMORY \0";
@@ -50,13 +50,15 @@ rom char STOP_STRING[] 					= " STOP \0";
 rom char RUN_STRING[] 					= " RUN \0";
 rom char SYNC_STRING[] 					= " SYNC \0";
 rom char DONE_STRING[] 					= " DONE \0";
-rom char WATCHDOG_STRING[]				= "ERR WD\0";
-rom char STACK_OVERFLOW_STRING[]		= "ERR SO\0";
+rom char ERROR_STRING[]					= "ERROR\0";
+rom char CAN_ERROR_1_STRING[]			= "Can Overflow Error Detected\0";
+rom char CAN_ERROR_2_STRING[]			= "Can Error Detected, header missing\0";
 rom char ONTRACK_STRING[]				= "ONTRACK\0";
 rom char OFFTRACK_STRING[]				= "OFFTRACK\0";
 rom char BOARD_PROMPT_STRING[]			= "\n\rBoard \0";
 rom char SPEED_STRING[]					= "SP \0";
 rom char INERTIA_STRING[]				= "IN \0";
+rom char INIT_STRING[]					= "INIT \0";
 
 // PROTOCOL
 #define MAXSIZETOKEN					10
@@ -110,35 +112,34 @@ rom char INERTIA_STRING[]				= "IN \0";
 #define GPIO3DIR_ADDRESS				(GPIO2DIR_ADDRESS+1) 		
 #define AUTOMATION_ADDRESS				(GPIO3DIR_ADDRESS+1)		// Should be the last of the list
 						
-rom char  UNKNOWN_TOKEN_STRING[] 		= "Unknown token";
-rom char  NUMBER_MISSING_STRING[] 		= "Number missing";
-rom char  INCOMPLETE_REQUEST_STRING[] 	= "Incomplete request";
-rom char  BAD_NUMBER_STRING[] 			= "Bad number";
-rom char  MODE_MISSING_STRING[] 		= "Mode missing";
-rom char  BAD_GPIO_NUMBER_STRING[] 		= "Bad GPIO number";
-rom char  BAD_TIMER_NUMBER_STRING[] 	= "Bad TIMER number";
-rom char  BAD_TIMER_VALUE_STRING[] 		= "Bad TIMER value";
-rom char  BAD_LPO_NUMBER_STRING[] 		= "Bad LPO number";
-rom char  BAD_AUT_STATUS_STRING[] 		= "Bad Automation status";
-rom char  BAD_AUT_IDENT_STRING[] 		= "Bad Automation name";
-rom char  MISSING_IDENT_STRING[] 		= "Automation name missing";
-rom char  BAD_GPIO_DIR_STRING[] 		= "Bad GPIO direction";
-rom char  BAD_GPIO_LEVEL_STRING[] 		= "Bad GPIO level";
-rom char  BAD_LPO_LEVEL_STRING[] 		= "Bad LPO level";
-rom char  BAD_TRACK_SPEED_STRING[] 		= "Bad track speed";
-rom char  BAD_TRACK_DIR_STRING[] 		= "Bad track direction";
-rom char  BAD_TRACK_NUMBER_STRING[] 	= "Bad track number";
-rom char  BAD_BOARD_MODE_STRING[] 		= "Bad board mode";
-rom char  WRONG_BOARD_NUMBER_STRING[]	= "Wrong board number";
-rom char  AUTOMATIONSIZELIMIT_STRING[] 	= "Automation limit reached";
-rom char  MISSING_SPACE_STRING[] 		= "Space missing";
-rom char  IDENT_TOO_LONG_STRING[] 		= "Identifier too long";
-rom char  AUTOMATIONLREADYEXISTS_STRING[] = "Automation already defined";
-rom char  BADAUTOMATIONNUMBER_STRING[] 	= "Wrong automation number";
-rom char  BAD_TRACK_INERTIA_STRING[] 	= "Bad inertia value";
-rom char  BAD_USER_MODE_STRING[] 		= "Bad user mode";
-rom char  UNKNOWN_ERROR_STRING[] 		= "Unknown Error";
-rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
+rom char  UNKNOWN_TOKEN_STRING[] 		= "Unknown token\0";
+rom char  NUMBER_MISSING_STRING[] 		= "Number missing\0";
+rom char  INCOMPLETE_REQUEST_STRING[] 	= "Incomplete request\0";
+rom char  BAD_NUMBER_STRING[] 			= "Bad number\0";
+rom char  MODE_MISSING_STRING[] 		= "Mode missing\0";
+rom char  BAD_GPIO_NUMBER_STRING[] 		= "Bad GPIO number\0";
+rom char  BAD_TIMER_NUMBER_STRING[] 	= "Bad TIMER number\0";
+rom char  BAD_TIMER_VALUE_STRING[] 		= "Bad TIMER value\0";
+rom char  BAD_LPO_NUMBER_STRING[] 		= "Bad LPO number\0";
+rom char  BAD_AUT_STATUS_STRING[] 		= "Bad Automation status\0";
+rom char  BAD_AUT_IDENT_STRING[] 		= "Bad Automation name\0";
+rom char  MISSING_IDENT_STRING[] 		= "Automation name missing\0";
+rom char  BAD_GPIO_DIR_STRING[] 		= "Bad GPIO direction\0";
+rom char  BAD_GPIO_LEVEL_STRING[] 		= "Bad GPIO level\0";
+rom char  BAD_LPO_LEVEL_STRING[] 		= "Bad LPO level\0";
+rom char  BAD_TRACK_SPEED_STRING[] 		= "Bad track speed\0";
+rom char  BAD_TRACK_DIR_STRING[] 		= "Bad track direction\0";
+rom char  BAD_TRACK_NUMBER_STRING[] 	= "Bad track number\0";
+rom char  BAD_BOARD_MODE_STRING[] 		= "Bad board mode\0";
+rom char  WRONG_BOARD_NUMBER_STRING[]	= "Wrong board number\0";
+rom char  AUTOMATIONSIZELIMIT_STRING[] 	= "Automation limit reached\0";
+rom char  MISSING_SPACE_STRING[] 		= "Space missing\0";
+rom char  IDENT_TOO_LONG_STRING[] 		= "Identifier too long\0";
+rom char  AUTOMATIONLREADYEXISTS_STRING[] = "Automation already defined\0";
+rom char  BADAUTOMATIONNUMBER_STRING[] 	= "Wrong automation number\0";
+rom char  BAD_TRACK_INERTIA_STRING[] 	= "Bad inertia value\0";
+rom char  BAD_USER_MODE_STRING[] 		= "Bad user mode\0";
+rom char  UNKNOWN_ERROR_STRING[] 		= "Unknown Error\0";
 
 // ERROR CODE
 #define UNKNOWN_TOKEN					0x1
@@ -183,7 +184,6 @@ rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
 #pragma config BORV 	= 				3
 #pragma config WDT 		= 				OFF  
 #pragma config STVREN   =				OFF
-#pragma config WDTPS 	= 				1024	// Watchdog entre 7 et 33 secondes     
 #pragma config PBADEN 	= 				OFF
 #pragma config MCLRE 	= 				OFF
 #pragma config LVP 		= 				OFF
@@ -193,6 +193,7 @@ rom char  TRACK_CALIBRATION_STRING[]	= "Calib";
 #define CAN_PRINT						2
 #define CAN_FREE						3
 #define CAN_GET_DATA					4
+#define CAN_GET_FOOTER					5
 #define WAITDELAYTRAMECAN				500
 #define SYNCHROSENDDELAY				100
 #define MAXINPUTCANBUFFER				4
