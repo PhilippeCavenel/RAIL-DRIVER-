@@ -2571,10 +2571,10 @@ void flushOut(void) {
 /* ==============================================================================
  * Function: CANsendDelay
  * Returns: void = no return.
- * Description: Small busyâ€‘wait delay between CAN frames.
+ * Description: Small busywait delay between CAN frames.
  * ============================================================================== */
 void CANsendDelay(void) {
-	short	delay;
+	int	delay;
 	for(delay=0;delay<WAITDELAYTRAMECAN;delay++);
 }
 /* ==============================================================================
@@ -2739,9 +2739,10 @@ void CAN_SendSync(void){
     INTCONbits.TMR0IE       = 0;   // Disable Timer0 Interrupt
     gl_speedCounter			= 1;   // Same value on each board
 	gl_syncRequested 		= 1;   // For printing SYNC message on LED
+	gl_flashingCounter		= 0;
     INTCONbits.TMR0IF       = 0;   // T0 int flag bit cleared before starting
 	TMR0H					= 0;   // re-phase Timer0
-	TMR0L 					= 0;   // re-phase Timer0
+	TMR0L 					= 6;   // re-phase Timer0
     INTCONbits.TMR0IE       = 1;   // Enable Timer0 Interrupt
     T0CONbits.TMR0ON        = 1;   // timer0 START
     gl_mutexLowIsr = 0;
@@ -2767,7 +2768,6 @@ char getInputRequestFromCAN(void) {
 
 	char 	bufferNumber;
 	char	data;
-	char	dataCounter;
 
 	mySprintf((char *)gl_message,"");
 	for(bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
@@ -2775,83 +2775,93 @@ char getInputRequestFromCAN(void) {
 		printHeaderTrameDetected=0;	
 		requestFooterTrameDetected=0;
 		printFooterTrameDetected=0;
-		dataCounter=0;
 
-		while (gl_inputCANReadBufferPointer[bufferNumber]!=gl_inputCANWriteBufferPointer[bufferNumber]) {
+		while (gl_inputCANReadBufferPointer[bufferNumber]!=gl_inputCANWriteBufferPointer[bufferNumber] && gl_canReceivedDataReady[bufferNumber]==READY) {
 			data=gl_inputCANbuffer[bufferNumber][gl_inputCANReadBufferPointer[bufferNumber]];
 		
 			if ((char)data==(char)TRAMEREQUESTHEADER) requestHeaderTrameDetected++;	else requestHeaderTrameDetected=0;
-			if ((char)data==(char)TRAMEREQUESTFOOTER) requestFooterTrameDetected++;	else requestFooterTrameDetected=0;
-
 			if ((char)data==(char)TRAMEPRINTHEADER) printHeaderTrameDetected++;		else printHeaderTrameDetected=0;				
+
+			if ((char)data==(char)TRAMEREQUESTFOOTER) requestFooterTrameDetected++;	else requestFooterTrameDetected=0;
 			if ((char)data==(char)TRAMEPRINTFOOTER) printFooterTrameDetected++;		else printFooterTrameDetected=0;
 
-			dataCounter++;
-
-			if (gl_inputCANmode[bufferNumber]==CAN_FREE && 
-				dataCounter==8 && 
-				requestHeaderTrameDetected<8 && 
-				printHeaderTrameDetected<8) {
-					mySprintf((char *)gl_message,ERROR_STRING);
-					TM1637_displayString((char *)gl_message);
-					mySprintf((char *)gl_message,CAN_ERROR_2_STRING);
-					prompt(gl_message);
-					return(FALSE);
-			}
 
 			// REQUEST HEADER
-			else if (requestHeaderTrameDetected==8) {
+			if (requestHeaderTrameDetected==8) {
 				gl_inputCANmode[bufferNumber]=CAN_REQUEST;
 				requestHeaderTrameDetected=0;
 				gl_requestInputCANtrameStart[bufferNumber]=gl_inputCANReadBufferPointer[bufferNumber]+1;
 				if ((int)gl_requestInputCANtrameStart[bufferNumber]>=MAXTRAMESIZE)gl_requestInputCANtrameStart[bufferNumber]=0;
 			}
+			// PRINT HEADER
 			else if (printHeaderTrameDetected==8) {
 				gl_inputCANmode[bufferNumber]=CAN_PRINT;
 				printHeaderTrameDetected=0;
 				gl_printInputCANtrameStart[bufferNumber]=gl_inputCANReadBufferPointer[bufferNumber]+1;
 				if ((char)gl_printInputCANtrameStart[bufferNumber]>=(char)MAXTRAMESIZE)gl_printInputCANtrameStart[bufferNumber]=0;
 			}
-			else if (requestFooterTrameDetected==8 && gl_inputCANmode[bufferNumber]==CAN_REQUEST) {
-				gl_inputCANmode[bufferNumber]=CAN_GET_FOOTER; 
-				requestTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
-				if (requestTrameEnd<0)requestTrameEnd+=MAXTRAMESIZE;
-				dataInCounter=gl_requestInputCANtrameStart[bufferNumber];
-				dataStructureCounter=0;
-				while(dataInCounter!=requestTrameEnd) {
-					gl_request[dataStructureCounter++]=gl_inputCANbuffer[bufferNumber][dataInCounter++];
-					if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
-					if (dataStructureCounter>=REQUESTSIZE){
-						gl_inputCANmode[bufferNumber]=CAN_FREE; 
-						mySprintf((char *)gl_message,ERROR_STRING);
-						TM1637_displayString((char *)gl_message);
-						mySprintf((char *)gl_message,CAN_ERROR_1_STRING);
-						prompt(gl_message);
+			// REQUEST READY
+			else if (requestFooterTrameDetected==8) {
+				if (gl_inputCANmode[bufferNumber]==CAN_REQUEST) {
+					gl_inputCANmode[bufferNumber]=CAN_GET_FOOTER; 
+					requestTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
+					if (requestTrameEnd<0)requestTrameEnd+=MAXTRAMESIZE;
+					dataInCounter=gl_requestInputCANtrameStart[bufferNumber];
+					dataStructureCounter=0;
+					while(dataInCounter!=requestTrameEnd) {
+						gl_request[dataStructureCounter++]=gl_inputCANbuffer[bufferNumber][dataInCounter++];
+						if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
+					}
+					gl_inputCANReadBufferPointer[bufferNumber]++;		
+					if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
+					gl_inputCANmode[bufferNumber]=CAN_FREE;
+					gl_canReceivedDataReady[bufferNumber]=WAITING_FOR_DATA;
+					return(uncompressData()); // Mean request available to proceed
+				}
+				// Incomplete trame received
+				else {
+					gl_inputCANReadBufferPointer[bufferNumber]++;
+					if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
+					gl_inputCANmode[bufferNumber]=CAN_FREE;
+					gl_canReceivedDataReady[bufferNumber]=WAITING_FOR_DATA;
+					return(FALSE);
+				}
+			}
+			// PRINT READY
+			else if (printFooterTrameDetected==8) {
+				if(gl_inputCANmode[bufferNumber]==CAN_PRINT) {
+					if ((char)gl_master==(char)TRUE) {
+						gl_inputCANmode[bufferNumber]=CAN_GET_FOOTER; 
+						printTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
+						if (printTrameEnd<0)printTrameEnd+=MAXTRAMESIZE;
+						dataInCounter=gl_printInputCANtrameStart[bufferNumber];	
+						while(dataInCounter!=printTrameEnd) {
+							if ((char)gl_inputCANbuffer[bufferNumber][dataInCounter]!=(char)0) _user_putc(gl_inputCANbuffer[bufferNumber][dataInCounter]);
+							dataInCounter++;
+							if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
+						}
+						gl_inputCANReadBufferPointer[bufferNumber]++;		
+						if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
+						gl_inputCANmode[bufferNumber]=CAN_FREE;			
+						gl_canReceivedDataReady[bufferNumber]=WAITING_FOR_DATA;
+						return(FALSE); // Mean no more data to print
+					}
+					else {
+						gl_inputCANReadBufferPointer[bufferNumber]++;
+						if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
+						gl_inputCANmode[bufferNumber]=CAN_FREE;
+						gl_canReceivedDataReady[bufferNumber]=WAITING_FOR_DATA;
 						return(FALSE);
 					}
 				}
-
-				gl_inputCANReadBufferPointer[bufferNumber]++;		
-				if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
-				gl_inputCANmode[bufferNumber]=CAN_FREE; 
-				return(uncompressData()); // Mean request available to proceed
-			}
-			else if (printFooterTrameDetected==8 && gl_inputCANmode[bufferNumber]==CAN_PRINT) {
-				gl_inputCANmode[bufferNumber]=CAN_GET_FOOTER; 
-				printTrameEnd=gl_inputCANReadBufferPointer[bufferNumber]-7;
-				if (printTrameEnd<0)printTrameEnd+=MAXTRAMESIZE;
-				dataInCounter=gl_printInputCANtrameStart[bufferNumber];	
-
-				while(dataInCounter!=printTrameEnd) {
-					if ((char)gl_master==(char)TRUE && (char)gl_inputCANbuffer[bufferNumber][dataInCounter]!=(char)0) _user_putc(gl_inputCANbuffer[bufferNumber][dataInCounter]);
-					dataInCounter++;
-					if (dataInCounter>=MAXTRAMESIZE)dataInCounter=0;
+				// Incomplete trame received
+				else {
+					gl_inputCANReadBufferPointer[bufferNumber]++;
+					if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
+					gl_inputCANmode[bufferNumber]=CAN_FREE;
+					gl_canReceivedDataReady[bufferNumber]=WAITING_FOR_DATA;
+					return(FALSE);
 				}
-
-				gl_inputCANReadBufferPointer[bufferNumber]++;		
-				if (gl_inputCANReadBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANReadBufferPointer[bufferNumber]=0;
-				gl_inputCANmode[bufferNumber]=CAN_FREE; 
-				return(FALSE); // Mean no more data to print
 			}
 			else {	
 				// read new data
@@ -2970,7 +2980,7 @@ void TM1637_write(short number1,short number2){
  * ============================================================================== */
 void TM1637_display(short number1,short number2){  
 
-	TM1637_setBrightness(4);
+	TM1637_setBrightness(3);
 
     twoWire_start();
     twoWire_write(0x40);
@@ -3035,7 +3045,7 @@ void TM1637_displayString(char *string) {
 	// init
 	len = strlen(string);
 
-	TM1637_setBrightness(4);
+	TM1637_setBrightness(3);
 
     if (len <= 6) {
         twoWire_start();
@@ -3186,7 +3196,15 @@ void high_isr(void){
 	ECAN_RX_MSG_FLAGS flags; 	// Flags
 	unsigned long 	id;			// Id of sender	
 	char	dataBuffered;
-	char	bufferNumber;
+	char	bufferNumber;	
+	char	requestFooterTrameDetected;
+	char	printFooterTrameDetected;
+
+	// Low voltage detection
+    if (PIR2bits.HLVDIF) {
+		gl_low=1;				
+        PIR2bits.HLVDIF = 0; 			// Clear flag HLVD
+    }	
 
 	dataBuffered=FALSE;
 
@@ -3197,31 +3215,40 @@ void high_isr(void){
         if (id == SYNC_ID) {
     		INTCONbits.TMR0IF       = 0;   // T0 int flag bit cleared before starting
 			TMR0H					= 0;   // re-phase Timer0
-			TMR0L 					= 0;   // re-phase Timer0
+			TMR0L 					= 6;   // re-phase Timer0
            	gl_speedCounter 		= 1;   // Same value on each board
 			gl_syncRequested 		= 1;   // For printing SYNC message on LED
+			gl_flashingCounter		= 0;   // Flashing
 		}
 		// OTHER TRAMES
 		else {
+
+			// Try to assign this trame to an existing buffer
 			for(bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
-				if ((unsigned long)gl_currentCANid[bufferNumber]==(unsigned long)id && (char)gl_inputCANmode[bufferNumber]!=(char)CAN_FREE) {
+				if ((unsigned long)gl_currentCANid[bufferNumber]==(unsigned long)id && gl_inputCANmode[bufferNumber]!=CAN_FREE && gl_canReceivedDataReady[bufferNumber]==WAITING_FOR_DATA) {
+					requestFooterTrameDetected=0;
+					printFooterTrameDetected=0;
 					for(dataCounter=0;dataCounter<dataLen;dataCounter++) {
-						gl_inputCANbuffer[bufferNumber][gl_inputCANWriteBufferPointer[bufferNumber]]=gl_data[dataCounter];
-						gl_inputCANWriteBufferPointer[bufferNumber]++;
-						if(gl_inputCANWriteBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANWriteBufferPointer[bufferNumber]-=MAXTRAMESIZE;
+						if ((char)gl_data[dataCounter]==(char)TRAMEREQUESTFOOTER) 	requestFooterTrameDetected++;	else requestFooterTrameDetected=0;
+						if ((char)gl_data[dataCounter]==(char)TRAMEPRINTFOOTER) 	printFooterTrameDetected++;		else printFooterTrameDetected=0;
+						gl_inputCANbuffer[bufferNumber][gl_inputCANWriteBufferPointer[bufferNumber]++]=gl_data[dataCounter];
+						if(gl_inputCANWriteBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANWriteBufferPointer[bufferNumber]=0;
+
+						// Lock this buffer until managed
+						if(requestFooterTrameDetected==8 || printFooterTrameDetected==8) gl_canReceivedDataReady[bufferNumber]=READY;	
 					}
 					dataBuffered=TRUE;
 					break;
-				}
+				}		
 			}
 	
+			// Assign a new buffer to this trame
 			if ((char)dataBuffered==(char)FALSE) {
 				for(bufferNumber=0;bufferNumber<MAXINPUTCANBUFFER;bufferNumber++) {
-					if ((gl_inputCANmode[bufferNumber]==CAN_FREE) && (gl_inputCANReadBufferPointer[bufferNumber]==gl_inputCANWriteBufferPointer[bufferNumber])) {
+					if (gl_inputCANmode[bufferNumber]==CAN_FREE) {
 						for(dataCounter=0;dataCounter<dataLen;dataCounter++) {
-							gl_inputCANbuffer[bufferNumber][gl_inputCANWriteBufferPointer[bufferNumber]]=gl_data[dataCounter];
-							gl_inputCANWriteBufferPointer[bufferNumber]++;
-							if(gl_inputCANWriteBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANWriteBufferPointer[bufferNumber]-=MAXTRAMESIZE;
+							gl_inputCANbuffer[bufferNumber][gl_inputCANWriteBufferPointer[bufferNumber]++]=gl_data[dataCounter];
+							if(gl_inputCANWriteBufferPointer[bufferNumber]>=MAXTRAMESIZE)gl_inputCANWriteBufferPointer[bufferNumber]=0;
 						}
 						gl_inputCANmode[bufferNumber]=CAN_GET_DATA;	
 						gl_currentCANid[bufferNumber]=id;
@@ -3230,16 +3257,18 @@ void high_isr(void){
 					}
 				}
 			}
+			// Flashing light for buffer overflow !	
+			if (dataBuffered==FALSE) {
+				gl_OUTchar[3]=2;
+			}
 		}
 	}
 
 
 	if ((char)gl_master==(char)FALSE)return;
 
-    // Check if interrupt originates from USART reception
-    if (PIR1bits.RCIF)
-    {
-        // Read received data
+    // Check if interrupt originates from USART reception to read input data
+    while (PIR1bits.RCIF) {
         gl_receivedUSARTData[gl_receivedUSARTPointer++] = RCREG;
 		if (gl_receivedUSARTPointer>=USARTBUFFERSIZE)gl_receivedUSARTPointer=0;
     }
@@ -3303,10 +3332,10 @@ int 	knobValue1;
 
 		gl_adcKnobValue1+=ADC;
 
-		if(gl_numberKnobData>=40) {
+		if(gl_numberKnobData>=20) {
 			gl_numberKnobData=0;
-			gl_adcKnobValue0=gl_adcKnobValue0/20;
-			gl_adcKnobValue1=gl_adcKnobValue1/20;
+			gl_adcKnobValue0=gl_adcKnobValue0/10;
+			gl_adcKnobValue1=gl_adcKnobValue1/10;
 
 			if (gl_calibKnob==1) {
 				if (gl_minAdcKnobValue0>gl_adcKnobValue0)gl_minAdcKnobValue0=gl_adcKnobValue0;
@@ -3559,10 +3588,7 @@ void low_isr(void){
     // INTERRUPT RESET
     if((char)INTCONbits.TMR0IF==(char)1){
 	    INTCONbits.TMR0IF = 0;
-		T0CONbits.PSA			= 0;   // Timer0 prescaler is assigned
-		T0CONbits.T0PS0			= 0;   // Prescale value 
-		T0CONbits.T0PS1			= 0;   // Prescale value 
-		T0CONbits.T0PS2			= 0;   // Prescale value 
+		TMR0L = 6;
     }
 }
 #pragma code
@@ -3627,11 +3653,17 @@ void initEnvironment(void) {
 		gl_mutexLowIsr=0;
     }
 
-	// TRACK //////////////////////////
+	// LPO  //////////////////////////
 	for(OUTCounter=0;OUTCounter<6;OUTCounter++) {
 		gl_mutexLowIsr=1;gl_OUTchar[OUTCounter]=1;gl_mutexLowIsr=0;
-	}
+	}	
+
+	// TRACK //////////////////////////
 	gl_mutexLowIsr=1;
+	gl_S1T0char=0; gl_S2T0char=0;
+	gl_S1T1char=0; gl_S2T1char=0;
+	gl_S1T2char=0; gl_S2T2char=0;
+	gl_S1T3char=0; gl_S2T3char=0;	
 	gl_trackNumber=0;
 	gl_speedCounter=0;
 	gl_syncRequested=0;
@@ -3682,6 +3714,8 @@ void initEnvironment(void) {
 	if((char)TRISCbits.RC4==(char)0)gl_GPIOchar[3]=1; else gl_GPIOchar[3]=0xFF; // out default value is 1 	
 	gl_mutexLowIsr=0;
 
+	
+
 	// Error clean
 	clearError();
 
@@ -3697,6 +3731,7 @@ void delayMainLoop(int delay) {
 
     for(i = 0; i <(long)(delay*5000UL); i++);
 }
+
 /* ==============================================================================
  * Function: PIC18FMainSettings
  * Returns: void = no return.
@@ -3704,26 +3739,52 @@ void delayMainLoop(int delay) {
  * ============================================================================== */
 void PIC18FMainSettings (void){
 
-    // PIC setting and enable interrupts
+    // PIC setup and enable interrupts
 
-	gl_mutexLowIsr=1; 
-    OSCCON                  = 0x70;  // no pre-divider => 8MHz 
-    OSCTUNE                 = 0x40;  // PLL *4 => 32MHz 
-    T0CONbits.T08BIT        = 1;   // 8-bit timer 
-    T0CONbits.T0CS          = 0;   // increment on instruction cycle input
-    T0CONbits.T0SE          = 0;   // increment on low--> high transition of clock
-    T0CONbits.PSA           = 1;   // T0 prescaler  assigned to 1:1
-    RCONbits.IPEN           = 1;   // Enable Interrupt Priorities
-    INTCONbits.GIEL         = 1;   // Enable Low Priority Interrupt
-    INTCONbits.GIEH         = 0;   // Enable high priority interrupts
-    INTCONbits.GIE          = 1;   // Enable Global Interrupts            
-    INTCONbits.PEIE         = 1;   // Enable device interrupts
-    INTCONbits.TMR0IE       = 1;   // Enable Timer0 Interrupt
-    INTCON2bits.TMR0IP      = 0;   // TMR0 set to low Priority Interrupt
-    INTCONbits.TMR0IF       = 0;   // T0 int flag bit cleared before starting
-    T0CONbits.TMR0ON        = 1;   // timer0 START
-	gl_mutexLowIsr=0; 
+    gl_mutexLowIsr = 1; 
+
+    OSCCON                  = 0x70; // no pre-divider => 8 MHz 
+    OSCTUNE                 = 0x40; // PLL x4 => 32 MHz 
+    T0CONbits.T08BIT        = 1;    // 8-bit timer 
+    T0CONbits.T0CS          = 0;    // increment on instruction cycle (Fosc/4)
+    T0CONbits.T0SE          = 0;    // (no effect when T0CS=0)
+
+    T0CONbits.PSA           = 0;    // prescaler assigned to TMR0  
+    T0CONbits.T0PS0         = 0;    // 1:2 prescaler
+    T0CONbits.T0PS1         = 0;
+    T0CONbits.T0PS2         = 0;
+
+    INTCONbits.TMR0IF       = 0;    // clear TMR0 interrupt flag
+    TMR0H                   = 0;
+    TMR0L                   = 6;    // 16 kHz (62.5 µs)
+
+    RCONbits.IPEN           = 1;    // enable interrupt priority levels
+    INTCONbits.GIEL         = 1;    // enable low-priority interrupts
+    INTCONbits.GIEH         = 1;    // enable high-priority interrupts
+    INTCONbits.PEIE         = 1;    // enable peripheral interrupts
+
+    INTCONbits.TMR0IE       = 1;    // enable Timer0 interrupt
+    INTCON2bits.TMR0IP      = 0;    // Timer0 on low priority
+
+	gl_low					= 0;
+
+    HLVDCON                 = 0;    // reset the register
+    HLVDCONbits.HLVDL       = LOWTH; // threshold 
+    HLVDCONbits.VDIRMAG     = 0;    // interrupt if VDD < threshold
+    HLVDCONbits.HLVDEN      = 1;    // enable HLVD
+    
+    while(!HLVDCONbits.IRVST);      // wait for the reference to stabilize
+    
+    PIR2bits.HLVDIF         = 0;    // clear HLVD interrupt flag
+	IPR2bits.HLVDIP 		= 1;
+    PIE2bits.HLVDIE         = 1;    // enable HLVD interrupt
+
+    T0CONbits.TMR0ON        = 1;    // start Timer0
+
+    gl_mutexLowIsr = 0; 
 }
+
+
 /* ==============================================================================
  * Function: init
  * Returns: void = no return.
@@ -3739,7 +3800,7 @@ void init(void) {
 
     // Main settings + Start timer
     PIC18FMainSettings(); 
-	
+
 	gl_mutexLowIsr=1; 
 
     // RS232
@@ -3757,6 +3818,7 @@ void init(void) {
 		gl_inputCANWriteBufferPointer[bufferNumber]=0;
 		gl_inputCANReadBufferPointer[bufferNumber]=0;
 		gl_inputCANmode[bufferNumber]=CAN_FREE;
+		gl_canReceivedDataReady[bufferNumber]=WAITING_FOR_DATA;
 	}
     ECANInitialize(); // init ECAN
 	PIE3bits.RXB0IE=1; // enable interrupt for CAN
@@ -3776,7 +3838,6 @@ void init(void) {
 
 	mySprintf((char *)gl_message,INIT_STRING);
 	TM1637_displayString((char *)gl_message);
-	prompt((char *)gl_message);
 
 	gl_mutexLowIsr=1;gl_stopAll=FALSE;gl_mutexLowIsr=0;
 
@@ -3786,10 +3847,6 @@ void init(void) {
 	// MESSAGE ON DISPLAY
 	mySprintf((char *)gl_message,START_STRING);
 	TM1637_displayString((char *)gl_message);
-
-	prompt((char *)gl_message);		
-	delayMainLoop(2);
-
 }
 /* ==============================================================================
  * Function: trackCalibration
@@ -3974,6 +4031,13 @@ void main(void)
 				gl_syncRequested=0;
 			}
 
+			// Low voltage detection
+			if(gl_low)  {
+				mySprintf((char *)gl_message,VOLT_STRING);
+				TM1637_displayString((char *)gl_message);
+				gl_low=0;
+			}
+
 			// Manage knob value (for MANUAL and AUTOMATIC mode)
 			getEventFromKNOB();
 
@@ -3994,7 +4058,7 @@ void main(void)
 
 			// Get Request from CAN Bus
 			if (getInputRequestFromCAN()==(char)TRUE) {
-				break;		
+				break;
 			}
 
 			// Get Request from RS232 input
@@ -4019,7 +4083,7 @@ void main(void)
 			}
 		}
 
-		// Manage request
+		// Manage other requests than request from CAN bus
 		if (gl_parserErrorCode!=0) traceError();
 		else {
 			if (manageRequest(TRUE)==(char)FALSE){
