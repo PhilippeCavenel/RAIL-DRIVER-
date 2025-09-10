@@ -554,37 +554,38 @@ void traceError(void) {
 char getToken(char* inputString, char* inputToken, char* stringPointer) {
 
 	 char carCounter;
-	 char tokenCarPointer;
 	 char testToken[MAXSIZETOKEN];
 	 int length;
 	 int tokenLength;
+	 int carTokenCounter;
 
  	// init
 	carCounter = 0;
-	tokenCarPointer = 0;
-	
+	carTokenCounter = 0;
 	length=strlen(inputString);
 	tokenLength=strlen(inputToken);
 
-	for(carCounter=0; (int)carCounter < length; carCounter++) {
+	// remove space
+	while((int)carCounter < length) {
 		if ((char)inputString[carCounter]==(rom char)' ') {
-			(*stringPointer)++;
-			continue; // remove space
+			carCounter++;
+			continue; 
 		}
-		testToken[tokenCarPointer++] = inputString[carCounter];
+		else break;
+	}
 
-		(*stringPointer)++;
-		if (!strncmp(testToken, inputToken, tokenLength)) {
-			return(TRUE);
-		}
-
-		// Error
-		if (tokenCarPointer == (((int)strlen(inputToken)<MAXSIZETOKEN-1) ? tokenLength :MAXSIZETOKEN - 1)) {
-			break;
-
-		}
-	} 
-	testToken[tokenCarPointer]='\0';
+	// Copy token to test
+	while((int)carCounter < length && carTokenCounter < tokenLength) {
+		testToken[carTokenCounter++]=inputString[carCounter++];
+	}
+	
+	// Test token
+	if (!strncmp(testToken, inputToken, tokenLength)) {
+		(*stringPointer)+=carCounter;
+		return(TRUE);
+	}
+	
+	testToken[carTokenCounter]='\0';
 	mySprintf((char *)gl_errorInfo,"%s (testing %s)",testToken,inputToken);
 	gl_parserErrorCode = UNKNOWN_TOKEN;
 	return(FALSE);
@@ -3566,9 +3567,8 @@ int 	knobValue1;
 				gl_OUTSTATchar[gl_trackNumber]=1;
 				gl_trackNotification[gl_trackNumber]=TRUE;
 			}
-			else if (((int)(10*gl_average[gl_trackNumber])<(int)((10+HYSTERERISLOW)*gl_noVehicule[gl_trackNumber])) && ((char)gl_OUTSTATchar[gl_trackNumber]==(char)1) && ((char)gl_trackNotification[gl_trackNumber]==(char)FALSE)) {
+			else if (((int)(10*gl_average[gl_trackNumber])<(int)((10+HYSTERERISLOW)*gl_noVehicule[gl_trackNumber])) && ((char)gl_OUTSTATchar[gl_trackNumber]==(char)1)) {
 				gl_OUTSTATchar[gl_trackNumber]=0;
-				gl_trackNotification[gl_trackNumber]=TRUE;
 			}
 		} 
 	}
@@ -3871,20 +3871,20 @@ void trackCalibration(void) {
 /* ==============================================================================
  * Function: getEventRequestFromTrack
  * Returns: char = implementation-defined.
- * Description: Notify when a train arrives at or leaves a track.
+ * Description: Notify when a train arrives at a track.(no notification when leaving)
  * ============================================================================== */
 char getEventRequestFromTrack(void) {
 
 	 char trackNumber;
 
 	for(trackNumber=0;trackNumber<4;trackNumber++) {
-		if ((char)gl_trackNotification[trackNumber]==(char)TRUE) {
+		if ((char)gl_trackNotification[trackNumber]==(char)TRUE && gl_OUTSTATchar[trackNumber]==1) {
 			initRequest();
 			gl_request[REQ_BOARD_NUMBER]=gl_boardNumber;
 			gl_request[REQ_EVENT_REQUEST_TRACK_EVENT]=TRUE;
 			gl_request[REQ_EVENT_REQUEST_EVENT_BOARD_TRACK_NUMBER]=gl_boardNumber;
 			gl_request[REQ_EVENT_REQUEST_EVENT_TRACK_NUMBER]=trackNumber;
-			gl_request[REQ_EVENT_REQUEST_EVENT_VEHICLE_STATUS]=gl_OUTSTATchar[trackNumber]==1 ? ONTRACKValue : OFFTRACKValue;
+			gl_request[REQ_EVENT_REQUEST_EVENT_VEHICLE_STATUS]=ONTRACKValue;
 			gl_mutexLowIsr=1;gl_trackNotification[trackNumber]=FALSE;gl_mutexLowIsr=0;
 			return (TRUE);
 		}

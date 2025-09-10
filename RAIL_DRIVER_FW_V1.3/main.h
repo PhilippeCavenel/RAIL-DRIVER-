@@ -36,8 +36,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39d\0";
-rom char VERSION_STRING[] 				= "VERSION 06-09-2025\0";
+rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39e\0";
+rom char VERSION_STRING[] 				= "VERSION 10-09-2025\0";
 rom char BOARD_NUMBER_STRING[] 			= "BOARD \0";
 rom char MODE_STRING[] 					= "MODE \0";
 rom char MEMORY_STRING[] 				= "MEMORY \0";
@@ -60,9 +60,9 @@ rom char VOLT_STRING[]					= "ERROR\0";
 
 // PROTOCOL
 #define MAXSIZETOKEN					10
-#define MAXERRORINFO					60
 #define MAXSIZEIDENT					3
-#define MAXTRAMESIZE					80 // Should be multiple of 8
+#define MAXERRORINFO					60
+#define MAXTRAMESIZE					72 // Should be multiple of 8
 #define MAXTRAMECAN						MAXTRAMESIZE-16 
 #define MAXMESSAGESIZE					MAXTRAMECAN-2 // We need to add lastchar and end of string
 
@@ -220,7 +220,7 @@ rom char  UNKNOWN_ERROR_STRING[] 		= "Unknown Error\0";
 
 #define WAITDELAYTRAMECAN				500
 #define SYNCHROSENDDELAY				100
-#define MAXINPUTCANBUFFER				4
+#define MAXINPUTCANBUFFER				5
 
 // SYNCHRO BOARD VIA CAN
 #define SYNC_ID 0x0FF
