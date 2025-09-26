@@ -3567,8 +3567,9 @@ int 	knobValue1;
 				gl_OUTSTATchar[gl_trackNumber]=1;
 				gl_trackNotification[gl_trackNumber]=TRUE;
 			}
-			else if (((int)(10*gl_average[gl_trackNumber])<(int)((10+HYSTERERISLOW)*gl_noVehicule[gl_trackNumber])) && ((char)gl_OUTSTATchar[gl_trackNumber]==(char)1)) {
+			else if (((int)(10*gl_average[gl_trackNumber])<(int)((10+HYSTERERISLOW)*gl_noVehicule[gl_trackNumber])) && ((char)gl_OUTSTATchar[gl_trackNumber]==(char)1)  && ((char)gl_trackNotification[gl_trackNumber]==(char)FALSE)) {
 				gl_OUTSTATchar[gl_trackNumber]=0;
+				gl_trackNotification[gl_trackNumber]=TRUE;
 			}
 		} 
 	}
@@ -3871,20 +3872,20 @@ void trackCalibration(void) {
 /* ==============================================================================
  * Function: getEventRequestFromTrack
  * Returns: char = implementation-defined.
- * Description: Notify when a train arrives at a track.(no notification when leaving)
+ * Description: Notify when a train or a car arrives or leaves at a track.
  * ============================================================================== */
 char getEventRequestFromTrack(void) {
 
 	 char trackNumber;
 
 	for(trackNumber=0;trackNumber<4;trackNumber++) {
-		if ((char)gl_trackNotification[trackNumber]==(char)TRUE && gl_OUTSTATchar[trackNumber]==1) {
+		if ((char)gl_trackNotification[trackNumber]==(char)TRUE) {
 			initRequest();
 			gl_request[REQ_BOARD_NUMBER]=gl_boardNumber;
 			gl_request[REQ_EVENT_REQUEST_TRACK_EVENT]=TRUE;
 			gl_request[REQ_EVENT_REQUEST_EVENT_BOARD_TRACK_NUMBER]=gl_boardNumber;
 			gl_request[REQ_EVENT_REQUEST_EVENT_TRACK_NUMBER]=trackNumber;
-			gl_request[REQ_EVENT_REQUEST_EVENT_VEHICLE_STATUS]=ONTRACKValue;
+			gl_request[REQ_EVENT_REQUEST_EVENT_VEHICLE_STATUS]=gl_OUTSTATchar[trackNumber]==1 ? ONTRACKValue : OFFTRACKValue;;
 			gl_mutexLowIsr=1;gl_trackNotification[trackNumber]=FALSE;gl_mutexLowIsr=0;
 			return (TRUE);
 		}

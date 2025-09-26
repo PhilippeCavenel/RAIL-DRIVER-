@@ -36,8 +36,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39f\0";
-rom char VERSION_STRING[] 				= "VERSION 20-09-2025\0";
+rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39g\0";
+rom char VERSION_STRING[] 				= "VERSION 26-09-2025\0";
 rom char BOARD_NUMBER_STRING[] 			= "BOARD \0";
 rom char MODE_STRING[] 					= "MODE \0";
 rom char MEMORY_STRING[] 				= "MEMORY \0";
