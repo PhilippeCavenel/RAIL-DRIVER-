@@ -104,9 +104,9 @@
 //================================================
 
 // Connect Rail 0	Voie M0
-// Connect Rail 1	Voie voiture 1 - temporaire en attendant d'avoir d'autres cartes
+// Connect Rail 1	Faller FF1
 // Connect Rail 2	Voie voiture 2 - temporaire en attendant d'avoir d'autres cartes
-// Connect Rail 3	Voie non connectée
+// Connect Rail 3	Faller FA1
 
 // LPO 0		Ouverture barrière passage à niveau 
 // LPO 1		Fermeture barrière passage à niveau
@@ -129,10 +129,10 @@
 // GESTION DES AUTOMATISMES DE LA CARTE 3
 //================================================
 
-// Connect Rail 0	Voie non connectée
-// Connect Rail 1	Voie non connectée
-// Connect Rail 2	Voie non connectée
-// Connect Rail 3	Voie non connectée
+// Connect Rail 0	Faller FC11 & FB1 (rose / bleu)
+// Connect Rail 1	Faller FC1 (blanc / gris )
+// Connect Rail 2	Faller FD1
+// Connect Rail 3	Faller FE1
 
 // LPO 0		aiguillage CROSS noir
 // LPO 1		aiguillage CROSS rouge
@@ -146,10 +146,10 @@
 // GPIO input 2		Commande décrochage wagon gare crémaillère haut
 // GPIO input 3		Commande décrochage wagon circuit bas
 
-// Track Status	0	non connecté
-// Track Status	1	non connecté
-// Track Status	2	non connecté	
-// Track Status	3	non connecté
+// Track Status	0	Non connecté
+// Track Status	1	Non connecté
+// Track Status	2	Non connecté	
+// Track Status	3	Non connecté
 
 
 //============================================================
@@ -177,6 +177,7 @@
 // A<i> => AUTOMATIQUE
 // T<i> => Gestion commandes du TCO
 // D<i> => Commande pouvant être désactivée (via AUTOFF spécifique non lié au mode AUTOMATIC ou MANUAL)
+// F<i> => Automatisme voitures Faller
 
 // Les commandes en mode AUTON sont toujours actives en mode MANUAL et AUTOMATIC sauf si elles ont été désactivées par une commande spécifique AUTOFF
 // Les commandes en mode AUTOFF sont désactivées en mode MANUAL 
@@ -819,6 +820,52 @@ PROG 3 AUT TH AUTON BOARD 31 GPIO 0 2 ACT LPO 2 1
 PROG 3 AUT TI AUTON BOARD 31 GPIO 2 2 ACT LPO 3 1
 PROG 3 AUT TJ AUTON BOARD 31 GPIO 2 2 ACT LPO 2 0
 PROG 3 AUT TK AUTON BOARD 31 GPIO 0 2 ACT LPO 3 0
+
+//============================================================
+// TEST AUTOMATISMES FALLER
+//============================================================
+// CARTE 2
+// Connect Rail 1	Faller FF1
+// Connect Rail 3	Faller FA1
+
+// CARTE 3
+// Connect Rail 0	Faller FC11 & FB1 (rose / bleu)
+// Connect Rail 1	Faller FC1 (blanc / gris )
+// Connect Rail 2	Faller FD1 
+// Connect Rail 3	Faller FE1
+
+// FF1 		(2;1)=> SLOW DOWN FE1 		(3;3)SPEED UP FD1 		(3;2)
+// FE1 		(3;3)=> SLOW DOWN FD1 		(3;2)SPEED UP FC1 		(3;1)
+// FD1 		(3;2)=> SLOW DOWN FC1 		(3;1)SPEED UP FC11 & FB1 (3;0)
+// FC1 		(3;1)=> SLOW DOWN FC11 & FB1 	(3;0)SPEED UP FA1 		(2;3)
+// FC11 & FB1 	(3;0)=> SLOW DOWN FA1 		(2;3)SPEED UP FF1 		(2;1)
+// FA1 		(2;3)=> SLOW DOWN FF1 		(2;1)SPEED UP FE1 		(3;3)
+
+// Connect Rail 1	Faller FF1
+PROG 2 AUT F0 AUTON BOARD 2 TRACK 3 STA ONTRACK ACT TRACK 1 SPEED 3 FORW INERTIA 0
+PROG 2 AUT F1 AUTON BOARD 3 TRACK 0 STA ONTRACK ACT TRACK 1 SPEED 4 FORW INERTIA 0
+
+// Connect Rail 3	Faller FA1
+PROG 2 AUT F3 AUTON BOARD 3 TRACK 0 STA ONTRACK ACT TRACK 3 SPEED 3 FORW INERTIA 0
+PROG 2 AUT F4 AUTON BOARD 3 TRACK 1 STA ONTRACK ACT TRACK 3 SPEED 4 FORW INERTIA 0
+
+// Connect Rail 0	Faller FC11 & FB1 (rose / bleu)
+PROG 3 AUT F0 AUTON BOARD 3 TRACK 1 STA ONTRACK ACT  TRACK 0 SPEED 3 FORW INERTIA 0
+PROG 3 AUT F1 AUTON BOARD 3 TRACK 2 STA ONTRACK ACT  TRACK 0 SPEED 4 FORW INERTIA 0
+
+// Connect Rail 1	Faller FC1 (blanc / gris )
+PROG 3 AUT F2 AUTON BOARD 3 TRACK 2 STA ONTRACK ACT  TRACK 1 SPEED 3 FORW INERTIA 0
+PROG 3 AUT F3 AUTON BOARD 3 TRACK 3 STA ONTRACK ACT  TRACK 1 SPEED 4 FORW INERTIA 0
+
+// Connect Rail 2	Faller FD1
+PROG 3 AUT F4 AUTON BOARD 3 TRACK 3 STA ONTRACK ACT  TRACK 2 SPEED 3 FORW INERTIA 0
+PROG 3 AUT F5 AUTON BOARD 2 TRACK 1 STA ONTRACK ACT  TRACK 2 SPEED 4 FORW INERTIA 0
+
+// Connect Rail 3	Faller FE1
+PROG 3 AUT F6 AUTON BOARD 2 TRACK 1 STA ONTRACK ACT  TRACK 3 SPEED 3 FORW INERTIA 0
+PROG 3 AUT F7 AUTON BOARD 2 TRACK 3 STA ONTRACK ACT  TRACK 3 SPEED 4 FORW INERTIA 0
+
+
 
 //============================================================
 // REMISE EN ROUTE DES AUTOMATISMES
