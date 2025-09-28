@@ -218,7 +218,7 @@ rom char  UNKNOWN_ERROR_STRING[] 		= "Unknown Error\0";
 #define READY							1
 #define WAITING_FOR_DATA				0
 
-#define WAITDELAYTRAMECAN				500
+#define WAITDELAYTRAMECAN				250
 #define SYNCHROSENDDELAY				100
 #define MAXINPUTCANBUFFER				4
 
