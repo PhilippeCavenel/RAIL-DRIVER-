@@ -151,7 +151,21 @@ void ResetEEPROM(void){
 	for(adr=(short)GPIO0DIR_ADDRESS;adr<=(short)GPIO0DIR_ADDRESS+3;adr++){
 		WriteEEPROM(adr,1);
 	}
+	
+	// No push on CAN bus
+	for(adr=(short)TRACK_CAN_NOTIFICATION_ADDRESS;adr<(short)TRACK_CAN_NOTIFICATION_ADDRESS+TRACK_SIZE;adr++){
+		WriteEEPROM(adr,(char)FALSE);
+	}
 
+	// No push on CAN bus
+	for(adr=(short)GPIO_CAN_NOTIFICATION_ADDRESS;adr<(short)GPIO_CAN_NOTIFICATION_ADDRESS+GPIO_SIZE;adr++){
+		WriteEEPROM(adr,(char)FALSE);
+	}
+
+	// No push on CAN bus
+	for(adr=(short)TIMER_CAN_NOTIFICATION_ADDRESS;adr<(short)TIMER_CAN_NOTIFICATION_ADDRESS+TIMER_SIZE;adr++){
+		WriteEEPROM(adr,(char)FALSE);
+	}
 }
 /* ==============================================================================
  * Function: ReadEEPROMConfig
@@ -308,6 +322,10 @@ char memAvailable(void) {
  * automation index to the prompt/LED display.
  * ============================================================================== */
 void boardStatus(void) {
+
+	char  value;
+	short adr;
+	char  timerCounter;
 				
 	mySprintf((char *)gl_message,"%S",RAIL_DRIVER_HEADER_STRING);
 	prompt((char *)gl_message);
@@ -336,6 +354,15 @@ void boardStatus(void) {
 	mySprintf((char *)gl_message,"%S",AUTOMATION_NUMBER_STRING);
 	mySprintf((char *)gl_message,"%s%d",gl_message,(int)gl_nexAvailableAutomation);
 	prompt((char *)gl_message);
+
+	for(timerCounter=0;timerCounter<MAXTIMER;timerCounter++) {
+		adr=(short)TIMER_CAN_NOTIFICATION_ADDRESS+timerCounter;
+		ReadEEPROM(adr,&value);
+		if (value==(char)TRUE){
+			mySprintf((char *)gl_message,"TIMER %d => CAN",(int)timerCounter);
+			prompt((char *)gl_message);
+		}
+	}
 
 	mySprintf((char *)gl_message,"");
 	prompt((char *)gl_message);
@@ -535,7 +562,8 @@ void traceError(void) {
 		case AUTOMATIONLREADYEXISTS		:		mySprintf((char *)gl_message,"%S",AUTOMATIONLREADYEXISTS_STRING);break;
 		case BADAUTOMATIONNUMBER		:		mySprintf((char *)gl_message,"%S",BADAUTOMATIONNUMBER_STRING);break;
 		case BAD_TRACK_INERTIA			:		mySprintf((char *)gl_message,"%S",BAD_TRACK_INERTIA_STRING);break;
-		case BAD_USER_MODE					:	mySprintf((char *)gl_message,"%S",BAD_USER_MODE_STRING);break;
+		case BAD_USER_MODE				:		mySprintf((char *)gl_message,"%S",BAD_USER_MODE_STRING);break;
+		case BAD_CANPUSH_NUMBER			:		mySprintf((char *)gl_message,"%S",BAD_CANPUSH_NUMBER_STRING);break;
 		default : mySprintf((char *)gl_message,"%s 0x%x",UNKNOWN_ERROR_STRING,gl_parserErrorCode);
 	}
 	mySprintf((char *)gl_message,"%s %s",gl_message,gl_errorInfo);
@@ -842,6 +870,93 @@ char parser(char* inputString) {
 				else return(FALSE);
 			}
 		}
+		// PUSHCAN
+		mySprintf(token,PUSHCAN);
+		stringPointer = keepStringPointer;
+		if (getToken(&inputString[stringPointer], token, &stringPointer)) {
+			gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH] = TRUE;
+
+			// Get can_push number
+			// 0,1,2,3 => Track number
+			// 4,5,6,7 => GPIO Number + 4
+			// 8 -> 22 => TIMER Number + 8
+
+			// get GPIO or TIMER or TRACK 
+			keepStringPointer = stringPointer;
+
+			// TRACK 
+			mySprintf(token,TRACK);
+			if (getToken(&inputString[stringPointer], token, &stringPointer)) {
+
+				// get TRACK number
+				if (!getValue((char *)&inputString[stringPointer],(char *) &gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER],(char *) &stringPointer)) return(FALSE);
+				if (gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]<0 || gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]>3) {
+					mySprintf((char *)gl_errorInfo,"%d",(int)gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]);
+					gl_parserErrorCode = BAD_CANPUSH_NUMBER;
+					return(FALSE);
+				}
+			}
+
+			// GPIO 
+			else {
+				stringPointer = keepStringPointer;
+				mySprintf(token,GPIO);
+				if (getToken(&inputString[stringPointer], token, &stringPointer)) {
+
+					// get GPIO number
+					if (!getValue((char *)&inputString[stringPointer],(char *) &gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER],(char *) &stringPointer)) return(FALSE);
+					else {
+						if (gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]<0 || gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]>3) {
+							mySprintf((char *)gl_errorInfo,"%d",(int)gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]);
+							gl_parserErrorCode = BAD_CANPUSH_NUMBER;
+							return(FALSE);
+						}
+						gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]+=TRACK_SIZE;
+					}
+				}
+				// TIMER
+				else {
+					stringPointer = keepStringPointer;
+					mySprintf(token,TIMER);
+					if (getToken(&inputString[stringPointer], token, &stringPointer)) {
+	
+						// get TIMER number
+						if (!getValue((char *)&inputString[stringPointer],(char *) &gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER],(char *) &stringPointer)) return(FALSE);
+						else {
+							if (gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]<0 || gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]>14) {
+								mySprintf((char *)gl_errorInfo,"%d",(int)gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]);
+								gl_parserErrorCode = BAD_CANPUSH_NUMBER;
+								return(FALSE);
+							}
+							gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]+=TRACK_SIZE+GPIO_SIZE;
+						}
+					}
+				}
+			}
+
+
+			// ONCAN
+			mySprintf(token,ONCAN);
+			keepStringPointer = stringPointer;
+			if (getToken(&inputString[stringPointer], token, &stringPointer)) {
+				gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_ACTIVE] = TRUE;
+				clearError();
+				return(TRUE);
+			}
+
+			// OFFCAN
+			else {
+				stringPointer = keepStringPointer;
+				mySprintf(token,OFFCAN);
+				if (getToken(&inputString[stringPointer], token, &stringPointer)) {
+					gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_ACTIVE] = FALSE;
+					clearError();
+					return(TRUE);
+				}
+				else return(FALSE);
+			}
+		}
+		
 		// AUT 
 		stringPointer = keepStringPointer;
         mySprintf(token,AUT);
@@ -1810,7 +1925,7 @@ char manageRequest (char sendPrompt) {
 	if ((char)gl_request[REQ_EVENT_REQUEST_TRACK_EVENT] == (char) TRUE) {
 
 		// Event from this board is sent to the others 
-		if ((char)gl_request[REQ_BOARD_NUMBER] == (char) gl_boardNumber) sendRequestToCAN();
+		if (((char)gl_request[REQ_BOARD_NUMBER] == (char) gl_boardNumber) && ((char)gl_request[REQ_EVENT_REQUEST_EVENT_CAN_NOTIFICATION] == (char)TRUE))  sendRequestToCAN();
 
 		// Keep values as request struct should be reset
 		eventBoardTrackNumber=gl_request[REQ_EVENT_REQUEST_EVENT_BOARD_TRACK_NUMBER];
@@ -1835,7 +1950,7 @@ char manageRequest (char sendPrompt) {
 	else if ((char)gl_request[REQ_EVENT_REQUEST_GPIO_EVENT] == (char) TRUE) {
 
 		// Event from this board is sent to the others 
-		if ((char)gl_request[REQ_BOARD_NUMBER] == (char)gl_boardNumber) sendRequestToCAN();
+		if (((char)gl_request[REQ_BOARD_NUMBER] == (char) gl_boardNumber) && ((char)gl_request[REQ_EVENT_REQUEST_EVENT_CAN_NOTIFICATION] == (char)TRUE)) sendRequestToCAN();
 
 		// Keep values as request struct should be reset
 		eventBoardGPIONumber=gl_request[REQ_EVENT_REQUEST_EVENT_BOARD_GPIO_NUMBER];
@@ -1860,7 +1975,7 @@ char manageRequest (char sendPrompt) {
 	else if ((char)gl_request[REQ_EVENT_REQUEST_TIMER_EVENT] == (char) TRUE) {
 
 		// Event from this board is sent to the others 
-		if ((char)gl_request[REQ_BOARD_NUMBER] == (char)gl_boardNumber) sendRequestToCAN();
+		if (((char)gl_request[REQ_BOARD_NUMBER] == (char) gl_boardNumber) && ((char)gl_request[REQ_EVENT_REQUEST_EVENT_CAN_NOTIFICATION] == (char)TRUE)) sendRequestToCAN();
 
 		// Keep values as request struct should be reset
 		eventBoardTIMERNumber=gl_request[REQ_EVENT_REQUEST_EVENT_BOARD_TIMER_NUMBER];
@@ -2027,6 +2142,19 @@ char manageRequest (char sendPrompt) {
 						return(FALSE);
 					}											
 				}
+				if ((char)gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH] == (char)TRUE) {	
+					if ((int)gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]>=0 && (int)gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]<=TRACK_SIZE+GPIO_SIZE+TIMER_SIZE) {
+						adr=(short)CAN_NOTIFICATION_ADDRESS+gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER];
+						if ((char)gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_ACTIVE] == (char)TRUE) WriteEEPROM(adr,(char)TRUE);
+						else WriteEEPROM(adr,(char)FALSE);
+					}
+					else {
+							mySprintf((char *)gl_errorInfo,"%d",(int)gl_request[REQ_PROGRAM_REQUEST_SET_CAN_PUSH_NUMBER]);
+						gl_parserErrorCode=BAD_CANPUSH_NUMBER;
+						return(FALSE);
+					}
+				}	
+
 				if ((char)gl_request[REQ_PROGRAM_REQUEST_SET_AUTOMATION] == (char)TRUE) {
 					length=strlen(&gl_request[REQ_PROGRAM_REQUEST_IDENT]);
 					for(automationCounter=0;automationCounter<gl_nexAvailableAutomation;automationCounter++) {
@@ -2375,13 +2503,28 @@ char manageRequest (char sendPrompt) {
 				else if ((char)gl_request[REQ_COMMAND_REQUEST_GET_GPIO_STATUS] == (char) TRUE) {
 					if ((char)sendPrompt==(char)TRUE) {
 						if((char)TRISDbits.RD1==(char)0)mySprintf((char *)gl_message,"GPIO 0 OUT VAL %d",(int)gl_GPIOchar[0]);else mySprintf((char *)gl_message,"GPIO 0 IN VAL %d COUNT %d",(int)gl_GPIOchar[0],(int)gl_GPIOcounter[0]);
+						adr=(short)GPIO_CAN_NOTIFICATION_ADDRESS;
+						ReadEEPROM(adr,&value);
+						if (value==(char)TRUE)mySprintf((char *)gl_message,"%s => CAN",gl_message);
 						prompt((char *)gl_message);
+
 						if((char)TRISDbits.RD2==(char)0)mySprintf((char *)gl_message,"GPIO 1 OUT VAL %d",(int)gl_GPIOchar[1]);else mySprintf((char *)gl_message,"GPIO 1 IN VAL %d COUNT %d",(int)gl_GPIOchar[1],(int)gl_GPIOcounter[1]);
+						adr=(short)GPIO_CAN_NOTIFICATION_ADDRESS+1;
+						ReadEEPROM(adr,&value);
+						if (value==(char)TRUE)mySprintf((char *)gl_message,"%s => CAN",gl_message);
 						prompt((char *)gl_message);
+
 						if((char)TRISDbits.RD3==(char)0)mySprintf((char *)gl_message,"GPIO 2 OUT VAL %d",(int)gl_GPIOchar[2]);else mySprintf((char *)gl_message,"GPIO 2 IN VAL %d COUNT %d",(int)gl_GPIOchar[2],(int)gl_GPIOcounter[2]);
-						prompt((char *)gl_message);
+						adr=(short)GPIO_CAN_NOTIFICATION_ADDRESS+2;
+						ReadEEPROM(adr,&value);
+						if (value==(char)TRUE)mySprintf((char *)gl_message,"%s => CAN",gl_message);						prompt((char *)gl_message);
+
 						if((char)TRISCbits.RC4==(char)0)mySprintf((char *)gl_message,"GPIO 3 OUT VAL %d",(int)gl_GPIOchar[3]);else mySprintf((char *)gl_message,"GPIO 3 IN VAL %d COUNT %d",(int)gl_GPIOchar[3],(int)gl_GPIOcounter[3]);
+						adr=(short)GPIO_CAN_NOTIFICATION_ADDRESS+3;
+						ReadEEPROM(adr,&value);
+						if (value==(char)TRUE)mySprintf((char *)gl_message,"%s => CAN",gl_message);
 						prompt((char *)gl_message);
+
 						mySprintf((char *)gl_message,"KNOB 0 VAL %d",(int)gl_knobValue0);
 						prompt((char *)gl_message);
 						mySprintf((char *)gl_message,"KNOB 1 VAL %d",(int)gl_knobValue1);
@@ -2417,10 +2560,13 @@ char manageRequest (char sendPrompt) {
 							 gl_OUTSTATchar[statusCounter]==0 ? OFFTRACK_STRING : ONTRACK_STRING,
 							(int)gl_average[statusCounter],
 							(int)gl_noVehicule[statusCounter]);
-						if ((char)sendPrompt==(char)TRUE) prompt((char *)gl_message);
+						adr=(short)TRACK_CAN_NOTIFICATION_ADDRESS+statusCounter;
+						ReadEEPROM(adr,&value);
+						if (value==(char)TRUE)mySprintf((char *)gl_message,"%s => CAN",gl_message);
+						prompt((char *)gl_message);
 					}
 					mySprintf((char *)gl_message,"");
-					if ((char)sendPrompt==(char)TRUE) prompt((char *)gl_message);	
+					prompt((char *)gl_message);	
 					return(TRUE);
 				}		
 				break;
@@ -3877,6 +4023,8 @@ void trackCalibration(void) {
 char getEventRequestFromTrack(void) {
 
 	 char trackNumber;
+	 char 	value;
+	 short adr;
 
 	for(trackNumber=0;trackNumber<4;trackNumber++) {
 		if ((char)gl_trackNotification[trackNumber]==(char)TRUE) {
@@ -3885,7 +4033,13 @@ char getEventRequestFromTrack(void) {
 			gl_request[REQ_EVENT_REQUEST_TRACK_EVENT]=TRUE;
 			gl_request[REQ_EVENT_REQUEST_EVENT_BOARD_TRACK_NUMBER]=gl_boardNumber;
 			gl_request[REQ_EVENT_REQUEST_EVENT_TRACK_NUMBER]=trackNumber;
-			gl_request[REQ_EVENT_REQUEST_EVENT_VEHICLE_STATUS]=gl_OUTSTATchar[trackNumber]==1 ? ONTRACKValue : OFFTRACKValue;;
+			gl_request[REQ_EVENT_REQUEST_EVENT_VEHICLE_STATUS]=gl_OUTSTATchar[trackNumber]==1 ? ONTRACKValue : OFFTRACKValue;
+
+			// Read status to push notification on CAN bus
+			adr=(short)TRACK_CAN_NOTIFICATION_ADDRESS+trackNumber;
+			ReadEEPROM(adr,&value);
+			gl_request[REQ_EVENT_REQUEST_EVENT_CAN_NOTIFICATION]=value;
+
 			gl_mutexLowIsr=1;gl_trackNotification[trackNumber]=FALSE;gl_mutexLowIsr=0;
 			return (TRUE);
 		}
@@ -3900,6 +4054,8 @@ char getEventRequestFromTrack(void) {
 char getEventRequestFromGPIO(void) {
 
 	 char GPIONumber;
+	 char 	value;
+	 short adr;
 
 	for(GPIONumber=0;GPIONumber<4;GPIONumber++) {
 		if ((char)gl_GPIONotification[GPIONumber]==(char)TRUE) {
@@ -3910,6 +4066,12 @@ char getEventRequestFromGPIO(void) {
 			gl_request[REQ_EVENT_REQUEST_EVENT_GPIO_NUMBER]=GPIONumber;
 			if (gl_GPIOchar[GPIONumber]==0)gl_request[REQ_EVENT_REQUEST_EVENT_GPIO_LEVEL]=0;
 			else gl_request[REQ_EVENT_REQUEST_EVENT_GPIO_LEVEL]=gl_GPIOcounter[GPIONumber];
+
+			// Read status to push notification on CAN bus
+			adr=(short)GPIO_CAN_NOTIFICATION_ADDRESS+GPIONumber;
+			ReadEEPROM(adr,&value);
+			gl_request[REQ_EVENT_REQUEST_EVENT_CAN_NOTIFICATION]=value;
+
 			gl_mutexLowIsr=1;gl_GPIONotification[GPIONumber]=FALSE;gl_mutexLowIsr=0;
 			return(TRUE);
 		}
@@ -3924,6 +4086,8 @@ char getEventRequestFromGPIO(void) {
 char getEventRequestFromTIMER(void) {
 
 	 char TIMERNumber;
+	 char 	value;
+	 short adr;
 
 	for(TIMERNumber=0;TIMERNumber<MAXTIMER;TIMERNumber++) {
 		if ((char)gl_TIMERNotification[TIMERNumber]==(char)TRUE) {
@@ -3932,6 +4096,12 @@ char getEventRequestFromTIMER(void) {
 			gl_request[REQ_EVENT_REQUEST_TIMER_EVENT]=TRUE;
 			gl_request[REQ_EVENT_REQUEST_EVENT_BOARD_TIMER_NUMBER]=gl_boardNumber;
 			gl_request[REQ_EVENT_REQUEST_EVENT_TIMER_NUMBER]=TIMERNumber;
+
+			// Read status to push notification on CAN bus
+			adr=(short)TIMER_CAN_NOTIFICATION_ADDRESS+TIMERNumber;
+			ReadEEPROM(adr,&value);
+			gl_request[REQ_EVENT_REQUEST_EVENT_CAN_NOTIFICATION]=value;
+
 			gl_mutexLowIsr=1;gl_TIMERNotification[TIMERNumber]=FALSE;gl_mutexLowIsr=0;
 			return(TRUE);
 		}

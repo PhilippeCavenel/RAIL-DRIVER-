@@ -157,7 +157,7 @@
 //============================================================
 
 // Passage en mode manuel
-//	- passe en vitesse nulle toutes les voies de la carte jusqu'à modification d'une valeur de vitesse ou d'internie
+//	- passe en vitesse nulle toutes les voies de la carte jusqu'à modification d'une valeur de vitesse ou d'inertie
 //	- allume la led rouge du mode manuel
 //	- Eteint la led du bouton demarrer si elle était allumée
 //	- Réinitialise tous les TIMERs
@@ -756,9 +756,9 @@ PROG 1 AUT T5 AUTON BOARD 2 GPIO 0 3 ACT LPO 0 0
 // Pilotage automatique décrochage gare crémaillère haut
 PROG 0 AUT T1 AUTON BOARD 1 TIMER 1 ACT LPO 4 1 
 PROG 0 AUT T2 AUTON BOARD 1 TIMER 4 ACT LPO 4 0
-
 PROG 3 AUT T1 AUTON BOARD 1 TIMER 2 ACT LPO 1 0
 PROG 3 AUT T2 AUTON BOARD 1 TIMER 2 ACT LPO 0 1
+
 
 // Commande automatique B1 / CROSS
 PROG 3 AUT T3 AUTON BOARD 31 GPIO 1 1 ACT LPO 2 1
@@ -771,7 +771,6 @@ PROG 3 AUT T6 AUTON BOARD 0 GPIO 1 1 ACT LPO 5 0
 // Commande automatique CROSS
 PROG 3 AUT T7 AUTON BOARD 0 TIMER 1 ACT LPO 1 1
 PROG 3 AUT T8 AUTON BOARD 0 TIMER 1 ACT LPO 0 0
-
 PROG 3 AUT T9 AUTON BOARD 1 TIMER 2 ACT LPO 1 0
 PROG 3 AUT TA AUTON BOARD 1 TIMER 2 ACT LPO 0 1
 
@@ -871,7 +870,35 @@ PROG 3 AUT F6 AUTON BOARD 2 TRACK 1 STA ONTRACK ACT  TRACK 3 SPEED 2 FORW INERTI
 PROG 3 AUT F7 AUTON BOARD 2 TRACK 1 STA OFFTRACK ACT  TRACK 3 SPEED 4 FORW INERTIA 0
 
 
+//============================================================
+// CAN NOTIFICATION
+//============================================================
 
+PROG 0 PUSHCAN TRACK 3 ONCAN
+PROG 0 PUSHCAN TIMER 1 ONCAN
+PROG 0 PUSHCAN GPIO 0 ONCAN
+PROG 0 PUSHCAN GPIO 1 ONCAN
+PROG 0 PUSHCAN GPIO 2 ONCAN
+PROG 0 PUSHCAN GPIO 3 ONCAN
+
+PROG 1 PUSHCAN TRACK 2 ONCAN
+PROG 1 PUSHCAN TIMER 1 ONCAN
+PROG 1 PUSHCAN TIMER 2 ONCAN
+PROG 1 PUSHCAN TIMER 4 ONCAN
+PROG 1 PUSHCAN TIMER 6 ONCAN
+
+PROG 2 PUSHCAN GPIO 0 ONCAN
+PROG 2 PUSHCAN TRACK 1 ONCAN
+
+PROG 3 PUSHCAN GPIO 0 ONCAN
+PROG 3 PUSHCAN GPIO 1 ONCAN
+PROG 3 PUSHCAN GPIO 2 ONCAN
+PROG 3 PUSHCAN GPIO 3 ONCAN
+PROG 3 PUSHCAN TRACK 0 ONCAN
+
+PROG 31 PUSHCAN GPIO 0 ONCAN
+PROG 31 PUSHCAN GPIO 1 ONCAN
+PROG 31 PUSHCAN GPIO 2 ONCAN
 
 //============================================================
 // REMISE EN ROUTE DES AUTOMATISMES

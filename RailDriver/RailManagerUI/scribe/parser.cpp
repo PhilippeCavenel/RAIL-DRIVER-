@@ -345,6 +345,85 @@ char parser::parseLine(char* inputString,parserObject* returnedObject) {
                 else return(FALSE);
             }
         }
+        // PUSHCAN
+        stringPointer = keepStringPointer;
+        if (getToken(&inputString[stringPointer], (char*)PUSHCAN, &stringPointer)) {
+
+            //GPIO
+            keepStringPointer = stringPointer;
+            if (getToken(&inputString[stringPointer], (char*)GPIO, &stringPointer)) {
+
+                // get GPIO number
+                char Number;
+
+                if (!getValue(&inputString[stringPointer], &Number, &stringPointer)) return(FALSE);
+                keepStringPointer = stringPointer;
+
+                // ONCAN
+                if (getToken(&inputString[stringPointer], (char*)ONCAN, &stringPointer)) {
+                    return(TRUE);
+                }
+
+                // OFFCAN
+                else {
+                    stringPointer = keepStringPointer;
+                    if (getToken(&inputString[stringPointer], (char*)OFFCAN, &stringPointer)) {
+                        return(TRUE);
+                    }
+                    else return(FALSE);
+                }
+            }
+            //TRACK
+            stringPointer = keepStringPointer;
+            if (getToken(&inputString[stringPointer], (char*)TRACK, &stringPointer)) {
+
+                // get TRACK number
+                char Number;
+
+                if (!getValue(&inputString[stringPointer], &Number, &stringPointer)) return(FALSE);
+                keepStringPointer = stringPointer;
+
+                // ONCAN
+                if (getToken(&inputString[stringPointer], (char*)ONCAN, &stringPointer)) {
+                    return(TRUE);
+                }
+
+                // OFFCAN
+                else {
+                    stringPointer = keepStringPointer;
+                    if (getToken(&inputString[stringPointer], (char*)OFFCAN, &stringPointer)) {
+                        return(TRUE);
+                    }
+                    else return(FALSE);
+                }
+            }
+            //TIMER
+            stringPointer = keepStringPointer;
+            if (getToken(&inputString[stringPointer], (char*)TIMER, &stringPointer)) {
+
+                // get TIMER number
+                char Number;
+
+                if (!getValue(&inputString[stringPointer], &Number, &stringPointer)) return(FALSE);
+                keepStringPointer = stringPointer;
+
+                // ONCAN
+                if (getToken(&inputString[stringPointer], (char*)ONCAN, &stringPointer)) {
+                    return(TRUE);
+                }
+
+                // OFFCAN
+                else {
+                    stringPointer = keepStringPointer;
+                    if (getToken(&inputString[stringPointer], (char*)OFFCAN, &stringPointer)) {
+                        return(TRUE);
+                    }
+                    else return(FALSE);
+                }
+            }
+            return(FALSE);
+        }
+
         // AUT
         stringPointer = keepStringPointer;
         if (getToken(&inputString[stringPointer], (char*)AUT, &stringPointer)) {
@@ -618,6 +697,27 @@ char parser::parseLine(char* inputString,parserObject* returnedObject) {
                 stringPointer = keepStringPointer;
                 if (getToken(&inputString[stringPointer], (char*)MANUAL0, &stringPointer)) {
                     returnedObject->Action.append(QString("MANUAL0"));
+                    return(TRUE);
+                }
+
+                // MANUAL1
+                stringPointer = keepStringPointer;
+                if (getToken(&inputString[stringPointer], (char*)MANUAL1, &stringPointer)) {
+                    returnedObject->Action.append(QString("MANUAL1"));
+                    return(TRUE);
+                }
+
+                // MANUAL2
+                stringPointer = keepStringPointer;
+                if (getToken(&inputString[stringPointer], (char*)MANUAL2, &stringPointer)) {
+                    returnedObject->Action.append(QString("MANUAL2"));
+                    return(TRUE);
+                }
+
+                // MANUAL3
+                stringPointer = keepStringPointer;
+                if (getToken(&inputString[stringPointer], (char*)MANUAL3, &stringPointer)) {
+                    returnedObject->Action.append(QString("MANUAL3"));
                     return(TRUE);
                 }
                 // MANUAL

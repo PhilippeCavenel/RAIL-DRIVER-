@@ -1,5 +1,5 @@
 MPLINK 5.00, LINKER
-Linker Map File - Created Fri Sep 26 18:17:01 2025
+Linker Map File - Created Wed Oct 01 19:35:24 2025
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -10,48 +10,48 @@ Linker Map File - Created Fri Sep 26 18:17:01 2025
         .idata_stdout.o_i    romdata   0x00000e    program   0x000002
                low_vector       code   0x000018    program   0x000006
                    .cinit    romdata   0x00001e    program   0x00001a
-             .code_main.o       code   0x000038    program   0x00c912
-         .code_vfprintf.o       code   0x00c94a    program   0x000c22
-         .code_ECANPoll.o       code   0x00d56c    program   0x00084e
-             .stringtable    romdata   0x00ddba    program   0x00034c
-          .romdata_main.o    romdata   0x00e106    program   0x0002d5
-      .idata_fxd3232u.o_i    romdata   0x00e3db    program   0x000000
-      .romdata_fxd3232u.o    romdata   0x00e3db    program   0x000000
-       .idata_fxm3232.o_i    romdata   0x00e3db    program   0x000000
-       .romdata_fxm3232.o    romdata   0x00e3db    program   0x000000
-        .idata___init.o_i    romdata   0x00e3db    program   0x000000
-        .romdata___init.o    romdata   0x00e3db    program   0x000000
-         .idata_errno.o_i    romdata   0x00e3db    program   0x000000
-         .romdata_errno.o    romdata   0x00e3db    program   0x000000
-          .romdata_putc.o    romdata   0x00e3db    program   0x000000
-          .idata_putc.o_i    romdata   0x00e3db    program   0x000000
-        .romdata_stdout.o    romdata   0x00e3db    program   0x000000
-      .idata_vsprintf.o_i    romdata   0x00e3db    program   0x000000
-      .romdata_vsprintf.o    romdata   0x00e3db    program   0x000000
-      .idata_vfprintf.o_i    romdata   0x00e3db    program   0x000000
-         .idata_c018i.o_i    romdata   0x00e3db    program   0x000000
-      .romdata_fxd1616u.o    romdata   0x00e3db    program   0x000000
-         .romdata_c018i.o    romdata   0x00e3db    program   0x000000
-      .idata_fxd1616u.o_i    romdata   0x00e3db    program   0x000000
-      .idata_ECANPoll.o_i    romdata   0x00e3db    program   0x000000
-      .romdata_ECANPoll.o    romdata   0x00e3db    program   0x000000
-            .code_c018i.o       code   0x00e3dc    program   0x000000
-           .code_stdout.o       code   0x00e3dc    program   0x000000
-            .code_errno.o       code   0x00e3dc    program   0x000000
-                     PROG       code   0x00e3dc    program   0x00010e
-                   STRING       code   0x00e4ea    program   0x0000bc
-               _cinit_scn       code   0x00e5a6    program   0x00009e
-         .code_vsprintf.o       code   0x00e644    program   0x000088
-             .code_putc.o       code   0x00e6cc    program   0x000084
-          .code_fxm3232.o       code   0x00e750    program   0x000070
-         .code_fxd3232u.o       code   0x00e7c0    program   0x000048
-         .code_fxd1616u.o       code   0x00e808    program   0x00002c
-                    CTYPE       code   0x00e834    program   0x000024
-                    .code       code   0x00e858    program   0x000020
-             _startup_scn       code   0x00e878    program   0x00001c
-                    STDIO       code   0x00e894    program   0x00001c
-      .romdata_vfprintf.o    romdata   0x00e8b0    program   0x000011
-          .idata_main.o_i    romdata   0x00e8c1    program   0x00002e
+             .code_main.o       code   0x000038    program   0x00d356
+         .code_vfprintf.o       code   0x00d38e    program   0x000c22
+         .code_ECANPoll.o       code   0x00dfb0    program   0x00084e
+             .stringtable    romdata   0x00e7fe    program   0x00037b
+          .romdata_main.o    romdata   0x00eb79    program   0x0002ea
+      .idata_fxd3232u.o_i    romdata   0x00ee63    program   0x000000
+      .romdata_fxd3232u.o    romdata   0x00ee63    program   0x000000
+       .idata_fxm3232.o_i    romdata   0x00ee63    program   0x000000
+       .romdata_fxm3232.o    romdata   0x00ee63    program   0x000000
+        .idata___init.o_i    romdata   0x00ee63    program   0x000000
+        .romdata___init.o    romdata   0x00ee63    program   0x000000
+         .idata_errno.o_i    romdata   0x00ee63    program   0x000000
+         .romdata_errno.o    romdata   0x00ee63    program   0x000000
+          .romdata_putc.o    romdata   0x00ee63    program   0x000000
+          .idata_putc.o_i    romdata   0x00ee63    program   0x000000
+        .romdata_stdout.o    romdata   0x00ee63    program   0x000000
+      .idata_vsprintf.o_i    romdata   0x00ee63    program   0x000000
+      .romdata_vsprintf.o    romdata   0x00ee63    program   0x000000
+      .idata_vfprintf.o_i    romdata   0x00ee63    program   0x000000
+         .idata_c018i.o_i    romdata   0x00ee63    program   0x000000
+      .romdata_fxd1616u.o    romdata   0x00ee63    program   0x000000
+         .romdata_c018i.o    romdata   0x00ee63    program   0x000000
+      .idata_fxd1616u.o_i    romdata   0x00ee63    program   0x000000
+      .idata_ECANPoll.o_i    romdata   0x00ee63    program   0x000000
+      .romdata_ECANPoll.o    romdata   0x00ee63    program   0x000000
+            .code_c018i.o       code   0x00ee64    program   0x000000
+           .code_stdout.o       code   0x00ee64    program   0x000000
+            .code_errno.o       code   0x00ee64    program   0x000000
+                     PROG       code   0x00ee64    program   0x00010e
+                   STRING       code   0x00ef72    program   0x0000bc
+               _cinit_scn       code   0x00f02e    program   0x00009e
+         .code_vsprintf.o       code   0x00f0cc    program   0x000088
+             .code_putc.o       code   0x00f154    program   0x000084
+          .code_fxm3232.o       code   0x00f1d8    program   0x000070
+         .code_fxd3232u.o       code   0x00f248    program   0x000048
+         .code_fxd1616u.o       code   0x00f290    program   0x00002c
+                    CTYPE       code   0x00f2bc    program   0x000024
+                    .code       code   0x00f2e0    program   0x000020
+             _startup_scn       code   0x00f300    program   0x00001c
+                    STDIO       code   0x00f31c    program   0x00001c
+      .romdata_vfprintf.o    romdata   0x00f338    program   0x000011
+          .idata_main.o_i    romdata   0x00f349    program   0x00002e
     .config_300001_main.o    romdata   0x300001    program   0x000001
     .config_300002_main.o    romdata   0x300002    program   0x000001
     .config_300003_main.o    romdata   0x300003    program   0x000001
@@ -85,7 +85,7 @@ Linker Map File - Created Fri Sep 26 18:17:01 2025
         .idata_ECANPoll.o      idata   0x0000d8       data   0x000000
            .idata_c018i.o      idata   0x0000d8       data   0x000000
                    .stack      udata   0x000100       data   0x000100
-              GLOBAL_DATA      udata   0x0003a0       data   0x00093a
+              GLOBAL_DATA      udata   0x0003a0       data   0x000942
               SFR_BANKED0      udata   0x000d60       data   0x00000c
               SFR_BANKED1      udata   0x000d70       data   0x00000c
               SFR_BANKED2      udata   0x000d80       data   0x00000c
@@ -108,372 +108,380 @@ Linker Map File - Created Fri Sep 26 18:17:01 2025
                                Start         End      
                            ---------   ---------      
                             0x000000    0x00000f      
-                            0x000018    0x00e3da      
-                            0x00e3dc    0x00e8ee      
+                            0x000018    0x00ee62      
+                            0x00ee64    0x00f376      
                             0x300001    0x300003      
                             0x300005    0x300006      
-            59627 out of 66584 program addresses used, program memory utilization is 89%
+            62323 out of 66584 program addresses used, program memory utilization is 93%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-AUTOMATIONLREADYEXISTS_STRING   0x00e375    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-AUTOMATIONSIZELIMIT_STRING   0x00e337    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
- AUTOMATION_NUMBER_STRING   0x00e159    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-        AUTOMATION_STRING   0x00e147    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-BADAUTOMATIONNUMBER_STRING   0x00e391    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     BAD_AUT_IDENT_STRING   0x00e27a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    BAD_AUT_STATUS_STRING   0x00e263    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    BAD_BOARD_MODE_STRING   0x00e313    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-      BAD_GPIO_DIR_STRING   0x00e2a8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    BAD_GPIO_LEVEL_STRING   0x00e2bc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-   BAD_GPIO_NUMBER_STRING   0x00e21f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     BAD_LPO_LEVEL_STRING   0x00e2cc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    BAD_LPO_NUMBER_STRING   0x00e253    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-        BAD_NUMBER_STRING   0x00e205    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-  BAD_TIMER_NUMBER_STRING   0x00e230    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-   BAD_TIMER_VALUE_STRING   0x00e242    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     BAD_TRACK_DIR_STRING   0x00e2ec    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
- BAD_TRACK_INERTIA_STRING   0x00e3aa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-  BAD_TRACK_NUMBER_STRING   0x00e301    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-   BAD_TRACK_SPEED_STRING   0x00e2db    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     BAD_USER_MODE_STRING   0x00e3bd    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-      BOARD_NUMBER_STRING   0x00e12f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-      BOARD_PROMPT_STRING   0x00e1b0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-             CAN_SendSync   0x00913c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             CANsendDelay   0x008ad8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+AUTOMATIONLREADYEXISTS_STRING   0x00ede8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+AUTOMATIONSIZELIMIT_STRING   0x00edaa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+ AUTOMATION_NUMBER_STRING   0x00ebcc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+        AUTOMATION_STRING   0x00ebba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+BADAUTOMATIONNUMBER_STRING   0x00ee04    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     BAD_AUT_IDENT_STRING   0x00eced    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    BAD_AUT_STATUS_STRING   0x00ecd6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    BAD_BOARD_MODE_STRING   0x00ed86    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+BAD_CANPUSH_NUMBER_STRING   0x00ee4e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      BAD_GPIO_DIR_STRING   0x00ed1b    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    BAD_GPIO_LEVEL_STRING   0x00ed2f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+   BAD_GPIO_NUMBER_STRING   0x00ec92    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     BAD_LPO_LEVEL_STRING   0x00ed3f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    BAD_LPO_NUMBER_STRING   0x00ecc6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+        BAD_NUMBER_STRING   0x00ec78    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+  BAD_TIMER_NUMBER_STRING   0x00eca3    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+   BAD_TIMER_VALUE_STRING   0x00ecb5    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     BAD_TRACK_DIR_STRING   0x00ed5f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+ BAD_TRACK_INERTIA_STRING   0x00ee1d    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+  BAD_TRACK_NUMBER_STRING   0x00ed74    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+   BAD_TRACK_SPEED_STRING   0x00ed4e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     BAD_USER_MODE_STRING   0x00ee30    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      BOARD_NUMBER_STRING   0x00eba2    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      BOARD_PROMPT_STRING   0x00ec23    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+             CAN_SendSync   0x009a78    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             CANsendDelay   0x009414    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
           CalibMinMaxKnob   0x000144    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   D1616S   0x00e3fe    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                D1616SNEG   0x00e40c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 D1616SOK   0x00e408    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  D1616SX   0x00e41e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                   D3232S   0x00e458    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                D3232SNEG   0x00e466    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                 D3232SOK   0x00e462    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                  D3232SX   0x00e486    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                  DA1616S   0x00e3ee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  DA3232S   0x00e442    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-              DONE_STRING   0x00e195    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           ECANInitialize   0x00d56c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-       ECANReceiveMessage   0x00d7ea    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-          ECANSendMessage   0x00d5de    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-     ECANSetOperationMode   0x00d9fe    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-                 FXD1616S   0x00e3dc    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 FXD1616U   0x00e808    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
-                 FXD3232S   0x00e428    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                 FXD3232U   0x00e7c0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232u.c
-                 FXM1616S   0x00e490    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-                  FXM3232   0x00e750    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm3232.c
-    IDENT_TOO_LONG_STRING   0x00e360    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-INCOMPLETE_REQUEST_STRING   0x00e1f1    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           INERTIA_STRING   0x00e1bf    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              INIT_STRING   0x00e1c4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-            MEMORY_STRING   0x00e13e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     MISSING_IDENT_STRING   0x00e28f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     MISSING_SPACE_STRING   0x00e351    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-      MODE_MISSING_STRING   0x00e211    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              MODE_STRING   0x00e137    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    NUMBER_MISSING_STRING   0x00e1e1    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-          OFFTRACK_STRING   0x00e1a6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           ONTRACK_STRING   0x00e19d    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-       PIC18FMainSettings   0x00c08a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-RAIL_DRIVER_HEADER_STRING   0x00e106    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-             RESET_STRING   0x00e177    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-               RUN_STRING   0x00e186    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+                   D1616S   0x00ee86    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                D1616SNEG   0x00ee94    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 D1616SOK   0x00ee90    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  D1616SX   0x00eea6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                   D3232S   0x00eee0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                D3232SNEG   0x00eeee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                 D3232SOK   0x00eeea    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                  D3232SX   0x00ef0e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                  DA1616S   0x00ee76    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  DA3232S   0x00eeca    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+              DONE_STRING   0x00ec08    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           ECANInitialize   0x00dfb0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+       ECANReceiveMessage   0x00e22e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+          ECANSendMessage   0x00e022    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+     ECANSetOperationMode   0x00e442    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+                 FXD1616S   0x00ee64    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 FXD1616U   0x00f290    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
+                 FXD3232S   0x00eeb0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                 FXD3232U   0x00f248    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232u.c
+                 FXM1616S   0x00ef18    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+                  FXM3232   0x00f1d8    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm3232.c
+    IDENT_TOO_LONG_STRING   0x00edd3    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+INCOMPLETE_REQUEST_STRING   0x00ec64    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           INERTIA_STRING   0x00ec32    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              INIT_STRING   0x00ec37    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+            MEMORY_STRING   0x00ebb1    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     MISSING_IDENT_STRING   0x00ed02    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     MISSING_SPACE_STRING   0x00edc4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      MODE_MISSING_STRING   0x00ec84    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              MODE_STRING   0x00ebaa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    NUMBER_MISSING_STRING   0x00ec54    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+          OFFTRACK_STRING   0x00ec19    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           ONTRACK_STRING   0x00ec10    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+       PIC18FMainSettings   0x00c9c6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+RAIL_DRIVER_HEADER_STRING   0x00eb79    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+             RESET_STRING   0x00ebea    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+               RUN_STRING   0x00ebf9    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
                ReadEEPROM   0x0000c8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         ReadEEPROMConfig   0x000530    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         ReadEEPROMConfig   0x000614    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
               ResetEEPROM   0x00040a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             SPEED_STRING   0x00e1ba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-             START_STRING   0x00e170    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              STOP_STRING   0x00e17e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              SYNC_STRING   0x00e18d    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           TM1637_display   0x009cf0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-     TM1637_displayString   0x009f62    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              TM1637_init   0x009b7a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-     TM1637_setBrightness   0x00a068    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             TM1637_write   0x009b7e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
- TM1637_writeStringWindow   0x009e62    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-               TSIGN1616A   0x00e4dc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-     UNKNOWN_ERROR_STRING   0x00e3cc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     UNKNOWN_TOKEN_STRING   0x00e1d2    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           VERSION_STRING   0x00e11b    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              VOLT_STRING   0x00e1cb    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-WRONG_BOARD_NUMBER_STRING   0x00e323    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     WriteCompletedEEPROM   0x000976    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              WriteEEPROM   0x00099a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           WriteRdyEEPROM   0x00098a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   _2jEnd   0x00e590    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-              _4jContinue   0x00e532    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                   _5jEnd   0x00e53c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-             _CANIDToRegs   0x00da28    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-             _RegsToCANID   0x00dbe8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-      ___default_lbl00680   0x008728    program     static                          
-         ___else_lbl00239   0x003bda    program     static                          
-         ___else_lbl01068   0x00bb50    program     static                          
-          ___for_lbl00821   0x009236    program     static                          
-           ___if_lbl00240   0x003be0    program     static                          
-           ___if_lbl00243   0x003ca4    program     static                          
-           ___if_lbl00291   0x004dbc    program     static                          
-           ___if_lbl00662   0x008726    program     static                          
-           ___if_lbl00664   0x008726    program     static                          
-           ___if_lbl00666   0x008726    program     static                          
-           ___if_lbl00668   0x008726    program     static                          
-           ___if_lbl00670   0x008726    program     static                          
-           ___if_lbl00672   0x008726    program     static                          
-           ___if_lbl00674   0x008726    program     static                          
-           ___if_lbl00676   0x008726    program     static                          
-       ___return_lbl00000   0x00e7be    program     static                          
-       ___return_lbl00000   0x00e806    program     static                          
+             SPEED_STRING   0x00ec2d    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+             START_STRING   0x00ebe3    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              STOP_STRING   0x00ebf1    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              SYNC_STRING   0x00ec00    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           TM1637_display   0x00a62c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+     TM1637_displayString   0x00a89e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              TM1637_init   0x00a4b6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+     TM1637_setBrightness   0x00a9a4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             TM1637_write   0x00a4ba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+ TM1637_writeStringWindow   0x00a79e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+               TSIGN1616A   0x00ef64    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+     UNKNOWN_ERROR_STRING   0x00ee3f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     UNKNOWN_TOKEN_STRING   0x00ec45    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           VERSION_STRING   0x00eb8e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              VOLT_STRING   0x00ec3e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+WRONG_BOARD_NUMBER_STRING   0x00ed96    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     WriteCompletedEEPROM   0x000a60    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              WriteEEPROM   0x000a84    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           WriteRdyEEPROM   0x000a74    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                   _2jEnd   0x00f018    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+              _4jContinue   0x00efba    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                   _5jEnd   0x00efc4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+             _CANIDToRegs   0x00e46c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+             _RegsToCANID   0x00e62c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+      ___default_lbl00727   0x009064    program     static                          
+         ___else_lbl00274   0x004262    program     static                          
+         ___else_lbl01115   0x00c48c    program     static                          
+          ___for_lbl00868   0x009b72    program     static                          
+           ___if_lbl00275   0x004268    program     static                          
+           ___if_lbl00278   0x00432c    program     static                          
+           ___if_lbl00326   0x005444    program     static                          
+           ___if_lbl00705   0x009062    program     static                          
+           ___if_lbl00707   0x009062    program     static                          
+           ___if_lbl00709   0x009062    program     static                          
+           ___if_lbl00711   0x009062    program     static                          
+           ___if_lbl00713   0x009062    program     static                          
+           ___if_lbl00715   0x009062    program     static                          
+           ___if_lbl00717   0x009062    program     static                          
+           ___if_lbl00719   0x009062    program     static                          
+           ___if_lbl00721   0x009062    program     static                          
+           ___if_lbl00723   0x009062    program     static                          
+       ___return_lbl00000   0x00f28e    program     static                          
+       ___return_lbl00000   0x00f246    program     static                          
+       ___return_lbl00000   0x00f2ba    program     static                          
        ___return_lbl00000   0x000004    program     static                          
-       ___return_lbl00000   0x00e832    program     static                          
-       ___return_lbl00001   0x00e892    program     static                          
-       ___return_lbl00002   0x00e642    program     static                          
-       ___return_lbl00157   0x004dc0    program     static                          
-       ___return_lbl00334   0x005b1e    program     static                          
-       ___return_lbl00368   0x008740    program     static                          
-       ___return_lbl00894   0x00000c    program     static                          
-       ___return_lbl00933   0x00001c    program     static                          
-   ___switchexit_lbl00437   0x008740    program     static                          
+       ___return_lbl00001   0x00f31a    program     static                          
+       ___return_lbl00002   0x00f0ca    program     static                          
+       ___return_lbl00171   0x005448    program     static                          
+       ___return_lbl00369   0x0061a6    program     static                          
+       ___return_lbl00403   0x00907c    program     static                          
+       ___return_lbl00941   0x00000c    program     static                          
+       ___return_lbl00980   0x00001c    program     static                          
+   ___switchexit_lbl00475   0x00907c    program     static                          
                __config_0   0x300001    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
                __config_1   0x300002    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
                __config_2   0x300003    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
                __config_3   0x300005    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
                __config_4   0x300006    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
                    __init   0x000006    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
-                   __pa_0   0x00d28a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_1   0x00d292    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_10   0x00d346    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_11   0x00d354    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_12   0x00d36a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_13   0x00d384    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_14   0x00d39c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_15   0x00d3ac    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_16   0x00d3c2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_17   0x00d3d4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_18   0x00d3e6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_19   0x00d3f0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_2   0x00d29c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_20   0x00d400    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_21   0x00d410    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_22   0x00d420    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_23   0x00d42c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_24   0x00d43a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_25   0x00d442    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_26   0x00d44c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_27   0x00d456    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_28   0x00d45e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_29   0x00d46c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_3   0x00d2a6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_30   0x00d488    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_31   0x00d4a2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_32   0x00d4bc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_33   0x00d4d4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_34   0x00d4de    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_35   0x00d4ec    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_36   0x00d4f4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_37   0x00d4fe    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_38   0x00d50e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_39   0x00d51c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_4   0x00d2be    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_40   0x00d528    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_41   0x00d534    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_42   0x00d53c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_43   0x00d546    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_44   0x00d54c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_45   0x00d556    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_46   0x00d562    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_5   0x00d2d2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_6   0x00d2ee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_7   0x00d2f8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_8   0x00d304    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_9   0x00d326    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-             __string_100   0x00dfb3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_101   0x00dfaf    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_102   0x00dfa9    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_103   0x00dfa3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_104   0x00df9d    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_105   0x00df97    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_106   0x00df8f    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_107   0x00df8a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_108   0x00df85    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_109   0x00df77    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_110   0x00df68    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_111   0x00df5b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_112   0x00df4a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_113   0x00df39    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_114   0x00df30    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_115   0x00df26    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_116   0x00df12    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_117   0x00df05    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_118   0x00defe    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_119   0x00deec    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_120   0x00ded2    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_121   0x00dec0    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_122   0x00dea6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_123   0x00de94    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_124   0x00de7a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_125   0x00de68    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_126   0x00de4e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_127   0x00de40    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_128   0x00de32    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_129   0x00de29    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_130   0x00de20    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_131   0x00de10    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_132   0x00ddec    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_133   0x00ddc8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_134   0x00ddc4    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_135   0x00ddbf    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_136   0x00ddba    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_48   0x00e0fe    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_49   0x00e0f6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_50   0x00e0f3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_51   0x00e0ee    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_52   0x00e0e8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_53   0x00e0e2    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_54   0x00e0db    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_55   0x00e0d2    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_56   0x00e0c6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_57   0x00e0c5    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_58   0x00e0b9    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_59   0x00e0b1    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_60   0x00e0ab    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_61   0x00e09b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_62   0x00e098    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_63   0x00e089    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_64   0x00e086    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_65   0x00e081    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_66   0x00e07a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_67   0x00e075    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_68   0x00e071    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_69   0x00e06b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_70   0x00e065    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_71   0x00e060    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_72   0x00e05c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_73   0x00e058    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_74   0x00e053    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_75   0x00e050    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_76   0x00e04c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_77   0x00e048    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_78   0x00e042    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_79   0x00e03b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_80   0x00e035    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_81   0x00e02f    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_82   0x00e029    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_83   0x00e025    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_84   0x00e01d    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_85   0x00e014    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_86   0x00e010    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_87   0x00e00c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_88   0x00e006    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_89   0x00e000    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_90   0x00dffa    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_91   0x00dff5    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_92   0x00dff0    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_93   0x00dfe8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_94   0x00dfe0    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_95   0x00dfd8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_96   0x00dfd0    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_97   0x00dfc8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_98   0x00dfc1    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_99   0x00dfb7    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __tmplbl_42   0x00d420    program     static                          
-              __tmplbl_43   0x00d268    program     static                          
-              __tmplbl_44   0x00d24e    program     static                          
-              __tmplbl_85   0x00c9a0    program     static                          
-            __zero_memory   0x00e858    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                _do_cinit   0x00e5a6    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                   __pa_0   0x00dcce    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_1   0x00dcd6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_10   0x00dd8a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_11   0x00dd98    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_12   0x00ddae    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_13   0x00ddc8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_14   0x00dde0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_15   0x00ddf0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_16   0x00de06    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_17   0x00de18    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_18   0x00de2a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_19   0x00de34    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_2   0x00dce0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_20   0x00de44    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_21   0x00de54    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_22   0x00de64    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_23   0x00de70    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_24   0x00de7e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_25   0x00de86    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_26   0x00de90    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_27   0x00de9a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_28   0x00dea2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_29   0x00deb0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_3   0x00dcea    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_30   0x00decc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_31   0x00dee6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_32   0x00df00    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_33   0x00df18    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_34   0x00df22    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_35   0x00df30    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_36   0x00df38    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_37   0x00df42    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_38   0x00df52    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_39   0x00df60    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_4   0x00dd02    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_40   0x00df6c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_41   0x00df78    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_42   0x00df80    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_43   0x00df8a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_44   0x00df90    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_45   0x00df9a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_46   0x00dfa6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_5   0x00dd16    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_6   0x00dd32    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_7   0x00dd3c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_8   0x00dd48    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_9   0x00dd6a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+             __string_100   0x00ea26    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_101   0x00ea1e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_102   0x00ea16    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_103   0x00ea0f    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_104   0x00ea05    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_105   0x00ea01    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_106   0x00e9fd    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_107   0x00e9f7    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_108   0x00e9f1    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_109   0x00e9eb    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_110   0x00e9e5    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_111   0x00e9dd    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_112   0x00e9d8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_113   0x00e9d3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_114   0x00e9c5    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_115   0x00e9b6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_116   0x00e9a9    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_117   0x00e998    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_118   0x00e987    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_119   0x00e97e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_120   0x00e974    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_121   0x00e960    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_122   0x00e953    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_123   0x00e94c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_124   0x00e93a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_125   0x00e920    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_126   0x00e916    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_127   0x00e904    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_128   0x00e8ea    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_129   0x00e8d8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_130   0x00e8be    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_131   0x00e8ac    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_132   0x00e892    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_133   0x00e884    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_134   0x00e876    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_135   0x00e86d    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_136   0x00e864    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_137   0x00e854    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_138   0x00e830    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_139   0x00e80c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_140   0x00e808    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_141   0x00e803    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_142   0x00e7fe    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_49   0x00eb71    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_50   0x00eb69    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_51   0x00eb66    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_52   0x00eb61    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_53   0x00eb5b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_54   0x00eb55    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_55   0x00eb4e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_56   0x00eb45    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_57   0x00eb39    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_58   0x00eb29    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_59   0x00eb28    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_60   0x00eb1c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_61   0x00eb14    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_62   0x00eb0e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_63   0x00eafe    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_64   0x00eafb    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_65   0x00eaec    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_66   0x00eae9    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_67   0x00eae4    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_68   0x00eadd    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_69   0x00ead8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_70   0x00ead4    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_71   0x00eace    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_72   0x00eac8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_73   0x00eac3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_74   0x00eabf    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_75   0x00eabb    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_76   0x00eab6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_77   0x00eab3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_78   0x00eaaf    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_79   0x00eaa7    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_80   0x00eaa1    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_81   0x00ea9b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_82   0x00ea95    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_83   0x00ea8e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_84   0x00ea8a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_85   0x00ea84    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_86   0x00ea7d    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_87   0x00ea77    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_88   0x00ea73    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_89   0x00ea6b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_90   0x00ea62    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_91   0x00ea5e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_92   0x00ea5a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_93   0x00ea54    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_94   0x00ea4e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_95   0x00ea48    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_96   0x00ea43    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_97   0x00ea3e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_98   0x00ea36    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_99   0x00ea2e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __tmplbl_42   0x00de64    program     static                          
+              __tmplbl_43   0x00dcac    program     static                          
+              __tmplbl_44   0x00dc92    program     static                          
+              __tmplbl_85   0x00d3e4    program     static                          
+            __zero_memory   0x00f2e0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                _do_cinit   0x00f02e    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                    _entry   0x000000    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                   _false   0x00e802    program     static                          
-                 _startup   0x00e878    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-              _usart_putc   0x00e894    program     extern E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
-               _user_putc   0x008e0c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         assignAutomation   0x005b36    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              boardStatus   0x000a68    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           charToSegments   0x009d46    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-               clearError   0x00143c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                compare_l   0x00e86e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-             compressData   0x004f46    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                copy_loop   0x00e618    program     static                          
-            copy_one_byte   0x00e61e    program     static                          
-            delayMainLoop   0x00bfda    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                     done   0x00e642    program     static                          
-             done_copying   0x00e62c    program     static                          
-                  endloop   0x00e82e    program     static                          
-                 flushOut   0x008ad0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-  getAutomationFromEEPROM   0x000d48    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         getEventFromKNOB   0x00c4f4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-  getEventRequestFromGPIO   0x00c3ba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
- getEventRequestFromTIMER   0x00c470    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
- getEventRequestFromTrack   0x00c316    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 getIdent   0x001dac    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-   getInputRequestFromCAN   0x00920a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
- getInputRequestFromUSART   0x0087ec    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 getToken   0x001990    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 getValue   0x001ba0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 high_isr   0x00a408    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                     init   0x00c0de    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-          initEnvironment   0x00bc2a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              initRequest   0x005146    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                initUSART   0x008758    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                   _false   0x00f28a    program     static                          
+                 _startup   0x00f300    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+              _usart_putc   0x00f31c    program     extern E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
+               _user_putc   0x009748    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         assignAutomation   0x0061be    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              boardStatus   0x000b52    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           charToSegments   0x00a682    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+               clearError   0x0015ec    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                compare_l   0x00f2f6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+             compressData   0x0055ce    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                copy_loop   0x00f0a0    program     static                          
+            copy_one_byte   0x00f0a6    program     static                          
+            delayMainLoop   0x00c916    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                     done   0x00f0ca    program     static                          
+             done_copying   0x00f0b4    program     static                          
+                  endloop   0x00f2b6    program     static                          
+                 flushOut   0x00940c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+  getAutomationFromEEPROM   0x000ef8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         getEventFromKNOB   0x00cf38    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+  getEventRequestFromGPIO   0x00cd4e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+ getEventRequestFromTIMER   0x00ce5c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+ getEventRequestFromTrack   0x00cc52    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 getIdent   0x001f88    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+   getInputRequestFromCAN   0x009b46    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+ getInputRequestFromUSART   0x009128    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 getToken   0x001b6c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 getValue   0x001d7c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 high_isr   0x00ad44    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                     init   0x00ca1a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+          initEnvironment   0x00c566    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              initRequest   0x0057ce    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                initUSART   0x009094    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
  interrupt_at_high_vector   0x000008    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 isAdigit   0x001096    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             isAhexaDigit   0x0010e6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                  isdigit   0x00e834    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                     jEnd   0x00e546    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                     jEnd   0x00e504    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                     jEnd   0x00e592    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                    jLoop   0x00e57a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                    jLoop   0x00e4fa    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                    jLoop   0x00e526    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                   jMatch   0x00e854    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                 jNoMatch   0x00e856    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                     loop   0x00e8a4    program     static E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
-                     loop   0x00e812    program     static                          
-                     loop   0x00e7ce    program     static                          
-                     loop   0x00e888    program     static                          
-                   loop_h   0x00e866    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                   loop_l   0x00e870    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                 isAdigit   0x001246    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             isAhexaDigit   0x001296    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                  isdigit   0x00f2bc    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                     jEnd   0x00efce    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                     jEnd   0x00ef8c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                     jEnd   0x00f01a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                    jLoop   0x00f002    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                    jLoop   0x00ef82    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                    jLoop   0x00efae    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                   jMatch   0x00f2dc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                 jNoMatch   0x00f2de    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                     loop   0x00f32c    program     static E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
+                     loop   0x00f29a    program     static                          
+                     loop   0x00f256    program     static                          
+                     loop   0x00f310    program     static                          
+                   loop_h   0x00f2ee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                   loop_l   0x00f2f8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
             low_interrupt   0x000018    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                  low_isr   0x00bb68    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             low_isr_task   0x00a8ce    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                     main   0x00c6d2    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-            manageRequest   0x00600e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             memAvailable   0x000a62    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                  low_isr   0x00c4a4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             low_isr_task   0x00b20a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                     main   0x00d116    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+            manageRequest   0x006696    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             memAvailable   0x000b4c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
                 mySprintf   0x000038    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   parser   0x002040    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   prompt   0x00894e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                     putc   0x00e6cc    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\putc.c
-         removeAutomation   0x005174    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 s_digits   0x00e8b0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-            s_put_n_chars   0x00c94a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-           saveAutomation   0x005290    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           sendPrintToCAN   0x008b1e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         sendRequestToCAN   0x008e8c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                sendUSART   0x0087c6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-          set7segmentPort   0x009a48    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-    setAutomationToEEPROM   0x000f20    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   setDcc   0x00a08a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                  setPort   0x00a2aa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 setSpeed   0x005f72    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   strlen   0x00e4ea    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                strlenpgm   0x00e55c    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                  strncmp   0x00e506    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                   strtol   0x001194    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                     test   0x00e5c0    program     static                          
-              toUpperCase   0x001136    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-               traceError   0x00145e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         trackCalibration   0x00c27e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              twoWire_ack   0x009ace    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             twoWire_init   0x009a80    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-            twoWire_start   0x009a8c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             twoWire_stop   0x009aa8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-            twoWire_write   0x009ae6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           uncompressData   0x004dd8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 vfprintf   0x00c976    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                 vsprintf   0x00e644    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vsprintf.c
-               zero_block   0x00e866    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                   parser   0x00221c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                   prompt   0x00928a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                     putc   0x00f154    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\putc.c
+         removeAutomation   0x0057fc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 s_digits   0x00f338    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+            s_put_n_chars   0x00d38e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+           saveAutomation   0x005918    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           sendPrintToCAN   0x00945a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         sendRequestToCAN   0x0097c8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                sendUSART   0x009102    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+          set7segmentPort   0x00a384    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+    setAutomationToEEPROM   0x0010d0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                   setDcc   0x00a9c6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                  setPort   0x00abe6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 setSpeed   0x0065fa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                   strlen   0x00ef72    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                strlenpgm   0x00efe4    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                  strncmp   0x00ef8e    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                   strtol   0x001344    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                     test   0x00f048    program     static                          
+              toUpperCase   0x0012e6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+               traceError   0x00160e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         trackCalibration   0x00cbba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              twoWire_ack   0x00a40a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             twoWire_init   0x00a3bc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+            twoWire_start   0x00a3c8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             twoWire_stop   0x00a3e4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+            twoWire_write   0x00a422    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           uncompressData   0x005460    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 vfprintf   0x00d3ba    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                 vsprintf   0x00f0cc    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vsprintf.c
+               zero_block   0x00f2ee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
                    ADCON0   0x000fc2       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
                ADCON0bits   0x000fc2       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
                    ADCON1   0x000fc1       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
@@ -1251,11 +1259,11 @@ WRONG_BOARD_NUMBER_STRING   0x00e323    program     extern C:\Users\caven\Deskto
                  data_ptr   0x0000d0       data     static E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
                    digits   0x00009b       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
                     errno   0x0000d3       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\errno.c
-      gl_GPIONotification   0x000ca8       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              gl_GPIOchar   0x000cac       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           gl_GPIOcounter   0x000cb0       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-        gl_GPIOstabilized   0x000cb4       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           gl_OUTSTATchar   0x000ca0       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      gl_GPIONotification   0x000cb0       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              gl_GPIOchar   0x000cb4       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           gl_GPIOcounter   0x000cb8       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+        gl_GPIOstabilized   0x000cbc       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           gl_OUTSTATchar   0x000ca8       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
                gl_OUTchar   0x0003a0       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
               gl_S1T0char   0x0000c1       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
               gl_S1T1char   0x0000c3       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
@@ -1265,12 +1273,12 @@ WRONG_BOARD_NUMBER_STRING   0x00e323    program     extern C:\Users\caven\Deskto
               gl_S2T1char   0x0000c4       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
               gl_S2T2char   0x0000c5       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
               gl_S2T3char   0x0000c8       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     gl_TIMERNotification   0x000ccb       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-            gl_TIMERValue   0x000cbc       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     gl_TIMERNotification   0x000cd3       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+            gl_TIMERValue   0x000cc4       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
          gl_adcKnobValue0   0x000086       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
          gl_adcKnobValue1   0x000088       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-            gl_automation   0x000876       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-               gl_average   0x000c90       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+            gl_automation   0x00087e       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+               gl_average   0x000c98       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
              gl_boardMode   0x000068       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
            gl_boardNumber   0x000060       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
              gl_calibKnob   0x000093       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
@@ -1307,7 +1315,7 @@ gl_inputCANWriteBufferPointer   0x000610       data     extern C:\Users\caven\De
       gl_minAdcKnobValue1   0x00008e       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
            gl_mutexLowIsr   0x000069       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
 gl_nexAvailableAutomation   0x000073       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-            gl_noVehicule   0x000c98       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+            gl_noVehicule   0x000ca0       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
         gl_numberKnobData   0x00007d       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
        gl_outputCANbuffer   0x00047f       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
 gl_outputCANbufferCounter   0x0004cf       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
@@ -1327,9 +1335,9 @@ gl_requestInputCANtrameStart   0x00061c       data     extern C:\Users\caven\Des
          gl_syncRequested   0x00006f       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
                  gl_timer   0x000079       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
            gl_timerNumber   0x000078       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-             gl_tmpBuffer   0x000814       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+             gl_tmpBuffer   0x000818       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
       gl_trackCalibration   0x000075       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     gl_trackNotification   0x000ca4       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     gl_trackNotification   0x000cac       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
            gl_trackNumber   0x000076       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
               gl_userMode   0x000077       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
           gl_waitCanPrint   0x00006e       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
@@ -1346,352 +1354,360 @@ gl_requestInputCANtrameStart   0x00061c       data     extern C:\Users\caven\Des
        ___return_lbl00000   0x000004    program     static                          
                    __init   0x000006    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\__init.c
  interrupt_at_high_vector   0x000008    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-       ___return_lbl00894   0x00000c    program     static                          
+       ___return_lbl00941   0x00000c    program     static                          
             low_interrupt   0x000018    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-       ___return_lbl00933   0x00001c    program     static                          
+       ___return_lbl00980   0x00001c    program     static                          
                 mySprintf   0x000038    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
                ReadEEPROM   0x0000c8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
           CalibMinMaxKnob   0x000144    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
               ResetEEPROM   0x00040a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         ReadEEPROMConfig   0x000530    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-     WriteCompletedEEPROM   0x000976    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           WriteRdyEEPROM   0x00098a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              WriteEEPROM   0x00099a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             memAvailable   0x000a62    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              boardStatus   0x000a68    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-  getAutomationFromEEPROM   0x000d48    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-    setAutomationToEEPROM   0x000f20    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 isAdigit   0x001096    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             isAhexaDigit   0x0010e6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              toUpperCase   0x001136    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   strtol   0x001194    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-               clearError   0x00143c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-               traceError   0x00145e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 getToken   0x001990    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 getValue   0x001ba0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 getIdent   0x001dac    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   parser   0x002040    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         ___else_lbl00239   0x003bda    program     static                          
-           ___if_lbl00240   0x003be0    program     static                          
-           ___if_lbl00243   0x003ca4    program     static                          
-           ___if_lbl00291   0x004dbc    program     static                          
-       ___return_lbl00157   0x004dc0    program     static                          
-           uncompressData   0x004dd8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             compressData   0x004f46    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              initRequest   0x005146    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         removeAutomation   0x005174    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           saveAutomation   0x005290    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-       ___return_lbl00334   0x005b1e    program     static                          
-         assignAutomation   0x005b36    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 setSpeed   0x005f72    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-            manageRequest   0x00600e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           ___if_lbl00676   0x008726    program     static                          
-           ___if_lbl00674   0x008726    program     static                          
-           ___if_lbl00672   0x008726    program     static                          
-           ___if_lbl00670   0x008726    program     static                          
-           ___if_lbl00668   0x008726    program     static                          
-           ___if_lbl00662   0x008726    program     static                          
-           ___if_lbl00664   0x008726    program     static                          
-           ___if_lbl00666   0x008726    program     static                          
-      ___default_lbl00680   0x008728    program     static                          
-   ___switchexit_lbl00437   0x008740    program     static                          
-       ___return_lbl00368   0x008740    program     static                          
-                initUSART   0x008758    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                sendUSART   0x0087c6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
- getInputRequestFromUSART   0x0087ec    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   prompt   0x00894e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 flushOut   0x008ad0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             CANsendDelay   0x008ad8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           sendPrintToCAN   0x008b1e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-               _user_putc   0x008e0c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         sendRequestToCAN   0x008e8c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             CAN_SendSync   0x00913c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-   getInputRequestFromCAN   0x00920a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-          ___for_lbl00821   0x009236    program     static                          
-          set7segmentPort   0x009a48    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             twoWire_init   0x009a80    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-            twoWire_start   0x009a8c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             twoWire_stop   0x009aa8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              twoWire_ack   0x009ace    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-            twoWire_write   0x009ae6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              TM1637_init   0x009b7a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             TM1637_write   0x009b7e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           TM1637_display   0x009cf0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-           charToSegments   0x009d46    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
- TM1637_writeStringWindow   0x009e62    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-     TM1637_displayString   0x009f62    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-     TM1637_setBrightness   0x00a068    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                   setDcc   0x00a08a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                  setPort   0x00a2aa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                 high_isr   0x00a408    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             low_isr_task   0x00a8ce    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         ___else_lbl01068   0x00bb50    program     static                          
-                  low_isr   0x00bb68    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-          initEnvironment   0x00bc2a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-            delayMainLoop   0x00bfda    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-       PIC18FMainSettings   0x00c08a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                     init   0x00c0de    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         trackCalibration   0x00c27e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
- getEventRequestFromTrack   0x00c316    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-  getEventRequestFromGPIO   0x00c3ba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
- getEventRequestFromTIMER   0x00c470    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-         getEventFromKNOB   0x00c4f4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-                     main   0x00c6d2    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-            s_put_n_chars   0x00c94a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                 vfprintf   0x00c976    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-              __tmplbl_85   0x00c9a0    program     static                          
-              __tmplbl_44   0x00d24e    program     static                          
-              __tmplbl_43   0x00d268    program     static                          
-                   __pa_0   0x00d28a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_1   0x00d292    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_2   0x00d29c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_3   0x00d2a6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_4   0x00d2be    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_5   0x00d2d2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_6   0x00d2ee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_7   0x00d2f8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_8   0x00d304    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                   __pa_9   0x00d326    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_10   0x00d346    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_11   0x00d354    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_12   0x00d36a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_13   0x00d384    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_14   0x00d39c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_15   0x00d3ac    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_16   0x00d3c2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_17   0x00d3d4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_18   0x00d3e6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_19   0x00d3f0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_20   0x00d400    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_21   0x00d410    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_22   0x00d420    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-              __tmplbl_42   0x00d420    program     static                          
-                  __pa_23   0x00d42c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_24   0x00d43a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_25   0x00d442    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_26   0x00d44c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_27   0x00d456    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_28   0x00d45e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_29   0x00d46c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_30   0x00d488    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_31   0x00d4a2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_32   0x00d4bc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_33   0x00d4d4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_34   0x00d4de    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_35   0x00d4ec    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_36   0x00d4f4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_37   0x00d4fe    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_38   0x00d50e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_39   0x00d51c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_40   0x00d528    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_41   0x00d534    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_42   0x00d53c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_43   0x00d546    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_44   0x00d54c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_45   0x00d556    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-                  __pa_46   0x00d562    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
-           ECANInitialize   0x00d56c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-          ECANSendMessage   0x00d5de    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-       ECANReceiveMessage   0x00d7ea    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-     ECANSetOperationMode   0x00d9fe    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-             _CANIDToRegs   0x00da28    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-             _RegsToCANID   0x00dbe8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
-             __string_136   0x00ddba    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_135   0x00ddbf    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_134   0x00ddc4    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_133   0x00ddc8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_132   0x00ddec    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_131   0x00de10    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_130   0x00de20    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_129   0x00de29    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_128   0x00de32    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_127   0x00de40    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_126   0x00de4e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_125   0x00de68    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_124   0x00de7a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_123   0x00de94    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_122   0x00dea6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_121   0x00dec0    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_120   0x00ded2    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_119   0x00deec    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_118   0x00defe    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_117   0x00df05    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_116   0x00df12    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_115   0x00df26    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_114   0x00df30    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_113   0x00df39    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_112   0x00df4a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_111   0x00df5b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_110   0x00df68    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_109   0x00df77    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_108   0x00df85    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_107   0x00df8a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_106   0x00df8f    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_105   0x00df97    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_104   0x00df9d    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_103   0x00dfa3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_102   0x00dfa9    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_101   0x00dfaf    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-             __string_100   0x00dfb3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_99   0x00dfb7    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_98   0x00dfc1    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_97   0x00dfc8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_96   0x00dfd0    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_95   0x00dfd8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_94   0x00dfe0    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_93   0x00dfe8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_92   0x00dff0    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_91   0x00dff5    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_90   0x00dffa    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_89   0x00e000    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_88   0x00e006    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_87   0x00e00c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_86   0x00e010    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_85   0x00e014    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_84   0x00e01d    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_83   0x00e025    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_82   0x00e029    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_81   0x00e02f    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_80   0x00e035    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_79   0x00e03b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_78   0x00e042    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_77   0x00e048    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_76   0x00e04c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_75   0x00e050    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_74   0x00e053    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_73   0x00e058    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_72   0x00e05c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_71   0x00e060    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_70   0x00e065    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_69   0x00e06b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_68   0x00e071    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_67   0x00e075    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_66   0x00e07a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_65   0x00e081    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_64   0x00e086    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_63   0x00e089    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_62   0x00e098    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_61   0x00e09b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_60   0x00e0ab    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_59   0x00e0b1    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_58   0x00e0b9    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_57   0x00e0c5    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_56   0x00e0c6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_55   0x00e0d2    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_54   0x00e0db    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_53   0x00e0e2    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_52   0x00e0e8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_51   0x00e0ee    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_50   0x00e0f3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_49   0x00e0f6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-              __string_48   0x00e0fe    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
-RAIL_DRIVER_HEADER_STRING   0x00e106    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           VERSION_STRING   0x00e11b    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-      BOARD_NUMBER_STRING   0x00e12f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              MODE_STRING   0x00e137    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-            MEMORY_STRING   0x00e13e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-        AUTOMATION_STRING   0x00e147    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
- AUTOMATION_NUMBER_STRING   0x00e159    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-             START_STRING   0x00e170    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-             RESET_STRING   0x00e177    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              STOP_STRING   0x00e17e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-               RUN_STRING   0x00e186    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              SYNC_STRING   0x00e18d    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              DONE_STRING   0x00e195    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           ONTRACK_STRING   0x00e19d    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-          OFFTRACK_STRING   0x00e1a6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-      BOARD_PROMPT_STRING   0x00e1b0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-             SPEED_STRING   0x00e1ba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           INERTIA_STRING   0x00e1bf    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              INIT_STRING   0x00e1c4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              VOLT_STRING   0x00e1cb    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     UNKNOWN_TOKEN_STRING   0x00e1d2    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    NUMBER_MISSING_STRING   0x00e1e1    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-INCOMPLETE_REQUEST_STRING   0x00e1f1    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-        BAD_NUMBER_STRING   0x00e205    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-      MODE_MISSING_STRING   0x00e211    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-   BAD_GPIO_NUMBER_STRING   0x00e21f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-  BAD_TIMER_NUMBER_STRING   0x00e230    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-   BAD_TIMER_VALUE_STRING   0x00e242    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    BAD_LPO_NUMBER_STRING   0x00e253    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    BAD_AUT_STATUS_STRING   0x00e263    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     BAD_AUT_IDENT_STRING   0x00e27a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     MISSING_IDENT_STRING   0x00e28f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-      BAD_GPIO_DIR_STRING   0x00e2a8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    BAD_GPIO_LEVEL_STRING   0x00e2bc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     BAD_LPO_LEVEL_STRING   0x00e2cc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-   BAD_TRACK_SPEED_STRING   0x00e2db    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     BAD_TRACK_DIR_STRING   0x00e2ec    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-  BAD_TRACK_NUMBER_STRING   0x00e301    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    BAD_BOARD_MODE_STRING   0x00e313    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-WRONG_BOARD_NUMBER_STRING   0x00e323    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-AUTOMATIONSIZELIMIT_STRING   0x00e337    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     MISSING_SPACE_STRING   0x00e351    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-    IDENT_TOO_LONG_STRING   0x00e360    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-AUTOMATIONLREADYEXISTS_STRING   0x00e375    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-BADAUTOMATIONNUMBER_STRING   0x00e391    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
- BAD_TRACK_INERTIA_STRING   0x00e3aa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     BAD_USER_MODE_STRING   0x00e3bd    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     UNKNOWN_ERROR_STRING   0x00e3cc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-                 FXD1616S   0x00e3dc    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  DA1616S   0x00e3ee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                   D1616S   0x00e3fe    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 D1616SOK   0x00e408    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                D1616SNEG   0x00e40c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                  D1616SX   0x00e41e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
-                 FXD3232S   0x00e428    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                  DA3232S   0x00e442    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                   D3232S   0x00e458    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                 D3232SOK   0x00e462    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                D3232SNEG   0x00e466    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                  D3232SX   0x00e486    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
-                 FXM1616S   0x00e490    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-               TSIGN1616A   0x00e4dc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
-                   strlen   0x00e4ea    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                    jLoop   0x00e4fa    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                     jEnd   0x00e504    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
-                  strncmp   0x00e506    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                    jLoop   0x00e526    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-              _4jContinue   0x00e532    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                   _5jEnd   0x00e53c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                     jEnd   0x00e546    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
-                strlenpgm   0x00e55c    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                    jLoop   0x00e57a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                   _2jEnd   0x00e590    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                     jEnd   0x00e592    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
-                _do_cinit   0x00e5a6    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     test   0x00e5c0    program     static                          
-                copy_loop   0x00e618    program     static                          
-            copy_one_byte   0x00e61e    program     static                          
-             done_copying   0x00e62c    program     static                          
-       ___return_lbl00002   0x00e642    program     static                          
-                     done   0x00e642    program     static                          
-                 vsprintf   0x00e644    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vsprintf.c
-                     putc   0x00e6cc    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\putc.c
-                  FXM3232   0x00e750    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm3232.c
-       ___return_lbl00000   0x00e7be    program     static                          
-                 FXD3232U   0x00e7c0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232u.c
-                     loop   0x00e7ce    program     static                          
-                   _false   0x00e802    program     static                          
-       ___return_lbl00000   0x00e806    program     static                          
-                 FXD1616U   0x00e808    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
-                     loop   0x00e812    program     static                          
-                  endloop   0x00e82e    program     static                          
-       ___return_lbl00000   0x00e832    program     static                          
-                  isdigit   0x00e834    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                   jMatch   0x00e854    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-                 jNoMatch   0x00e856    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
-            __zero_memory   0x00e858    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-               zero_block   0x00e866    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                   loop_h   0x00e866    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                compare_l   0x00e86e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                   loop_l   0x00e870    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
-                 _startup   0x00e878    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
-                     loop   0x00e888    program     static                          
-       ___return_lbl00001   0x00e892    program     static                          
-              _usart_putc   0x00e894    program     extern E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
-                     loop   0x00e8a4    program     static E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
-                 s_digits   0x00e8b0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+         ReadEEPROMConfig   0x000614    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+     WriteCompletedEEPROM   0x000a60    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           WriteRdyEEPROM   0x000a74    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              WriteEEPROM   0x000a84    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             memAvailable   0x000b4c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              boardStatus   0x000b52    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+  getAutomationFromEEPROM   0x000ef8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+    setAutomationToEEPROM   0x0010d0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 isAdigit   0x001246    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             isAhexaDigit   0x001296    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              toUpperCase   0x0012e6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                   strtol   0x001344    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+               clearError   0x0015ec    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+               traceError   0x00160e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 getToken   0x001b6c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 getValue   0x001d7c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 getIdent   0x001f88    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                   parser   0x00221c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         ___else_lbl00274   0x004262    program     static                          
+           ___if_lbl00275   0x004268    program     static                          
+           ___if_lbl00278   0x00432c    program     static                          
+           ___if_lbl00326   0x005444    program     static                          
+       ___return_lbl00171   0x005448    program     static                          
+           uncompressData   0x005460    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             compressData   0x0055ce    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              initRequest   0x0057ce    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         removeAutomation   0x0057fc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           saveAutomation   0x005918    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+       ___return_lbl00369   0x0061a6    program     static                          
+         assignAutomation   0x0061be    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 setSpeed   0x0065fa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+            manageRequest   0x006696    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           ___if_lbl00713   0x009062    program     static                          
+           ___if_lbl00711   0x009062    program     static                          
+           ___if_lbl00709   0x009062    program     static                          
+           ___if_lbl00723   0x009062    program     static                          
+           ___if_lbl00721   0x009062    program     static                          
+           ___if_lbl00719   0x009062    program     static                          
+           ___if_lbl00717   0x009062    program     static                          
+           ___if_lbl00715   0x009062    program     static                          
+           ___if_lbl00707   0x009062    program     static                          
+           ___if_lbl00705   0x009062    program     static                          
+      ___default_lbl00727   0x009064    program     static                          
+   ___switchexit_lbl00475   0x00907c    program     static                          
+       ___return_lbl00403   0x00907c    program     static                          
+                initUSART   0x009094    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                sendUSART   0x009102    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+ getInputRequestFromUSART   0x009128    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                   prompt   0x00928a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 flushOut   0x00940c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             CANsendDelay   0x009414    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           sendPrintToCAN   0x00945a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+               _user_putc   0x009748    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         sendRequestToCAN   0x0097c8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             CAN_SendSync   0x009a78    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+   getInputRequestFromCAN   0x009b46    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+          ___for_lbl00868   0x009b72    program     static                          
+          set7segmentPort   0x00a384    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             twoWire_init   0x00a3bc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+            twoWire_start   0x00a3c8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             twoWire_stop   0x00a3e4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              twoWire_ack   0x00a40a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+            twoWire_write   0x00a422    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              TM1637_init   0x00a4b6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             TM1637_write   0x00a4ba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           TM1637_display   0x00a62c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+           charToSegments   0x00a682    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+ TM1637_writeStringWindow   0x00a79e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+     TM1637_displayString   0x00a89e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+     TM1637_setBrightness   0x00a9a4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                   setDcc   0x00a9c6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                  setPort   0x00abe6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                 high_isr   0x00ad44    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             low_isr_task   0x00b20a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         ___else_lbl01115   0x00c48c    program     static                          
+                  low_isr   0x00c4a4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+          initEnvironment   0x00c566    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+            delayMainLoop   0x00c916    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+       PIC18FMainSettings   0x00c9c6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                     init   0x00ca1a    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         trackCalibration   0x00cbba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+ getEventRequestFromTrack   0x00cc52    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+  getEventRequestFromGPIO   0x00cd4e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+ getEventRequestFromTIMER   0x00ce5c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+         getEventFromKNOB   0x00cf38    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+                     main   0x00d116    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+            s_put_n_chars   0x00d38e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                 vfprintf   0x00d3ba    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+              __tmplbl_85   0x00d3e4    program     static                          
+              __tmplbl_44   0x00dc92    program     static                          
+              __tmplbl_43   0x00dcac    program     static                          
+                   __pa_0   0x00dcce    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_1   0x00dcd6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_2   0x00dce0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_3   0x00dcea    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_4   0x00dd02    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_5   0x00dd16    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_6   0x00dd32    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_7   0x00dd3c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_8   0x00dd48    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                   __pa_9   0x00dd6a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_10   0x00dd8a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_11   0x00dd98    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_12   0x00ddae    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_13   0x00ddc8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_14   0x00dde0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_15   0x00ddf0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_16   0x00de06    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_17   0x00de18    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_18   0x00de2a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_19   0x00de34    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_20   0x00de44    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_21   0x00de54    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_22   0x00de64    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+              __tmplbl_42   0x00de64    program     static                          
+                  __pa_23   0x00de70    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_24   0x00de7e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_25   0x00de86    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_26   0x00de90    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_27   0x00de9a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_28   0x00dea2    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_29   0x00deb0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_30   0x00decc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_31   0x00dee6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_32   0x00df00    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_33   0x00df18    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_34   0x00df22    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_35   0x00df30    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_36   0x00df38    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_37   0x00df42    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_38   0x00df52    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_39   0x00df60    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_40   0x00df6c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_41   0x00df78    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_42   0x00df80    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_43   0x00df8a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_44   0x00df90    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_45   0x00df9a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+                  __pa_46   0x00dfa6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
+           ECANInitialize   0x00dfb0    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+          ECANSendMessage   0x00e022    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+       ECANReceiveMessage   0x00e22e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+     ECANSetOperationMode   0x00e442    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+             _CANIDToRegs   0x00e46c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+             _RegsToCANID   0x00e62c    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\ECANPoll.c
+             __string_142   0x00e7fe    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_141   0x00e803    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_140   0x00e808    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_139   0x00e80c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_138   0x00e830    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_137   0x00e854    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_136   0x00e864    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_135   0x00e86d    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_134   0x00e876    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_133   0x00e884    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_132   0x00e892    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_131   0x00e8ac    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_130   0x00e8be    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_129   0x00e8d8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_128   0x00e8ea    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_127   0x00e904    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_126   0x00e916    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_125   0x00e920    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_124   0x00e93a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_123   0x00e94c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_122   0x00e953    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_121   0x00e960    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_120   0x00e974    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_119   0x00e97e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_118   0x00e987    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_117   0x00e998    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_116   0x00e9a9    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_115   0x00e9b6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_114   0x00e9c5    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_113   0x00e9d3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_112   0x00e9d8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_111   0x00e9dd    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_110   0x00e9e5    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_109   0x00e9eb    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_108   0x00e9f1    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_107   0x00e9f7    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_106   0x00e9fd    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_105   0x00ea01    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_104   0x00ea05    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_103   0x00ea0f    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_102   0x00ea16    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_101   0x00ea1e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+             __string_100   0x00ea26    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_99   0x00ea2e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_98   0x00ea36    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_97   0x00ea3e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_96   0x00ea43    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_95   0x00ea48    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_94   0x00ea4e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_93   0x00ea54    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_92   0x00ea5a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_91   0x00ea5e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_90   0x00ea62    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_89   0x00ea6b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_88   0x00ea73    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_87   0x00ea77    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_86   0x00ea7d    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_85   0x00ea84    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_84   0x00ea8a    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_83   0x00ea8e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_82   0x00ea95    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_81   0x00ea9b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_80   0x00eaa1    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_79   0x00eaa7    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_78   0x00eaaf    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_77   0x00eab3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_76   0x00eab6    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_75   0x00eabb    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_74   0x00eabf    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_73   0x00eac3    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_72   0x00eac8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_71   0x00eace    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_70   0x00ead4    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_69   0x00ead8    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_68   0x00eadd    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_67   0x00eae4    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_66   0x00eae9    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_65   0x00eaec    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_64   0x00eafb    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_63   0x00eafe    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_62   0x00eb0e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_61   0x00eb14    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_60   0x00eb1c    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_59   0x00eb28    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_58   0x00eb29    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_57   0x00eb39    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_56   0x00eb45    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_55   0x00eb4e    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_54   0x00eb55    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_53   0x00eb5b    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_52   0x00eb61    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_51   0x00eb66    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_50   0x00eb69    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+              __string_49   0x00eb71    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
+RAIL_DRIVER_HEADER_STRING   0x00eb79    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           VERSION_STRING   0x00eb8e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      BOARD_NUMBER_STRING   0x00eba2    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              MODE_STRING   0x00ebaa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+            MEMORY_STRING   0x00ebb1    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+        AUTOMATION_STRING   0x00ebba    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+ AUTOMATION_NUMBER_STRING   0x00ebcc    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+             START_STRING   0x00ebe3    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+             RESET_STRING   0x00ebea    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              STOP_STRING   0x00ebf1    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+               RUN_STRING   0x00ebf9    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              SYNC_STRING   0x00ec00    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              DONE_STRING   0x00ec08    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           ONTRACK_STRING   0x00ec10    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+          OFFTRACK_STRING   0x00ec19    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      BOARD_PROMPT_STRING   0x00ec23    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+             SPEED_STRING   0x00ec2d    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           INERTIA_STRING   0x00ec32    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              INIT_STRING   0x00ec37    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              VOLT_STRING   0x00ec3e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     UNKNOWN_TOKEN_STRING   0x00ec45    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    NUMBER_MISSING_STRING   0x00ec54    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+INCOMPLETE_REQUEST_STRING   0x00ec64    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+        BAD_NUMBER_STRING   0x00ec78    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      MODE_MISSING_STRING   0x00ec84    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+   BAD_GPIO_NUMBER_STRING   0x00ec92    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+  BAD_TIMER_NUMBER_STRING   0x00eca3    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+   BAD_TIMER_VALUE_STRING   0x00ecb5    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    BAD_LPO_NUMBER_STRING   0x00ecc6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    BAD_AUT_STATUS_STRING   0x00ecd6    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     BAD_AUT_IDENT_STRING   0x00eced    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     MISSING_IDENT_STRING   0x00ed02    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      BAD_GPIO_DIR_STRING   0x00ed1b    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    BAD_GPIO_LEVEL_STRING   0x00ed2f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     BAD_LPO_LEVEL_STRING   0x00ed3f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+   BAD_TRACK_SPEED_STRING   0x00ed4e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     BAD_TRACK_DIR_STRING   0x00ed5f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+  BAD_TRACK_NUMBER_STRING   0x00ed74    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    BAD_BOARD_MODE_STRING   0x00ed86    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+WRONG_BOARD_NUMBER_STRING   0x00ed96    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+AUTOMATIONSIZELIMIT_STRING   0x00edaa    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     MISSING_SPACE_STRING   0x00edc4    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+    IDENT_TOO_LONG_STRING   0x00edd3    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+AUTOMATIONLREADYEXISTS_STRING   0x00ede8    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+BADAUTOMATIONNUMBER_STRING   0x00ee04    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+ BAD_TRACK_INERTIA_STRING   0x00ee1d    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     BAD_USER_MODE_STRING   0x00ee30    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     UNKNOWN_ERROR_STRING   0x00ee3f    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+BAD_CANPUSH_NUMBER_STRING   0x00ee4e    program     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+                 FXD1616S   0x00ee64    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  DA1616S   0x00ee76    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                   D1616S   0x00ee86    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 D1616SOK   0x00ee90    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                D1616SNEG   0x00ee94    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                  D1616SX   0x00eea6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616s.asm
+                 FXD3232S   0x00eeb0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                  DA3232S   0x00eeca    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                   D3232S   0x00eee0    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                 D3232SOK   0x00eeea    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                D3232SNEG   0x00eeee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                  D3232SX   0x00ef0e    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232s.asm
+                 FXM1616S   0x00ef18    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+               TSIGN1616A   0x00ef64    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm1616s.asm
+                   strlen   0x00ef72    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                    jLoop   0x00ef82    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                     jEnd   0x00ef8c    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strlen.asm
+                  strncmp   0x00ef8e    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                    jLoop   0x00efae    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+              _4jContinue   0x00efba    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                   _5jEnd   0x00efc4    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                     jEnd   0x00efce    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\strncmp.asm
+                strlenpgm   0x00efe4    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                    jLoop   0x00f002    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                   _2jEnd   0x00f018    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                     jEnd   0x00f01a    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\slenpgm.asm
+                _do_cinit   0x00f02e    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     test   0x00f048    program     static                          
+                copy_loop   0x00f0a0    program     static                          
+            copy_one_byte   0x00f0a6    program     static                          
+             done_copying   0x00f0b4    program     static                          
+       ___return_lbl00002   0x00f0ca    program     static                          
+                     done   0x00f0ca    program     static                          
+                 vsprintf   0x00f0cc    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vsprintf.c
+                     putc   0x00f154    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\putc.c
+                  FXM3232   0x00f1d8    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxm3232.c
+       ___return_lbl00000   0x00f246    program     static                          
+                 FXD3232U   0x00f248    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd3232u.c
+                     loop   0x00f256    program     static                          
+                   _false   0x00f28a    program     static                          
+       ___return_lbl00000   0x00f28e    program     static                          
+                 FXD1616U   0x00f290    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\math\fxd1616u.c
+                     loop   0x00f29a    program     static                          
+                  endloop   0x00f2b6    program     static                          
+       ___return_lbl00000   0x00f2ba    program     static                          
+                  isdigit   0x00f2bc    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                   jMatch   0x00f2dc    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+                 jNoMatch   0x00f2de    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\isdigit.asm
+            __zero_memory   0x00f2e0    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+               zero_block   0x00f2ee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                   loop_h   0x00f2ee    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                compare_l   0x00f2f6    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                   loop_l   0x00f2f8    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
+                 _startup   0x00f300    program     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\startup\c018i.c
+                     loop   0x00f310    program     static                          
+       ___return_lbl00001   0x00f31a    program     static                          
+              _usart_putc   0x00f31c    program     extern E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
+                     loop   0x00f32c    program     static E:\3.46\pic18-lt\cxx-framework\src\pmc_common\USART\_usartpc.asm
+                 s_digits   0x00f338    program     static E:\3.46\pic18-lt\cxx-framework\src\traditional\stdclib\vfprintf.c
                __config_0   0x300001    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
                __config_1   0x300002    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
                __config_2   0x300003    program     static C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.c
@@ -1808,18 +1824,18 @@ gl_printInputCANtrameStart   0x000620       data     extern C:\Users\caven\Deskt
                gl_message   0x0006f7       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
              gl_errorInfo   0x000776       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
                gl_request   0x0007b2       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-             gl_tmpBuffer   0x000814       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-            gl_automation   0x000876       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-               gl_average   0x000c90       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-            gl_noVehicule   0x000c98       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           gl_OUTSTATchar   0x000ca0       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     gl_trackNotification   0x000ca4       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-      gl_GPIONotification   0x000ca8       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-              gl_GPIOchar   0x000cac       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-           gl_GPIOcounter   0x000cb0       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-        gl_GPIOstabilized   0x000cb4       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-            gl_TIMERValue   0x000cbc       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
-     gl_TIMERNotification   0x000ccb       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+             gl_tmpBuffer   0x000818       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+            gl_automation   0x00087e       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+               gl_average   0x000c98       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+            gl_noVehicule   0x000ca0       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           gl_OUTSTATchar   0x000ca8       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     gl_trackNotification   0x000cac       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+      gl_GPIONotification   0x000cb0       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+              gl_GPIOchar   0x000cb4       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+           gl_GPIOcounter   0x000cb8       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+        gl_GPIOstabilized   0x000cbc       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+            gl_TIMERValue   0x000cc4       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
+     gl_TIMERNotification   0x000cd3       data     extern C:\Users\caven\Desktop\RAIL_DRIVER_FW_V1.3.1\main.h
              RXF6SIDHbits   0x000d60       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
                  RXF6SIDH   0x000d60       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
              RXF6SIDLbits   0x000d61       data     extern E:\3.46\pic18-lt\cxx-framework\src\traditional\proc\p18f4680.asm
