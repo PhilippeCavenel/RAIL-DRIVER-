@@ -36,8 +36,8 @@
 #define TRUE							1
 #define FALSE							0
                          
-rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.39g\0";
-rom char VERSION_STRING[] 				= "VERSION 01-10-2025\0";
+rom char RAIL_DRIVER_HEADER_STRING[] 	= "RAIL DRIVER V 1.40\0";
+rom char VERSION_STRING[] 				= "VERSION 03-10-2025\0";
 rom char BOARD_NUMBER_STRING[] 			= "BOARD \0";
 rom char MODE_STRING[] 					= "MODE \0";
 rom char MEMORY_STRING[] 				= "MEMORY \0";
@@ -62,7 +62,7 @@ rom char VOLT_STRING[]					= "ERROR\0";
 #define MAXSIZETOKEN					10
 #define MAXSIZEIDENT					3
 #define MAXERRORINFO					60
-#define MAXTRAMESIZE					80 // Should be multiple of 8
+#define MAXTRAMESIZE					82 // Should be even and multiple of 8  (+2)
 #define MAXTRAMECAN						MAXTRAMESIZE-16 
 #define MAXMESSAGESIZE					MAXTRAMECAN-2 // We need to add lastchar and end of string
 
@@ -231,7 +231,7 @@ rom char  BAD_CANPUSH_NUMBER_STRING[]	= "Bad CAN event value\0";
 #define READY							1
 #define WAITING_FOR_DATA				0
 
-#define WAITDELAYTRAMECAN				250
+#define WAITDELAYTRAMECAN				500
 #define SYNCHROSENDDELAY				100
 #define MAXINPUTCANBUFFER				4
 

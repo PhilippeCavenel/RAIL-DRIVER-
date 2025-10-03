@@ -3127,7 +3127,7 @@ void TM1637_write(short number1,short number2){
  * ============================================================================== */
 void TM1637_display(short number1,short number2){  
 
-	TM1637_setBrightness(3);
+	TM1637_setBrightness(4);
 
     twoWire_start();
     twoWire_write(0x40);
@@ -3192,7 +3192,7 @@ void TM1637_displayString(char *string) {
 	// init
 	len = strlen(string);
 
-	TM1637_setBrightness(3);
+	TM1637_setBrightness(4);
 
     if (len <= 6) {
         twoWire_start();
