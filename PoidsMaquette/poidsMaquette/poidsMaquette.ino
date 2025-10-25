@@ -13,6 +13,7 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 float calibration_factor = 10000.0;  
 float mechanical_factor = 2.0;       // Correction mécanique (force divisée par 2)
 float offset = 14.0;
+float last_weight=-1000;
 
 void setup() {
   lcd.init();
@@ -29,38 +30,43 @@ void setup() {
 }
 
 void loop() {
+
   if (scale.is_ready()) {
     long reading = scale.read_average(20);
 
     // Conversion brute -> poids maquette (kg)
     float weight = round(((float)reading / calibration_factor) * mechanical_factor)-offset;
+    if (weight!=last_weight) {
+      last_weight=weight;
+      if (weight<0)weight=0.0;
 
-    if (weight<0)weight=0.0;
+      lcd.clear();
 
-    lcd.clear();
+      // Ligne 0 : titre centré
+      lcd.setCursor(3, 0);
+      lcd.print("Poids maquette");
 
-    // Ligne 0 : titre centré
-    lcd.setCursor(3, 0);
-    lcd.print("Poids maquette");
-
-    // AFfichage poids
-    if(weight >= 200) {
+      // AFfichage poids
+      if(weight >= 200) {
         lcd.setCursor(0, 1);
         lcd.print("ATTENTION SURCHARGE");
-        lcd.setCursor(8, 2);
+        lcd.setCursor(7, 2);
         lcd.print(weight, 0);
-        lcd.print(" kg");
+        lcd.print(" Kg");
+      }
+      else {  
+        lcd.setCursor(7, 2);
+        lcd.print(weight, 0);
+        lcd.print(" Kg");
+      }
     }
-    else {  
-      lcd.setCursor(8, 2);
-      lcd.print(weight, 0);
-      lcd.print(" kg");
-    }
-  } else {
+  }
+  else {
     lcd.clear();
+    last_weight=-1000;
     lcd.setCursor(3, 1);
     lcd.print("Mesure en cours...");
   }
 
-  delay(500);
+  delay(1000);
 }
