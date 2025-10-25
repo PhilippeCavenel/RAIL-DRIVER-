@@ -13,13 +13,12 @@ LiquidCrystal_I2C lcd(0x27, 20, 4);
 float calibration_factor = 10000.0;  
 float mechanical_factor = 2.0;       // Correction mécanique (force divisée par 2)
 float offset = 14.0;
-float last_weight=-1000;
+float last_weight;
 
 void setup() {
   lcd.init();
-  lcd.backlight();
   lcd.clear();
-
+  lcd.backlight();
   lcd.setCursor(5, 0);  
   lcd.print("BONJOUR !");
   lcd.setCursor(0, 2);
@@ -27,6 +26,9 @@ void setup() {
   scale.begin(DOUT, CLK);
   delay(4000);
   lcd.clear();
+  last_weight=-1000;
+  lcd.setCursor(1, 1);
+  lcd.print("Mesure en cours...");
 }
 
 void loop() {
@@ -64,7 +66,7 @@ void loop() {
   else {
     lcd.clear();
     last_weight=-1000;
-    lcd.setCursor(3, 1);
+    lcd.setCursor(1, 1);
     lcd.print("Mesure en cours...");
   }
 
